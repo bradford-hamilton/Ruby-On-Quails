@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/scaffold_controller/scaffold_controller_generator"
+require "quails/generators/quails/scaffold_controller/scaffold_controller_generator"
 
 # Mock out two ORMs
 module ORMWithGenerators
@@ -17,18 +17,18 @@ module ORMWithoutGenerators
   # No generators
 end
 
-class OrmTest < Rails::Generators::TestCase
+class OrmTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
-  tests Rails::Generators::ScaffoldControllerGenerator
+  tests Quails::Generators::ScaffoldControllerGenerator
 
   def test_orm_class_returns_custom_generator_if_supported_custom_orm_set
     g = generator ["Foo"], orm: "ORMWithGenerators"
     assert_equal ORMWithGenerators::Generators::ActiveModel, g.send(:orm_class)
   end
 
-  def test_orm_class_returns_rails_generator_if_unsupported_custom_orm_set
+  def test_orm_class_returns_quails_generator_if_unsupported_custom_orm_set
     g = generator ["Foo"], orm: "ORMWithoutGenerators"
-    assert_equal Rails::Generators::ActiveModel, g.send(:orm_class)
+    assert_equal Quails::Generators::ActiveModel, g.send(:orm_class)
   end
 
   def test_orm_instance_returns_orm_class_instance_with_name

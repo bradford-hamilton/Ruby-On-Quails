@@ -478,7 +478,7 @@ module ActionDispatch
           include UrlFor
 
           # Define url_for in the singleton level so one can do:
-          # Rails.application.routes.url_helpers.url_for(args)
+          # Quails.application.routes.url_helpers.url_for(args)
           proxy_class = Class.new do
             include UrlFor
             include routes.named_routes.path_helpers_module
@@ -530,7 +530,7 @@ module ActionDispatch
 
           # Make named_routes available in the module singleton
           # as well, so one can do:
-          # Rails.application.routes.url_helpers.posts_path
+          # Quails.application.routes.url_helpers.posts_path
           extend url_helpers
 
           # Any class that includes this module will get all
@@ -574,7 +574,7 @@ module ActionDispatch
             "You may have defined two routes with the same name using the `:as` option, or " \
             "you may be overriding a route already defined by a resource with the same naming. " \
             "For the latter, you can restrict the routes created with `resources` as explained here: \n" \
-            "http://guides.rubyonrails.org/routing.html#restricting-the-routes-created"
+            "http://guides.rubyonquails.org/routing.html#restricting-the-routes-created"
         end
 
         route = @set.add_route(name, mapping)
@@ -583,14 +583,14 @@ module ActionDispatch
         if route.segment_keys.include?(:controller)
           ActiveSupport::Deprecation.warn(<<-MSG.squish)
             Using a dynamic :controller segment in a route is deprecated and
-            will be removed in Rails 5.2.
+            will be removed in Quails 5.2.
           MSG
         end
 
         if route.segment_keys.include?(:action)
           ActiveSupport::Deprecation.warn(<<-MSG.squish)
             Using a dynamic :action segment in a route is deprecated and
-            will be removed in Rails 5.2.
+            will be removed in Quails 5.2.
           MSG
         end
 

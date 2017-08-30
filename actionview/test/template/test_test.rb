@@ -22,7 +22,7 @@ end
 
 class PeopleHelperTest < ActionView::TestCase
   def test_title
-    assert_equal "<h1>Ruby on Rails</h1>", title("Ruby on Rails")
+    assert_equal "<h1>Ruby on Quails</h1>", title("Ruby on Quails")
   end
 
   def test_homepage_path

@@ -7,7 +7,7 @@ require "descendants_tracker_test_cases"
 class DescendantsTrackerWithoutAutoloadingTest < ActiveSupport::TestCase
   include DescendantsTrackerTestCases
 
-  # Regression test for #8422. https://github.com/rails/rails/issues/8442
+  # Regression test for #8422. https://github.com/quails/quails/issues/8442
   def test_clear_without_autoloaded_singleton_parent
     mark_as_autoloaded do
       parent_instance = Parent.new

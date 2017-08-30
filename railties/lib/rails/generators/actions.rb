@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   module Generators
     module Actions
       def initialize(*) # :nodoc:
@@ -13,7 +13,7 @@ module Rails
       #
       #   gem "rspec", group: :test
       #   gem "technoweenie-restful-authentication", lib: "restful-authentication", source: "http://gems.github.com/"
-      #   gem "rails", "3.0", git: "git://github.com/rails/rails"
+      #   gem "quails", "3.0", git: "git://github.com/quails/quails"
       def gem(*args)
         options = args.extract_options!
         name, version = args
@@ -44,7 +44,7 @@ module Rails
       # Wraps gem entries inside a group.
       #
       #   gem_group :development, :test do
-      #     gem "rspec-rails"
+      #     gem "rspec-quails"
       #   end
       def gem_group(*names, &block)
         name = names.map(&:inspect).join(", ")
@@ -68,7 +68,7 @@ module Rails
       #   add_source "http://gems.github.com/"
       #
       #   add_source "http://gems.github.com/" do
-      #     gem "rspec-rails"
+      #     gem "rspec-quails"
       #   end
       def add_source(source, options = {}, &block)
         log :source, source
@@ -99,8 +99,8 @@ module Rails
       #     "config.action_controller.asset_host = 'localhost:3000'"
       #   end
       def environment(data = nil, options = {})
-        sentinel = "class Application < Rails::Application\n"
-        env_file_sentinel = "Rails.application.configure do\n"
+        sentinel = "class Application < Quails::Application\n"
+        env_file_sentinel = "Quails.application.configure do\n"
         data ||= yield if block_given?
 
         in_root do
@@ -199,7 +199,7 @@ module Rails
         create_file("config/initializers/#{filename}", optimize_indentation(data), verbose: false)
       end
 
-      # Generate something using a generator from Rails or a plugin.
+      # Generate something using a generator from Quails or a plugin.
       # The second parameter is the argument string that is passed to
       # the generator or an Array that is joined.
       #
@@ -208,7 +208,7 @@ module Rails
         log :generate, what
         argument = args.flat_map(&:to_s).join(" ")
 
-        in_root { run_ruby_script("bin/rails generate #{what} #{argument}", verbose: false) }
+        in_root { run_ruby_script("bin/quails generate #{what} #{argument}", verbose: false) }
       end
 
       # Runs the supplied rake task (invoked with 'rake ...')
@@ -220,25 +220,25 @@ module Rails
         execute_command :rake, command, options
       end
 
-      # Runs the supplied rake task (invoked with 'rails ...')
+      # Runs the supplied rake task (invoked with 'quails ...')
       #
-      #   rails_command("db:migrate")
-      #   rails_command("db:migrate", env: "production")
-      #   rails_command("gems:install", sudo: true)
-      def rails_command(command, options = {})
-        execute_command :rails, command, options
+      #   quails_command("db:migrate")
+      #   quails_command("db:migrate", env: "production")
+      #   quails_command("gems:install", sudo: true)
+      def quails_command(command, options = {})
+        execute_command :quails, command, options
       end
 
       # Just run the capify command in root
       #
       #   capify!
       def capify!
-        ActiveSupport::Deprecation.warn("`capify!` is deprecated and will be removed in the next version of Rails.")
+        ActiveSupport::Deprecation.warn("`capify!` is deprecated and will be removed in the next version of Quails.")
         log :capify, ""
         in_root { run("#{extify(:capify)} .", verbose: false) }
       end
 
-      # Make an entry in Rails routing file <tt>config/routes.rb</tt>
+      # Make an entry in Quails routing file <tt>config/routes.rb</tt>
       #
       #   route "root 'welcome#index'"
       def route(routing_code)
@@ -281,7 +281,7 @@ module Rails
           end
         end
 
-        # Runs the supplied command using either "rake ..." or "rails ..."
+        # Runs the supplied command using either "rake ..." or "quails ..."
         # based on the executor parameter provided.
         def execute_command(executor, command, options = {}) # :doc:
           log executor, command

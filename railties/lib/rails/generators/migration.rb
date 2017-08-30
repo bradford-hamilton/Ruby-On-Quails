@@ -3,7 +3,7 @@
 require "active_support/concern"
 require_relative "actions/create_migration"
 
-module Rails
+module Quails
   module Generators
     # Holds common methods for migrations. It assumes that migrations have the
     # [0-9]*_name format and can be used by other frameworks (like Sequel)
@@ -33,7 +33,7 @@ module Rails
       end
 
       def create_migration(destination, data, config = {}, &block)
-        action Rails::Generators::Actions::CreateMigration.new(self, destination, block || data.to_s, config)
+        action Quails::Generators::Actions::CreateMigration.new(self, destination, block || data.to_s, config)
       end
 
       def set_migration_assigns!(destination)

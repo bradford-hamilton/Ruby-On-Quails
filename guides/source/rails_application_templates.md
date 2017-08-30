@@ -1,44 +1,44 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-Rails Application Templates
+Quails Application Templates
 ===========================
 
-Application templates are simple Ruby files containing DSL for adding gems/initializers etc. to your freshly created Rails project or an existing Rails project.
+Application templates are simple Ruby files containing DSL for adding gems/initializers etc. to your freshly created Quails project or an existing Quails project.
 
 After reading this guide, you will know:
 
-* How to use templates to generate/customize Rails applications.
-* How to write your own reusable application templates using the Rails template API.
+* How to use templates to generate/customize Quails applications.
+* How to write your own reusable application templates using the Quails template API.
 
 --------------------------------------------------------------------------------
 
 Usage
 -----
 
-To apply a template, you need to provide the Rails generator with the location of the template you wish to apply using the `-m` option. This can either be a path to a file or a URL.
+To apply a template, you need to provide the Quails generator with the location of the template you wish to apply using the `-m` option. This can either be a path to a file or a URL.
 
 ```bash
-$ rails new blog -m ~/template.rb
-$ rails new blog -m http://example.com/template.rb
+$ quails new blog -m ~/template.rb
+$ quails new blog -m http://example.com/template.rb
 ```
 
-You can use the `app:template` Rake task to apply templates to an existing Rails application. The location of the template needs to be passed in via the LOCATION environment variable. Again, this can either be path to a file or a URL.
+You can use the `app:template` Rake task to apply templates to an existing Quails application. The location of the template needs to be passed in via the LOCATION environment variable. Again, this can either be path to a file or a URL.
 
 ```bash
-$ bin/rails app:template LOCATION=~/template.rb
-$ bin/rails app:template LOCATION=http://example.com/template.rb
+$ bin/quails app:template LOCATION=~/template.rb
+$ bin/quails app:template LOCATION=http://example.com/template.rb
 ```
 
 Template API
 ------------
 
-The Rails templates API is easy to understand. Here's an example of a typical Rails template:
+The Quails templates API is easy to understand. Here's an example of a typical Quails template:
 
 ```ruby
 # template.rb
 generate(:scaffold, "person name:string")
 route "root to: 'people#index'"
-rails_command("db:migrate")
+quails_command("db:migrate")
 
 after_bundle do
   git :init
@@ -70,11 +70,11 @@ bundle install
 
 Wraps gem entries inside a group.
 
-For example, if you want to load `rspec-rails` only in the `development` and `test` groups:
+For example, if you want to load `rspec-quails` only in the `development` and `test` groups:
 
 ```ruby
 gem_group :development, :test do
-  gem "rspec-rails"
+  gem "rspec-quails"
 end
 ```
 
@@ -92,7 +92,7 @@ If block is given, gem entries in block are wrapped into the source group.
 
 ```ruby
 add_source "http://gems.github.com/" do
-  gem "rspec-rails"
+  gem "rspec-quails"
 end
 ```
 
@@ -130,7 +130,7 @@ CODE
 
 Similarly, `lib()` creates a file in the `lib/` directory and `vendor()` creates a file in the `vendor/` directory.
 
-There is even `file()`, which accepts a relative path from `Rails.root` and creates all the directories/files needed:
+There is even `file()`, which accepts a relative path from `Quails.root` and creates all the directories/files needed:
 
 ```ruby
 file 'app/components/foo.rb', <<-CODE
@@ -161,7 +161,7 @@ The above creates `lib/tasks/bootstrap.rake` with a `boot:strap` rake task.
 
 ### generate(what, *args)
 
-Runs the supplied rails generator with given arguments.
+Runs the supplied quails generator with given arguments.
 
 ```ruby
 generate(:scaffold, "person", "name:string", "address:text", "age:number")
@@ -175,24 +175,24 @@ Executes an arbitrary command. Just like the backticks. Let's say you want to re
 run "rm README.rdoc"
 ```
 
-### rails_command(command, options = {})
+### quails_command(command, options = {})
 
-Runs the supplied task in the Rails application. Let's say you want to migrate the database:
+Runs the supplied task in the Quails application. Let's say you want to migrate the database:
 
 ```ruby
-rails_command "db:migrate"
+quails_command "db:migrate"
 ```
 
-You can also run tasks with a different Rails environment:
+You can also run tasks with a different Quails environment:
 
 ```ruby
-rails_command "db:migrate", env: 'production'
+quails_command "db:migrate", env: 'production'
 ```
 
 You can also run tasks as a super-user:
 
 ```ruby
-rails_command "log:clear", sudo: true
+quails_command "log:clear", sudo: true
 ```
 
 ### route(routing_code)
@@ -205,11 +205,11 @@ route "root to: 'person#index'"
 
 ### inside(dir)
 
-Enables you to run a command from the given directory. For example, if you have a copy of edge rails that you wish to symlink from your new apps, you can do this:
+Enables you to run a command from the given directory. For example, if you have a copy of edge quails that you wish to symlink from your new apps, you can do this:
 
 ```ruby
 inside('vendor') do
-  run "ln -s ~/commit-rails/rails rails"
+  run "ln -s ~/commit-quails/quails quails"
 end
 ```
 
@@ -229,16 +229,16 @@ CODE
 
 ### yes?(question) or no?(question)
 
-These methods let you ask questions from templates and decide the flow based on the user's answer. Let's say you want to Freeze Rails only if the user wants to:
+These methods let you ask questions from templates and decide the flow based on the user's answer. Let's say you want to Freeze Quails only if the user wants to:
 
 ```ruby
-rails_command("rails:freeze:gems") if yes?("Freeze rails gems?")
+quails_command("quails:freeze:gems") if yes?("Freeze quails gems?")
 # no?(question) acts just the opposite.
 ```
 
 ### git(:command)
 
-Rails templates let you run any git command:
+Quails templates let you run any git command:
 
 ```ruby
 git :init
@@ -266,7 +266,7 @@ Advanced Usage
 --------------
 
 The application template is evaluated in the context of a
-`Rails::Generators::AppGenerator` instance. It uses the `apply` action
+`Quails::Generators::AppGenerator` instance. It uses the `apply` action
 provided by
 [Thor](https://github.com/erikhuda/thor/blob/master/lib/thor/actions.rb#L207).
 This means you can extend and change the instance to match your needs.

@@ -7,7 +7,7 @@ require_relative "core_ext/array/wrap"
 # :enddoc:
 
 module I18n
-  class Railtie < Rails::Railtie
+  class Railtie < Quails::Railtie
     config.i18n = ActiveSupport::OrderedOptions.new
     config.i18n.railties_load_path = []
     config.i18n.load_path = []

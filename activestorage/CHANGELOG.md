@@ -1,3 +1,3 @@
-*   Added to Rails.
+*   Added to Quails.
 
     *DHH*

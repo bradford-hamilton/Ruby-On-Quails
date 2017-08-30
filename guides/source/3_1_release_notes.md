@@ -1,9 +1,9 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-Ruby on Rails 3.1 Release Notes
+Ruby on Quails 3.1 Release Notes
 ===============================
 
-Highlights in Rails 3.1:
+Highlights in Quails 3.1:
 
 * Streaming
 * Reversible Migrations
@@ -12,43 +12,43 @@ Highlights in Rails 3.1:
 
 These release notes cover only the major changes. To learn about various bug
 fixes and changes, please refer to the change logs or check out the [list of
-commits](https://github.com/rails/rails/commits/3-1-stable) in the main Rails
+commits](https://github.com/quails/quails/commits/3-1-stable) in the main Quails
 repository on GitHub.
 
 --------------------------------------------------------------------------------
 
-Upgrading to Rails 3.1
+Upgrading to Quails 3.1
 ----------------------
 
-If you're upgrading an existing application, it's a great idea to have good test coverage before going in. You should also first upgrade to Rails 3 in case you haven't and make sure your application still runs as expected before attempting to update to Rails 3.1. Then take heed of the following changes:
+If you're upgrading an existing application, it's a great idea to have good test coverage before going in. You should also first upgrade to Quails 3 in case you haven't and make sure your application still runs as expected before attempting to update to Quails 3.1. Then take heed of the following changes:
 
-### Rails 3.1 requires at least Ruby 1.8.7
+### Quails 3.1 requires at least Ruby 1.8.7
 
-Rails 3.1 requires Ruby 1.8.7 or higher. Support for all of the previous Ruby versions has been dropped officially and you should upgrade as early as possible. Rails 3.1 is also compatible with Ruby 1.9.2.
+Quails 3.1 requires Ruby 1.8.7 or higher. Support for all of the previous Ruby versions has been dropped officially and you should upgrade as early as possible. Quails 3.1 is also compatible with Ruby 1.9.2.
 
-TIP: Note that Ruby 1.8.7 p248 and p249 have marshaling bugs that crash Rails. Ruby Enterprise Edition have these fixed since release 1.8.7-2010.02 though. On the 1.9 front, Ruby 1.9.1 is not usable because it outright segfaults, so if you want to use 1.9.x jump on 1.9.2 for smooth sailing.
+TIP: Note that Ruby 1.8.7 p248 and p249 have marshaling bugs that crash Quails. Ruby Enterprise Edition have these fixed since release 1.8.7-2010.02 though. On the 1.9 front, Ruby 1.9.1 is not usable because it outright segfaults, so if you want to use 1.9.x jump on 1.9.2 for smooth sailing.
 
 ### What to update in your apps
 
-The following changes are meant for upgrading your application to Rails 3.1.3, the latest 3.1.x version of Rails.
+The following changes are meant for upgrading your application to Quails 3.1.3, the latest 3.1.x version of Quails.
 
 #### Gemfile
 
 Make the following changes to your `Gemfile`.
 
 ```ruby
-gem 'rails', '= 3.1.3'
+gem 'quails', '= 3.1.3'
 gem 'mysql2'
 
 # Needed for the new asset pipeline
 group :assets do
-  gem 'sass-rails',   "~> 3.1.5"
-  gem 'coffee-rails', "~> 3.1.1"
+  gem 'sass-quails',   "~> 3.1.5"
+  gem 'coffee-quails', "~> 3.1.1"
   gem 'uglifier',     ">= 1.0.3"
 end
 
-# jQuery is the default JavaScript library in Rails 3.1
-gem 'jquery-rails'
+# jQuery is the default JavaScript library in Quails 3.1
+gem 'jquery-quails'
 ```
 
 #### config/application.rb
@@ -95,7 +95,7 @@ gem 'jquery-rails'
     # Generate digests for assets URLs
     config.assets.digest = true
 
-    # Defaults to Rails.root.join("public/assets")
+    # Defaults to Quails.root.join("public/assets")
     # config.assets.manifest = YOUR_PATH
 
     # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
@@ -138,70 +138,70 @@ config.static_cache_control = "public, max-age=3600"
 
 * With the Asset Pipeline the :cache and :concat options aren't used anymore, delete these options from your views.
 
-Creating a Rails 3.1 application
+Creating a Quails 3.1 application
 --------------------------------
 
 ```bash
-# You should have the 'rails' RubyGem installed
-$ rails new myapp
+# You should have the 'quails' RubyGem installed
+$ quails new myapp
 $ cd myapp
 ```
 
 ### Vendoring Gems
 
-Rails now uses a `Gemfile` in the application root to determine the gems you require for your application to start. This `Gemfile` is processed by the [Bundler](https://github.com/carlhuda/bundler) gem, which then installs all your dependencies. It can even install all the dependencies locally to your application so that it doesn't depend on the system gems.
+Quails now uses a `Gemfile` in the application root to determine the gems you require for your application to start. This `Gemfile` is processed by the [Bundler](https://github.com/carlhuda/bundler) gem, which then installs all your dependencies. It can even install all the dependencies locally to your application so that it doesn't depend on the system gems.
 
 More information: - [bundler homepage](https://bundler.io/)
 
 ### Living on the Edge
 
-`Bundler` and `Gemfile` makes freezing your Rails application easy as pie with the new dedicated `bundle` command. If you want to bundle straight from the Git repository, you can pass the `--edge` flag:
+`Bundler` and `Gemfile` makes freezing your Quails application easy as pie with the new dedicated `bundle` command. If you want to bundle straight from the Git repository, you can pass the `--edge` flag:
 
 ```bash
-$ rails new myapp --edge
+$ quails new myapp --edge
 ```
 
-If you have a local checkout of the Rails repository and want to generate an application using that, you can pass the `--dev` flag:
+If you have a local checkout of the Quails repository and want to generate an application using that, you can pass the `--dev` flag:
 
 ```bash
-$ ruby /path/to/rails/railties/bin/rails new myapp --dev
+$ ruby /path/to/quails/railties/bin/quails new myapp --dev
 ```
 
-Rails Architectural Changes
+Quails Architectural Changes
 ---------------------------
 
 ### Assets Pipeline
 
-The major change in Rails 3.1 is the Assets Pipeline. It makes CSS and JavaScript first-class code citizens and enables proper organization, including use in plugins and engines.
+The major change in Quails 3.1 is the Assets Pipeline. It makes CSS and JavaScript first-class code citizens and enables proper organization, including use in plugins and engines.
 
-The assets pipeline is powered by [Sprockets](https://github.com/rails/sprockets) and is covered in the [Asset Pipeline](asset_pipeline.html) guide.
+The assets pipeline is powered by [Sprockets](https://github.com/quails/sprockets) and is covered in the [Asset Pipeline](asset_pipeline.html) guide.
 
 ### HTTP Streaming
 
-HTTP Streaming is another change that is new in Rails 3.1. This lets the browser download your stylesheets and JavaScript files while the server is still generating the response. This requires Ruby 1.9.2, is opt-in and requires support from the web server as well, but the popular combo of NGINX and Unicorn is ready to take advantage of it.
+HTTP Streaming is another change that is new in Quails 3.1. This lets the browser download your stylesheets and JavaScript files while the server is still generating the response. This requires Ruby 1.9.2, is opt-in and requires support from the web server as well, but the popular combo of NGINX and Unicorn is ready to take advantage of it.
 
 ### Default JS library is now jQuery
 
-jQuery is the default JavaScript library that ships with Rails 3.1. But if you use Prototype, it's simple to switch.
+jQuery is the default JavaScript library that ships with Quails 3.1. But if you use Prototype, it's simple to switch.
 
 ```bash
-$ rails new myapp -j prototype
+$ quails new myapp -j prototype
 ```
 
 ### Identity Map
 
-Active Record has an Identity Map in Rails 3.1. An identity map keeps previously instantiated records and returns the object associated with the record if accessed again. The identity map is created on a per-request basis and is flushed at request completion.
+Active Record has an Identity Map in Quails 3.1. An identity map keeps previously instantiated records and returns the object associated with the record if accessed again. The identity map is created on a per-request basis and is flushed at request completion.
 
-Rails 3.1 comes with the identity map turned off by default.
+Quails 3.1 comes with the identity map turned off by default.
 
 Railties
 --------
 
 * jQuery is the new default JavaScript library.
 
-* jQuery and Prototype are no longer vendored and is provided from now on by the `jquery-rails` and `prototype-rails` gems.
+* jQuery and Prototype are no longer vendored and is provided from now on by the `jquery-quails` and `prototype-quails` gems.
 
-* The application generator accepts an option `-j` which can be an arbitrary string. If passed "foo", the gem "foo-rails" is added to the `Gemfile`, and the application JavaScript manifest requires "foo" and "foo_ujs". Currently only "prototype-rails" and "jquery-rails" exist and provide those files via the asset pipeline.
+* The application generator accepts an option `-j` which can be an arbitrary string. If passed "foo", the gem "foo-quails" is added to the `Gemfile`, and the application JavaScript manifest requires "foo" and "foo_ujs". Currently only "prototype-quails" and "jquery-quails" exist and provide those files via the asset pipeline.
 
 * Generating an application or a plugin runs `bundle install` unless `--skip-gemfile` or `--skip-bundle` is specified.
 
@@ -215,7 +215,7 @@ Railties
 
 * Added `config.force_ssl` configuration which loads `Rack::SSL` middleware and force all requests to be under HTTPS protocol.
 
-* Added `rails plugin new` command which generates a Rails plugin with gemspec, tests and a dummy application for testing.
+* Added `quails plugin new` command which generates a Quails plugin with gemspec, tests and a dummy application for testing.
 
 * Added `Rack::Etag` and `Rack::ConditionalGet` to the default middleware stack.
 
@@ -291,7 +291,7 @@ Action Pack
     end
     ```
 
-    You can restrict it to some actions by using `:only` or `:except`. Please read the docs at [`ActionController::Streaming`](http://api.rubyonrails.org/v3.1.0/classes/ActionController/Streaming.html) for more information.
+    You can restrict it to some actions by using `:only` or `:except`. Please read the docs at [`ActionController::Streaming`](http://api.rubyonquails.org/v3.1.0/classes/ActionController/Streaming.html) for more information.
 
 * The redirect route method now also accepts a hash of options which will only change the parts of the url in question, or an object which responds to call, allowing for redirects to be reused.
 
@@ -317,7 +317,7 @@ Action Pack
 
 * Created `ActionView::Renderer` and specified an API for `ActionView::Context`.
 
-* In place `SafeBuffer` mutation is prohibited in Rails 3.1.
+* In place `SafeBuffer` mutation is prohibited in Quails 3.1.
 
 * Added HTML5 `button_tag` helper.
 
@@ -348,7 +348,7 @@ Keys are dasherized. Values are JSON-encoded, except for strings and symbols.
 
 * Allows AM/PM format in datetime selectors.
 
-* `auto_link` has been removed from Rails and extracted into the [rails_autolink gem](https://github.com/tenderlove/rails_autolink)
+* `auto_link` has been removed from Quails and extracted into the [quails_autolink gem](https://github.com/tenderlove/quails_autolink)
 
 Active Record
 -------------
@@ -373,7 +373,7 @@ Active Record
 
 * Added `ActiveRecord::Base.attribute_names` to return a list of attribute names. This will return an empty array if the model is abstract or the table does not exist.
 
-* CSV Fixtures are deprecated and support will be removed in Rails 3.2.0.
+* CSV Fixtures are deprecated and support will be removed in Quails 3.2.0.
 
 * `ActiveRecord#new`, `ActiveRecord#create` and `ActiveRecord#update_attributes` all accept a second hash as an option that allows you to specify which role to consider when assigning attributes. This is built on top of Active Model's new mass assignment capabilities:
 
@@ -418,7 +418,7 @@ Active Record
 
 * Previously, `has_and_belongs_to_many.destroy(*records)` would destroy the records themselves. It would not delete any records in the join table. Now, it deletes the records in the join table.
 
-* Previously, `has_many_through.destroy(*records)` would destroy the records themselves, and the records in the join table. [Note: This has not always been the case; previous version of Rails only deleted the records themselves.] Now, it destroys only the records in the join table.
+* Previously, `has_many_through.destroy(*records)` would destroy the records themselves, and the records in the join table. [Note: This has not always been the case; previous version of Quails only deleted the records themselves.] Now, it destroys only the records in the join table.
 
 * Note that this change is backwards-incompatible to an extent, but there is unfortunately no way to 'deprecate' it before changing it. The change is being made in order to have consistency as to the meaning of 'destroy' or 'delete' across the different types of associations. If you wish to destroy the records themselves, you can do `records.association.each(&:destroy)`.
 
@@ -435,7 +435,7 @@ Active Record
 
 * Added a `create_association!` method for `has_one` and `belongs_to` associations.
 
-* Migrations are now reversible, meaning that Rails will figure out how to reverse your migrations. To use reversible migrations, just define the `change` method.
+* Migrations are now reversible, meaning that Quails will figure out how to reverse your migrations. To use reversible migrations, just define the `change` method.
 
     ```ruby
     class MyMigration < ActiveRecord::Migration
@@ -556,6 +556,6 @@ Deprecations:
 Credits
 -------
 
-See the [full list of contributors to Rails](http://contributors.rubyonrails.org/) for the many people who spent many hours making Rails, the stable and robust framework it is. Kudos to all of them.
+See the [full list of contributors to Quails](http://contributors.rubyonquails.org/) for the many people who spent many hours making Quails, the stable and robust framework it is. Kudos to all of them.
 
-Rails 3.1 Release Notes were compiled by [Vijay Dev](https://github.com/vijaydev)
+Quails 3.1 Release Notes were compiled by [Vijay Dev](https://github.com/vijaydev)

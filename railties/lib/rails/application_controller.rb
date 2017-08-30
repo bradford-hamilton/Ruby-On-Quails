@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Rails::ApplicationController < ActionController::Base # :nodoc:
+class Quails::ApplicationController < ActionController::Base # :nodoc:
   self.view_paths = File.expand_path("templates", __dir__)
   layout "application"
 
@@ -13,6 +13,6 @@ class Rails::ApplicationController < ActionController::Base # :nodoc:
     end
 
     def local_request?
-      Rails.application.config.consider_all_requests_local || request.local?
+      Quails.application.config.consider_all_requests_local || request.local?
     end
 end

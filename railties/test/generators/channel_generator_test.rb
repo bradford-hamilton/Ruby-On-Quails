@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/channel/channel_generator"
+require "quails/generators/channel/channel_generator"
 
-class ChannelGeneratorTest < Rails::Generators::TestCase
+class ChannelGeneratorTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
-  tests Rails::Generators::ChannelGenerator
+  tests Quails::Generators::ChannelGenerator
 
   def test_application_cable_skeleton_is_created
     run_generator ["books"]

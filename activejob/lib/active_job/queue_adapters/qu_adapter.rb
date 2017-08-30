@@ -16,7 +16,7 @@ module ActiveJob
     #
     # To use Qu set the queue_adapter config to +:qu+.
     #
-    #   Rails.application.config.active_job.queue_adapter = :qu
+    #   Quails.application.config.active_job.queue_adapter = :qu
     class QuAdapter
       def enqueue(job, *args) #:nodoc:
         qu_job = Qu::Payload.new(klass: JobWrapper, args: [job.serialize]).tap do |payload|
@@ -29,7 +29,7 @@ module ActiveJob
       end
 
       def enqueue_at(job, timestamp, *args) #:nodoc:
-        raise NotImplementedError, "This queueing backend does not support scheduling jobs. To see what features are supported go to http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html"
+        raise NotImplementedError, "This queueing backend does not support scheduling jobs. To see what features are supported go to http://api.rubyonquails.org/classes/ActiveJob/QueueAdapters.html"
       end
 
       class JobWrapper < Qu::Job #:nodoc:

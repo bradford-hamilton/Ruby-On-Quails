@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = "railties"
   s.version     = version
-  s.summary     = "Tools for creating, working with, and running Rails applications."
-  s.description = "Rails internals: application bootup, plugins, generators, and rake tasks."
+  s.summary     = "Tools for creating, working with, and running Quails applications."
+  s.description = "Quails internals: application bootup, plugins, generators, and rake tasks."
 
   s.required_ruby_version = ">= 2.2.2"
 
@@ -15,19 +15,19 @@ Gem::Specification.new do |s|
 
   s.author   = "David Heinemeier Hansson"
   s.email    = "david@loudthinking.com"
-  s.homepage = "http://rubyonrails.org"
+  s.homepage = "http://rubyonquails.org"
 
   s.files        = Dir["CHANGELOG.md", "README.rdoc", "MIT-LICENSE", "RDOC_MAIN.rdoc", "exe/**/*", "lib/**/{*,.[a-z]*}"]
   s.require_path = "lib"
 
   s.bindir      = "exe"
-  s.executables = ["rails"]
+  s.executables = ["quails"]
 
   s.rdoc_options << "--exclude" << "."
 
   s.metadata = {
-    "source_code_uri" => "https://github.com/rails/rails/tree/v#{version}/railties",
-    "changelog_uri"   => "https://github.com/rails/rails/blob/v#{version}/railties/CHANGELOG.md"
+    "source_code_uri" => "https://github.com/quails/quails/tree/v#{version}/railties",
+    "changelog_uri"   => "https://github.com/quails/quails/blob/v#{version}/railties/CHANGELOG.md"
   }
 
   s.add_dependency "activesupport", version

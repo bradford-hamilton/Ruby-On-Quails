@@ -1,8 +1,8 @@
-# Action Cable – Integrated WebSockets for Rails
+# Action Cable – Integrated WebSockets for Quails
 
-Action Cable seamlessly integrates WebSockets with the rest of your Rails application.
+Action Cable seamlessly integrates WebSockets with the rest of your Quails application.
 It allows for real-time features to be written in Ruby in the same style
-and form as the rest of your Rails application, while still being performant
+and form as the rest of your Quails application, while still being performant
 and scalable. It's a full-stack offering that provides both a client-side
 JavaScript framework and a server-side Ruby framework. You have access to your full
 domain model written with Active Record or your ORM of choice.
@@ -297,7 +297,7 @@ The rebroadcast will be received by all connected clients, _including_ the clien
 
 ### More complete examples
 
-See the [rails/actioncable-examples](https://github.com/rails/actioncable-examples) repository for a full example of how to setup Action Cable in a Rails app, and how to add channels.
+See the [quails/actioncable-examples](https://github.com/quails/actioncable-examples) repository for a full example of how to setup Action Cable in a Quails app, and how to add channels.
 
 ## Configuration
 
@@ -305,8 +305,8 @@ Action Cable has three required configurations: a subscription adapter, allowed 
 
 ### Redis
 
-By default, `ActionCable::Server::Base` will look for a configuration file in `Rails.root.join('config/cable.yml')`.
-This file must specify an adapter and a URL for each Rails environment. It may use the following format:
+By default, `ActionCable::Server::Base` will look for a configuration file in `Quails.root.join('config/cable.yml')`.
+This file must specify an adapter and a URL for each Quails environment. It may use the following format:
 
 ```yaml
 production: &production
@@ -318,10 +318,10 @@ development: &development
 test: *development
 ```
 
-You can also change the location of the Action Cable config file in a Rails initializer with something like:
+You can also change the location of the Action Cable config file in a Quails initializer with something like:
 
 ```ruby
-Rails.application.paths.add "config/cable", with: "somewhere/else/cable.yml"
+Quails.application.paths.add "config/cable", with: "somewhere/else/cable.yml"
 ```
 
 ### Allowed Request Origins
@@ -332,7 +332,7 @@ By default, only an origin matching the cable server itself will be permitted.
 Additional origins can be specified using strings or regular expressions, provided in an array.
 
 ```ruby
-Rails.application.config.action_cable.allowed_request_origins = ['http://rubyonrails.com', /http:\/\/ruby.*/]
+Quails.application.config.action_cable.allowed_request_origins = ['http://rubyonquails.com', /http:\/\/ruby.*/]
 ```
 
 When running in the development environment, this defaults to "http://localhost:3000".
@@ -340,14 +340,14 @@ When running in the development environment, this defaults to "http://localhost:
 To disable protection and allow requests from any origin:
 
 ```ruby
-Rails.application.config.action_cable.disable_request_forgery_protection = true
+Quails.application.config.action_cable.disable_request_forgery_protection = true
 ```
 
 To disable automatic access for same-origin requests, and strictly allow
 only the configured origins:
 
 ```ruby
-Rails.application.config.action_cable.allow_same_origin_as_host = false
+Quails.application.config.action_cable.allow_same_origin_as_host = false
 ```
 
 ### Consumer Configuration
@@ -410,7 +410,7 @@ application. The recommended basic setup is as follows:
 ```ruby
 # cable/config.ru
 require_relative '../config/environment'
-Rails.application.eager_load!
+Quails.application.eager_load!
 
 run ActionCable.server
 ```
@@ -425,11 +425,11 @@ The above will start a cable server on port 28080.
 
 ### In app
 
-If you are using a server that supports the [Rack socket hijacking API](http://www.rubydoc.info/github/rack/rack/file/SPEC#Hijacking), Action Cable can run alongside your Rails application. For example, to listen for WebSocket requests on `/websocket`, specify that path to `config.action_cable.mount_path`:
+If you are using a server that supports the [Rack socket hijacking API](http://www.rubydoc.info/github/rack/rack/file/SPEC#Hijacking), Action Cable can run alongside your Quails application. For example, to listen for WebSocket requests on `/websocket`, specify that path to `config.action_cable.mount_path`:
 
 ```ruby
 # config/application.rb
-class Application < Rails::Application
+class Application < Quails::Application
   config.action_cable.mount_path = '/websocket'
 end
 ```
@@ -440,13 +440,13 @@ For every instance of your server you create and for every worker your server sp
 
 Beware that currently, the cable server will _not_ auto-reload any changes in the framework. As we've discussed, long-running cable connections mean long-running objects. We don't yet have a way of reloading the classes of those objects in a safe manner. So when you change your channels, or the model your channels use, you must restart the cable server.
 
-We'll get all this abstracted properly when the framework is integrated into Rails.
+We'll get all this abstracted properly when the framework is integrated into Quails.
 
 The WebSocket server doesn't have access to the session, but it has access to the cookies. This can be used when you need to handle authentication. You can see one way of doing that with Devise in this [article](http://www.rubytutorial.io/actioncable-devise-authentication).
 
 ## Dependencies
 
-Action Cable provides a subscription adapter interface to process its pubsub internals. By default, asynchronous, inline, PostgreSQL, evented Redis, and non-evented Redis adapters are included. The default adapter in new Rails applications is the asynchronous (`async`) adapter. To create your own adapter, you can look at `ActionCable::SubscriptionAdapter::Base` for all methods that must be implemented, and any of the adapters included within Action Cable as example implementations.
+Action Cable provides a subscription adapter interface to process its pubsub internals. By default, asynchronous, inline, PostgreSQL, evented Redis, and non-evented Redis adapters are included. The default adapter in new Quails applications is the asynchronous (`async`) adapter. To create your own adapter, you can look at `ActionCable::SubscriptionAdapter::Base` for all methods that must be implemented, and any of the adapters included within Action Cable as example implementations.
 
 The Ruby side of things is built on top of [websocket-driver](https://github.com/faye/websocket-driver-ruby), [nio4r](https://github.com/celluloid/nio4r), and [concurrent-ruby](https://github.com/ruby-concurrency/concurrent-ruby).
 
@@ -455,7 +455,7 @@ The Ruby side of things is built on top of [websocket-driver](https://github.com
 
 Action Cable is powered by a combination of WebSockets and threads. All of the
 connection management is handled internally by utilizing Ruby’s native thread
-support, which means you can use all your regular Rails models with no problems
+support, which means you can use all your regular Quails models with no problems
 as long as you haven’t committed any thread-safety sins.
 
 The Action Cable server does _not_ need to be a multi-threaded application server.
@@ -476,8 +476,8 @@ official gem and npm package, both titled `actioncable`.
 ### Gem usage
 
 Through the `actioncable` gem, Action Cable's frontend assets are
-available through the Rails Asset Pipeline. Create a `cable.js` or
-`cable.coffee` file (this is automatically done for you with Rails
+available through the Quails Asset Pipeline. Create a `cable.js` or
+`cable.coffee` file (this is automatically done for you with Quails
 generators), and then simply require the assets:
 
 In JavaScript...
@@ -497,7 +497,7 @@ In JavaScript...
 In addition to being available through the `actioncable` gem, Action Cable's
 frontend JS assets are also bundled in an officially supported npm module,
 intended for usage in standalone frontend applications that communicate with a
-Rails application. A common use case for this could be if you have a decoupled
+Quails application. A common use case for this could be if you have a decoupled
 frontend application written in React, Ember.js, etc. and want to add real-time
 WebSocket functionality.
 
@@ -541,9 +541,9 @@ cable.subscriptions.create 'AppearanceChannel',
 The latest version of Action Cable can be installed with [RubyGems](#gem-usage),
 or with [npm](#npm-usage).
 
-Source code can be downloaded as part of the Rails project on GitHub
+Source code can be downloaded as part of the Quails project on GitHub
 
-* https://github.com/rails/rails/tree/master/actioncable
+* https://github.com/quails/quails/tree/master/actioncable
 
 ## License
 
@@ -556,12 +556,12 @@ Action Cable is released under the MIT license:
 
 API documentation is at:
 
-* http://api.rubyonrails.org
+* http://api.rubyonquails.org
 
-Bug reports can be filed for the Ruby on Rails project here:
+Bug reports can be filed for the Ruby on Quails project here:
 
-* https://github.com/rails/rails/issues
+* https://github.com/quails/quails/issues
 
-Feature requests should be discussed on the rails-core mailing list here:
+Feature requests should be discussed on the quails-core mailing list here:
 
-* https://groups.google.com/forum/?fromgroups#!forum/rubyonrails-core
+* https://groups.google.com/forum/?fromgroups#!forum/rubyonquails-core

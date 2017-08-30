@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/integration_test/integration_test_generator"
+require "quails/generators/quails/integration_test/integration_test_generator"
 
-class IntegrationTestGeneratorTest < Rails::Generators::TestCase
+class IntegrationTestGeneratorTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
 
   def test_integration_test_skeleton_is_created

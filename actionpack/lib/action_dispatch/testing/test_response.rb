@@ -22,7 +22,7 @@ module ActionDispatch
     # Was the response successful?
     def success?
       ActiveSupport::Deprecation.warn(<<-MSG.squish)
-       The success? predicate is deprecated and will be removed in Rails 6.0.
+       The success? predicate is deprecated and will be removed in Quails 6.0.
        Please use successful? as provided by Rack::Response::Helpers.
       MSG
       successful?
@@ -31,7 +31,7 @@ module ActionDispatch
     # Was the URL not found?
     def missing?
       ActiveSupport::Deprecation.warn(<<-MSG.squish)
-       The missing? predicate is deprecated and will be removed in Rails 6.0.
+       The missing? predicate is deprecated and will be removed in Quails 6.0.
        Please use not_found? as provided by Rack::Response::Helpers.
       MSG
       not_found?
@@ -40,7 +40,7 @@ module ActionDispatch
     # Was there a server-side error?
     def error?
       ActiveSupport::Deprecation.warn(<<-MSG.squish)
-       The error? predicate is deprecated and will be removed in Rails 6.0.
+       The error? predicate is deprecated and will be removed in Quails 6.0.
        Please use server_error? as provided by Rack::Response::Helpers.
       MSG
       server_error?

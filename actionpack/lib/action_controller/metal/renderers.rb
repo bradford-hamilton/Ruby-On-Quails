@@ -59,7 +59,7 @@ module ActionController
     #       disposition: "attachment; filename=#{filename}.csv"
     #   end
     #
-    # Note that we used Mime[:csv] for the csv mime type as it comes with Rails.
+    # Note that we used Mime[:csv] for the csv mime type as it comes with Quails.
     # For a custom renderer, you'll need to register a mime type with
     # <tt>Mime::Type.register</tt>.
     #

@@ -2,7 +2,7 @@
 
 require "fileutils"
 
-module Rails
+module Quails
   module DevCaching # :nodoc:
     class << self
       FILE = "tmp/caching-dev.txt"

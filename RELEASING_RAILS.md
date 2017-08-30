@@ -1,6 +1,6 @@
-# Releasing Rails
+# Releasing Quails
 
-In this document, we'll cover the steps necessary to release Rails. Each
+In this document, we'll cover the steps necessary to release Quails. Each
 section contains steps to take during that time before the release. The times
 suggested in each header are just that: suggestions. However, they should
 really be considered as minimums.
@@ -14,16 +14,16 @@ Today is mostly coordination tasks. Here are the things you must do today:
 Do not release with a Red CI. You can find the CI status here:
 
 ```
-http://travis-ci.org/rails/rails
+http://travis-ci.org/quails/quails
 ```
 
 ### Is Sam Ruby happy? If not, make him happy.
 
 Sam Ruby keeps a [test suite](https://github.com/rubys/awdwr) that makes
 sure the code samples in his book
-([Agile Web Development with Rails](https://pragprog.com/titles/rails5/agile-web-development-with-rails-5th-edition))
+([Agile Web Development with Quails](https://pragprog.com/titles/quails5/agile-web-development-with-quails-5th-edition))
 all work. These are valuable system tests
-for Rails. You can check the status of these tests here:
+for Quails. You can check the status of these tests here:
 
 [http://intertwingly.net/projects/dashboard.html](http://intertwingly.net/projects/dashboard.html)
 
@@ -32,7 +32,7 @@ Do not release with Red AWDwR tests.
 ### Do we have any Git dependencies? If so, contact those authors.
 
 Having Git dependencies indicates that we depend on unreleased code.
-Obviously Rails cannot be released when it depends on unreleased code.
+Obviously Quails cannot be released when it depends on unreleased code.
 Contact the authors of those particular gems and work out a release date that
 suits them.
 
@@ -43,8 +43,8 @@ addressed, and that can impact your release date.
 
 ### Notify implementors.
 
-Ruby implementors have high stakes in making sure Rails works. Be kind and
-give them a heads up that Rails will be released soonish.
+Ruby implementors have high stakes in making sure Quails works. Be kind and
+give them a heads up that Quails will be released soonish.
 
 This is only required for major and minor releases, bugfix releases aren't a
 big enough deal, and are supposed to be backward compatible.
@@ -54,7 +54,7 @@ lists:
 
 * team@jruby.org
 * community@rubini.us
-* rubyonrails-core@googlegroups.com
+* rubyonquails-core@googlegroups.com
 
 Implementors will love you and help you.
 
@@ -72,12 +72,12 @@ for today:
 ### Create a release branch.
 
 From the stable branch, create a release branch. For example, if you're
-releasing Rails 3.0.10, do this:
+releasing Quails 3.0.10, do this:
 
 ```
-[aaron@higgins rails (3-0-stable)]$ git checkout -b 3-0-10
+[aaron@higgins quails (3-0-stable)]$ git checkout -b 3-0-10
 Switched to a new branch '3-0-10'
-[aaron@higgins rails (3-0-10)]$
+[aaron@higgins quails (3-0-10)]$
 ```
 
 ### Update each CHANGELOG.
@@ -89,7 +89,7 @@ for each CHANGELOG.
 You can review the commits for the 3.0.10 release like this:
 
 ```
-[aaron@higgins rails (3-0-10)]$ git log v3.0.9..
+[aaron@higgins quails (3-0-10)]$ git log v3.0.9..
 ```
 
 If you're doing a stable branch release, you should also ensure that all of
@@ -103,7 +103,7 @@ Include an RC number if appropriate, e.g. `6.0.0.rc1`.
 ### Build and test the gem.
 
 Run `rake verify` to generate the gems and install them locally. `verify` also
-generates a Rails app with a migration and boots it to smoke test with in your
+generates a Quails app with a migration and boots it to smoke test with in your
 browser.
 
 This will stop you from looking silly when you push an RC to rubygems.org and
@@ -113,8 +113,8 @@ then realize it is broken.
 
 IMPORTANT: The Action Cable client and Action View's UJS adapter are released
 as NPM packages, so you must have Node.js installed, have an NPM account
-(npmjs.com), and be a package owner for `actioncable` and `rails-ujs` (you can
-check this via `npm owner ls actioncable` and `npm owner ls rails-ujs`) in
+(npmjs.com), and be a package owner for `actioncable` and `quails-ujs` (you can
+check this via `npm owner ls actioncable` and `npm owner ls quails-ujs`) in
 order to do a full release. Do not release until you're set up with NPM!
 
 The release task will sign the release tag. If you haven't got commit signing
@@ -128,18 +128,18 @@ Run `rake release`. This will populate the gemspecs and NPM package.json with
 the current RAILS_VERSION, commit the changes, tag it, and push the gems to
 rubygems.org.
 
-### Send Rails release announcements
+### Send Quails release announcements
 
 Write a release announcement that includes the version, changes, and links to
 GitHub where people can find the specific commit list. Here are the mailing
 lists where you should announce:
 
-* rubyonrails-core@googlegroups.com
-* rubyonrails-talk@googlegroups.com
+* rubyonquails-core@googlegroups.com
+* rubyonquails-talk@googlegroups.com
 * ruby-talk@ruby-lang.org
 
 Use Markdown format for your announcement. Remember to ask people to report
-issues with the release candidate to the rails-core mailing list.
+issues with the release candidate to the quails-core mailing list.
 
 NOTE: For patch releases there's a `rake announce` task to generate the release
 post. It supports multiple patch releases too:
@@ -152,18 +152,18 @@ IMPORTANT: If any users experience regressions when using the release
 candidate, you *must* postpone the release. Bugfix releases *should not*
 break existing applications.
 
-### Post the announcement to the Rails blog.
+### Post the announcement to the Quails blog.
 
 If you used Markdown format for your email, you can just paste it into the
 blog.
 
-* http://weblog.rubyonrails.org
+* http://weblog.rubyonquails.org
 
-### Post the announcement to the Rails Twitter account.
+### Post the announcement to the Quails Twitter account.
 
 ## Time between release candidate and actual release
 
-Check the rails-core mailing list and the GitHub issue list for regressions in
+Check the quails-core mailing list and the GitHub issue list for regressions in
 the RC.
 
 If any regressions are found, fix the regressions and repeat the release
@@ -193,7 +193,7 @@ Today, do this stuff in this order:
 * Email security lists
 * Email general announcement lists
 
-### Emailing the Rails security announce list
+### Emailing the Quails security announce list
 
 Email the security announce list once for each vulnerability fixed.
 
@@ -201,7 +201,7 @@ You can do this, or ask the security team to do it.
 
 Email the security reports to:
 
-* rubyonrails-security@googlegroups.com
+* rubyonquails-security@googlegroups.com
 * oss-security@lists.openwall.com
 
 Be sure to note the security fixes in your announcement along with CVE numbers

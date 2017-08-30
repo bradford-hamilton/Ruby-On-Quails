@@ -217,7 +217,7 @@ HEADER
               parts << "primary_key: #{foreign_key.primary_key.inspect}"
             end
 
-            if foreign_key.name !~ /^fk_rails_[0-9a-f]{10}$/
+            if foreign_key.name !~ /^fk_quails_[0-9a-f]{10}$/
               parts << "name: #{foreign_key.name.inspect}"
             end
 

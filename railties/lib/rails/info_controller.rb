@@ -3,7 +3,7 @@
 require_relative "application_controller"
 require "action_dispatch/routing/inspector"
 
-class Rails::InfoController < Rails::ApplicationController # :nodoc:
+class Quails::InfoController < Quails::ApplicationController # :nodoc:
   prepend_view_path ActionDispatch::DebugExceptions::RESCUES_TEMPLATE_PATH
   layout -> { request.xhr? ? false : "application" }
 
@@ -14,7 +14,7 @@ class Rails::InfoController < Rails::ApplicationController # :nodoc:
   end
 
   def properties
-    @info = Rails::Info.to_html
+    @info = Quails::Info.to_html
     @page_title = "Properties"
   end
 

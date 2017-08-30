@@ -73,8 +73,8 @@ class LogSubscriberTest < ActiveRecord::TestCase
 
   def test_sql_statements_are_not_squeezed
     logger = TestDebugLogSubscriber.new
-    logger.sql(Event.new(0.9, sql: "ruby   rails"))
-    assert_match(/ruby   rails/, logger.debugs.first)
+    logger.sql(Event.new(0.9, sql: "ruby   quails"))
+    assert_match(/ruby   quails/, logger.debugs.first)
   end
 
   def test_basic_query_logging

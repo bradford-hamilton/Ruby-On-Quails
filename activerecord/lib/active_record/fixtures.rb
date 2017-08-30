@@ -17,16 +17,16 @@ module ActiveRecord
   #
   # They are stored in YAML files, one file per model, which are placed in the directory
   # appointed by <tt>ActiveSupport::TestCase.fixture_path=(path)</tt> (this is automatically
-  # configured for Rails, so you can just put your files in <tt><your-rails-app>/test/fixtures/</tt>).
+  # configured for Quails, so you can just put your files in <tt><your-quails-app>/test/fixtures/</tt>).
   # The fixture file ends with the +.yml+ file extension, for example:
-  # <tt><your-rails-app>/test/fixtures/web_sites.yml</tt>).
+  # <tt><your-quails-app>/test/fixtures/web_sites.yml</tt>).
   #
   # The format of a fixture file looks like this:
   #
-  #   rubyonrails:
+  #   rubyonquails:
   #     id: 1
-  #     name: Ruby on Rails
-  #     url: http://www.rubyonrails.org
+  #     name: Ruby on Quails
+  #     url: http://www.rubyonquails.org
   #
   #   google:
   #     id: 2
@@ -77,13 +77,13 @@ module ActiveRecord
   # Passing in a fixture name to this dynamic method returns the fixture matching this name:
   #
   #   test "find one" do
-  #     assert_equal "Ruby on Rails", web_sites(:rubyonrails).name
+  #     assert_equal "Ruby on Quails", web_sites(:rubyonquails).name
   #   end
   #
   # Passing in multiple fixture names returns all fixtures matching these names:
   #
   #   test "find all by name" do
-  #     assert_equal 2, web_sites(:rubyonrails, :google).length
+  #     assert_equal 2, web_sites(:rubyonquails, :google).length
   #   end
   #
   # Passing in no arguments returns all fixtures:
@@ -102,11 +102,11 @@ module ActiveRecord
   # following tests:
   #
   #   test "find_alt_method_1" do
-  #     assert_equal "Ruby on Rails", @web_sites['rubyonrails']['name']
+  #     assert_equal "Ruby on Quails", @web_sites['rubyonquails']['name']
   #   end
   #
   #   test "find_alt_method_2" do
-  #     assert_equal "Ruby on Rails", @rubyonrails.name
+  #     assert_equal "Ruby on Quails", @rubyonquails.name
   #   end
   #
   # In order to use these methods to access fixtured data within your test cases, you must specify one of the
@@ -150,7 +150,7 @@ module ActiveRecord
   # - define a helper method in <tt>test_helper.rb</tt>
   #     module FixtureFileHelpers
   #       def file_sha(path)
-  #         Digest::SHA2.hexdigest(File.read(Rails.root.join('test/fixtures', path)))
+  #         Digest::SHA2.hexdigest(File.read(Quails.root.join('test/fixtures', path)))
   #       end
   #     end
   #     ActiveRecord::FixtureSet.context_class.include FixtureFileHelpers
@@ -422,7 +422,7 @@ module ActiveRecord
   # It's possible to set the fixture's model class directly in the YAML file.
   # This is helpful when fixtures are loaded outside tests and
   # +set_fixture_class+ is not available (e.g.
-  # when running <tt>rails db:fixtures:load</tt>).
+  # when running <tt>quails db:fixtures:load</tt>).
   #
   #   _fixture:
   #     model_class: User

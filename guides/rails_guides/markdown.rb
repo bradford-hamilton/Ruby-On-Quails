@@ -2,9 +2,9 @@
 
 require "redcarpet"
 require "nokogiri"
-require "rails_guides/markdown/renderer"
+require "quails_guides/markdown/renderer"
 
-module RailsGuides
+module QuailsGuides
   class Markdown
     def initialize(view:, layout:, edge:, version:)
       @view          = view
@@ -141,9 +141,9 @@ module RailsGuides
 
       def generate_title
         if heading = Nokogiri::HTML.fragment(@header).at(:h2)
-          @title = "#{heading.text} — Ruby on Rails Guides"
+          @title = "#{heading.text} — Ruby on Quails Guides"
         else
-          @title = "Ruby on Rails Guides"
+          @title = "Ruby on Quails Guides"
         end
       end
 

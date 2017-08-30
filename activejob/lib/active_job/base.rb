@@ -29,7 +29,7 @@ module ActiveJob #:nodoc:
   #
   #   class ProcessPhotoJob < ActiveJob::Base
   #     def perform(photo)
-  #       photo.watermark!('Rails')
+  #       photo.watermark!('Quails')
   #       photo.rotate!(90.degrees)
   #       photo.resize_to_fit!(300, 300)
   #       photo.upload!

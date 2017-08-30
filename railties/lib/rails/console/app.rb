@@ -3,7 +3,7 @@
 require "active_support/all"
 require "action_controller"
 
-module Rails
+module Quails
   module ConsoleMethods
     # reference the global "app" instance, created on demand. To recreate the
     # instance, pass a non-false value as the parameter.
@@ -17,7 +17,7 @@ module Rails
     # create a new session. If a block is given, the new session will be yielded
     # to the block before being returned.
     def new_session
-      app = Rails.application
+      app = Quails.application
       session = ActionDispatch::Integration::Session.new(app)
       yield session if block_given?
 
@@ -31,7 +31,7 @@ module Rails
     # reloads the environment
     def reload!(print = true)
       puts "Reloading..." if print
-      Rails.application.reloader.reload!
+      Quails.application.reloader.reload!
       true
     end
   end

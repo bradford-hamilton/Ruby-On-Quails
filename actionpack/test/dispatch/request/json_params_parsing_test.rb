@@ -159,7 +159,7 @@ class RootLessJSONParamsParsingTest < ActionDispatch::IntegrationTest
   test "parses json params after custom json mime type registered" do
     begin
       Mime::Type.unregister :json
-      Mime::Type.register "application/json", :json, %w(application/vnd.rails+json)
+      Mime::Type.register "application/json", :json, %w(application/vnd.quails+json)
       assert_parses(
         { "user" => { "username" => "meinac" }, "username" => "meinac" },
         "{\"username\": \"meinac\"}", "CONTENT_TYPE" => "application/json"
@@ -173,10 +173,10 @@ class RootLessJSONParamsParsingTest < ActionDispatch::IntegrationTest
   test "parses json params after custom json mime type registered with synonym" do
     begin
       Mime::Type.unregister :json
-      Mime::Type.register "application/json", :json, %w(application/vnd.rails+json)
+      Mime::Type.register "application/json", :json, %w(application/vnd.quails+json)
       assert_parses(
         { "user" => { "username" => "meinac" }, "username" => "meinac" },
-        "{\"username\": \"meinac\"}", "CONTENT_TYPE" => "application/vnd.rails+json"
+        "{\"username\": \"meinac\"}", "CONTENT_TYPE" => "application/vnd.quails+json"
       )
     ensure
       Mime::Type.unregister :json

@@ -6,65 +6,65 @@
   handleConfirm
   handleRemote, formSubmitButtonClick, handleMetaClick
   handleMethod
-} = Rails
+} = Quails
 
 # For backward compatibility
-if jQuery? and jQuery.ajax? and not jQuery.rails
-  jQuery.rails = Rails
+if jQuery? and jQuery.ajax? and not jQuery.quails
+  jQuery.quails = Quails
   jQuery.ajaxPrefilter (options, originalOptions, xhr) ->
     CSRFProtection(xhr) unless options.crossDomain
 
-Rails.start = ->
+Quails.start = ->
   # Cut down on the number of issues from people inadvertently including
-  # rails-ujs twice by detecting and raising an error when it happens.
-  throw new Error('rails-ujs has already been loaded!') if window._rails_loaded
+  # quails-ujs twice by detecting and raising an error when it happens.
+  throw new Error('quails-ujs has already been loaded!') if window._quails_loaded
 
   # This event works the same as the load event, except that it fires every
   # time the page is loaded.
-  # See https://github.com/rails/jquery-ujs/issues/357
+  # See https://github.com/quails/jquery-ujs/issues/357
   # See https://developer.mozilla.org/en-US/docs/Using_Firefox_1.5_caching
   window.addEventListener 'pageshow', ->
-    $(Rails.formEnableSelector).forEach (el) ->
+    $(Quails.formEnableSelector).forEach (el) ->
       enableElement(el) if getData(el, 'ujs:disabled')
-    $(Rails.linkDisableSelector).forEach (el) ->
+    $(Quails.linkDisableSelector).forEach (el) ->
       enableElement(el) if getData(el, 'ujs:disabled')
 
-  delegate document, Rails.linkDisableSelector, 'ajax:complete', enableElement
-  delegate document, Rails.linkDisableSelector, 'ajax:stopped', enableElement
-  delegate document, Rails.buttonDisableSelector, 'ajax:complete', enableElement
-  delegate document, Rails.buttonDisableSelector, 'ajax:stopped', enableElement
+  delegate document, Quails.linkDisableSelector, 'ajax:complete', enableElement
+  delegate document, Quails.linkDisableSelector, 'ajax:stopped', enableElement
+  delegate document, Quails.buttonDisableSelector, 'ajax:complete', enableElement
+  delegate document, Quails.buttonDisableSelector, 'ajax:stopped', enableElement
 
-  delegate document, Rails.linkClickSelector, 'click', handleDisabledElement
-  delegate document, Rails.linkClickSelector, 'click', handleConfirm
-  delegate document, Rails.linkClickSelector, 'click', handleMetaClick
-  delegate document, Rails.linkClickSelector, 'click', disableElement
-  delegate document, Rails.linkClickSelector, 'click', handleRemote
-  delegate document, Rails.linkClickSelector, 'click', handleMethod
+  delegate document, Quails.linkClickSelector, 'click', handleDisabledElement
+  delegate document, Quails.linkClickSelector, 'click', handleConfirm
+  delegate document, Quails.linkClickSelector, 'click', handleMetaClick
+  delegate document, Quails.linkClickSelector, 'click', disableElement
+  delegate document, Quails.linkClickSelector, 'click', handleRemote
+  delegate document, Quails.linkClickSelector, 'click', handleMethod
 
-  delegate document, Rails.buttonClickSelector, 'click', handleDisabledElement
-  delegate document, Rails.buttonClickSelector, 'click', handleConfirm
-  delegate document, Rails.buttonClickSelector, 'click', disableElement
-  delegate document, Rails.buttonClickSelector, 'click', handleRemote
+  delegate document, Quails.buttonClickSelector, 'click', handleDisabledElement
+  delegate document, Quails.buttonClickSelector, 'click', handleConfirm
+  delegate document, Quails.buttonClickSelector, 'click', disableElement
+  delegate document, Quails.buttonClickSelector, 'click', handleRemote
 
-  delegate document, Rails.inputChangeSelector, 'change', handleDisabledElement
-  delegate document, Rails.inputChangeSelector, 'change', handleConfirm
-  delegate document, Rails.inputChangeSelector, 'change', handleRemote
+  delegate document, Quails.inputChangeSelector, 'change', handleDisabledElement
+  delegate document, Quails.inputChangeSelector, 'change', handleConfirm
+  delegate document, Quails.inputChangeSelector, 'change', handleRemote
 
-  delegate document, Rails.formSubmitSelector, 'submit', handleDisabledElement
-  delegate document, Rails.formSubmitSelector, 'submit', handleConfirm
-  delegate document, Rails.formSubmitSelector, 'submit', handleRemote
+  delegate document, Quails.formSubmitSelector, 'submit', handleDisabledElement
+  delegate document, Quails.formSubmitSelector, 'submit', handleConfirm
+  delegate document, Quails.formSubmitSelector, 'submit', handleRemote
   # Normal mode submit
   # Slight timeout so that the submit button gets properly serialized
-  delegate document, Rails.formSubmitSelector, 'submit', (e) -> setTimeout((-> disableElement(e)), 13)
-  delegate document, Rails.formSubmitSelector, 'ajax:send', disableElement
-  delegate document, Rails.formSubmitSelector, 'ajax:complete', enableElement
+  delegate document, Quails.formSubmitSelector, 'submit', (e) -> setTimeout((-> disableElement(e)), 13)
+  delegate document, Quails.formSubmitSelector, 'ajax:send', disableElement
+  delegate document, Quails.formSubmitSelector, 'ajax:complete', enableElement
 
-  delegate document, Rails.formInputClickSelector, 'click', handleDisabledElement
-  delegate document, Rails.formInputClickSelector, 'click', handleConfirm
-  delegate document, Rails.formInputClickSelector, 'click', formSubmitButtonClick
+  delegate document, Quails.formInputClickSelector, 'click', handleDisabledElement
+  delegate document, Quails.formInputClickSelector, 'click', handleConfirm
+  delegate document, Quails.formInputClickSelector, 'click', formSubmitButtonClick
 
   document.addEventListener('DOMContentLoaded', refreshCSRFTokens)
-  window._rails_loaded = true
+  window._quails_loaded = true
 
-if window.Rails is Rails and fire(document, 'rails:attachBindings')
-  Rails.start()
+if window.Quails is Quails and fire(document, 'quails:attachBindings')
+  Quails.start()

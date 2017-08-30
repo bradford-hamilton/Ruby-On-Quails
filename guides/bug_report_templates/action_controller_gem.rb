@@ -10,20 +10,20 @@ end
 gemfile(true) do
   source "https://rubygems.org"
   # Activate the gem you are reporting the issue against.
-  gem "rails", "5.1.0"
+  gem "quails", "5.1.0"
 end
 
 require "rack/test"
 require "action_controller/railtie"
 
-class TestApp < Rails::Application
+class TestApp < Quails::Application
   config.root = __dir__
   config.session_store :cookie_store, key: "cookie_store_key"
   secrets.secret_token    = "secret_token"
   secrets.secret_key_base = "secret_key_base"
 
   config.logger = Logger.new($stdout)
-  Rails.logger  = config.logger
+  Quails.logger  = config.logger
 
   routes.draw do
     get "/" => "test#index"
@@ -31,7 +31,7 @@ class TestApp < Rails::Application
 end
 
 class TestController < ActionController::Base
-  include Rails.application.routes.url_helpers
+  include Quails.application.routes.url_helpers
 
   def index
     render plain: "Home"
@@ -53,6 +53,6 @@ class BugTest < Minitest::Test
 
   private
     def app
-      Rails.application
+      Quails.application
     end
 end

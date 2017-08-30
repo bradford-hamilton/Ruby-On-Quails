@@ -1,15 +1,15 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-Maintenance Policy for Ruby on Rails
+Maintenance Policy for Ruby on Quails
 ====================================
 
-Support of the Rails framework is divided into four groups: New features, bug
+Support of the Quails framework is divided into four groups: New features, bug
 fixes, security issues, and severe security issues. They are handled as
 follows, all versions in `X.Y.Z` format.
 
 --------------------------------------------------------------------------------
 
-Rails follows a shifted version of [semver](http://semver.org/):
+Quails follows a shifted version of [semver](http://semver.org/):
 
 **Patch `Z`**
 
@@ -24,7 +24,7 @@ or major release.
 
 **Major `X`**
 
-New features, will likely contain API changes. The difference between Rails'
+New features, will likely contain API changes. The difference between Quails'
 minor and major releases is the magnitude of breaking changes, and usually
 reserved for special occasions.
 
@@ -57,7 +57,7 @@ security patches, and releasing. Those patches are then applied to the end of
 the x-y-stable branch. For example, a theoretical 1.2.3 security release would
 be built from 1.2.2, and then added to the end of 1-2-stable. This means that
 security releases are easy to upgrade to if you're running the latest version
-of Rails.
+of Quails.
 
 **Currently included series:** `5.1.Z`, `5.0.Z`.
 

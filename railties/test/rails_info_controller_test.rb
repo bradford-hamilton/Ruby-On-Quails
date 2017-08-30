@@ -9,16 +9,16 @@ module ActionController
 end
 
 class InfoControllerTest < ActionController::TestCase
-  tests Rails::InfoController
+  tests Quails::InfoController
 
   def setup
-    Rails.application.routes.draw do
-      get "/rails/info/properties" => "rails/info#properties"
-      get "/rails/info/routes"     => "rails/info#routes"
+    Quails.application.routes.draw do
+      get "/quails/info/properties" => "quails/info#properties"
+      get "/quails/info/routes"     => "quails/info#routes"
     end
-    @routes = Rails.application.routes
+    @routes = Quails.application.routes
 
-    Rails::InfoController.include(@routes.url_helpers)
+    Quails::InfoController.include(@routes.url_helpers)
 
     @request.env["REMOTE_ADDR"] = "127.0.0.1"
   end
@@ -58,26 +58,26 @@ class InfoControllerTest < ActionController::TestCase
   test "info controller returns exact matches" do
     exact_count = -> { JSON(response.body)["exact"].size }
 
-    get :routes, params: { path: "rails/info/route" }
+    get :routes, params: { path: "quails/info/route" }
     assert exact_count.call == 0, "should not match incomplete routes"
 
-    get :routes, params: { path: "rails/info/routes" }
+    get :routes, params: { path: "quails/info/routes" }
     assert exact_count.call == 1, "should match complete routes"
 
-    get :routes, params: { path: "rails/info/routes.html" }
+    get :routes, params: { path: "quails/info/routes.html" }
     assert exact_count.call == 1, "should match complete routes with optional parts"
   end
 
   test "info controller returns fuzzy matches" do
     fuzzy_count = -> { JSON(response.body)["fuzzy"].size }
 
-    get :routes, params: { path: "rails/info" }
+    get :routes, params: { path: "quails/info" }
     assert fuzzy_count.call == 2, "should match incomplete routes"
 
-    get :routes, params: { path: "rails/info/routes" }
+    get :routes, params: { path: "quails/info/routes" }
     assert fuzzy_count.call == 1, "should match complete routes"
 
-    get :routes, params: { path: "rails/info/routes.html" }
+    get :routes, params: { path: "quails/info/routes.html" }
     assert fuzzy_count.call == 0, "should match optional parts of route literally"
   end
 

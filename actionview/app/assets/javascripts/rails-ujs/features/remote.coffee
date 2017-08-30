@@ -5,7 +5,7 @@
   fire, stopEverything
   ajax, isCrossDomain
   serializeElement
-} = Rails
+} = Quails
 
 # Checks "data-remote" if true to handle the request through a XHR request.
 isRemote = (element) ->
@@ -13,7 +13,7 @@ isRemote = (element) ->
   value? and value isnt 'false'
 
 # Submits "remote" forms and links with ajax
-Rails.handleRemote = (e) ->
+Quails.handleRemote = (e) ->
   element = this
 
   return true unless isRemote(element)
@@ -24,7 +24,7 @@ Rails.handleRemote = (e) ->
   withCredentials = element.getAttribute('data-with-credentials')
   dataType = element.getAttribute('data-type') or 'script'
 
-  if matches(element, Rails.formSubmitSelector)
+  if matches(element, Quails.formSubmitSelector)
     # memoized value from clicked submit button
     button = getData(element, 'ujs:submit-button')
     method = getData(element, 'ujs:submit-button-formmethod') or element.method
@@ -42,13 +42,13 @@ Rails.handleRemote = (e) ->
     setData(element, 'ujs:submit-button', null)
     setData(element, 'ujs:submit-button-formmethod', null)
     setData(element, 'ujs:submit-button-formaction', null)
-  else if matches(element, Rails.buttonClickSelector) or matches(element, Rails.inputChangeSelector)
+  else if matches(element, Quails.buttonClickSelector) or matches(element, Quails.inputChangeSelector)
     method = element.getAttribute('data-method')
     url = element.getAttribute('data-url')
     data = serializeElement(element, element.getAttribute('data-params'))
   else
     method = element.getAttribute('data-method')
-    url = Rails.href(element)
+    url = Quails.href(element)
     data = element.getAttribute('data-params')
 
   ajax(
@@ -71,7 +71,7 @@ Rails.handleRemote = (e) ->
   )
   stopEverything(e)
 
-Rails.formSubmitButtonClick = (e) ->
+Quails.formSubmitButtonClick = (e) ->
   button = this
   form = button.form
   return unless form
@@ -82,7 +82,7 @@ Rails.formSubmitButtonClick = (e) ->
   setData(form, 'ujs:submit-button-formaction', button.getAttribute('formaction'))
   setData(form, 'ujs:submit-button-formmethod', button.getAttribute('formmethod'))
 
-Rails.handleMetaClick = (e) ->
+Quails.handleMetaClick = (e) ->
   link = this
   method = (link.getAttribute('data-method') or 'GET').toUpperCase()
   data = link.getAttribute('data-params')

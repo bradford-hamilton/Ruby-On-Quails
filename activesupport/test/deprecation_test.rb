@@ -397,7 +397,7 @@ class DeprecationTest < ActiveSupport::TestCase
     assert_match(/You are calling deprecated method/, object.last_message)
   end
 
-  def test_default_deprecation_horizon_should_always_bigger_than_current_rails_version
+  def test_default_deprecation_horizon_should_always_bigger_than_current_quails_version
     assert_operator ActiveSupport::Deprecation.new.deprecation_horizon, :>, ActiveSupport::VERSION::STRING
   end
 
@@ -405,7 +405,7 @@ class DeprecationTest < ActiveSupport::TestCase
     deprecator = ActiveSupport::Deprecation.new
 
     deprecator.send(:deprecated_method_warning, :deprecated_method, "You are calling deprecated method").tap do |message|
-      assert_match(/is deprecated and will be removed from Rails/, message)
+      assert_match(/is deprecated and will be removed from Quails/, message)
     end
   end
 

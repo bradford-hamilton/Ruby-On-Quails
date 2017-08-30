@@ -2,7 +2,7 @@
 
 require_relative "../../app_base"
 
-module Rails
+module Quails
   module ActionMethods # :nodoc:
     attr_reader :options
 
@@ -35,9 +35,9 @@ module Rails
   # Gemfile, README, or JavaScript files, without needing to know exactly
   # what those operations do so you can create another template action.
   #
-  #  class CustomAppBuilder < Rails::AppBuilder
+  #  class CustomAppBuilder < Quails::AppBuilder
   #    def test
-  #      @generator.gem "rspec-rails", group: [:development, :test]
+  #      @generator.gem "rspec-quails", group: [:development, :test]
   #      run "bundle install"
   #      generate "rspec:install"
   #    end
@@ -226,9 +226,9 @@ module Rails
 
       add_shared_options_for "application"
 
-      # Add bin/rails options
-      class_option :version, type: :boolean, aliases: "-v", group: :rails,
-                             desc: "Show Rails version number and quit"
+      # Add bin/quails options
+      class_option :version, type: :boolean, aliases: "-v", group: :quails,
+                             desc: "Show Quails version number and quit"
 
       class_option :api, type: :boolean,
                          desc: "Preconfigure smaller stack for API only apps"
@@ -290,7 +290,7 @@ module Rails
       remove_task :update_config_files
 
       def display_upgrade_guide_info
-        say "\nAfter this, check Rails upgrade guide at http://guides.rubyonrails.org/upgrading_ruby_on_rails.html for more details about upgrading your app."
+        say "\nAfter this, check Quails upgrade guide at http://guides.rubyonquails.org/upgrading_ruby_on_quails.html for more details about upgrading your app."
       end
       remove_task :display_upgrade_guide_info
 
@@ -428,7 +428,7 @@ module Rails
         build(:leftovers)
       end
 
-      public_task :apply_rails_template, :run_bundle
+      public_task :apply_quails_template, :run_bundle
       public_task :run_webpack, :generate_spring_binstubs
 
       def run_after_bundle_callbacks
@@ -436,7 +436,7 @@ module Rails
       end
 
       def self.banner
-        "rails new #{arguments.map(&:usage).join(' ')} [options]"
+        "quails new #{arguments.map(&:usage).join(' ')} [options]"
       end
 
     private
@@ -455,8 +455,8 @@ module Rails
       end
 
       def defined_app_const_base
-        Rails.respond_to?(:application) && defined?(Rails::Application) &&
-          Rails.application.is_a?(Rails::Application) && Rails.application.class.name.sub(/::Application$/, "")
+        Quails.respond_to?(:application) && defined?(Quails::Application) &&
+          Quails.application.is_a?(Quails::Application) && Quails.application.class.name.sub(/::Application$/, "")
       end
 
       alias :defined_app_const_base? :defined_app_const_base
@@ -475,7 +475,7 @@ module Rails
           raise Error, "Invalid application name #{app_name}. Please give a name which does not start with numbers."
         elsif RESERVED_NAMES.include?(app_name)
           raise Error, "Invalid application name #{app_name}. Please give a " \
-                       "name which does not match one of the reserved rails " \
+                       "name which does not match one of the reserved quails " \
                        "words: #{RESERVED_NAMES.join(", ")}"
         elsif Object.const_defined?(app_const_base)
           raise Error, "Invalid application name #{app_name}, constant #{app_const_base} is already in use. Please choose another application name."
@@ -501,13 +501,13 @@ module Rails
       end
 
       def get_builder_class
-        defined?(::AppBuilder) ? ::AppBuilder : Rails::AppBuilder
+        defined?(::AppBuilder) ? ::AppBuilder : Quails::AppBuilder
       end
     end
 
     # This class handles preparation of the arguments before the AppGenerator is
     # called. The class provides version or help information if they were
-    # requested, and also constructs the railsrc file (used for extra configuration
+    # requested, and also constructs the quailsrc file (used for extra configuration
     # options).
     #
     # This class should be called before the AppGenerator is required and started
@@ -520,12 +520,12 @@ module Rails
       def prepare!
         handle_version_request!(@argv.first)
         handle_invalid_command!(@argv.first, @argv) do
-          handle_rails_rc!(@argv.drop(1))
+          handle_quails_rc!(@argv.drop(1))
         end
       end
 
       def self.default_rc_file
-        File.expand_path("~/.railsrc")
+        File.expand_path("~/.quailsrc")
       end
 
       private
@@ -533,7 +533,7 @@ module Rails
         def handle_version_request!(argument)
           if ["--version", "-v"].include?(argument)
             require_relative "../../../version"
-            puts "Rails #{Rails::VERSION::STRING}"
+            puts "Quails #{Quails::VERSION::STRING}"
             exit(0)
           end
         end
@@ -546,15 +546,15 @@ module Rails
           end
         end
 
-        def handle_rails_rc!(argv)
+        def handle_quails_rc!(argv)
           if argv.find { |arg| arg == "--no-rc" }
             argv.reject { |arg| arg == "--no-rc" }
           else
-            railsrc(argv) { |rc_argv, rc| insert_railsrc_into_argv!(rc_argv, rc) }
+            quailsrc(argv) { |rc_argv, rc| insert_quailsrc_into_argv!(rc_argv, rc) }
           end
         end
 
-        def railsrc(argv)
+        def quailsrc(argv)
           if (customrc = argv.index { |x| x.include?("--rc=") })
             fname = File.expand_path(argv[customrc].gsub(/--rc=/, ""))
             yield(argv.take(customrc) + argv.drop(customrc + 1), fname)
@@ -563,15 +563,15 @@ module Rails
           end
         end
 
-        def read_rc_file(railsrc)
-          extra_args = File.readlines(railsrc).flat_map(&:split)
-          puts "Using #{extra_args.join(" ")} from #{railsrc}"
+        def read_rc_file(quailsrc)
+          extra_args = File.readlines(quailsrc).flat_map(&:split)
+          puts "Using #{extra_args.join(" ")} from #{quailsrc}"
           extra_args
         end
 
-        def insert_railsrc_into_argv!(argv, railsrc)
-          return argv unless File.exist?(railsrc)
-          extra_args = read_rc_file railsrc
+        def insert_quailsrc_into_argv!(argv, quailsrc)
+          return argv unless File.exist?(quailsrc)
+          extra_args = read_rc_file quailsrc
           argv.take(1) + extra_args + argv.drop(1)
         end
     end

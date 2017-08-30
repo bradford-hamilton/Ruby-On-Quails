@@ -278,7 +278,7 @@ class CalculationsTest < ActiveRecord::TestCase
   def test_should_group_by_summed_association
     c = Account.group(:firm).sum(:credit_limit)
     assert_equal 50,   c[companies(:first_firm)]
-    assert_equal 105,  c[companies(:rails_core)]
+    assert_equal 105,  c[companies(:quails_core)]
     assert_equal 60,   c[companies(:first_client)]
   end
 
@@ -288,7 +288,7 @@ class CalculationsTest < ActiveRecord::TestCase
 
   def test_should_return_zero_if_sum_conditions_return_nothing
     assert_equal 0, Account.where("1 = 2").sum(:credit_limit)
-    assert_equal 0, companies(:rails_core).companies.where("1 = 2").sum(:id)
+    assert_equal 0, companies(:quails_core).companies.where("1 = 2").sum(:id)
   end
 
   def test_sum_should_return_valid_values_for_decimals
@@ -337,7 +337,7 @@ class CalculationsTest < ActiveRecord::TestCase
   def test_should_calculate_grouped_association_with_invalid_field
     c = Account.group(:firm).count(:all)
     assert_equal 1, c[companies(:first_firm)]
-    assert_equal 2, c[companies(:rails_core)]
+    assert_equal 2, c[companies(:quails_core)]
     assert_equal 1, c[companies(:first_client)]
   end
 
@@ -355,7 +355,7 @@ class CalculationsTest < ActiveRecord::TestCase
     Account.belongs_to :another_firm, class_name: "Firm", foreign_key: "firm_id"
     c = Account.group(:another_firm).count(:all)
     assert_equal 1, c[companies(:first_firm)]
-    assert_equal 2, c[companies(:rails_core)]
+    assert_equal 2, c[companies(:quails_core)]
     assert_equal 1, c[companies(:first_client)]
   end
 
@@ -380,7 +380,7 @@ class CalculationsTest < ActiveRecord::TestCase
   end
 
   def test_should_sum_scoped_field
-    assert_equal 15, companies(:rails_core).companies.sum(:id)
+    assert_equal 15, companies(:quails_core).companies.sum(:id)
   end
 
   def test_should_sum_scoped_field_with_from
@@ -388,17 +388,17 @@ class CalculationsTest < ActiveRecord::TestCase
   end
 
   def test_should_sum_scoped_field_with_conditions
-    assert_equal 8,  companies(:rails_core).companies.where("id > 7").sum(:id)
+    assert_equal 8,  companies(:quails_core).companies.where("id > 7").sum(:id)
   end
 
   def test_should_group_by_scoped_field
-    c = companies(:rails_core).companies.group(:name).sum(:id)
+    c = companies(:quails_core).companies.group(:name).sum(:id)
     assert_equal 7, c["Leetsoft"]
     assert_equal 8, c["Jadedpixel"]
   end
 
   def test_should_group_by_summed_field_through_association_and_having
-    c = companies(:rails_core).companies.group(:name).having("sum(id) > 7").sum(:id)
+    c = companies(:quails_core).companies.group(:name).having("sum(id) > 7").sum(:id)
     assert_nil      c["Leetsoft"]
     assert_equal 8, c["Jadedpixel"]
   end

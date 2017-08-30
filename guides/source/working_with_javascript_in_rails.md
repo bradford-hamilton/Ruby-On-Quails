@@ -1,9 +1,9 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-Working with JavaScript in Rails
+Working with JavaScript in Quails
 ================================
 
-This guide covers the built-in Ajax/JavaScript functionality of Rails (and
+This guide covers the built-in Ajax/JavaScript functionality of Quails (and
 more); it will enable you to create rich and dynamic Ajax applications with
 ease!
 
@@ -11,7 +11,7 @@ After reading this guide, you will know:
 
 * The basics of Ajax.
 * Unobtrusive JavaScript.
-* How Rails' built-in helpers assist you.
+* How Quails' built-in helpers assist you.
 * How to handle Ajax on the server side.
 * The Turbolinks gem.
 
@@ -36,7 +36,7 @@ powers, a JavaScript writer can make a web page that can update just parts of
 itself, without needing to get the full page data from the server. This is a
 powerful technique that we call Ajax.
 
-Rails ships with CoffeeScript by default, and so the rest of the examples
+Quails ships with CoffeeScript by default, and so the rest of the examples
 in this guide will be in CoffeeScript. All of these lessons, of course, apply
 to vanilla JavaScript as well.
 
@@ -51,15 +51,15 @@ $.ajax(url: "/test").done (html) ->
 This code fetches data from "/test", and then appends the result to the `div`
 with an id of `results`.
 
-Rails provides quite a bit of built-in support for building web pages with this
+Quails provides quite a bit of built-in support for building web pages with this
 technique. You rarely have to write this code yourself. The rest of this guide
-will show you how Rails can help you write websites in this way, but it's
+will show you how Quails can help you write websites in this way, but it's
 all built on top of this fairly simple technique.
 
 Unobtrusive JavaScript
 ----------------------
 
-Rails uses a technique called "Unobtrusive JavaScript" to handle attaching
+Quails uses a technique called "Unobtrusive JavaScript" to handle attaching
 JavaScript to the DOM. This is generally considered to be a best-practice
 within the frontend community, but you may occasionally read tutorials that
 demonstrate other ways.
@@ -134,7 +134,7 @@ concatenator. We can serve our entire JavaScript bundle on every page, which
 means that it'll get downloaded on the first page load and then be cached on
 every page after that. Lots of little benefits really add up.
 
-The Rails team strongly encourages you to write your CoffeeScript (and
+The Quails team strongly encourages you to write your CoffeeScript (and
 JavaScript) in this style, and you can expect that many libraries will also
 follow this pattern.
 
@@ -143,15 +143,15 @@ Built-in Helpers
 
 ### Remote elements
 
-Rails provides a bunch of view helper methods written in Ruby to assist you
+Quails provides a bunch of view helper methods written in Ruby to assist you
 in generating HTML. Sometimes, you want to add a little Ajax to those elements,
-and Rails has got your back in those cases.
+and Quails has got your back in those cases.
 
-Because of Unobtrusive JavaScript, the Rails "Ajax helpers" are actually in two
+Because of Unobtrusive JavaScript, the Quails "Ajax helpers" are actually in two
 parts: the JavaScript half and the Ruby half.
 
 Unless you have disabled the Asset Pipeline,
-[rails-ujs](https://github.com/rails/rails/tree/master/actionview/app/assets/javascripts)
+[quails-ujs](https://github.com/quails/quails/tree/master/actionview/app/assets/javascripts)
 provides the JavaScript half, and the regular Ruby view helpers add appropriate
 tags to your DOM.
 
@@ -160,7 +160,7 @@ remote elements inside your application.
 
 #### form_with
 
-[`form_with`](http://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with)
+[`form_with`](http://api.rubyonquails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with)
 is a helper that assists with writing forms. By default, `form_with` assumes that
 your form will be using Ajax. You can opt out of this behavior by
 passing the `:local` option `form_with`.
@@ -199,7 +199,7 @@ start.
 
 #### link_to
 
-[`link_to`](http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to)
+[`link_to`](http://api.rubyonquails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to)
 is a helper that assists with generating links. It has a `:remote` option you
 can use like this:
 
@@ -231,7 +231,7 @@ $ ->
 
 #### button_to
 
-[`button_to`](http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to) is a helper that helps you create buttons. It has a `:remote` option that you can call like this:
+[`button_to`](http://api.rubyonquails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to) is a helper that helps you create buttons. It has a `:remote` option that you can call like this:
 
 ```erb
 <%= button_to "An article", @article, remote: true %>
@@ -267,7 +267,7 @@ link, and the method corresponding to `data-method` value, and submits that form
 
 NOTE: Because submitting forms with HTTP methods other than GET and POST isn't
 widely supported across browsers, all other HTTP methods are actually sent over
-POST with the intended method indicated in the `_method` parameter. Rails
+POST with the intended method indicated in the `_method` parameter. Quails
 automatically detects and compensates for this.
 
 #### `data-url` and `data-params`
@@ -376,9 +376,9 @@ browser to submit the form via normal means (i.e. non-Ajax submission) will be
 canceled and the form will not be submitted at all. This is useful for
 implementing your own Ajax file upload workaround.
 
-### Rails-ujs event handlers
+### Quails-ujs event handlers
 
-Rails 5.1 introduced rails-ujs and dropped jQuery as a dependency.
+Quails 5.1 introduced quails-ujs and dropped jQuery as a dependency.
 As a result the Unobtrusive JavaScript (UJS) driver has been rewritten to operate without jQuery.
 These introductions cause small changes to `custom events` fired during the request:
 
@@ -491,7 +491,7 @@ $("<%= escape_javascript(render @user) %>").appendTo("#users");
 Turbolinks
 ----------
 
-Rails ships with the [Turbolinks library](https://github.com/turbolinks/turbolinks),
+Quails ships with the [Turbolinks library](https://github.com/turbolinks/turbolinks),
 which uses Ajax to speed up page rendering in most applications.
 
 ### How Turbolinks Works
@@ -543,8 +543,8 @@ Other Resources
 
 Here are some helpful links to help you learn even more:
 
-* [jquery-ujs wiki](https://github.com/rails/jquery-ujs/wiki)
-* [jquery-ujs list of external articles](https://github.com/rails/jquery-ujs/wiki/External-articles)
-* [Rails 3 Remote Links and Forms: A Definitive Guide](http://www.alfajango.com/blog/rails-3-remote-links-and-forms/)
-* [Railscasts: Unobtrusive JavaScript](http://railscasts.com/episodes/205-unobtrusive-javascript)
-* [Railscasts: Turbolinks](http://railscasts.com/episodes/390-turbolinks)
+* [jquery-ujs wiki](https://github.com/quails/jquery-ujs/wiki)
+* [jquery-ujs list of external articles](https://github.com/quails/jquery-ujs/wiki/External-articles)
+* [Quails 3 Remote Links and Forms: A Definitive Guide](http://www.alfajango.com/blog/quails-3-remote-links-and-forms/)
+* [Quailscasts: Unobtrusive JavaScript](http://quailscasts.com/episodes/205-unobtrusive-javascript)
+* [Quailscasts: Turbolinks](http://quailscasts.com/episodes/390-turbolinks)

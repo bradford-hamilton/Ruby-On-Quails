@@ -53,7 +53,7 @@ module ActionDispatch
 
     ##
     # This class is just used for displaying route information when someone
-    # executes `rails routes` or looks at the RoutingError page.
+    # executes `quails routes` or looks at the RoutingError page.
     # People should not use this class.
     class RoutesInspector # :nodoc:
       def initialize(routes)
@@ -158,7 +158,7 @@ module ActionDispatch
         else
           "No routes were found for this controller"
         end
-        @buffer << "For more information about routes, see the Rails guide: http://guides.rubyonrails.org/routing.html."
+        @buffer << "For more information about routes, see the Quails guide: http://guides.rubyonquails.org/routing.html."
       end
 
       private
@@ -208,8 +208,8 @@ module ActionDispatch
           <ul>
             <li>Please add some routes in <tt>config/routes.rb</tt>.</li>
             <li>
-              For more information about routes, please see the Rails guide
-              <a href="http://guides.rubyonrails.org/routing.html">Rails Routing from the Outside In</a>.
+              For more information about routes, please see the Quails guide
+              <a href="http://guides.rubyonquails.org/routing.html">Quails Routing from the Outside In</a>.
             </li>
           </ul>
           MESSAGE

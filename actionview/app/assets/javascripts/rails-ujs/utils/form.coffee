@@ -1,10 +1,10 @@
 #= require ./dom
 
-{ matches } = Rails
+{ matches } = Quails
 
 toArray = (e) -> Array.prototype.slice.call(e)
 
-Rails.serializeElement = (element, additionalParam) ->
+Quails.serializeElement = (element, additionalParam) ->
   inputs = [element]
   inputs = toArray(element.elements) if matches(element, 'form')
   params = []
@@ -29,7 +29,7 @@ Rails.serializeElement = (element, additionalParam) ->
 # Helper function that returns form elements that match the specified CSS selector
 # If form is actually a "form" element this will return associated elements outside the from that have
 # the html form attribute set
-Rails.formElements = (form, selector) ->
+Quails.formElements = (form, selector) ->
   if matches(form, 'form')
     toArray(form.elements).filter (el) -> matches(el, selector)
   else

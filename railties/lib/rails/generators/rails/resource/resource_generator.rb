@@ -3,7 +3,7 @@
 require_relative "../../resource_helpers"
 require_relative "../model/model_generator"
 
-module Rails
+module Quails
   module Generators
     class ResourceGenerator < ModelGenerator # :nodoc:
       include ResourceHelpers

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module RailsGuides
+module QuailsGuides
   module Levenshtein
     # This code is based directly on the Text gem implementation.
     # Copyright (c) 2006-2013 Paul Battley, Michael Neumann, Tim Fletcher.

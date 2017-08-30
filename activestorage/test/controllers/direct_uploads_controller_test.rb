@@ -17,7 +17,7 @@ if SERVICE_CONFIGURATIONS[:s3] && SERVICE_CONFIGURATIONS[:s3][:access_key_id].pr
     test "creating new direct upload" do
       checksum = Digest::MD5.base64digest("Hello")
 
-      post rails_direct_uploads_url, params: { blob: {
+      post quails_direct_uploads_url, params: { blob: {
         filename: "hello.txt", byte_size: 6, checksum: checksum, content_type: "text/plain" } }
 
       response.parsed_body.tap do |details|
@@ -52,7 +52,7 @@ if SERVICE_CONFIGURATIONS[:gcs]
     test "creating new direct upload" do
       checksum = Digest::MD5.base64digest("Hello")
 
-      post rails_direct_uploads_url, params: { blob: {
+      post quails_direct_uploads_url, params: { blob: {
         filename: "hello.txt", byte_size: 6, checksum: checksum, content_type: "text/plain" } }
 
       @response.parsed_body.tap do |details|
@@ -86,7 +86,7 @@ if SERVICE_CONFIGURATIONS[:azure]
     test "creating new direct upload" do
       checksum = Digest::MD5.base64digest("Hello")
 
-      post rails_direct_uploads_url, params: { blob: {
+      post quails_direct_uploads_url, params: { blob: {
         filename: "hello.txt", byte_size: 6, checksum: checksum, content_type: "text/plain" } }
 
       @response.parsed_body.tap do |details|
@@ -108,7 +108,7 @@ class ActiveStorage::DiskDirectUploadsControllerTest < ActionDispatch::Integrati
   test "creating new direct upload" do
     checksum = Digest::MD5.base64digest("Hello")
 
-    post rails_direct_uploads_url, params: { blob: {
+    post quails_direct_uploads_url, params: { blob: {
       filename: "hello.txt", byte_size: 6, checksum: checksum, content_type: "text/plain" } }
 
     @response.parsed_body.tap do |details|
@@ -117,7 +117,7 @@ class ActiveStorage::DiskDirectUploadsControllerTest < ActionDispatch::Integrati
       assert_equal 6, details["byte_size"]
       assert_equal checksum, details["checksum"]
       assert_equal "text/plain", details["content_type"]
-      assert_match(/rails\/active_storage\/disk/, details["direct_upload"]["url"])
+      assert_match(/quails\/active_storage\/disk/, details["direct_upload"]["url"])
       assert_equal({ "Content-Type" => "text/plain" }, details["direct_upload"]["headers"])
     end
   end

@@ -10,13 +10,13 @@ module ActiveJob
     # This reduces the cost of hosting on a service like Heroku along
     # with the memory footprint of having to maintain additional jobs if
     # hosting on a dedicated server. All queues can run within a
-    # single application (eg. Rails, Sinatra, etc.) process.
+    # single application (eg. Quails, Sinatra, etc.) process.
     #
     # Read more about Sucker Punch {here}[https://github.com/brandonhilkert/sucker_punch].
     #
     # To use Sucker Punch set the queue_adapter config to +:sucker_punch+.
     #
-    #   Rails.application.config.active_job.queue_adapter = :sucker_punch
+    #   Quails.application.config.active_job.queue_adapter = :sucker_punch
     class SuckerPunchAdapter
       def enqueue(job) #:nodoc:
         if JobWrapper.respond_to?(:perform_async)

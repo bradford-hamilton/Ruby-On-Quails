@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails-dom-testing"
+require "quails-dom-testing"
 
 module ActionDispatch
   module Assertions
@@ -11,7 +11,7 @@ module ActionDispatch
 
     include ResponseAssertions
     include RoutingAssertions
-    include Rails::Dom::Testing::Assertions
+    include Quails::Dom::Testing::Assertions
 
     def html_document
       @html_document ||= if @response.content_type.to_s.end_with?("xml")

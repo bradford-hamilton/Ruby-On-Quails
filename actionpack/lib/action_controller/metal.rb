@@ -78,7 +78,7 @@ module ActionController
   #
   #   get 'hello', to: HelloController.action(:index)
   #
-  # The +action+ method returns a valid Rack application for the \Rails
+  # The +action+ method returns a valid Rack application for the \Quails
   # router to dispatch to.
   #
   # == Rendering Helpers
@@ -92,7 +92,7 @@ module ActionController
   #   class HelloController < ActionController::Metal
   #     include AbstractController::Rendering
   #     include ActionView::Layouts
-  #     append_view_path "#{Rails.root}/app/views"
+  #     append_view_path "#{Quails.root}/app/views"
   #
   #     def index
   #       render "hello/index"
@@ -105,7 +105,7 @@ module ActionController
   #
   #   class HelloController < ActionController::Metal
   #     include ActionController::Redirecting
-  #     include Rails.application.routes.url_helpers
+  #     include Quails.application.routes.url_helpers
   #
   #     def index
   #       redirect_to root_url

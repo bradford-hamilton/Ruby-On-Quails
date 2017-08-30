@@ -5,7 +5,7 @@ require "action_controller"
 require "action_controller/test_case"
 require "action_view"
 
-require "rails-dom-testing"
+require "quails-dom-testing"
 
 module ActionView
   # = Action View Test Case
@@ -38,7 +38,7 @@ module ActionView
       extend ActiveSupport::Concern
 
       include ActionDispatch::Assertions, ActionDispatch::TestProcess
-      include Rails::Dom::Testing::Assertions
+      include Quails::Dom::Testing::Assertions
       include ActionController::TemplateAssertions
       include ActionView::Context
 

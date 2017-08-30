@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "active_support/core_ext/object/try"
-require "rails-html-sanitizer"
+require "quails-html-sanitizer"
 
 module ActionView
   # = Action View Sanitize Helpers
@@ -17,8 +17,8 @@ module ActionView
       # ASCII, and hex character references to work around these protocol filters.
       # All special characters will be escaped.
       #
-      # The default sanitizer is Rails::Html::WhiteListSanitizer. See {Rails HTML
-      # Sanitizers}[https://github.com/rails/rails-html-sanitizer] for more information.
+      # The default sanitizer is Quails::Html::WhiteListSanitizer. See {Quails HTML
+      # Sanitizers}[https://github.com/quails/quails-html-sanitizer] for more information.
       #
       # Custom sanitization rules can also be provided.
       #
@@ -29,7 +29,7 @@ module ActionView
       #
       # * <tt>:tags</tt> - An array of allowed tags.
       # * <tt>:attributes</tt> - An array of allowed attributes.
-      # * <tt>:scrubber</tt> - A {Rails::Html scrubber}[https://github.com/rails/rails-html-sanitizer]
+      # * <tt>:scrubber</tt> - A {Quails::Html scrubber}[https://github.com/quails/quails-html-sanitizer]
       #   or {Loofah::Scrubber}[https://github.com/flavorjones/loofah] object that
       #   defines custom sanitization rules. A custom scrubber takes precedence over
       #   custom tags and attributes.
@@ -44,9 +44,9 @@ module ActionView
       #
       #   <%= sanitize @comment.body, tags: %w(strong em a), attributes: %w(href) %>
       #
-      # Providing a custom Rails::Html scrubber:
+      # Providing a custom Quails::Html scrubber:
       #
-      #   class CommentScrubber < Rails::Html::PermitScrubber
+      #   class CommentScrubber < Quails::Html::PermitScrubber
       #     def initialize
       #       super
       #       self.tags = %w( form script comment blockquote )
@@ -60,8 +60,8 @@ module ActionView
       #
       #   <%= sanitize @comment.body, scrubber: CommentScrubber.new %>
       #
-      # See {Rails HTML Sanitizer}[https://github.com/rails/rails-html-sanitizer] for
-      # documentation about Rails::Html scrubbers.
+      # See {Quails HTML Sanitizer}[https://github.com/quails/quails-html-sanitizer] for
+      # documentation about Quails::Html scrubbers.
       #
       # Providing a custom Loofah::Scrubber:
       #
@@ -107,8 +107,8 @@ module ActionView
 
       # Strips all link tags from +html+ leaving just the link text.
       #
-      #   strip_links('<a href="http://www.rubyonrails.org">Ruby on Rails</a>')
-      #   # => Ruby on Rails
+      #   strip_links('<a href="http://www.rubyonquails.org">Ruby on Quails</a>')
+      #   # => Ruby on Quails
       #
       #   strip_links('Please e-mail me at <a href="mailto:me@email.com">me@email.com</a>.')
       #   # => Please e-mail me at me@email.com.
@@ -126,9 +126,9 @@ module ActionView
         attr_writer :full_sanitizer, :link_sanitizer, :white_list_sanitizer
 
         # Vendors the full, link and white list sanitizers.
-        # Provided strictly for compatibility and can be removed in Rails 5.1.
+        # Provided strictly for compatibility and can be removed in Quails 5.1.
         def sanitizer_vendor
-          Rails::Html::Sanitizer
+          Quails::Html::Sanitizer
         end
 
         def sanitized_allowed_tags
@@ -139,10 +139,10 @@ module ActionView
           sanitizer_vendor.white_list_sanitizer.allowed_attributes
         end
 
-        # Gets the Rails::Html::FullSanitizer instance used by +strip_tags+. Replace with
+        # Gets the Quails::Html::FullSanitizer instance used by +strip_tags+. Replace with
         # any object that responds to +sanitize+.
         #
-        #   class Application < Rails::Application
+        #   class Application < Quails::Application
         #     config.action_view.full_sanitizer = MySpecialSanitizer.new
         #   end
         #
@@ -150,10 +150,10 @@ module ActionView
           @full_sanitizer ||= sanitizer_vendor.full_sanitizer.new
         end
 
-        # Gets the Rails::Html::LinkSanitizer instance used by +strip_links+.
+        # Gets the Quails::Html::LinkSanitizer instance used by +strip_links+.
         # Replace with any object that responds to +sanitize+.
         #
-        #   class Application < Rails::Application
+        #   class Application < Quails::Application
         #     config.action_view.link_sanitizer = MySpecialSanitizer.new
         #   end
         #
@@ -161,10 +161,10 @@ module ActionView
           @link_sanitizer ||= sanitizer_vendor.link_sanitizer.new
         end
 
-        # Gets the Rails::Html::WhiteListSanitizer instance used by sanitize and +sanitize_css+.
+        # Gets the Quails::Html::WhiteListSanitizer instance used by sanitize and +sanitize_css+.
         # Replace with any object that responds to +sanitize+.
         #
-        #   class Application < Rails::Application
+        #   class Application < Quails::Application
         #     config.action_view.white_list_sanitizer = MySpecialSanitizer.new
         #   end
         #

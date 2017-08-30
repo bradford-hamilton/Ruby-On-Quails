@@ -121,7 +121,7 @@ class HotCompatibilityTest < ActiveRecord::TestCase
         .instance_variable_get(:@cache)[Process.pid]
     end
 
-    # Rails will automatically clear the prepared statements on the connection
+    # Quails will automatically clear the prepared statements on the connection
     # that runs the migration, so we use two connections to simulate what would
     # actually happen on a production system; we'd have one connection running the
     # migration from the rake task ("ddl_connection" here), and we'd have another

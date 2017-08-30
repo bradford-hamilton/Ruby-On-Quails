@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/job/job_generator"
+require "quails/generators/job/job_generator"
 
-class JobGeneratorTest < Rails::Generators::TestCase
+class JobGeneratorTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
 
   def test_job_skeleton_is_created

@@ -71,7 +71,7 @@ class RedirectController < ActionController::Base
   end
 
   def redirect_to_url
-    redirect_to "http://www.rubyonrails.org/"
+    redirect_to "http://www.rubyonquails.org/"
   end
 
   def redirect_to_url_with_unescaped_query_string
@@ -83,7 +83,7 @@ class RedirectController < ActionController::Base
   end
 
   def redirect_to_url_with_network_path_reference
-    redirect_to "//www.rubyonrails.org/"
+    redirect_to "//www.rubyonquails.org/"
   end
 
   def redirect_to_existing_record
@@ -103,11 +103,11 @@ class RedirectController < ActionController::Base
   end
 
   def redirect_to_with_block
-    redirect_to proc { "http://www.rubyonrails.org/" }
+    redirect_to proc { "http://www.rubyonquails.org/" }
   end
 
   def redirect_to_with_block_and_assigns
-    @url = "http://www.rubyonrails.org/"
+    @url = "http://www.rubyonquails.org/"
     redirect_to proc { @url }
   end
 
@@ -221,7 +221,7 @@ class RedirectTest < ActionController::TestCase
   def test_redirect_to_url
     get :redirect_to_url
     assert_response :redirect
-    assert_redirected_to "http://www.rubyonrails.org/"
+    assert_redirected_to "http://www.rubyonquails.org/"
   end
 
   def test_redirect_to_url_with_unescaped_query_string
@@ -239,7 +239,7 @@ class RedirectTest < ActionController::TestCase
   def test_redirect_to_url_with_network_path_reference
     get :redirect_to_url_with_network_path_reference
     assert_response :redirect
-    assert_equal "//www.rubyonrails.org/", redirect_to_url
+    assert_equal "//www.rubyonquails.org/", redirect_to_url
   end
 
   def test_redirect_back
@@ -296,13 +296,13 @@ class RedirectTest < ActionController::TestCase
   def test_redirect_to_with_block
     get :redirect_to_with_block
     assert_response :redirect
-    assert_redirected_to "http://www.rubyonrails.org/"
+    assert_redirected_to "http://www.rubyonquails.org/"
   end
 
   def test_redirect_to_with_block_and_assigns
     get :redirect_to_with_block_and_assigns
     assert_response :redirect
-    assert_redirected_to "http://www.rubyonrails.org/"
+    assert_redirected_to "http://www.rubyonquails.org/"
   end
 
   def test_redirect_to_with_block_and_accepted_options

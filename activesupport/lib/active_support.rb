@@ -84,13 +84,13 @@ module ActiveSupport
 
   def self.halt_callback_chains_on_return_false
     ActiveSupport::Deprecation.warn(<<-MSG.squish)
-      ActiveSupport.halt_callback_chains_on_return_false is deprecated and will be removed in Rails 5.2.
+      ActiveSupport.halt_callback_chains_on_return_false is deprecated and will be removed in Quails 5.2.
     MSG
   end
 
   def self.halt_callback_chains_on_return_false=(value)
     ActiveSupport::Deprecation.warn(<<-MSG.squish)
-      ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2.
+      ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Quails 5.2.
     MSG
   end
 

@@ -2,7 +2,7 @@
 
 require "active_support/concern"
 
-module Rails
+module Quails
   class Railtie
     module Configurable
       extend ActiveSupport::Concern

@@ -5,52 +5,52 @@ require "active_support/inflector"
 require "active_support/core_ext/module/introspection"
 require "active_support/core_ext/module/delegation"
 
-module Rails
-  # <tt>Rails::Railtie</tt> is the core of the Rails framework and provides
-  # several hooks to extend Rails and/or modify the initialization process.
+module Quails
+  # <tt>Quails::Railtie</tt> is the core of the Quails framework and provides
+  # several hooks to extend Quails and/or modify the initialization process.
   #
-  # Every major component of Rails (Action Mailer, Action Controller, Active
+  # Every major component of Quails (Action Mailer, Action Controller, Active
   # Record, etc.) implements a railtie. Each of them is responsible for their
-  # own initialization. This makes Rails itself absent of any component hooks,
-  # allowing other components to be used in place of any of the Rails defaults.
+  # own initialization. This makes Quails itself absent of any component hooks,
+  # allowing other components to be used in place of any of the Quails defaults.
   #
-  # Developing a Rails extension does _not_ require implementing a railtie, but
-  # if you need to interact with the Rails framework during or after boot, then
+  # Developing a Quails extension does _not_ require implementing a railtie, but
+  # if you need to interact with the Quails framework during or after boot, then
   # a railtie is needed.
   #
   # For example, an extension doing any of the following would need a railtie:
   #
   # * creating initializers
-  # * configuring a Rails framework for the application, like setting a generator
+  # * configuring a Quails framework for the application, like setting a generator
   # * adding <tt>config.*</tt> keys to the environment
   # * setting up a subscriber with <tt>ActiveSupport::Notifications</tt>
   # * adding Rake tasks
   #
   # == Creating a Railtie
   #
-  # To extend Rails using a railtie, create a subclass of <tt>Rails::Railtie</tt>.
-  # This class must be loaded during the Rails boot process, and is conventionally
+  # To extend Quails using a railtie, create a subclass of <tt>Quails::Railtie</tt>.
+  # This class must be loaded during the Quails boot process, and is conventionally
   # called <tt>MyNamespace::Railtie</tt>.
   #
   # The following example demonstrates an extension which can be used with or
-  # without Rails.
+  # without Quails.
   #
   #   # lib/my_gem/railtie.rb
   #   module MyGem
-  #     class Railtie < Rails::Railtie
+  #     class Railtie < Quails::Railtie
   #     end
   #   end
   #
   #   # lib/my_gem.rb
-  #   require 'my_gem/railtie' if defined?(Rails)
+  #   require 'my_gem/railtie' if defined?(Quails)
   #
   # == Initializers
   #
-  # To add an initialization step to the Rails boot process from your railtie, just
+  # To add an initialization step to the Quails boot process from your railtie, just
   # define the initialization code with the +initializer+ macro:
   #
-  #   class MyRailtie < Rails::Railtie
-  #     initializer "my_railtie.configure_rails_initialization" do
+  #   class MyRailtie < Quails::Railtie
+  #     initializer "my_railtie.configure_quails_initialization" do
   #       # some initialization behavior
   #     end
   #   end
@@ -58,8 +58,8 @@ module Rails
   # If specified, the block can also receive the application object, in case you
   # need to access some application-specific configuration, like middleware:
   #
-  #   class MyRailtie < Rails::Railtie
-  #     initializer "my_railtie.configure_rails_initialization" do |app|
+  #   class MyRailtie < Quails::Railtie
+  #     initializer "my_railtie.configure_quails_initialization" do |app|
   #       app.middleware.use MyRailtie::Middleware
   #     end
   #   end
@@ -73,7 +73,7 @@ module Rails
   # Railties can access a config object which contains configuration shared by all
   # railties and the application:
   #
-  #   class MyRailtie < Rails::Railtie
+  #   class MyRailtie < Quails::Railtie
   #     # Customize the ORM
   #     config.app_generators.orm :my_railtie_orm
   #
@@ -86,20 +86,20 @@ module Rails
   #
   # == Loading Rake Tasks and Generators
   #
-  # If your railtie has Rake tasks, you can tell Rails to load them through the method
+  # If your railtie has Rake tasks, you can tell Quails to load them through the method
   # +rake_tasks+:
   #
-  #   class MyRailtie < Rails::Railtie
+  #   class MyRailtie < Quails::Railtie
   #     rake_tasks do
   #       load 'path/to/my_railtie.tasks'
   #     end
   #   end
   #
-  # By default, Rails loads generators from your load path. However, if you want to place
+  # By default, Quails loads generators from your load path. However, if you want to place
   # your generators at a different location, you can specify in your railtie a block which
   # will load them during normal generators lookup:
   #
-  #   class MyRailtie < Rails::Railtie
+  #   class MyRailtie < Quails::Railtie
   #     generators do
   #       require 'path/to/my_railtie_generator'
   #     end
@@ -111,16 +111,16 @@ module Rails
   # == Application and Engine
   #
   # An engine is nothing more than a railtie with some initializers already set. And since
-  # <tt>Rails::Application</tt> is an engine, the same configuration described here can be
+  # <tt>Quails::Application</tt> is an engine, the same configuration described here can be
   # used in both.
   #
   # Be sure to look at the documentation of those specific classes for more information.
   class Railtie
-    autoload :Configuration, "rails/railtie/configuration"
+    autoload :Configuration, "quails/railtie/configuration"
 
     include Initializable
 
-    ABSTRACT_RAILTIES = %w(Rails::Railtie Rails::Engine Rails::Application)
+    ABSTRACT_RAILTIES = %w(Quails::Railtie Quails::Engine Quails::Application)
 
     class << self
       private :new
@@ -161,7 +161,7 @@ module Rails
         @railtie_name ||= generate_railtie_name(self.name)
       end
 
-      # Since Rails::Railtie cannot be instantiated, any methods that call
+      # Since Quails::Railtie cannot be instantiated, any methods that call
       # +instance+ are intended to be called only on subclasses of a Railtie.
       def instance
         @instance ||= new

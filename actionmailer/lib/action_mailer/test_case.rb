@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "active_support/test_case"
-require "rails-dom-testing"
+require "quails-dom-testing"
 
 module ActionMailer
   class NonInferrableMailerError < ::StandardError
@@ -35,8 +35,8 @@ module ActionMailer
 
       include ActiveSupport::Testing::ConstantLookup
       include TestHelper
-      include Rails::Dom::Testing::Assertions::SelectorAssertions
-      include Rails::Dom::Testing::Assertions::DomAssertions
+      include Quails::Dom::Testing::Assertions::SelectorAssertions
+      include Quails::Dom::Testing::Assertions::DomAssertions
 
       included do
         class_attribute :_mailer_class
@@ -114,7 +114,7 @@ module ActionMailer
         end
 
         def read_fixture(action)
-          IO.readlines(File.join(Rails.root, "test", "fixtures", self.class.mailer_class.name.underscore, action))
+          IO.readlines(File.join(Quails.root, "test", "fixtures", self.class.mailer_class.name.underscore, action))
         end
     end
 

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require "rails"
+require "quails"
 require "action_cable"
 require_relative "helpers/action_cable_helper"
 require "active_support/core_ext/hash/indifferent_access"
 
 module ActionCable
-  class Engine < Rails::Engine # :nodoc:
+  class Engine < Quails::Engine # :nodoc:
     config.action_cable = ActiveSupport::OrderedOptions.new
     config.action_cable.mount_path = ActionCable::INTERNAL[:default_mount_path]
 
@@ -19,18 +19,18 @@ module ActionCable
     end
 
     initializer "action_cable.logger" do
-      ActiveSupport.on_load(:action_cable) { self.logger ||= ::Rails.logger }
+      ActiveSupport.on_load(:action_cable) { self.logger ||= ::Quails.logger }
     end
 
     initializer "action_cable.set_configs" do |app|
       options = app.config.action_cable
-      options.allowed_request_origins ||= /https?:\/\/localhost:\d+/ if ::Rails.env.development?
+      options.allowed_request_origins ||= /https?:\/\/localhost:\d+/ if ::Quails.env.development?
 
       app.paths.add "config/cable", with: "config/cable.yml"
 
       ActiveSupport.on_load(:action_cable) do
         if (config_path = Pathname.new(app.config.paths["config/cable"].first)).exist?
-          self.cable = Rails.application.config_for(config_path).with_indifferent_access
+          self.cable = Quails.application.config_for(config_path).with_indifferent_access
         end
 
         previous_connection_class = connection_class

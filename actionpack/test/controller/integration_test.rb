@@ -2,7 +2,7 @@
 
 require "abstract_unit"
 require "controller/fake_controllers"
-require "rails/engine"
+require "quails/engine"
 
 class SessionTest < ActiveSupport::TestCase
   StubApp = lambda { |env|
@@ -23,8 +23,8 @@ class SessionTest < ActiveSupport::TestCase
 
   def test_host!
     assert_not_equal "glu.ttono.us", @session.host
-    @session.host! "rubyonrails.com"
-    assert_equal "rubyonrails.com", @session.host
+    @session.host! "rubyonquails.com"
+    assert_equal "rubyonquails.com", @session.host
   end
 
   def test_follow_redirect_raises_when_no_redirect
@@ -645,7 +645,7 @@ class ApplicationIntegrationTest < ActionDispatch::IntegrationTest
     @routes ||= ActionDispatch::Routing::RouteSet.new
   end
 
-  class MountedApp < Rails::Engine
+  class MountedApp < Quails::Engine
     def self.routes
       @routes ||= ActionDispatch::Routing::RouteSet.new
     end
@@ -1115,7 +1115,7 @@ class IntegrationFileUploadTest < ActionDispatch::IntegrationTest
   def test_fixture_file_upload
     post "/test_file_upload",
       params: {
-        file: fixture_file_upload("/ruby_on_rails.jpg", "image/jpg")
+        file: fixture_file_upload("/ruby_on_quails.jpg", "image/jpg")
       }
     assert_equal "45142", @response.body
   end

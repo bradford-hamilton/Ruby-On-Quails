@@ -4,7 +4,7 @@ require "active_support/core_ext/hash/slice"
 require_relative "../app/app_generator"
 require "date"
 
-module Rails
+module Quails
   # The plugin builder allows you to override elements of the plugin
   # generator without being forced to reverse the operations of the default
   # generator.
@@ -100,22 +100,22 @@ task default: :test
       opts[:skip_git] = true
       opts[:skip_turbolinks] = true
 
-      invoke Rails::Generators::AppGenerator,
+      invoke Quails::Generators::AppGenerator,
         [ File.expand_path(dummy_path, destination_root) ], opts
     end
 
     def test_dummy_config
-      template "rails/boot.rb", "#{dummy_path}/config/boot.rb", force: true
-      template "rails/application.rb", "#{dummy_path}/config/application.rb", force: true
+      template "quails/boot.rb", "#{dummy_path}/config/boot.rb", force: true
+      template "quails/application.rb", "#{dummy_path}/config/application.rb", force: true
       if mountable?
-        template "rails/routes.rb", "#{dummy_path}/config/routes.rb", force: true
+        template "quails/routes.rb", "#{dummy_path}/config/routes.rb", force: true
       end
     end
 
     def test_dummy_assets
-      template "rails/javascripts.js",    "#{dummy_path}/app/assets/javascripts/application.js", force: true
-      template "rails/stylesheets.css",   "#{dummy_path}/app/assets/stylesheets/application.css", force: true
-      template "rails/dummy_manifest.js", "#{dummy_path}/app/assets/config/manifest.js", force: true
+      template "quails/javascripts.js",    "#{dummy_path}/app/assets/javascripts/application.js", force: true
+      template "quails/stylesheets.css",   "#{dummy_path}/app/assets/stylesheets/application.css", force: true
+      template "quails/dummy_manifest.js", "#{dummy_path}/app/assets/config/manifest.js", force: true
     end
 
     def test_dummy_clean
@@ -131,12 +131,12 @@ task default: :test
     end
 
     def assets_manifest
-      template "rails/engine_manifest.js", "app/assets/config/#{underscored_name}_manifest.js"
+      template "quails/engine_manifest.js", "app/assets/config/#{underscored_name}_manifest.js"
     end
 
     def stylesheets
       if mountable?
-        copy_file "rails/stylesheets.css",
+        copy_file "quails/stylesheets.css",
                   "app/assets/stylesheets/#{namespaced_name}/application.css"
       elsif full?
         empty_directory_with_keep_file "app/assets/stylesheets/#{namespaced_name}"
@@ -147,7 +147,7 @@ task default: :test
       return if options.skip_javascript?
 
       if mountable?
-        template "rails/javascripts.js",
+        template "quails/javascripts.js",
                  "app/assets/javascripts/#{namespaced_name}/application.js"
       elsif full?
         empty_directory_with_keep_file "app/assets/javascripts/#{namespaced_name}"
@@ -155,7 +155,7 @@ task default: :test
     end
 
     def bin(force = false)
-      bin_file = engine? ? "bin/rails.tt" : "bin/test.tt"
+      bin_file = engine? ? "bin/quails.tt" : "bin/test.tt"
       template bin_file, force: force do |content|
         "#{shebang}\n" + content
       end
@@ -165,7 +165,7 @@ task default: :test
     def gemfile_entry
       return unless inside_application?
 
-      gemfile_in_app_path = File.join(rails_app_path, "Gemfile")
+      gemfile_in_app_path = File.join(quails_app_path, "Gemfile")
       if File.exist? gemfile_in_app_path
         entry = "gem '#{name}', path: '#{relative_path}'"
         append_file gemfile_in_app_path, entry
@@ -183,7 +183,7 @@ task default: :test
                                   desc: "Create dummy application at given path"
 
       class_option :full,         type: :boolean, default: false,
-                                  desc: "Generate a rails engine with bundled Rails application for testing"
+                                  desc: "Generate a quails engine with bundled Quails application for testing"
 
       class_option :mountable,    type: :boolean, default: false,
                                   desc: "Generate mountable isolated application"
@@ -260,7 +260,7 @@ task default: :test
         build(:leftovers)
       end
 
-      public_task :apply_rails_template
+      public_task :apply_quails_template
 
       def run_after_bundle_callbacks
         @after_bundle_callbacks.each do |callback|
@@ -300,7 +300,7 @@ task default: :test
           build(:test_dummy_config)
           build(:test_dummy_assets)
           build(:test_dummy_clean)
-          # ensure that bin/rails has proper dummy_path
+          # ensure that bin/quails has proper dummy_path
           build(:bin, true)
         end
       end
@@ -330,7 +330,7 @@ task default: :test
       end
 
       def self.banner
-        "rails plugin new #{arguments.map(&:usage).join(' ')} [options]"
+        "quails plugin new #{arguments.map(&:usage).join(' ')} [options]"
       end
 
       def original_name
@@ -389,7 +389,7 @@ task default: :test
           raise Error, "Invalid plugin name #{original_name}. Please give a name which does not start with numbers."
         elsif RESERVED_NAMES.include?(name)
           raise Error, "Invalid plugin name #{original_name}. Please give a " \
-                       "name which does not match one of the reserved rails " \
+                       "name which does not match one of the reserved quails " \
                        "words: #{RESERVED_NAMES.join(", ")}"
         elsif Object.const_defined?(camelized)
           raise Error, "Invalid plugin name #{original_name}, constant #{camelized} is already in use. Please choose another plugin name."
@@ -409,7 +409,7 @@ task default: :test
       alias :store_application_definition! :application_definition
 
       def get_builder_class
-        defined?(::PluginBuilder) ? ::PluginBuilder : Rails::PluginBuilder
+        defined?(::PluginBuilder) ? ::PluginBuilder : Quails::PluginBuilder
       end
 
       def rakefile_test_tasks
@@ -433,17 +433,17 @@ end
         shell.mute(&block)
       end
 
-      def rails_app_path
+      def quails_app_path
         APP_PATH.sub("/config/application", "") if defined?(APP_PATH)
       end
 
       def inside_application?
-        rails_app_path && destination_root.start_with?(rails_app_path.to_s)
+        quails_app_path && destination_root.start_with?(quails_app_path.to_s)
       end
 
       def relative_path
         return unless inside_application?
-        app_path.sub(/^#{rails_app_path}\//, "")
+        app_path.sub(/^#{quails_app_path}\//, "")
       end
     end
   end

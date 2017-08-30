@@ -2,7 +2,7 @@
 
 require "tsort"
 
-module Rails
+module Quails
   module Initializable
     def self.included(base) #:nodoc:
       base.extend ClassMethods

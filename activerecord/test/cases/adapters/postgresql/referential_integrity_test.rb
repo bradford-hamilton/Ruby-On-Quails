@@ -55,7 +55,7 @@ class PostgreSQLReferentialIntegrityTest < ActiveRecord::PostgreSQLTestCase
       end
       assert_equal "Should be re-raised", e.message
     end
-    assert_match (/WARNING: Rails was not able to disable referential integrity/), warning
+    assert_match (/WARNING: Quails was not able to disable referential integrity/), warning
     assert_match (/cause: PG::InsufficientPrivilege/), warning
   end
 

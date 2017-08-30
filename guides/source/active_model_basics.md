@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
 Active Model Basics
 ===================
@@ -6,14 +6,14 @@ Active Model Basics
 This guide should provide you with all you need to get started using model
 classes. Active Model allows for Action Pack helpers to interact with
 plain Ruby objects. Active Model also helps build custom ORMs for use
-outside of the Rails framework.
+outside of the Quails framework.
 
 After reading this guide, you will know:
 
 * How an Active Record model behaves.
 * How Callbacks and validations work.
 * How serializers work.
-* How Active Model integrates with the Rails internationalization (i18n) framework.
+* How Active Model integrates with the Quails internationalization (i18n) framework.
 
 --------------------------------------------------------------------------------
 
@@ -87,7 +87,7 @@ end
 ### Conversion
 
 If a class defines `persisted?` and `id` methods, then you can include the
-`ActiveModel::Conversion` module in that class, and call the Rails conversion
+`ActiveModel::Conversion` module in that class, and call the Quails conversion
 methods on objects of that class.
 
 ```ruby
@@ -383,7 +383,7 @@ person.name            # => "Bob"
 
 ### Translation
 
-`ActiveModel::Translation` provides integration between your object and the Rails
+`ActiveModel::Translation` provides integration between your object and the Quails
 internationalization (i18n) framework.
 
 ```ruby
@@ -437,7 +437,7 @@ the Active Model API.
     ```
 
 ```bash
-$ rails test
+$ quails test
 
 Run options: --seed 14596
 

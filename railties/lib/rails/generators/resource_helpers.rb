@@ -3,13 +3,13 @@
 require_relative "active_model"
 require_relative "model_helpers"
 
-module Rails
+module Quails
   module Generators
     # Deal with controller names on scaffold and add some helpers to deal with
     # ActiveModel.
     module ResourceHelpers # :nodoc:
       def self.included(base) #:nodoc:
-        base.include(Rails::Generators::ModelHelpers)
+        base.include(Quails::Generators::ModelHelpers)
         base.class_option :model_name, type: :string, desc: "ModelName to be used"
       end
 
@@ -62,7 +62,7 @@ module Rails
 
         # Loads the ORM::Generators::ActiveModel class. This class is responsible
         # to tell scaffold entities how to generate a specific method for the
-        # ORM. Check Rails::Generators::ActiveModel for more information.
+        # ORM. Check Quails::Generators::ActiveModel for more information.
         def orm_class
           @orm_class ||= begin
             # Raise an error if the class_option :orm was not defined.
@@ -73,7 +73,7 @@ module Rails
             begin
               "#{options[:orm].to_s.camelize}::Generators::ActiveModel".constantize
             rescue NameError
-              Rails::Generators::ActiveModel
+              Quails::Generators::ActiveModel
             end
           end
         end

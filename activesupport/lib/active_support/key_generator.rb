@@ -6,7 +6,7 @@ require "openssl"
 module ActiveSupport
   # KeyGenerator is a simple wrapper around OpenSSL's implementation of PBKDF2.
   # It can be used to derive a number of keys for various purposes from a given secret.
-  # This lets Rails applications have a single secure secret, but avoid reusing that
+  # This lets Quails applications have a single secure secret, but avoid reusing that
   # key in multiple incompatible contexts.
   class KeyGenerator
     def initialize(secret, options = {})

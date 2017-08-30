@@ -4,19 +4,19 @@ begin
   require "thor/group"
 rescue LoadError
   puts "Thor is not available.\nIf you ran this command from a git checkout " \
-       "of Rails, please make sure thor is installed,\nand run this command " \
+       "of Quails, please make sure thor is installed,\nand run this command " \
        "as `ruby #{$0} #{(ARGV | ['--dev']).join(" ")}`"
   exit
 end
 
-module Rails
+module Quails
   module Generators
     class Error < Thor::Error # :nodoc:
     end
 
     class Base < Thor::Group
       include Thor::Actions
-      include Rails::Generators::Actions
+      include Quails::Generators::Actions
 
       class_option :skip_namespace, type: :boolean, default: false,
                                     desc: "Skip namespace (affects only isolated applications)"
@@ -51,9 +51,9 @@ module Rails
       end
 
       # Convenience method to hide this generator from the available ones when
-      # running rails generator command.
+      # running quails generator command.
       def self.hide!
-        Rails::Generators.hide_namespace(namespace)
+        Quails::Generators.hide_namespace(namespace)
       end
 
       # Invoke a generator based on the value supplied by the user to the
@@ -62,7 +62,7 @@ module Rails
       #
       # ==== Examples
       #
-      #   module Rails::Generators
+      #   module Quails::Generators
       #     class ControllerGenerator < Base
       #       hook_for :test_framework, aliases: "-t"
       #     end
@@ -73,15 +73,15 @@ module Rails
       #
       # For example, if the user invoke the controller generator as:
       #
-      #   rails generate controller Account --test-framework=test_unit
+      #   quails generate controller Account --test-framework=test_unit
       #
       # The controller generator will then try to invoke the following generators:
       #
-      #   "rails:test_unit", "test_unit:controller", "test_unit"
+      #   "quails:test_unit", "test_unit:controller", "test_unit"
       #
-      # Notice that "rails:generators:test_unit" could be loaded as well, what
-      # Rails looks for is the first and last parts of the namespace. This is what
-      # allows any test framework to hook into Rails as long as it provides any
+      # Notice that "quails:generators:test_unit" could be loaded as well, what
+      # Quails looks for is the first and last parts of the namespace. This is what
+      # allows any test framework to hook into Quails as long as it provides any
       # of the hooks above.
       #
       # ==== Options
@@ -93,7 +93,7 @@ module Rails
       # Let's suppose you are creating a generator that needs to invoke the
       # controller generator from test unit. Your first attempt is:
       #
-      #   class AwesomeGenerator < Rails::Generators::Base
+      #   class AwesomeGenerator < Quails::Generators::Base
       #     hook_for :test_framework
       #   end
       #
@@ -104,7 +104,7 @@ module Rails
       # Which is not the desired lookup. You can change it by providing the
       # :as option:
       #
-      #   class AwesomeGenerator < Rails::Generators::Base
+      #   class AwesomeGenerator < Quails::Generators::Base
       #     hook_for :test_framework, as: :controller
       #   end
       #
@@ -112,27 +112,27 @@ module Rails
       #
       #   "test_unit:controller", "test_unit"
       #
-      # Similarly, if you want it to also look up in the rails namespace, you
+      # Similarly, if you want it to also look up in the quails namespace, you
       # just need to provide the :in value:
       #
-      #   class AwesomeGenerator < Rails::Generators::Base
-      #     hook_for :test_framework, in: :rails, as: :controller
+      #   class AwesomeGenerator < Quails::Generators::Base
+      #     hook_for :test_framework, in: :quails, as: :controller
       #   end
       #
       # And the lookup is exactly the same as previously:
       #
-      #   "rails:test_unit", "test_unit:controller", "test_unit"
+      #   "quails:test_unit", "test_unit:controller", "test_unit"
       #
       # ==== Switches
       #
       # All hooks come with switches for user interface. If you do not want
       # to use any test framework, you can do:
       #
-      #   rails generate controller Account --skip-test-framework
+      #   quails generate controller Account --skip-test-framework
       #
       # Or similarly:
       #
-      #   rails generate controller Account --no-test-framework
+      #   quails generate controller Account --no-test-framework
       #
       # ==== Boolean hooks
       #
@@ -140,15 +140,15 @@ module Rails
       # developers might want to have webrat available on controller generator.
       # This can be achieved as:
       #
-      #   Rails::Generators::ControllerGenerator.hook_for :webrat, type: :boolean
+      #   Quails::Generators::ControllerGenerator.hook_for :webrat, type: :boolean
       #
       # Then, if you want webrat to be invoked, just supply:
       #
-      #   rails generate controller Account --webrat
+      #   quails generate controller Account --webrat
       #
       # The hooks lookup is similar as above:
       #
-      #   "rails:generators:webrat", "webrat:generators:controller", "webrat"
+      #   "quails:generators:webrat", "webrat:generators:controller", "webrat"
       #
       # ==== Custom invocations
       #
@@ -199,7 +199,7 @@ module Rails
         end
       end
 
-      # Make class option aware of Rails::Generators.options and Rails::Generators.aliases.
+      # Make class option aware of Quails::Generators.options and Quails::Generators.aliases.
       def self.class_option(name, options = {}) #:nodoc:
         options[:desc]    = "Indicates when to generate #{name.to_s.humanize.downcase}" unless options.key?(:desc)
         options[:aliases] = default_aliases_for_option(name, options)
@@ -208,7 +208,7 @@ module Rails
       end
 
       # Returns the default source root for a given generator. This is used internally
-      # by rails to set its generators source root. If you want to customize your source
+      # by quails to set its generators source root. If you want to customize your source
       # root, you should use source_root.
       def self.default_source_root
         return unless base_name && generator_name
@@ -232,9 +232,9 @@ module Rails
         base.source_root
 
         if base.name && base.name !~ /Base$/
-          Rails::Generators.subclasses << base
+          Quails::Generators.subclasses << base
 
-          Rails::Generators.templates_path.each do |path|
+          Quails::Generators.templates_path.each do |path|
             if base.name.include?("::")
               base.source_paths << File.join(path, base.base_name, base.generator_name)
             else
@@ -247,7 +247,7 @@ module Rails
       private
 
         # Check whether the given class names are already taken by user
-        # application or Ruby on Rails.
+        # application or Ruby on Quails.
         def class_collisions(*class_names)
           return unless behavior == :invoke
 
@@ -262,7 +262,7 @@ module Rails
 
             if last && last.const_defined?(last_name.camelize, false)
               raise Error, "The name '#{class_name}' is either already used in your application " \
-                           "or reserved by Ruby on Rails. Please choose an alternative and run "  \
+                           "or reserved by Ruby on Quails. Please choose an alternative and run "  \
                            "this generator again."
             end
           end
@@ -295,7 +295,7 @@ module Rails
         end
 
         def namespace # :doc:
-          Rails::Generators.namespace
+          Quails::Generators.namespace
         end
 
         def namespaced? # :doc:
@@ -310,9 +310,9 @@ module Rails
           @namespaced_path ||= namespace_dirs.join("/")
         end
 
-        # Use Rails default banner.
+        # Use Quails default banner.
         def self.banner # :doc:
-          "rails generate #{namespace.sub(/^rails:/, '')} #{arguments.map(&:usage).join(' ')} [options]".gsub(/\s+/, " ")
+          "quails generate #{namespace.sub(/^quails:/, '')} #{arguments.map(&:usage).join(' ')} [options]".gsub(/\s+/, " ")
         end
 
         # Sets the base_name taking into account the current class namespace.
@@ -325,7 +325,7 @@ module Rails
         end
 
         # Removes the namespaces and get the generator name. For example,
-        # Rails::Generators::ModelGenerator will return "model" as generator name.
+        # Quails::Generators::ModelGenerator will return "model" as generator name.
         def self.generator_name # :doc:
           @generator_name ||= begin
             if generator = name.to_s.split("::").last
@@ -336,15 +336,15 @@ module Rails
         end
 
         # Returns the default value for the option name given doing a lookup in
-        # Rails::Generators.options.
+        # Quails::Generators.options.
         def self.default_value_for_option(name, options) # :doc:
-          default_for_option(Rails::Generators.options, name, options, options[:default])
+          default_for_option(Quails::Generators.options, name, options, options[:default])
         end
 
         # Returns default aliases for the option name given doing a lookup in
-        # Rails::Generators.aliases.
+        # Quails::Generators.aliases.
         def self.default_aliases_for_option(name, options) # :doc:
-          default_for_option(Rails::Generators.aliases, name, options, options[:aliases])
+          default_for_option(Quails::Generators.aliases, name, options, options[:aliases])
         end
 
         # Returns default for the option name given doing a lookup in config.
@@ -353,8 +353,8 @@ module Rails
             c[name]
           elsif base_name && (c = config[base_name.to_sym]) && c.key?(name)
             c[name]
-          elsif config[:rails].key?(name)
-            config[:rails][name]
+          elsif config[:quails].key?(name)
+            config[:quails][name]
           else
             default
           end
@@ -365,15 +365,15 @@ module Rails
           @hooks ||= from_superclass(:hooks, {})
         end
 
-        # Prepare class invocation to search on Rails namespace if a previous
+        # Prepare class invocation to search on Quails namespace if a previous
         # added hook is being used.
         def self.prepare_for_invocation(name, value) #:nodoc:
           return super unless value.is_a?(String) || value.is_a?(Symbol)
 
           if value && constants = hooks[name]
             value = name if TrueClass === value
-            Rails::Generators.find_by_namespace(value, *constants)
-          elsif klass = Rails::Generators.find_by_namespace(value)
+            Quails::Generators.find_by_namespace(value, *constants)
+          elsif klass = Quails::Generators.find_by_namespace(value)
             klass
           else
             super

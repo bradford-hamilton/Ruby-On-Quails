@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   module Command
     class HelpCommand < Base # :nodoc:
       hide_command!
@@ -8,7 +8,7 @@ module Rails
       def help(*)
         puts self.class.desc
 
-        Rails::Command.print_commands
+        Quails::Command.print_commands
       end
     end
   end

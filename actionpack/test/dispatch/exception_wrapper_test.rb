@@ -33,11 +33,11 @@ module ActionDispatch
     end
 
     test "#source_extracts works with Windows paths" do
-      exc = TestError.new("c:/path/to/rails/app/controller.rb:27:in 'index':")
+      exc = TestError.new("c:/path/to/quails/app/controller.rb:27:in 'index':")
 
       wrapper = ExceptionWrapper.new(nil, exc)
 
-      assert_called_with(wrapper, :source_fragment, ["c:/path/to/rails/app/controller.rb", 27], returns: "nothing") do
+      assert_called_with(wrapper, :source_fragment, ["c:/path/to/quails/app/controller.rb", 27], returns: "nothing") do
         assert_equal [ code: "nothing", line_number: 27 ], wrapper.source_extracts
       end
     end

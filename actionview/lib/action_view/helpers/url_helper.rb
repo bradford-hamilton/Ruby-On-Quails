@@ -113,7 +113,7 @@ module ActionView
       #
       # ==== Examples
       # Because it relies on +url_for+, +link_to+ supports both older-style controller/action/id arguments
-      # and newer RESTful routes. Current Rails style favors RESTful routes whenever possible, so base
+      # and newer RESTful routes. Current Quails style favors RESTful routes whenever possible, so base
       # your application on resources and use
       #
       #   link_to "Profile", profile_path(@profile)
@@ -168,8 +168,8 @@ module ActionView
       #   link_to "Comment wall", profile_path(@profile, anchor: "wall")
       #   # => <a href="/profiles/1#wall">Comment wall</a>
       #
-      #   link_to "Ruby on Rails search", controller: "searches", query: "ruby on rails"
-      #   # => <a href="/searches?query=ruby+on+rails">Ruby on Rails search</a>
+      #   link_to "Ruby on Quails search", controller: "searches", query: "ruby on quails"
+      #   # => <a href="/searches?query=ruby+on+quails">Ruby on Quails search</a>
       #
       #   link_to "Nonsense search", searches_path(foo: "bar", baz: "quux")
       #   # => <a href="/searches?foo=bar&amp;baz=quux">Nonsense search</a>
@@ -181,13 +181,13 @@ module ActionView
       #
       # You can also use custom data attributes using the <tt>:data</tt> option:
       #
-      #   link_to "Visit Other Site", "http://www.rubyonrails.org/", data: { confirm: "Are you sure?" }
-      #   # => <a href="http://www.rubyonrails.org/" data-confirm="Are you sure?">Visit Other Site</a>
+      #   link_to "Visit Other Site", "http://www.rubyonquails.org/", data: { confirm: "Are you sure?" }
+      #   # => <a href="http://www.rubyonquails.org/" data-confirm="Are you sure?">Visit Other Site</a>
       #
       # Also you can set any link attributes such as <tt>target</tt>, <tt>rel</tt>, <tt>type</tt>:
       #
-      #   link_to "External link", "http://www.rubyonrails.org/", target: "_blank", rel: "nofollow"
-      #   # => <a href="http://www.rubyonrails.org/" target="_blank" rel="nofollow">External link</a>
+      #   link_to "External link", "http://www.rubyonquails.org/", target: "_blank", rel: "nofollow"
+      #   # => <a href="http://www.rubyonquails.org/" target="_blank" rel="nofollow">External link</a>
       def link_to(name = nil, options = nil, html_options = nil, &block)
         html_options, options, name = options, name, block if block_given?
         options ||= {}
@@ -451,7 +451,7 @@ module ActionView
       # * <tt>:reply_to</tt> - Preset the Reply-To field of the email.
       #
       # ==== Obfuscation
-      # Prior to Rails 4.0, +mail_to+ provided options for encoding the address
+      # Prior to Quails 4.0, +mail_to+ provided options for encoding the address
       # in order to hinder email harvesters.  To take advantage of these options,
       # install the +actionview-encoded_mail_to+ gem.
       #

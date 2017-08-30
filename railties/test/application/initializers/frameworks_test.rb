@@ -41,18 +41,18 @@ module ApplicationTests
 
     test "allows me to configure default url options for ActionMailer" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
-          config.action_mailer.default_url_options = { :host => "test.rails" }
+        Quails.application.configure do
+          config.action_mailer.default_url_options = { :host => "test.quails" }
         end
       RUBY
 
       require "#{app_path}/config/environment"
-      assert_equal "test.rails", ActionMailer::Base.default_url_options[:host]
+      assert_equal "test.quails", ActionMailer::Base.default_url_options[:host]
     end
 
     test "Default to HTTPS for ActionMailer URLs when force_ssl is on" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Quails.application.configure do
           config.force_ssl = true
         end
       RUBY
@@ -63,7 +63,7 @@ module ApplicationTests
 
     test "includes url helpers as action methods" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           get "/foo", :to => lambda { |env| [200, {}, []] }, :as => :foo
         end
       RUBY
@@ -125,7 +125,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           get "/:controller(/:action)"
         end
       RUBY
@@ -157,7 +157,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           get "/:controller(/:action)"
         end
       RUBY
@@ -216,8 +216,8 @@ module ApplicationTests
 
     test "use schema cache dump" do
       Dir.chdir(app_path) do
-        `rails generate model post title:string;
-         bin/rails db:migrate db:schema:cache:dump`
+        `quails generate model post title:string;
+         bin/quails db:migrate db:schema:cache:dump`
       end
       require "#{app_path}/config/environment"
       ActiveRecord::Base.connection.drop_table("posts") # force drop posts table for test.
@@ -226,33 +226,33 @@ module ApplicationTests
 
     test "expire schema cache dump" do
       Dir.chdir(app_path) do
-        `rails generate model post title:string;
-         bin/rails db:migrate db:schema:cache:dump db:rollback`
+        `quails generate model post title:string;
+         bin/quails db:migrate db:schema:cache:dump db:rollback`
       end
       require "#{app_path}/config/environment"
       assert !ActiveRecord::Base.connection.schema_cache.data_sources("posts")
     end
 
-    test "active record establish_connection uses Rails.env if DATABASE_URL is not set" do
+    test "active record establish_connection uses Quails.env if DATABASE_URL is not set" do
       begin
         require "#{app_path}/config/environment"
         orig_database_url = ENV.delete("DATABASE_URL")
-        orig_rails_env, Rails.env = Rails.env, "development"
+        orig_quails_env, Quails.env = Quails.env, "development"
         ActiveRecord::Base.establish_connection
         assert ActiveRecord::Base.connection
-        assert_match(/#{ActiveRecord::Base.configurations[Rails.env]['database']}/, ActiveRecord::Base.connection_config[:database])
+        assert_match(/#{ActiveRecord::Base.configurations[Quails.env]['database']}/, ActiveRecord::Base.connection_config[:database])
       ensure
         ActiveRecord::Base.remove_connection
         ENV["DATABASE_URL"] = orig_database_url if orig_database_url
-        Rails.env = orig_rails_env if orig_rails_env
+        Quails.env = orig_quails_env if orig_quails_env
       end
     end
 
-    test "active record establish_connection uses DATABASE_URL even if Rails.env is set" do
+    test "active record establish_connection uses DATABASE_URL even if Quails.env is set" do
       begin
         require "#{app_path}/config/environment"
         orig_database_url = ENV.delete("DATABASE_URL")
-        orig_rails_env, Rails.env = Rails.env, "development"
+        orig_quails_env, Quails.env = Quails.env, "development"
         database_url_db_name = "db/database_url_db.sqlite3"
         ENV["DATABASE_URL"] = "sqlite3:#{database_url_db_name}"
         ActiveRecord::Base.establish_connection
@@ -261,7 +261,7 @@ module ApplicationTests
       ensure
         ActiveRecord::Base.remove_connection
         ENV["DATABASE_URL"] = orig_database_url if orig_database_url
-        Rails.env = orig_rails_env if orig_rails_env
+        Quails.env = orig_quails_env if orig_quails_env
       end
     end
 

@@ -33,7 +33,7 @@
     *Sean Griffin*
 
 *   `ApplicationRecord` is no longer generated when generating models. If you
-    need to generate it, it can be created with `rails g application_record`.
+    need to generate it, it can be created with `quails g application_record`.
 
     *Lisa Ugray*
 
@@ -154,7 +154,7 @@
     #=> SELECT ... FROM authors INNER JOIN posts ON ... INNER JOIN comments ON...
     ```
 
-    TODO: Add to the Rails 5.2 upgrade guide
+    TODO: Add to the Quails 5.2 upgrade guide
 
     *Maxime Handfield Lapointe*
 
@@ -191,7 +191,7 @@
     that does not include a timestamp any more.
 
     NOTE: This feature is turned off by default, and `#cache_key` will still return cache keys with timestamps
-    until you set `ActiveRecord::Base.cache_versioning = true`. That's the setting for all new apps on Rails 5.2+
+    until you set `ActiveRecord::Base.cache_versioning = true`. That's the setting for all new apps on Quails 5.2+
 
     *DHH*
 
@@ -218,7 +218,7 @@
 
     *bogdanvlviv*
 
-*   Fix `bin/rails db:forward` first migration.
+*   Fix `bin/quails db:forward` first migration.
 
     *bogdanvlviv*
 
@@ -239,4 +239,4 @@
     *Kevin McPhillips*
 
 
-Please check [5-1-stable](https://github.com/rails/rails/blob/5-1-stable/activerecord/CHANGELOG.md) for previous changes.
+Please check [5-1-stable](https://github.com/quails/quails/blob/5-1-stable/activerecord/CHANGELOG.md) for previous changes.

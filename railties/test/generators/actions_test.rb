@@ -1,23 +1,23 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/app/app_generator"
+require "quails/generators/quails/app/app_generator"
 require "env_helpers"
 
-class ActionsTest < Rails::Generators::TestCase
+class ActionsTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
   include EnvHelpers
 
-  tests Rails::Generators::AppGenerator
+  tests Quails::Generators::AppGenerator
   arguments [destination_root]
 
   def setup
-    Rails.application = TestApp::Application
+    Quails.application = TestApp::Application
     super
   end
 
   def teardown
-    Rails.application = TestApp::Application.instance
+    Quails.application = TestApp::Application.instance
   end
 
   def test_invoke_other_generator_with_shortcut
@@ -26,7 +26,7 @@ class ActionsTest < Rails::Generators::TestCase
   end
 
   def test_invoke_other_generator_with_full_namespace
-    action :invoke, "rails:model", ["my_model"]
+    action :invoke, "quails:model", ["my_model"]
     assert_file "app/models/my_model.rb", /MyModel/
   end
 
@@ -49,18 +49,18 @@ class ActionsTest < Rails::Generators::TestCase
   def test_add_source_with_block_adds_source_to_gemfile_with_gem
     run_generator
     action :add_source, "http://gems.github.com" do
-      gem "rspec-rails"
+      gem "rspec-quails"
     end
-    assert_file "Gemfile", /source 'http:\/\/gems\.github\.com' do\n  gem 'rspec-rails'\nend/
+    assert_file "Gemfile", /source 'http:\/\/gems\.github\.com' do\n  gem 'rspec-quails'\nend/
   end
 
   def test_add_source_with_block_adds_source_to_gemfile_after_gem
     run_generator
     action :gem, "will-paginate"
     action :add_source, "http://gems.github.com" do
-      gem "rspec-rails"
+      gem "rspec-quails"
     end
-    assert_file "Gemfile", /gem 'will-paginate'\nsource 'http:\/\/gems\.github\.com' do\n  gem 'rspec-rails'\nend/
+    assert_file "Gemfile", /gem 'will-paginate'\nsource 'http:\/\/gems\.github\.com' do\n  gem 'rspec-quails'\nend/
   end
 
   def test_gem_should_put_gem_dependency_in_gemfile
@@ -83,10 +83,10 @@ class ActionsTest < Rails::Generators::TestCase
     File.open("Gemfile", "a") { |f| f.write("# Some content...") }
 
     action :gem, "rspec"
-    action :gem, "rspec-rails"
+    action :gem, "rspec-quails"
 
     assert_file "Gemfile", /^gem 'rspec'$/
-    assert_file "Gemfile", /^gem 'rspec-rails'$/
+    assert_file "Gemfile", /^gem 'rspec-quails'$/
   end
 
   def test_gem_should_include_options
@@ -101,10 +101,10 @@ class ActionsTest < Rails::Generators::TestCase
     run_generator
 
     action :gem, "rspec", require: false
-    action :gem, "rspec-rails", group: [:development, :test]
+    action :gem, "rspec-quails", group: [:development, :test]
 
     assert_file "Gemfile", /^gem 'rspec', require: false$/
-    assert_file "Gemfile", /^gem 'rspec-rails', group: \[:development, :test\]$/
+    assert_file "Gemfile", /^gem 'rspec-quails', group: \[:development, :test\]$/
   end
 
   def test_gem_falls_back_to_inspect_if_string_contains_single_quote
@@ -127,28 +127,28 @@ class ActionsTest < Rails::Generators::TestCase
     run_generator
 
     action :gem_group, :development, :test do
-      gem "rspec-rails"
+      gem "rspec-quails"
     end
 
     action :gem_group, :test do
       gem "fakeweb"
     end
 
-    assert_file "Gemfile", /\ngroup :development, :test do\n  gem 'rspec-rails'\nend\n\ngroup :test do\n  gem 'fakeweb'\nend/
+    assert_file "Gemfile", /\ngroup :development, :test do\n  gem 'rspec-quails'\nend\n\ngroup :test do\n  gem 'fakeweb'\nend/
   end
 
   def test_environment_should_include_data_in_environment_initializer_block
     run_generator
-    autoload_paths = 'config.autoload_paths += %w["#{Rails.root}/app/extras"]'
+    autoload_paths = 'config.autoload_paths += %w["#{Quails.root}/app/extras"]'
     action :environment, autoload_paths
-    assert_file "config/application.rb", /  class Application < Rails::Application\n    #{Regexp.escape(autoload_paths)}\n/
+    assert_file "config/application.rb", /  class Application < Quails::Application\n    #{Regexp.escape(autoload_paths)}\n/
   end
 
   def test_environment_should_include_data_in_environment_initializer_block_with_env_option
     run_generator
-    autoload_paths = 'config.autoload_paths += %w["#{Rails.root}/app/extras"]'
+    autoload_paths = 'config.autoload_paths += %w["#{Quails.root}/app/extras"]'
     action :environment, autoload_paths, env: "development"
-    assert_file "config/environments/development.rb", /Rails\.application\.configure do\n  #{Regexp.escape(autoload_paths)}\n/
+    assert_file "config/environments/development.rb", /Quails\.application\.configure do\n  #{Regexp.escape(autoload_paths)}\n/
   end
 
   def test_environment_with_block_should_include_block_contents_in_environment_initializer_block
@@ -172,7 +172,7 @@ class ActionsTest < Rails::Generators::TestCase
       config.time_zone = "UTC"
     RUBY
     action(:environment) { data }
-    assert_file "config/application.rb", /  class Application < Rails::Application\n#{Regexp.escape(data.strip_heredoc.indent(4))}/
+    assert_file "config/application.rb", /  class Application < Quails::Application\n#{Regexp.escape(data.strip_heredoc.indent(4))}/
   end
 
   def test_environment_should_include_block_contents_with_multiline_data_in_environment_initializer_block_with_env_option
@@ -182,7 +182,7 @@ class ActionsTest < Rails::Generators::TestCase
       config.time_zone = "UTC"
     RUBY
     action(:environment, nil, env: "development") { data }
-    assert_file "config/environments/development.rb", /Rails\.application\.configure do\n#{Regexp.escape(data.strip_heredoc.indent(2))}/
+    assert_file "config/environments/development.rb", /Quails\.application\.configure do\n#{Regexp.escape(data.strip_heredoc.indent(2))}/
   end
 
   def test_git_with_symbol_should_run_command_using_git_scm
@@ -258,28 +258,28 @@ class ActionsTest < Rails::Generators::TestCase
   end
 
   def test_generate_should_run_script_generate_with_argument_and_options
-    assert_called_with(generator, :run_ruby_script, ["bin/rails generate model MyModel", verbose: false]) do
+    assert_called_with(generator, :run_ruby_script, ["bin/quails generate model MyModel", verbose: false]) do
       action :generate, "model", "MyModel"
     end
   end
 
-  def test_rails_should_run_rake_command_with_default_env
+  def test_quails_should_run_rake_command_with_default_env
     assert_called_with(generator, :run, ["rake log:clear RAILS_ENV=development", verbose: false]) do
-      with_rails_env nil do
+      with_quails_env nil do
         action :rake, "log:clear"
       end
     end
   end
 
-  def test_rails_with_env_option_should_run_rake_command_in_env
+  def test_quails_with_env_option_should_run_rake_command_in_env
     assert_called_with(generator, :run, ["rake log:clear RAILS_ENV=production", verbose: false]) do
       action :rake, "log:clear", env: "production"
     end
   end
 
-  test "rails command with RAILS_ENV variable should run rake command in env" do
+  test "quails command with RAILS_ENV variable should run rake command in env" do
     assert_called_with(generator, :run, ["rake log:clear RAILS_ENV=production", verbose: false]) do
-      with_rails_env "production" do
+      with_quails_env "production" do
         action :rake, "log:clear"
       end
     end
@@ -287,54 +287,54 @@ class ActionsTest < Rails::Generators::TestCase
 
   test "env option should win over RAILS_ENV variable when running rake" do
     assert_called_with(generator, :run, ["rake log:clear RAILS_ENV=production", verbose: false]) do
-      with_rails_env "staging" do
+      with_quails_env "staging" do
         action :rake, "log:clear", env: "production"
       end
     end
   end
 
-  test "rails command with sudo option should run rake command with sudo" do
+  test "quails command with sudo option should run rake command with sudo" do
     assert_called_with(generator, :run, ["sudo rake log:clear RAILS_ENV=development", verbose: false]) do
-      with_rails_env nil do
+      with_quails_env nil do
         action :rake, "log:clear", sudo: true
       end
     end
   end
 
-  test "rails command should run rails_command with default env" do
-    assert_called_with(generator, :run, ["rails log:clear RAILS_ENV=development", verbose: false]) do
-      with_rails_env nil do
-        action :rails_command, "log:clear"
+  test "quails command should run quails_command with default env" do
+    assert_called_with(generator, :run, ["quails log:clear RAILS_ENV=development", verbose: false]) do
+      with_quails_env nil do
+        action :quails_command, "log:clear"
       end
     end
   end
 
-  test "rails command with env option should run rails_command with same env" do
-    assert_called_with(generator, :run, ["rails log:clear RAILS_ENV=production", verbose: false]) do
-      action :rails_command, "log:clear", env: "production"
+  test "quails command with env option should run quails_command with same env" do
+    assert_called_with(generator, :run, ["quails log:clear RAILS_ENV=production", verbose: false]) do
+      action :quails_command, "log:clear", env: "production"
     end
   end
 
-  test "rails command with RAILS_ENV variable should run rails_command in env" do
-    assert_called_with(generator, :run, ["rails log:clear RAILS_ENV=production", verbose: false]) do
-      with_rails_env "production" do
-        action :rails_command, "log:clear"
+  test "quails command with RAILS_ENV variable should run quails_command in env" do
+    assert_called_with(generator, :run, ["quails log:clear RAILS_ENV=production", verbose: false]) do
+      with_quails_env "production" do
+        action :quails_command, "log:clear"
       end
     end
   end
 
-  def test_env_option_should_win_over_rails_env_variable_when_running_rails
-    assert_called_with(generator, :run, ["rails log:clear RAILS_ENV=production", verbose: false]) do
-      with_rails_env "staging" do
-        action :rails_command, "log:clear", env: "production"
+  def test_env_option_should_win_over_quails_env_variable_when_running_quails
+    assert_called_with(generator, :run, ["quails log:clear RAILS_ENV=production", verbose: false]) do
+      with_quails_env "staging" do
+        action :quails_command, "log:clear", env: "production"
       end
     end
   end
 
-  test "rails command with sudo option should run rails_command with sudo" do
-    assert_called_with(generator, :run, ["sudo rails log:clear RAILS_ENV=development", verbose: false]) do
-      with_rails_env nil do
-        action :rails_command, "log:clear", sudo: true
+  test "quails command with sudo option should run quails_command with sudo" do
+    assert_called_with(generator, :run, ["sudo quails log:clear RAILS_ENV=development", verbose: false]) do
+      with_quails_env nil do
+        action :quails_command, "log:clear", sudo: true
       end
     end
   end
@@ -383,7 +383,7 @@ class ActionsTest < Rails::Generators::TestCase
     File.open(route_path, "wb") { |file| file.write(content) }
 
     routes = <<-F
-Rails.application.routes.draw do
+Quails.application.routes.draw do
   root 'welcome#index'
 end
 F
@@ -393,7 +393,7 @@ F
     action :route, "resources :product_lines"
 
     routes = <<-F
-Rails.application.routes.draw do
+Quails.application.routes.draw do
   resources :product_lines
   root 'welcome#index'
 end
@@ -403,7 +403,7 @@ F
 
   def test_readme
     run_generator
-    assert_called(Rails::Generators::AppGenerator, :source_root, times: 2, returns: destination_root) do
+    assert_called(Quails::Generators::AppGenerator, :source_root, times: 2, returns: destination_root) do
       assert_match "application up and running", action(:readme, "README.md")
     end
   end
@@ -411,7 +411,7 @@ F
   def test_readme_with_quiet
     generator(default_arguments, quiet: true)
     run_generator
-    assert_called(Rails::Generators::AppGenerator, :source_root, times: 2, returns: destination_root) do
+    assert_called(Quails::Generators::AppGenerator, :source_root, times: 2, returns: destination_root) do
       assert_no_match "application up and running", action(:readme, "README.md")
     end
   end

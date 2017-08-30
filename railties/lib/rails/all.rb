@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails"
+require "quails"
 
 %w(
   active_record/railtie
@@ -10,7 +10,7 @@ require "rails"
   active_job/railtie
   action_cable/engine
   active_storage/engine
-  rails/test_unit/railtie
+  quails/test_unit/railtie
   sprockets/railtie
 ).each do |railtie|
   begin

@@ -8,7 +8,7 @@ class ScreenshotHelperTest < ActiveSupport::TestCase
   test "image path is saved in tmp directory" do
     new_test = DrivenBySeleniumWithChrome.new("x")
 
-    Rails.stub :root, Pathname.getwd do
+    Quails.stub :root, Pathname.getwd do
       assert_equal "tmp/screenshots/x.png", new_test.send(:image_path)
     end
   end
@@ -16,7 +16,7 @@ class ScreenshotHelperTest < ActiveSupport::TestCase
   test "image path includes failures text if test did not pass" do
     new_test = DrivenBySeleniumWithChrome.new("x")
 
-    Rails.stub :root, Pathname.getwd do
+    Quails.stub :root, Pathname.getwd do
       new_test.stub :passed?, false do
         assert_equal "tmp/screenshots/failures_x.png", new_test.send(:image_path)
       end
@@ -26,7 +26,7 @@ class ScreenshotHelperTest < ActiveSupport::TestCase
   test "image path does not include failures text if test skipped" do
     new_test = DrivenBySeleniumWithChrome.new("x")
 
-    Rails.stub :root, Pathname.getwd do
+    Quails.stub :root, Pathname.getwd do
       new_test.stub :passed?, false do
         new_test.stub :skipped?, true do
           assert_equal "tmp/screenshots/x.png", new_test.send(:image_path)
@@ -42,7 +42,7 @@ class ScreenshotHelperTest < ActiveSupport::TestCase
 
       new_test = DrivenBySeleniumWithChrome.new("x")
 
-      Rails.stub :root, Pathname.getwd do
+      Quails.stub :root, Pathname.getwd do
         new_test.stub :passed?, false do
           assert_match %r|url=artifact://.+?tmp/screenshots/failures_x\.png|, new_test.send(:display_image)
         end
@@ -55,7 +55,7 @@ class ScreenshotHelperTest < ActiveSupport::TestCase
   test "image path returns the relative path from current directory" do
     new_test = DrivenBySeleniumWithChrome.new("x")
 
-    Rails.stub :root, Pathname.getwd.join("..") do
+    Quails.stub :root, Pathname.getwd.join("..") do
       assert_equal "../tmp/screenshots/x.png", new_test.send(:image_path)
     end
   end

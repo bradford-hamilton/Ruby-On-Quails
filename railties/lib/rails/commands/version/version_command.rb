@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   module Command
     class VersionCommand < Base # :nodoc:
       def perform
-        Rails::Command.invoke :application, [ "--version" ]
+        Quails::Command.invoke :application, [ "--version" ]
       end
     end
   end

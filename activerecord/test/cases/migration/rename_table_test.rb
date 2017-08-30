@@ -32,8 +32,8 @@ module ActiveRecord
           renamed = true
 
           # Using explicit id in insert for compatibility across all databases
-          connection.execute "INSERT INTO 'references' (url, created_at, updated_at) VALUES ('http://rubyonrails.com', 0, 0)"
-          assert_equal "http://rubyonrails.com", connection.select_value("SELECT url FROM 'references' WHERE id=1")
+          connection.execute "INSERT INTO 'references' (url, created_at, updated_at) VALUES ('http://rubyonquails.com', 0, 0)"
+          assert_equal "http://rubyonquails.com", connection.select_value("SELECT url FROM 'references' WHERE id=1")
         ensure
           return unless renamed
           connection.rename_table :references, :test_models

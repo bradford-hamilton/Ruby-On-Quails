@@ -43,7 +43,7 @@ module ActiveRecord
         unless column_name.nil?
           ActiveSupport::Deprecation.warn \
             "When `count' is called with a block, it ignores other arguments. " \
-            "This behavior is now deprecated and will result in an ArgumentError in Rails 6.0."
+            "This behavior is now deprecated and will result in an ArgumentError in Quails 6.0."
         end
 
         return super()
@@ -88,7 +88,7 @@ module ActiveRecord
         unless column_name.nil?
           ActiveSupport::Deprecation.warn \
             "When `sum' is called with a block, it ignores other arguments. " \
-            "This behavior is now deprecated and will result in an ArgumentError in Rails 6.0."
+            "This behavior is now deprecated and will result in an ArgumentError in Quails 6.0."
         end
 
         return super()

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/scaffold_controller/scaffold_controller_generator"
+require "quails/generators/quails/scaffold_controller/scaffold_controller_generator"
 
-class NamedBaseTest < Rails::Generators::TestCase
+class NamedBaseTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
-  tests Rails::Generators::ScaffoldControllerGenerator
+  tests Quails::Generators::ScaffoldControllerGenerator
 
   def test_named_generator_with_underscore
     g = generator ["line_item"]
@@ -81,11 +81,11 @@ class NamedBaseTest < Rails::Generators::TestCase
 
   def test_application_name
     g = generator ["Admin::Foo"]
-    Rails.stub(:application, Object.new) do
+    Quails.stub(:application, Object.new) do
       assert_name g, "object", :application_name
     end
 
-    Rails.stub(:application, nil) do
+    Quails.stub(:application, nil) do
       assert_name g, "application", :application_name
     end
   end
@@ -108,9 +108,9 @@ class NamedBaseTest < Rails::Generators::TestCase
   def test_hide_namespace
     g = generator ["Hidden"]
     g.class.stub(:namespace, "hidden") do
-      assert_not_includes Rails::Generators.hidden_namespaces, "hidden"
+      assert_not_includes Quails::Generators.hidden_namespaces, "hidden"
       g.class.hide!
-      assert_includes Rails::Generators.hidden_namespaces, "hidden"
+      assert_includes Quails::Generators.hidden_namespaces, "hidden"
     end
   end
 

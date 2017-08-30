@@ -9,7 +9,7 @@ silence_warnings do
   Encoding.default_external = Encoding::UTF_8
 end
 
-module Rails
+module Quails
   def self.root
     File.expand_path("..", __dir__)
   end

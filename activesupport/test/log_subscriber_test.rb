@@ -43,7 +43,7 @@ class SyncLogSubscriberTest < ActiveSupport::TestCase
     ActiveSupport::Notifications.instrument(*args, &block)
   end
 
-  def test_proxies_method_to_rails_logger
+  def test_proxies_method_to_quails_logger
     @log_subscriber.foo(nil)
     assert_equal %w(debug), @logger.logged(:debug)
     assert_equal %w(info), @logger.logged(:info)

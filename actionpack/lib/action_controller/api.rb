@@ -7,7 +7,7 @@ require_relative "log_subscriber"
 module ActionController
   # API Controller is a lightweight version of <tt>ActionController::Base</tt>,
   # created for applications that don't require all functionalities that a complete
-  # \Rails controller provides, allowing you to create controllers with just the
+  # \Quails controller provides, allowing you to create controllers with just the
   # features that you need for API only applications.
   #
   # An API Controller is different from a normal controller in the sense that

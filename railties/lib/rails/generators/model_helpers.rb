@@ -2,7 +2,7 @@
 
 require_relative "active_model"
 
-module Rails
+module Quails
   module Generators
     module ModelHelpers # :nodoc:
       PLURAL_MODEL_NAME_WARN_MESSAGE = "[WARNING] The model name '%s' was recognized as a plural, using the singular '%s' instead. " \

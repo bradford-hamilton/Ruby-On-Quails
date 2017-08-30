@@ -145,7 +145,7 @@ module ActionCable::StreamTests
   class StreamFromTest < ActionCable::TestCase
     setup do
       @server = TestServer.new(subscription_adapter: ActionCable::SubscriptionAdapter::Async)
-      @server.config.allowed_request_origins = %w( http://rubyonrails.com )
+      @server.config.allowed_request_origins = %w( http://rubyonquails.com )
     end
 
     test "custom encoder" do
@@ -188,7 +188,7 @@ module ActionCable::StreamTests
       end
 
       def open_connection
-        env = Rack::MockRequest.env_for "/test", "HTTP_HOST" => "localhost", "HTTP_CONNECTION" => "upgrade", "HTTP_UPGRADE" => "websocket", "HTTP_ORIGIN" => "http://rubyonrails.com"
+        env = Rack::MockRequest.env_for "/test", "HTTP_HOST" => "localhost", "HTTP_CONNECTION" => "upgrade", "HTTP_UPGRADE" => "websocket", "HTTP_ORIGIN" => "http://rubyonquails.com"
 
         Connection.new(@server, env).tap do |connection|
           connection.process

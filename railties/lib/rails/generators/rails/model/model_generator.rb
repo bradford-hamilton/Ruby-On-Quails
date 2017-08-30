@@ -2,10 +2,10 @@
 
 require_relative "../../model_helpers"
 
-module Rails
+module Quails
   module Generators
     class ModelGenerator < NamedBase # :nodoc:
-      include Rails::Generators::ModelHelpers
+      include Quails::Generators::ModelHelpers
 
       argument :attributes, type: :array, default: [], banner: "field[:type][:index] field[:type][:index]"
       hook_for :orm, required: true, desc: "ORM to be invoked"

@@ -2,7 +2,7 @@
 
 require_relative "../../command/environment_argument"
 
-module Rails
+module Quails
   class DBConsole
     def self.start(*args)
       new(*args).start
@@ -52,7 +52,7 @@ module Rails
 
         args << "-#{@options['mode']}" if @options["mode"]
         args << "-header" if @options["header"]
-        args << File.expand_path(config["database"], Rails.respond_to?(:root) ? Rails.root : nil)
+        args << File.expand_path(config["database"], Quails.respond_to?(:root) ? Quails.root : nil)
 
         find_cmd_and_exec("sqlite3", *args)
 
@@ -103,7 +103,7 @@ module Rails
     end
 
     def environment
-      Rails.respond_to?(:env) ? Rails.env : Rails::Command.environment
+      Quails.respond_to?(:env) ? Quails.env : Quails::Command.environment
     end
 
     def connection
@@ -113,7 +113,7 @@ module Rails
     private
       def configurations # :doc:
         require APP_PATH
-        ActiveRecord::Base.configurations = Rails.application.config.database_configuration
+        ActiveRecord::Base.configurations = Quails.application.config.database_configuration
         ActiveRecord::Base.configurations
       end
 
@@ -163,7 +163,7 @@ module Rails
         ENV["RAILS_ENV"] = options[:environment]
 
         require_application_and_environment!
-        Rails::DBConsole.start(options)
+        Quails::DBConsole.start(options)
       end
     end
   end

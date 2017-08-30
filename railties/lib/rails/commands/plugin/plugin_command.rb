@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   module Command
     class PluginCommand < Base # :nodoc:
       hide_command!
@@ -13,20 +13,20 @@ module Rails
         "#{executable} new [options]"
       end
 
-      class_option :rc, type: :string, default: File.join("~", ".railsrc"),
-        desc: "Initialize the plugin command with previous defaults. Uses .railsrc in your home directory by default."
+      class_option :rc, type: :string, default: File.join("~", ".quailsrc"),
+        desc: "Initialize the plugin command with previous defaults. Uses .quailsrc in your home directory by default."
 
-      class_option :no_rc, desc: "Skip evaluating .railsrc."
+      class_option :no_rc, desc: "Skip evaluating .quailsrc."
 
       def perform(type = nil, *plugin_args)
         plugin_args << "--help" unless type == "new"
 
         unless options.key?("no_rc") # Thor's not so indifferent access hash.
-          railsrc = File.expand_path(options[:rc])
+          quailsrc = File.expand_path(options[:rc])
 
-          if File.exist?(railsrc)
-            extra_args = File.read(railsrc).split(/\n+/).flat_map(&:split)
-            puts "Using #{extra_args.join(" ")} from #{railsrc}"
+          if File.exist?(quailsrc)
+            extra_args = File.read(quailsrc).split(/\n+/).flat_map(&:split)
+            puts "Using #{extra_args.join(" ")} from #{quailsrc}"
             plugin_args.insert(1, *extra_args)
           end
         end
@@ -37,8 +37,8 @@ module Rails
       private
         def run_plugin_generator(plugin_args)
           require_relative "../../generators"
-          require_relative "../../generators/rails/plugin/plugin_generator"
-          Rails::Generators::PluginGenerator.start plugin_args
+          require_relative "../../generators/quails/plugin/plugin_generator"
+          Quails::Generators::PluginGenerator.start plugin_args
         end
     end
   end

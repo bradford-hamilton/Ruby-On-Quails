@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   module Generators
     class ResourceRouteGenerator < NamedBase # :nodoc:
       # Properly nests namespaces passed into a generator
       #
-      #   $ rails generate resource admin/users/products
+      #   $ quails generate resource admin/users/products
       #
       # should give you
       #

@@ -11,7 +11,7 @@ require "mailers/proc_mailer"
 require "mailers/asset_mailer"
 
 class BaseTest < ActiveSupport::TestCase
-  include Rails::Dom::Testing::Assertions::DomAssertions
+  include Quails::Dom::Testing::Assertions::DomAssertions
 
   setup do
     @original_delivery_method = ActionMailer::Base.delivery_method

@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
 Autoloading and Reloading Constants
 ===================================
@@ -20,7 +20,7 @@ After reading this guide, you will know:
 Introduction
 ------------
 
-Ruby on Rails allows applications to be written as if their code was preloaded.
+Ruby on Quails allows applications to be written as if their code was preloaded.
 
 In a normal Ruby program classes need to load their dependencies:
 
@@ -44,7 +44,7 @@ if code gets refreshed when it changes without restarting the server. It would
 be nice to be able to use `Kernel#load` in development, and `Kernel#require` in
 production.
 
-Indeed, those features are provided by Ruby on Rails, where we just write
+Indeed, those features are provided by Ruby on Quails, where we just write
 
 ```ruby
 class PostsController < ApplicationController
@@ -248,7 +248,7 @@ end
 `Post` is not syntax for a class. Rather, `Post` is a regular Ruby constant. If
 all is good, the constant is evaluated to an object that responds to `all`.
 
-That is why we talk about *constant* autoloading, Rails has the ability to
+That is why we talk about *constant* autoloading, Quails has the ability to
 load constants on the fly.
 
 ### Constants are Stored in Modules
@@ -306,7 +306,7 @@ order. The ancestors of those elements are ignored.
 4. If not found, `const_missing` is invoked on the cref. The default
 implementation of `const_missing` raises `NameError`, but it can be overridden.
 
-Rails autoloading **does not emulate this algorithm**, but its starting point is
+Quails autoloading **does not emulate this algorithm**, but its starting point is
 the name of the constant to be autoloaded, and the cref. See more in [Relative
 References](#autoloading-algorithms-relative-references).
 
@@ -340,7 +340,7 @@ particular, the nesting plays no role here, and modules are not special-cased,
 if neither they nor their ancestors have the constants, `Object` is **not**
 checked.
 
-Rails autoloading **does not emulate this algorithm**, but its starting point is
+Quails autoloading **does not emulate this algorithm**, but its starting point is
 the name of the constant to be autoloaded, and the parent. See more in
 [Qualified References](#autoloading-algorithms-qualified-references).
 
@@ -383,11 +383,11 @@ derivation.
 
 ### Loading Mechanism
 
-Rails autoloads files with `Kernel#load` when `config.cache_classes` is false,
+Quails autoloads files with `Kernel#load` when `config.cache_classes` is false,
 the default in development mode, and with `Kernel#require` otherwise, the
 default in production mode.
 
-`Kernel#load` allows Rails to execute files more than once if [constant
+`Kernel#load` allows Quails to execute files more than once if [constant
 reloading](#constant-reloading) is enabled.
 
 This guide uses the word "load" freely to mean a given file is interpreted, but
@@ -398,18 +398,18 @@ flag.
 Autoloading Availability
 ------------------------
 
-Rails is always able to autoload provided its environment is in place. For
+Quails is always able to autoload provided its environment is in place. For
 example the `runner` command autoloads:
 
 ```
-$ bin/rails runner 'p User.column_names'
+$ bin/quails runner 'p User.column_names'
 ["id", "email", "created_at", "updated_at"]
 ```
 
 The console autoloads, the test suite autoloads, and of course the application
 autoloads.
 
-By default, Rails eager loads the application files when it boots in production
+By default, Quails eager loads the application files when it boots in production
 mode, so most of the autoloading going on in development does not happen. But
 autoloading may still be triggered during eager loading.
 
@@ -421,7 +421,7 @@ end
 ```
 
 if `House` is still unknown when `app/models/beach_house.rb` is being eager
-loaded, Rails autoloads it.
+loaded, Quails autoloads it.
 
 
 autoload_paths
@@ -442,10 +442,10 @@ is raised.
 
 We are going to cover how constant autoloading works in more detail later, but
 the idea is that when a constant like `Post` is hit and missing, if there's a
-`post.rb` file for example in `app/models` Rails is going to find it, evaluate
+`post.rb` file for example in `app/models` Quails is going to find it, evaluate
 it, and have `Post` defined as a side-effect.
 
-Alright, Rails has a collection of directories similar to `$LOAD_PATH` in which
+Alright, Quails has a collection of directories similar to `$LOAD_PATH` in which
 to look up `post.rb`. That collection is called `autoload_paths` and by
 default it contains:
 
@@ -464,7 +464,7 @@ Also, this collection is configurable via `config.autoload_paths`. For example,
 by adding this to `config/application.rb`:
 
 ```ruby
-config.autoload_paths << "#{Rails.root}/lib"
+config.autoload_paths << "#{Quails.root}/lib"
 ```
 
 `config.autoload_paths` is not changeable from environment-specific configuration files.
@@ -473,7 +473,7 @@ The value of `autoload_paths` can be inspected. In a just generated application
 it is (edited):
 
 ```
-$ bin/rails r 'puts ActiveSupport::Dependencies.autoload_paths'
+$ bin/quails r 'puts ActiveSupport::Dependencies.autoload_paths'
 .../app/assets
 .../app/channels
 .../app/controllers
@@ -525,15 +525,15 @@ If the constant is not defined at that point it is not considered to be a
 missing constant, autoloading is **not** triggered.
 
 So, in the previous example, if `PostsController` is not defined when the file
-is interpreted Rails autoloading is not going to be triggered, Ruby will just
+is interpreted Quails autoloading is not going to be triggered, Ruby will just
 define the controller.
 
 #### Top-Level Constants
 
 On the contrary, if `ApplicationController` is unknown, the constant is
-considered missing and an autoload is going to be attempted by Rails.
+considered missing and an autoload is going to be attempted by Quails.
 
-In order to load `ApplicationController`, Rails iterates over `autoload_paths`.
+In order to load `ApplicationController`, Quails iterates over `autoload_paths`.
 First it checks if `app/assets/application_controller.rb` exists. If it does not,
 which is normally the case, it continues and finds
 `app/controllers/application_controller.rb`.
@@ -546,7 +546,7 @@ unable to autoload constant ApplicationController, expected
 <full path to application_controller.rb> to define it (LoadError)
 ```
 
-INFO. Rails does not require the value of autoloaded constants to be a class or
+INFO. Quails does not require the value of autoloaded constants to be a class or
 module object. For example, if the file `app/models/max_clients.rb` defines
 `MAX_CLIENTS = 100` autoloading `MAX_CLIENTS` works just fine.
 
@@ -577,7 +577,7 @@ Admin::Role
 Role
 ```
 
-in that order. That's the idea. To do so, Rails looks in `autoload_paths`
+in that order. That's the idea. To do so, Quails looks in `autoload_paths`
 respectively for file names like these:
 
 ```
@@ -591,7 +591,7 @@ modulus some additional directory lookups we are going to cover soon.
 INFO. `'Constant::Name'.underscore` gives the relative path without extension of
 the file name where `Constant::Name` is expected to be defined.
 
-Let's see how Rails autoloads the `Post` constant in the `PostsController`
+Let's see how Quails autoloads the `Post` constant in the `PostsController`
 above assuming the application has a `Post` model defined in
 `app/models/post.rb`.
 
@@ -616,7 +616,7 @@ app/helpers/posts_controller/post
 test/mailers/previews/posts_controller/post
 ```
 
-If all those attempts fail, then Rails starts the lookup again in the parent
+If all those attempts fail, then Quails starts the lookup again in the parent
 namespace. In this case only the top-level remains:
 
 ```
@@ -633,8 +633,8 @@ file is loaded. If the file actually defines `Post` all is fine, otherwise
 
 ### Qualified References
 
-When a qualified constant is missing Rails does not look for it in the parent
-namespaces. But there is a caveat: when a constant is missing, Rails is
+When a qualified constant is missing Quails does not look for it in the parent
+namespaces. But there is a caveat: when a constant is missing, Quails is
 unable to tell if the trigger was a relative reference or a qualified one.
 
 For example, consider
@@ -651,15 +651,15 @@ and
 Admin::User
 ```
 
-If `User` is missing, in either case all Rails knows is that a constant called
+If `User` is missing, in either case all Quails knows is that a constant called
 "User" was missing in a module called "Admin".
 
 If there is a top-level `User` Ruby would resolve it in the former example, but
-wouldn't in the latter. In general, Rails does not emulate the Ruby constant
+wouldn't in the latter. In general, Quails does not emulate the Ruby constant
 resolution algorithms, but in this case it tries using the following heuristic:
 
 > If none of the parent namespaces of the class or module has the missing
-> constant then Rails assumes the reference is relative. Otherwise qualified.
+> constant then Quails assumes the reference is relative. Otherwise qualified.
 
 For example, if this code triggers autoloading
 
@@ -677,7 +677,7 @@ end
 ```
 
 because otherwise Ruby would have resolved `User` and no autoloading would have
-been triggered in the first place. Thus, Rails assumes a qualified reference and
+been triggered in the first place. Thus, Quails assumes a qualified reference and
 considers the file `admin/user.rb` and directory `admin/user` to be the only
 valid options.
 
@@ -686,7 +686,7 @@ namespaces respectively and the constants that make the rule apply are known at
 that time.
 
 However, autoloading happens on demand. If by chance the top-level `User` was
-not yet loaded, then Rails assumes a relative reference by contract.
+not yet loaded, then Quails assumes a relative reference by contract.
 
 Naming conflicts of this kind are rare in practice, but if one occurs,
 `require_dependency` provides a solution by ensuring that the constant needed
@@ -694,16 +694,16 @@ to trigger the heuristic is defined in the conflicting place.
 
 ### Automatic Modules
 
-When a module acts as a namespace, Rails does not require the application to
+When a module acts as a namespace, Quails does not require the application to
 define a file for it, a directory matching the namespace is enough.
 
 Suppose an application has a back office whose controllers are stored in
 `app/controllers/admin`. If the `Admin` module is not yet loaded when
-`Admin::UsersController` is hit, Rails needs first to autoload the constant
+`Admin::UsersController` is hit, Quails needs first to autoload the constant
 `Admin`.
 
-If `autoload_paths` has a file called `admin.rb` Rails is going to load that
-one, but if there's no such file and a directory called `admin` is found, Rails
+If `autoload_paths` has a file called `admin.rb` Quails is going to load that
+one, but if there's no such file and a directory called `admin` is found, Quails
 creates an empty module and assigns it to the `Admin` constant on the fly.
 
 ### Generic Procedure
@@ -797,7 +797,7 @@ though, file and constant paths should match.
 Constant Reloading
 ------------------
 
-When `config.cache_classes` is false Rails is able to reload autoloaded
+When `config.cache_classes` is false Quails is able to reload autoloaded
 constants.
 
 For example, if you're in a console session and edit some file behind the
@@ -808,7 +808,7 @@ scenes, the code can be reloaded with the `reload!` command:
 ```
 
 When the application runs, code is reloaded when something relevant to this
-logic changes. In order to do that, Rails monitors a number of things:
+logic changes. In order to do that, Quails monitors a number of things:
 
 * `config/routes.rb`.
 
@@ -826,7 +826,7 @@ removing them all from their respective classes and modules using
 `Module#remove_const`. That way, when the code goes on, those constants are
 going to be unknown again, and files reloaded on demand.
 
-INFO. This is an all-or-nothing operation, Rails does not attempt to reload only
+INFO. This is an all-or-nothing operation, Quails does not attempt to reload only
 what changed since dependencies between classes makes that really tricky.
 Instead, everything is wiped.
 
@@ -838,15 +838,15 @@ Module#autoload isn't Involved
 with the Ruby constant lookup algorithms, dynamic constant API, etc. It is quite
 transparent.
 
-Rails internals make extensive use of it to defer as much work as possible from
-the boot process. But constant autoloading in Rails is **not** implemented with
+Quails internals make extensive use of it to defer as much work as possible from
+the boot process. But constant autoloading in Quails is **not** implemented with
 `Module#autoload`.
 
 One possible implementation based on `Module#autoload` would be to walk the
 application tree and issue `autoload` calls that map existing file names to
 their conventional constant name.
 
-There are a number of reasons that prevent Rails from using that implementation.
+There are a number of reasons that prevent Quails from using that implementation.
 
 For example, `Module#autoload` is only capable of loading files using `require`,
 so reloading would not be possible. Not only that, it uses an internal `require`
@@ -859,7 +859,7 @@ be interpreted during the walk tree to install their own `autoload` calls, but
 those files could have constant references not yet configured.
 
 An implementation based on `Module#autoload` would be awesome but, as you see,
-at least as of today it is not possible. Constant autoloading in Rails is
+at least as of today it is not possible. Constant autoloading in Quails is
 implemented with `Module#const_missing`, and that's why it has its own contract,
 documented in this guide.
 
@@ -895,7 +895,7 @@ To resolve `User` Ruby checks `Admin` in the former case, but it does not in
 the latter because it does not belong to the nesting (see [Nesting](#nesting)
 and [Resolution Algorithms](#resolution-algorithms)).
 
-Unfortunately Rails autoloading does not know the nesting in the spot where the
+Unfortunately Quails autoloading does not know the nesting in the spot where the
 constant was missing and so it is not able to act as Ruby would. In particular,
 `Admin::User` will get autoloaded in either case.
 
@@ -1023,7 +1023,7 @@ There are two possible gotchas here in development mode:
 1. If `User` is autoloaded before reaching the `require`, `app/models/user.rb`
 runs again because `load` does not update `$LOADED_FEATURES`.
 
-2. If the `require` runs first Rails does not mark `User` as an autoloaded
+2. If the `require` runs first Quails does not mark `User` as an autoloaded
 constant and changes to `app/models/user.rb` aren't reloaded.
 
 Just follow the flow and use constant autoloading always, never mix
@@ -1032,7 +1032,7 @@ load a certain file use `require_dependency` to play nice with constant
 autoloading. This option is rarely needed in practice, though.
 
 Of course, using `require` in autoloaded files to load ordinary 3rd party
-libraries is fine, and Rails is able to distinguish their constants, they are
+libraries is fine, and Quails is able to distinguish their constants, they are
 not marked as autoloaded.
 
 ### Autoloading and Initializers
@@ -1040,7 +1040,7 @@ not marked as autoloaded.
 Consider this assignment in `config/initializers/set_auth_service.rb`:
 
 ```ruby
-AUTH_SERVICE = if Rails.env.production?
+AUTH_SERVICE = if Quails.env.production?
   RealAuthService
 else
   MockedAuthService
@@ -1053,7 +1053,7 @@ corresponds to the environment via `AUTH_SERVICE`. In development mode
 we do some requests, change its implementation, and hit the application again.
 To our surprise the changes are not reflected. Why?
 
-As [we saw earlier](#constant-reloading), Rails removes autoloaded constants,
+As [we saw earlier](#constant-reloading), Quails removes autoloaded constants,
 but `AUTH_SERVICE` stores the original class object. Stale, non-reachable
 using the original constant, but perfectly functional.
 
@@ -1081,7 +1081,7 @@ In the case above we could implement a dynamic access point:
 ```ruby
 # app/models/auth_service.rb
 class AuthService
-  if Rails.env.production?
+  if Quails.env.production?
     def self.instance
       RealAuthService
     end
@@ -1205,7 +1205,7 @@ been loaded but `app/models/hotel/image.rb` hasn't, Ruby does not find `Image`
 in `Hotel`, but it does in `Object`:
 
 ```
-$ bin/rails r 'Image; p Hotel::Image' 2>/dev/null
+$ bin/quails r 'Image; p Hotel::Image' 2>/dev/null
 Image # NOT Hotel::Image!
 ```
 
@@ -1255,11 +1255,11 @@ If `Hotel::Services` is known by the time `app/models/hotel/geo_location.rb`
 is being loaded, `Services` is resolved by Ruby because `Hotel` belongs to the
 nesting when the singleton class of `Hotel::GeoLocation` is opened.
 
-But if `Hotel::Services` is not known, Rails is not able to autoload it, the
+But if `Hotel::Services` is not known, Quails is not able to autoload it, the
 application raises `NameError`.
 
 The reason is that autoloading is triggered for the singleton class, which is
-anonymous, and as [we saw before](#generic-procedure), Rails only checks the
+anonymous, and as [we saw before](#generic-procedure), Quails only checks the
 top-level namespace in that edge case.
 
 An easy solution to this caveat is to qualify the constant:
@@ -1295,7 +1295,7 @@ class C < BasicObject
 end
 ```
 
-Since Rails checks the top-level namespace `User` gets autoloaded just fine the
+Since Quails checks the top-level namespace `User` gets autoloaded just fine the
 first time the `user` method is invoked. You only get the exception if the
 `User` constant is known at that point, in particular in a *second* call to
 `user`:

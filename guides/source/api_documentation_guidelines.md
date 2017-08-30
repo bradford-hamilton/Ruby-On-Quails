@@ -1,9 +1,9 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
 API Documentation Guidelines
 ============================
 
-This guide documents the Ruby on Rails API documentation guidelines.
+This guide documents the Ruby on Quails API documentation guidelines.
 
 After reading this guide, you will know:
 
@@ -15,9 +15,9 @@ After reading this guide, you will know:
 RDoc
 ----
 
-The [Rails API documentation](http://api.rubyonrails.org) is generated with
+The [Quails API documentation](http://api.rubyonquails.org) is generated with
 [RDoc](http://docs.seattlerb.org/rdoc/). To generate it, make sure you are
-in the rails root directory, run `bundle install` and execute:
+in the quails root directory, run `bundle install` and execute:
 
 ```bash
   bundle exec rake rdoc
@@ -47,11 +47,11 @@ def attr_internal_reader(*attrs)
 end
 ```
 
-Communicate to the reader the current way of doing things, both explicitly and implicitly. Use the idioms recommended in edge. Reorder sections to emphasize favored approaches if needed, etc. The documentation should be a model for best practices and canonical, modern Rails usage.
+Communicate to the reader the current way of doing things, both explicitly and implicitly. Use the idioms recommended in edge. Reorder sections to emphasize favored approaches if needed, etc. The documentation should be a model for best practices and canonical, modern Quails usage.
 
 Documentation has to be concise but comprehensive. Explore and document edge cases. What happens if a module is anonymous? What if a collection is empty? What if an argument is nil?
 
-The proper names of Rails components have a space in between the words, like "Active Support". `ActiveRecord` is a Ruby module, whereas Active Record is an ORM. All Rails documentation should consistently refer to Rails components by their proper name, and if in your next blog post or presentation you remember this tidbit and take it into account that'd be phenomenal.
+The proper names of Quails components have a space in between the words, like "Active Support". `ActiveRecord` is a Ruby module, whereas Active Record is an ORM. All Quails documentation should consistently refer to Quails components by their proper name, and if in your next blog post or presentation you remember this tidbit and take it into account that'd be phenomenal.
 
 Spell names correctly: Arel, Test::Unit, RSpec, HTML, MySQL, JavaScript, ERB. When in doubt, please have a look at some authoritative source like their official documentation.
 
@@ -95,7 +95,7 @@ Example Code
 
 Choose meaningful examples that depict and cover the basics as well as interesting points or gotchas.
 
-Use two spaces to indent chunks of code--that is, for markup purposes, two spaces with respect to the left margin. The examples themselves should use [Rails coding conventions](contributing_to_ruby_on_rails.html#follow-the-coding-conventions).
+Use two spaces to indent chunks of code--that is, for markup purposes, two spaces with respect to the left margin. The examples themselves should use [Quails coding conventions](contributing_to_ruby_on_quails.html#follow-the-coding-conventions).
 
 Short docs do not need an explicit "Examples" label to introduce snippets; they just follow paragraphs:
 
@@ -311,11 +311,11 @@ self.class_eval %{
 Method Visibility
 -----------------
 
-When writing documentation for Rails, it's important to understand the difference between public user-facing API vs internal API.
+When writing documentation for Quails, it's important to understand the difference between public user-facing API vs internal API.
 
-Rails, like most libraries, uses the private keyword from Ruby for defining internal API. However, public API follows a slightly different convention. Instead of assuming all public methods are designed for user consumption, Rails uses the `:nodoc:` directive to annotate these kinds of methods as internal API.
+Quails, like most libraries, uses the private keyword from Ruby for defining internal API. However, public API follows a slightly different convention. Instead of assuming all public methods are designed for user consumption, Quails uses the `:nodoc:` directive to annotate these kinds of methods as internal API.
 
-This means that there are methods in Rails with `public` visibility that aren't meant for user consumption.
+This means that there are methods in Quails with `public` visibility that aren't meant for user consumption.
 
 An example of this is `ActiveRecord::Core::ClassMethods#arel_table`:
 
@@ -327,19 +327,19 @@ module ActiveRecord::Core::ClassMethods
 end
 ```
 
-If you thought, "this method looks like a public class method for `ActiveRecord::Core`", you were right. But actually the Rails team doesn't want users to rely on this method. So they mark it as `:nodoc:` and it's removed from public documentation. The reasoning behind this is to allow the team to change these methods according to their internal needs across releases as they see fit. The name of this method could change, or the return value, or this entire class may disappear; there's no guarantee and so you shouldn't depend on this API in your plugins or applications. Otherwise, you risk your app or gem breaking when you upgrade to a newer release of Rails.
+If you thought, "this method looks like a public class method for `ActiveRecord::Core`", you were right. But actually the Quails team doesn't want users to rely on this method. So they mark it as `:nodoc:` and it's removed from public documentation. The reasoning behind this is to allow the team to change these methods according to their internal needs across releases as they see fit. The name of this method could change, or the return value, or this entire class may disappear; there's no guarantee and so you shouldn't depend on this API in your plugins or applications. Otherwise, you risk your app or gem breaking when you upgrade to a newer release of Quails.
 
-As a contributor, it's important to think about whether this API is meant for end-user consumption. The Rails team is committed to not making any breaking changes to public API across releases without going through a full deprecation cycle. It's recommended that you `:nodoc:` any of your internal methods/classes unless they're already private (meaning visibility), in which case it's internal by default. Once the API stabilizes the visibility can change, but changing public API is much harder due to backwards compatibility.
+As a contributor, it's important to think about whether this API is meant for end-user consumption. The Quails team is committed to not making any breaking changes to public API across releases without going through a full deprecation cycle. It's recommended that you `:nodoc:` any of your internal methods/classes unless they're already private (meaning visibility), in which case it's internal by default. Once the API stabilizes the visibility can change, but changing public API is much harder due to backwards compatibility.
 
 A class or module is marked with `:nodoc:` to indicate that all methods are internal API and should never be used directly.
 
-To summarize, the Rails team uses `:nodoc:` to mark publicly visible methods and classes for internal use; changes to the visibility of API should be considered carefully and discussed over a pull request first.
+To summarize, the Quails team uses `:nodoc:` to mark publicly visible methods and classes for internal use; changes to the visibility of API should be considered carefully and discussed over a pull request first.
 
-Regarding the Rails Stack
+Regarding the Quails Stack
 -------------------------
 
-When documenting parts of Rails API, it's important to remember all of the
-pieces that go into the Rails stack.
+When documenting parts of Quails API, it's important to remember all of the
+pieces that go into the Quails stack.
 
 This means that behavior may change depending on the scope or context of the
 method or class you're trying to document.
@@ -354,13 +354,13 @@ into account, one such example is
 ```
 
 Although the default behavior for `#image_tag` is to always return
-`/images/icon.png`, we take into account the full Rails stack (including the
+`/images/icon.png`, we take into account the full Quails stack (including the
 Asset Pipeline) we may see the result seen above.
 
 We're only concerned with the behavior experienced when using the full default
-Rails stack.
+Quails stack.
 
 In this case, we want to document the behavior of the _framework_, and not just
 this specific method.
 
-If you have a question on how the Rails team handles certain API, don't hesitate to open a ticket or send a patch to the [issue tracker](https://github.com/rails/rails/issues).
+If you have a question on how the Quails team handles certain API, don't hesitate to open a ticket or send a patch to the [issue tracker](https://github.com/quails/quails/issues).

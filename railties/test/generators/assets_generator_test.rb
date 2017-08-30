@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/assets/assets_generator"
+require "quails/generators/quails/assets/assets_generator"
 
-class AssetsGeneratorTest < Rails::Generators::TestCase
+class AssetsGeneratorTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
   arguments %w(posts)
 

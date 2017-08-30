@@ -1,12 +1,12 @@
 # Contributor Code of Conduct
 
-The Rails team is committed to fostering a welcoming community.
+The Quails team is committed to fostering a welcoming community.
 
 **Our Code of Conduct can be found here**:
 
-http://rubyonrails.org/conduct/
+http://rubyonquails.org/conduct/
 
 For a history of updates, see the page history here:
 
-https://github.com/rails/rails.github.com/commits/master/conduct/index.html
+https://github.com/quails/quails.github.com/commits/master/conduct/index.html
 

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/model/model_generator"
+require "quails/generators/quails/model/model_generator"
 require "active_support/core_ext/string/strip"
 
-class ModelGeneratorTest < Rails::Generators::TestCase
+class ModelGeneratorTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
   arguments %w(Account name:string age:integer)
 
@@ -204,14 +204,14 @@ class ModelGeneratorTest < Rails::Generators::TestCase
   end
 
   def test_migration_with_configured_path
-    old_paths = Rails.application.config.paths["db/migrate"]
-    Rails.application.config.paths.add "db/migrate", with: "db2/migrate"
+    old_paths = Quails.application.config.paths["db/migrate"]
+    Quails.application.config.paths.add "db/migrate", with: "db2/migrate"
 
     run_generator
 
     assert_migration "db2/migrate/create_accounts.rb", /class CreateAccounts < ActiveRecord::Migration\[[0-9.]+\]/
   ensure
-    Rails.application.config.paths["db/migrate"] = old_paths
+    Quails.application.config.paths["db/migrate"] = old_paths
   end
 
   def test_model_with_references_attribute_generates_belongs_to_associations

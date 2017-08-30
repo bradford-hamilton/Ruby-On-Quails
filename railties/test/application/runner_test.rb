@@ -26,21 +26,21 @@ module ApplicationTests
     end
 
     def test_should_include_runner_in_shebang_line_in_help_without_option
-      assert_match "/rails runner", Dir.chdir(app_path) { `bin/rails runner` }
+      assert_match "/quails runner", Dir.chdir(app_path) { `bin/quails runner` }
     end
 
     def test_should_include_runner_in_shebang_line_in_help
-      assert_match "/rails runner", Dir.chdir(app_path) { `bin/rails runner --help` }
+      assert_match "/quails runner", Dir.chdir(app_path) { `bin/quails runner --help` }
     end
 
     def test_should_run_ruby_statement
-      assert_match "42", Dir.chdir(app_path) { `bin/rails runner "puts User.count"` }
+      assert_match "42", Dir.chdir(app_path) { `bin/quails runner "puts User.count"` }
     end
 
     def test_should_set_argv_when_running_code
       output = Dir.chdir(app_path) {
         # Both long and short args, at start and end of ARGV
-        `bin/rails runner "puts ARGV.join(',')" --foo a1 -b a2 a3 --moo`
+        `bin/quails runner "puts ARGV.join(',')" --foo a1 -b a2 a3 --moo`
       }
       assert_equal "--foo,a1,-b,a2,a3,--moo", output.chomp
     end
@@ -50,7 +50,7 @@ module ApplicationTests
       puts User.count
       SCRIPT
 
-      assert_match "42", Dir.chdir(app_path) { `bin/rails runner "bin/count_users.rb"` }
+      assert_match "42", Dir.chdir(app_path) { `bin/quails runner "bin/count_users.rb"` }
     end
 
     def test_no_minitest_loaded_in_production_mode
@@ -58,7 +58,7 @@ module ApplicationTests
       p $LOADED_FEATURES.grep(/minitest/)
       SCRIPT
       assert_match "[]", Dir.chdir(app_path) {
-        `RAILS_ENV=production bin/rails runner "bin/print_features.rb"`
+        `RAILS_ENV=production bin/quails runner "bin/print_features.rb"`
       }
     end
 
@@ -67,7 +67,7 @@ module ApplicationTests
       puts $0
       SCRIPT
 
-      assert_match "bin/dollar0.rb", Dir.chdir(app_path) { `bin/rails runner "bin/dollar0.rb"` }
+      assert_match "bin/dollar0.rb", Dir.chdir(app_path) { `bin/quails runner "bin/dollar0.rb"` }
     end
 
     def test_should_set_dollar_program_name_to_file
@@ -75,7 +75,7 @@ module ApplicationTests
       puts $PROGRAM_NAME
       SCRIPT
 
-      assert_match "bin/program_name.rb", Dir.chdir(app_path) { `bin/rails runner "bin/program_name.rb"` }
+      assert_match "bin/program_name.rb", Dir.chdir(app_path) { `bin/quails runner "bin/program_name.rb"` }
     end
 
     def test_passes_extra_args_to_file
@@ -83,7 +83,7 @@ module ApplicationTests
       p ARGV
       SCRIPT
 
-      assert_match %w( a b ).to_s, Dir.chdir(app_path) { `bin/rails runner "bin/program_name.rb" a b` }
+      assert_match %w( a b ).to_s, Dir.chdir(app_path) { `bin/quails runner "bin/program_name.rb" a b` }
     end
 
     def test_should_run_stdin
@@ -91,7 +91,7 @@ module ApplicationTests
       puts User.count
       SCRIPT
 
-      assert_match "42", Dir.chdir(app_path) { `cat bin/count_users.rb | bin/rails runner -` }
+      assert_match "42", Dir.chdir(app_path) { `cat bin/count_users.rb | bin/quails runner -` }
     end
 
     def test_with_hook
@@ -101,34 +101,34 @@ module ApplicationTests
         end
       RUBY
 
-      assert_match "true", Dir.chdir(app_path) { `bin/rails runner "puts Rails.application.config.ran"` }
+      assert_match "true", Dir.chdir(app_path) { `bin/quails runner "puts Quails.application.config.ran"` }
     end
 
     def test_default_environment
-      assert_match "development", Dir.chdir(app_path) { `bin/rails runner "puts Rails.env"` }
+      assert_match "development", Dir.chdir(app_path) { `bin/quails runner "puts Quails.env"` }
     end
 
     def test_runner_detects_syntax_errors
-      output = Dir.chdir(app_path) { `bin/rails runner "puts 'hello world" 2>&1` }
+      output = Dir.chdir(app_path) { `bin/quails runner "puts 'hello world" 2>&1` }
       assert_not $?.success?
       assert_match "unterminated string meets end of file", output
     end
 
     def test_runner_detects_bad_script_name
-      output = Dir.chdir(app_path) { `bin/rails runner "iuiqwiourowe" 2>&1` }
+      output = Dir.chdir(app_path) { `bin/quails runner "iuiqwiourowe" 2>&1` }
       assert_not $?.success?
       assert_match "undefined local variable or method `iuiqwiourowe' for", output
     end
 
-    def test_environment_with_rails_env
-      with_rails_env "production" do
-        assert_match "production", Dir.chdir(app_path) { `bin/rails runner "puts Rails.env"` }
+    def test_environment_with_quails_env
+      with_quails_env "production" do
+        assert_match "production", Dir.chdir(app_path) { `bin/quails runner "puts Quails.env"` }
       end
     end
 
     def test_environment_with_rack_env
       with_rack_env "production" do
-        assert_match "production", Dir.chdir(app_path) { `bin/rails runner "puts Rails.env"` }
+        assert_match "production", Dir.chdir(app_path) { `bin/quails runner "puts Quails.env"` }
       end
     end
   end

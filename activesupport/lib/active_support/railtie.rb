@@ -4,7 +4,7 @@ require "active_support"
 require_relative "i18n_railtie"
 
 module ActiveSupport
-  class Railtie < Rails::Railtie # :nodoc:
+  class Railtie < Quails::Railtie # :nodoc:
     config.active_support = ActiveSupport::OrderedOptions.new
 
     config.eager_load_namespaces << ActiveSupport

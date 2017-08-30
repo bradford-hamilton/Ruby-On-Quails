@@ -18,7 +18,7 @@ module ApplicationTests
 
     test "Unknown format falls back to HTML template" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           get 'pages/:id', to: 'pages#show'
         end
       RUBY

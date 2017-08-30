@@ -1,9 +1,9 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-The Basics of Creating Rails Plugins
+The Basics of Creating Quails Plugins
 ====================================
 
-A Rails plugin is either an extension or a modification of the core framework. Plugins provide:
+A Quails plugin is either an extension or a modification of the core framework. Plugins provide:
 
 * A way for developers to share bleeding-edge ideas without hurting the stable code base.
 * A segmented architecture so that units of code can be fixed or updated on their own release schedule.
@@ -29,25 +29,25 @@ goodness.
 Setup
 -----
 
-Currently, Rails plugins are built as gems, _gemified plugins_. They can be shared across
-different Rails applications using RubyGems and Bundler if desired.
+Currently, Quails plugins are built as gems, _gemified plugins_. They can be shared across
+different Quails applications using RubyGems and Bundler if desired.
 
 ### Generate a gemified plugin.
 
 
-Rails ships with a `rails plugin new` command which creates a
-skeleton for developing any kind of Rails extension with the ability
-to run integration tests using a dummy Rails application. Create your
+Quails ships with a `quails plugin new` command which creates a
+skeleton for developing any kind of Quails extension with the ability
+to run integration tests using a dummy Quails application. Create your
 plugin with the command:
 
 ```bash
-$ rails plugin new yaffle
+$ quails plugin new yaffle
 ```
 
 See usage and options by asking for help:
 
 ```bash
-$ rails plugin new --help
+$ quails plugin new --help
 ```
 
 Testing Your Newly Generated Plugin
@@ -67,7 +67,7 @@ This will tell you that everything got generated properly and you are ready to s
 Extending Core Classes
 ----------------------
 
-This section will explain how to add a method to String that will be available anywhere in your Rails application.
+This section will explain how to add a method to String that will be available anywhere in your Quails application.
 
 In this example you will add a method to String named `to_squawk`. To begin, create a new test file with a few assertions:
 
@@ -138,7 +138,7 @@ To test that your method does what it says it does, run the unit tests with `bin
 To see this in action, change to the `test/dummy` directory, fire up a console and start squawking:
 
 ```bash
-$ bin/rails console
+$ bin/quails console
 >> "Hello World".to_squawk
 => "squawk! Hello World"
 ```
@@ -236,13 +236,13 @@ Finished in 0.004812s, 831.2949 runs/s, 415.6475 assertions/s.
 ```
 
 This tells us that we don't have the necessary models (Hickwall and Wickwall) that we are trying to test.
-We can easily generate these models in our "dummy" Rails application by running the following commands from the
+We can easily generate these models in our "dummy" Quails application by running the following commands from the
 test/dummy directory:
 
 ```bash
 $ cd test/dummy
-$ bin/rails generate model Hickwall last_squawk:string
-$ bin/rails generate model Wickwall last_squawk:string last_tweet:string
+$ bin/quails generate model Hickwall last_squawk:string
+$ bin/quails generate model Wickwall last_squawk:string last_tweet:string
 ```
 
 Now you can create the necessary database tables in your testing database by navigating to your dummy app
@@ -250,7 +250,7 @@ and migrating the database. First, run:
 
 ```bash
 $ cd test/dummy
-$ bin/rails db:migrate
+$ bin/quails db:migrate
 ```
 
 While you are here, change the Hickwall and Wickwall models so that they know that they are supposed to act
@@ -449,7 +449,7 @@ Gem plugins currently in development can easily be shared from any Git repositor
 commit the code to a Git repository (like GitHub) and add a line to the Gemfile of the application in question:
 
 ```ruby
-gem "yaffle", git: "https://github.com/rails/yaffle.git"
+gem "yaffle", git: "https://github.com/quails/yaffle.git"
 ```
 
 After running `bundle install`, your gem functionality will be available to the application.

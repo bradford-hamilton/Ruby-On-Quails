@@ -144,7 +144,7 @@ class MultipartParamsParsingTest < ActionDispatch::IntegrationTest
 
   test "uploads and reads binary file" do
     with_test_routing do
-      fixture = FIXTURE_PATH + "/ruby_on_rails.jpg"
+      fixture = FIXTURE_PATH + "/ruby_on_quails.jpg"
       params = { uploaded_data: fixture_file_upload(fixture, "image/jpg") }
       post "/read", params: params
     end

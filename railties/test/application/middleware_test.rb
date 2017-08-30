@@ -16,7 +16,7 @@ module ApplicationTests
     end
 
     def app
-      @app ||= Rails.application
+      @app ||= Quails.application
     end
 
     test "default middleware stack" do
@@ -33,7 +33,7 @@ module ApplicationTests
         "Rack::MethodOverride",
         "ActionDispatch::RequestId",
         "ActionDispatch::RemoteIp",
-        "Rails::Rack::Logger",
+        "Quails::Rack::Logger",
         "ActionDispatch::ShowExceptions",
         "ActionDispatch::DebugExceptions",
         "ActionDispatch::Reloader",
@@ -61,7 +61,7 @@ module ApplicationTests
         "Rack::Runtime",
         "ActionDispatch::RequestId",
         "ActionDispatch::RemoteIp",
-        "Rails::Rack::Logger",
+        "Quails::Rack::Logger",
         "ActionDispatch::ShowExceptions",
         "ActionDispatch::DebugExceptions",
         "ActionDispatch::Reloader",
@@ -82,7 +82,7 @@ module ApplicationTests
 
       dependencies = [
         # Logger needs a fully "corrected" request environment
-        %w(Rails::Rack::Logger Rack::MethodOverride ActionDispatch::RequestId ActionDispatch::RemoteIp),
+        %w(Quails::Rack::Logger Rack::MethodOverride ActionDispatch::RequestId ActionDispatch::RemoteIp),
 
         # Serving public/ doesn't invoke user code, so it should skip
         # locks etc
@@ -136,7 +136,7 @@ module ApplicationTests
       add_to_config "config.ssl_options = { redirect: { host: 'example.com' } }"
       boot!
 
-      assert_equal [{ redirect: { host: "example.com" } }], Rails.application.middleware.first.args
+      assert_equal [{ redirect: { host: "example.com" } }], Quails.application.middleware.first.args
     end
 
     test "removing Active Record omits its middleware" do
@@ -229,13 +229,13 @@ module ApplicationTests
       assert_equal "Rack::Config", middleware.first
     end
 
-    test "Rails.cache does not respond to middleware" do
+    test "Quails.cache does not respond to middleware" do
       add_to_config "config.cache_store = :memory_store"
       boot!
       assert_equal "Rack::Runtime", middleware.fourth
     end
 
-    test "Rails.cache does respond to middleware" do
+    test "Quails.cache does respond to middleware" do
       boot!
       assert_equal "Rack::Runtime", middleware.fifth
     end
@@ -294,7 +294,7 @@ module ApplicationTests
     test "ORIGINAL_FULLPATH is passed to env" do
       boot!
       env = ::Rack::MockRequest.env_for("/foo/?something")
-      Rails.application.call(env)
+      Quails.application.call(env)
 
       assert_equal "/foo/?something", env["ORIGINAL_FULLPATH"]
     end
@@ -306,7 +306,7 @@ module ApplicationTests
       end
 
       def middleware
-        Rails.application.middleware.map(&:klass).map(&:name)
+        Quails.application.middleware.map(&:klass).map(&:name)
       end
   end
 end

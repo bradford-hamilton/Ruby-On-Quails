@@ -1,9 +1,9 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-Ruby on Rails 4.0 Release Notes
+Ruby on Quails 4.0 Release Notes
 ===============================
 
-Highlights in Rails 4.0:
+Highlights in Quails 4.0:
 
 * Ruby 2.0 preferred; 1.9.3+ required
 * Strong Parameters
@@ -12,107 +12,107 @@ Highlights in Rails 4.0:
 
 These release notes cover only the major changes. To learn about various bug
 fixes and changes, please refer to the change logs or check out the [list of
-commits](https://github.com/rails/rails/commits/4-0-stable) in the main Rails
+commits](https://github.com/quails/quails/commits/4-0-stable) in the main Quails
 repository on GitHub.
 
 --------------------------------------------------------------------------------
 
-Upgrading to Rails 4.0
+Upgrading to Quails 4.0
 ----------------------
 
-If you're upgrading an existing application, it's a great idea to have good test coverage before going in. You should also first upgrade to Rails 3.2 in case you haven't and make sure your application still runs as expected before attempting an update to Rails 4.0. A list of things to watch out for when upgrading is available in the [Upgrading Ruby on Rails](upgrading_ruby_on_rails.html#upgrading-from-rails-3-2-to-rails-4-0) guide.
+If you're upgrading an existing application, it's a great idea to have good test coverage before going in. You should also first upgrade to Quails 3.2 in case you haven't and make sure your application still runs as expected before attempting an update to Quails 4.0. A list of things to watch out for when upgrading is available in the [Upgrading Ruby on Quails](upgrading_ruby_on_quails.html#upgrading-from-quails-3-2-to-quails-4-0) guide.
 
 
-Creating a Rails 4.0 application
+Creating a Quails 4.0 application
 --------------------------------
 
 ```
- You should have the 'rails' RubyGem installed
-$ rails new myapp
+ You should have the 'quails' RubyGem installed
+$ quails new myapp
 $ cd myapp
 ```
 
 ### Vendoring Gems
 
-Rails now uses a `Gemfile` in the application root to determine the gems you require for your application to start. This `Gemfile` is processed by the [Bundler](https://github.com/carlhuda/bundler) gem, which then installs all your dependencies. It can even install all the dependencies locally to your application so that it doesn't depend on the system gems.
+Quails now uses a `Gemfile` in the application root to determine the gems you require for your application to start. This `Gemfile` is processed by the [Bundler](https://github.com/carlhuda/bundler) gem, which then installs all your dependencies. It can even install all the dependencies locally to your application so that it doesn't depend on the system gems.
 
 More information: [Bundler homepage](https://bundler.io)
 
 ### Living on the Edge
 
-`Bundler` and `Gemfile` makes freezing your Rails application easy as pie with the new dedicated `bundle` command. If you want to bundle straight from the Git repository, you can pass the `--edge` flag:
+`Bundler` and `Gemfile` makes freezing your Quails application easy as pie with the new dedicated `bundle` command. If you want to bundle straight from the Git repository, you can pass the `--edge` flag:
 
 ```
-$ rails new myapp --edge
+$ quails new myapp --edge
 ```
 
-If you have a local checkout of the Rails repository and want to generate an application using that, you can pass the `--dev` flag:
+If you have a local checkout of the Quails repository and want to generate an application using that, you can pass the `--dev` flag:
 
 ```
-$ ruby /path/to/rails/railties/bin/rails new myapp --dev
+$ ruby /path/to/quails/railties/bin/quails new myapp --dev
 ```
 
 Major Features
 --------------
 
-[![Rails 4.0](images/rails4_features.png)](http://guides.rubyonrails.org/images/rails4_features.png)
+[![Quails 4.0](images/quails4_features.png)](http://guides.rubyonquails.org/images/quails4_features.png)
 
 ### Upgrade
 
-* **Ruby 1.9.3** ([commit](https://github.com/rails/rails/commit/a0380e808d3dbd2462df17f5d3b7fcd8bd812496)) - Ruby 2.0 preferred; 1.9.3+ required
-* **[New deprecation policy](https://www.youtube.com/watch?v=z6YgD6tVPQs)** - Deprecated features are warnings in Rails 4.0 and will be removed in Rails 4.1.
-* **ActionPack page and action caching** ([commit](https://github.com/rails/rails/commit/b0a7068564f0c95e7ef28fc39d0335ed17d93e90)) - Page and action caching are extracted to a separate gem. Page and action caching requires too much manual intervention (manually expiring caches when the underlying model objects are updated). Instead, use Russian doll caching.
-* **ActiveRecord observers** ([commit](https://github.com/rails/rails/commit/ccecab3ba950a288b61a516bf9b6962e384aae0b)) - Observers are extracted to a separate gem. Observers are only needed for page and action caching, and can lead to spaghetti code.
-* **ActiveRecord session store** ([commit](https://github.com/rails/rails/commit/0ffe19056c8e8b2f9ae9d487b896cad2ce9387ad)) - The ActiveRecord session store is extracted to a separate gem. Storing sessions in SQL is costly. Instead, use cookie sessions, memcache sessions, or a custom session store.
-* **ActiveModel mass assignment protection** ([commit](https://github.com/rails/rails/commit/f8c9a4d3e88181cee644f91e1342bfe896ca64c6)) - Rails 3 mass assignment protection is deprecated. Instead, use strong parameters.
-* **ActiveResource** ([commit](https://github.com/rails/rails/commit/f1637bf2bb00490203503fbd943b73406e043d1d)) - ActiveResource is extracted to a separate gem. ActiveResource was not widely used.
-* **vendor/plugins removed** ([commit](https://github.com/rails/rails/commit/853de2bd9ac572735fa6cf59fcf827e485a231c3)) - Use a Gemfile to manage installed gems.
+* **Ruby 1.9.3** ([commit](https://github.com/quails/quails/commit/a0380e808d3dbd2462df17f5d3b7fcd8bd812496)) - Ruby 2.0 preferred; 1.9.3+ required
+* **[New deprecation policy](https://www.youtube.com/watch?v=z6YgD6tVPQs)** - Deprecated features are warnings in Quails 4.0 and will be removed in Quails 4.1.
+* **ActionPack page and action caching** ([commit](https://github.com/quails/quails/commit/b0a7068564f0c95e7ef28fc39d0335ed17d93e90)) - Page and action caching are extracted to a separate gem. Page and action caching requires too much manual intervention (manually expiring caches when the underlying model objects are updated). Instead, use Russian doll caching.
+* **ActiveRecord observers** ([commit](https://github.com/quails/quails/commit/ccecab3ba950a288b61a516bf9b6962e384aae0b)) - Observers are extracted to a separate gem. Observers are only needed for page and action caching, and can lead to spaghetti code.
+* **ActiveRecord session store** ([commit](https://github.com/quails/quails/commit/0ffe19056c8e8b2f9ae9d487b896cad2ce9387ad)) - The ActiveRecord session store is extracted to a separate gem. Storing sessions in SQL is costly. Instead, use cookie sessions, memcache sessions, or a custom session store.
+* **ActiveModel mass assignment protection** ([commit](https://github.com/quails/quails/commit/f8c9a4d3e88181cee644f91e1342bfe896ca64c6)) - Quails 3 mass assignment protection is deprecated. Instead, use strong parameters.
+* **ActiveResource** ([commit](https://github.com/quails/quails/commit/f1637bf2bb00490203503fbd943b73406e043d1d)) - ActiveResource is extracted to a separate gem. ActiveResource was not widely used.
+* **vendor/plugins removed** ([commit](https://github.com/quails/quails/commit/853de2bd9ac572735fa6cf59fcf827e485a231c3)) - Use a Gemfile to manage installed gems.
 
 ### ActionPack
 
-* **Strong parameters** ([commit](https://github.com/rails/rails/commit/a8f6d5c6450a7fe058348a7f10a908352bb6c7fc)) - Only allow whitelisted parameters to update model objects (`params.permit(:title, :text)`).
-* **Routing concerns** ([commit](https://github.com/rails/rails/commit/0dd24728a088fcb4ae616bb5d62734aca5276b1b)) - In the routing DSL, factor out common subroutes (`comments` from `/posts/1/comments` and `/videos/1/comments`).
-* **ActionController::Live** ([commit](https://github.com/rails/rails/commit/af0a9f9eefaee3a8120cfd8d05cbc431af376da3)) - Stream JSON with `response.stream`.
-* **Declarative ETags** ([commit](https://github.com/rails/rails/commit/ed5c938fa36995f06d4917d9543ba78ed506bb8d)) - Add controller-level etag additions that will be part of the action etag computation.
-* **[Russian doll caching](http://37signals.com/svn/posts/3113-how-key-based-cache-expiration-works)** ([commit](https://github.com/rails/rails/commit/4154bf012d2bec2aae79e4a49aa94a70d3e91d49)) - Cache nested fragments of views. Each fragment expires based on a set of dependencies (a cache key). The cache key is usually a template version number and a model object.
-* **Turbolinks** ([commit](https://github.com/rails/rails/commit/e35d8b18d0649c0ecc58f6b73df6b3c8d0c6bb74)) - Serve only one initial HTML page. When the user navigates to another page, use pushState to update the URL and use AJAX to update the title and body.
-* **Decouple ActionView from ActionController** ([commit](https://github.com/rails/rails/commit/78b0934dd1bb84e8f093fb8ef95ca99b297b51cd)) - ActionView was decoupled from ActionPack and will be moved to a separated gem in Rails 4.1.
-* **Do not depend on ActiveModel** ([commit](https://github.com/rails/rails/commit/166dbaa7526a96fdf046f093f25b0a134b277a68)) - ActionPack no longer depends on ActiveModel.
+* **Strong parameters** ([commit](https://github.com/quails/quails/commit/a8f6d5c6450a7fe058348a7f10a908352bb6c7fc)) - Only allow whitelisted parameters to update model objects (`params.permit(:title, :text)`).
+* **Routing concerns** ([commit](https://github.com/quails/quails/commit/0dd24728a088fcb4ae616bb5d62734aca5276b1b)) - In the routing DSL, factor out common subroutes (`comments` from `/posts/1/comments` and `/videos/1/comments`).
+* **ActionController::Live** ([commit](https://github.com/quails/quails/commit/af0a9f9eefaee3a8120cfd8d05cbc431af376da3)) - Stream JSON with `response.stream`.
+* **Declarative ETags** ([commit](https://github.com/quails/quails/commit/ed5c938fa36995f06d4917d9543ba78ed506bb8d)) - Add controller-level etag additions that will be part of the action etag computation.
+* **[Russian doll caching](http://37signals.com/svn/posts/3113-how-key-based-cache-expiration-works)** ([commit](https://github.com/quails/quails/commit/4154bf012d2bec2aae79e4a49aa94a70d3e91d49)) - Cache nested fragments of views. Each fragment expires based on a set of dependencies (a cache key). The cache key is usually a template version number and a model object.
+* **Turbolinks** ([commit](https://github.com/quails/quails/commit/e35d8b18d0649c0ecc58f6b73df6b3c8d0c6bb74)) - Serve only one initial HTML page. When the user navigates to another page, use pushState to update the URL and use AJAX to update the title and body.
+* **Decouple ActionView from ActionController** ([commit](https://github.com/quails/quails/commit/78b0934dd1bb84e8f093fb8ef95ca99b297b51cd)) - ActionView was decoupled from ActionPack and will be moved to a separated gem in Quails 4.1.
+* **Do not depend on ActiveModel** ([commit](https://github.com/quails/quails/commit/166dbaa7526a96fdf046f093f25b0a134b277a68)) - ActionPack no longer depends on ActiveModel.
 
 ### General
 
- * **ActiveModel::Model** ([commit](https://github.com/rails/rails/commit/3b822e91d1a6c4eab0064989bbd07aae3a6d0d08)) - `ActiveModel::Model`, a mixin to make normal Ruby objects to work with ActionPack out of box (ex. for `form_for`)
- * **New scope API** ([commit](https://github.com/rails/rails/commit/50cbc03d18c5984347965a94027879623fc44cce)) - Scopes must always use callables.
- * **Schema cache dump** ([commit](https://github.com/rails/rails/commit/5ca4fc95818047108e69e22d200e7a4a22969477)) - To improve Rails boot time, instead of loading the schema directly from the database, load the schema from a dump file.
- * **Support for specifying transaction isolation level** ([commit](https://github.com/rails/rails/commit/392eeecc11a291e406db927a18b75f41b2658253)) - Choose whether repeatable reads or improved performance (less locking) is more important.
- * **Dalli** ([commit](https://github.com/rails/rails/commit/82663306f428a5bbc90c511458432afb26d2f238)) - Use Dalli memcache client for the memcache store.
- * **Notifications start &amp; finish** ([commit](https://github.com/rails/rails/commit/f08f8750a512f741acb004d0cebe210c5f949f28)) - Active Support instrumentation reports start and finish notifications to subscribers.
- * **Thread safe by default** ([commit](https://github.com/rails/rails/commit/5d416b907864d99af55ebaa400fff217e17570cd)) - Rails can run in threaded app servers without additional configuration.
+ * **ActiveModel::Model** ([commit](https://github.com/quails/quails/commit/3b822e91d1a6c4eab0064989bbd07aae3a6d0d08)) - `ActiveModel::Model`, a mixin to make normal Ruby objects to work with ActionPack out of box (ex. for `form_for`)
+ * **New scope API** ([commit](https://github.com/quails/quails/commit/50cbc03d18c5984347965a94027879623fc44cce)) - Scopes must always use callables.
+ * **Schema cache dump** ([commit](https://github.com/quails/quails/commit/5ca4fc95818047108e69e22d200e7a4a22969477)) - To improve Quails boot time, instead of loading the schema directly from the database, load the schema from a dump file.
+ * **Support for specifying transaction isolation level** ([commit](https://github.com/quails/quails/commit/392eeecc11a291e406db927a18b75f41b2658253)) - Choose whether repeatable reads or improved performance (less locking) is more important.
+ * **Dalli** ([commit](https://github.com/quails/quails/commit/82663306f428a5bbc90c511458432afb26d2f238)) - Use Dalli memcache client for the memcache store.
+ * **Notifications start &amp; finish** ([commit](https://github.com/quails/quails/commit/f08f8750a512f741acb004d0cebe210c5f949f28)) - Active Support instrumentation reports start and finish notifications to subscribers.
+ * **Thread safe by default** ([commit](https://github.com/quails/quails/commit/5d416b907864d99af55ebaa400fff217e17570cd)) - Quails can run in threaded app servers without additional configuration.
 
 NOTE: Check that the gems you are using are threadsafe.
 
- * **PATCH verb** ([commit](https://github.com/rails/rails/commit/eed9f2539e3ab5a68e798802f464b8e4e95e619e)) - In Rails, PATCH replaces PUT. PATCH is used for partial updates of resources.
+ * **PATCH verb** ([commit](https://github.com/quails/quails/commit/eed9f2539e3ab5a68e798802f464b8e4e95e619e)) - In Quails, PATCH replaces PUT. PATCH is used for partial updates of resources.
 
 ### Security
 
-* **match do not catch all** ([commit](https://github.com/rails/rails/commit/90d2802b71a6e89aedfe40564a37bd35f777e541)) - In the routing DSL, match requires the HTTP verb or verbs to be specified.
-* **html entities escaped by default** ([commit](https://github.com/rails/rails/commit/5f189f41258b83d49012ec5a0678d827327e7543)) - Strings rendered in erb are escaped unless wrapped with `raw` or `html_safe` is called.
-* **New security headers** ([commit](https://github.com/rails/rails/commit/6794e92b204572d75a07bd6413bdae6ae22d5a82)) - Rails sends the following headers with every HTTP request: `X-Frame-Options` (prevents clickjacking by forbidding the browser from embedding the page in a frame), `X-XSS-Protection` (asks the browser to halt script injection) and `X-Content-Type-Options` (prevents the browser from opening a jpeg as an exe).
+* **match do not catch all** ([commit](https://github.com/quails/quails/commit/90d2802b71a6e89aedfe40564a37bd35f777e541)) - In the routing DSL, match requires the HTTP verb or verbs to be specified.
+* **html entities escaped by default** ([commit](https://github.com/quails/quails/commit/5f189f41258b83d49012ec5a0678d827327e7543)) - Strings rendered in erb are escaped unless wrapped with `raw` or `html_safe` is called.
+* **New security headers** ([commit](https://github.com/quails/quails/commit/6794e92b204572d75a07bd6413bdae6ae22d5a82)) - Quails sends the following headers with every HTTP request: `X-Frame-Options` (prevents clickjacking by forbidding the browser from embedding the page in a frame), `X-XSS-Protection` (asks the browser to halt script injection) and `X-Content-Type-Options` (prevents the browser from opening a jpeg as an exe).
 
 Extraction of features to gems
 ---------------------------
 
-In Rails 4.0, several features have been extracted into gems. You can simply add the extracted gems to your `Gemfile` to bring the functionality back.
+In Quails 4.0, several features have been extracted into gems. You can simply add the extracted gems to your `Gemfile` to bring the functionality back.
 
-* Hash-based & Dynamic finder methods ([GitHub](https://github.com/rails/activerecord-deprecated_finders))
-* Mass assignment protection in Active Record models ([GitHub](https://github.com/rails/protected_attributes), [Pull Request](https://github.com/rails/rails/pull/7251))
-* ActiveRecord::SessionStore ([GitHub](https://github.com/rails/activerecord-session_store), [Pull Request](https://github.com/rails/rails/pull/7436))
-* Active Record Observers ([GitHub](https://github.com/rails/rails-observers), [Commit](https://github.com/rails/rails/commit/39e85b3b90c58449164673909a6f1893cba290b2))
-* Active Resource ([GitHub](https://github.com/rails/activeresource), [Pull Request](https://github.com/rails/rails/pull/572), [Blog](http://yetimedia-blog-blog.tumblr.com/post/35233051627/activeresource-is-dead-long-live-activeresource))
-* Action Caching ([GitHub](https://github.com/rails/actionpack-action_caching), [Pull Request](https://github.com/rails/rails/pull/7833))
-* Page Caching ([GitHub](https://github.com/rails/actionpack-page_caching), [Pull Request](https://github.com/rails/rails/pull/7833))
-* Sprockets ([GitHub](https://github.com/rails/sprockets-rails))
-* Performance tests ([GitHub](https://github.com/rails/rails-perftest), [Pull Request](https://github.com/rails/rails/pull/8876))
+* Hash-based & Dynamic finder methods ([GitHub](https://github.com/quails/activerecord-deprecated_finders))
+* Mass assignment protection in Active Record models ([GitHub](https://github.com/quails/protected_attributes), [Pull Request](https://github.com/quails/quails/pull/7251))
+* ActiveRecord::SessionStore ([GitHub](https://github.com/quails/activerecord-session_store), [Pull Request](https://github.com/quails/quails/pull/7436))
+* Active Record Observers ([GitHub](https://github.com/quails/quails-observers), [Commit](https://github.com/quails/quails/commit/39e85b3b90c58449164673909a6f1893cba290b2))
+* Active Resource ([GitHub](https://github.com/quails/activeresource), [Pull Request](https://github.com/quails/quails/pull/572), [Blog](http://yetimedia-blog-blog.tumblr.com/post/35233051627/activeresource-is-dead-long-live-activeresource))
+* Action Caching ([GitHub](https://github.com/quails/actionpack-action_caching), [Pull Request](https://github.com/quails/quails/pull/7833))
+* Page Caching ([GitHub](https://github.com/quails/actionpack-page_caching), [Pull Request](https://github.com/quails/quails/pull/7833))
+* Sprockets ([GitHub](https://github.com/quails/sprockets-quails))
+* Performance tests ([GitHub](https://github.com/quails/quails-perftest), [Pull Request](https://github.com/quails/quails/pull/8876))
 
 Documentation
 -------------
@@ -124,30 +124,30 @@ Documentation
 Railties
 --------
 
-Please refer to the [Changelog](https://github.com/rails/rails/blob/4-0-stable/railties/CHANGELOG.md) for detailed changes.
+Please refer to the [Changelog](https://github.com/quails/quails/blob/4-0-stable/railties/CHANGELOG.md) for detailed changes.
 
 ### Notable changes
 
-* New test locations `test/models`, `test/helpers`, `test/controllers`, and `test/mailers`. Corresponding rake tasks added as well. ([Pull Request](https://github.com/rails/rails/pull/7878))
+* New test locations `test/models`, `test/helpers`, `test/controllers`, and `test/mailers`. Corresponding rake tasks added as well. ([Pull Request](https://github.com/quails/quails/pull/7878))
 
-* Your app's executables now live in the `bin/` directory. Run `rake rails:update:bin` to get `bin/bundle`, `bin/rails`, and `bin/rake`.
+* Your app's executables now live in the `bin/` directory. Run `rake quails:update:bin` to get `bin/bundle`, `bin/quails`, and `bin/rake`.
 
 * Threadsafe on by default
 
 * Ability to use a custom builder by passing `--builder` (or `-b`) to
-  `rails new` has been removed. Consider using application templates
-  instead. ([Pull Request](https://github.com/rails/rails/pull/9401))
+  `quails new` has been removed. Consider using application templates
+  instead. ([Pull Request](https://github.com/quails/quails/pull/9401))
 
 ### Deprecations
 
 * `config.threadsafe!` is deprecated in favor of `config.eager_load` which provides a more fine grained control on what is eager loaded.
 
-* `Rails::Plugin` has gone. Instead of adding plugins to `vendor/plugins` use gems or bundler with path or git dependencies.
+* `Quails::Plugin` has gone. Instead of adding plugins to `vendor/plugins` use gems or bundler with path or git dependencies.
 
 Action Mailer
 -------------
 
-Please refer to the [Changelog](https://github.com/rails/rails/blob/4-0-stable/actionmailer/CHANGELOG.md) for detailed changes.
+Please refer to the [Changelog](https://github.com/quails/quails/blob/4-0-stable/actionmailer/CHANGELOG.md) for detailed changes.
 
 ### Notable changes
 
@@ -156,7 +156,7 @@ Please refer to the [Changelog](https://github.com/rails/rails/blob/4-0-stable/a
 Active Model
 ------------
 
-Please refer to the [Changelog](https://github.com/rails/rails/blob/4-0-stable/activemodel/CHANGELOG.md) for detailed changes.
+Please refer to the [Changelog](https://github.com/quails/quails/blob/4-0-stable/activemodel/CHANGELOG.md) for detailed changes.
 
 ### Notable changes
 
@@ -169,7 +169,7 @@ Please refer to the [Changelog](https://github.com/rails/rails/blob/4-0-stable/a
 Active Support
 --------------
 
-Please refer to the [Changelog](https://github.com/rails/rails/blob/4-0-stable/activesupport/CHANGELOG.md) for detailed changes.
+Please refer to the [Changelog](https://github.com/quails/quails/blob/4-0-stable/activesupport/CHANGELOG.md) for detailed changes.
 
 ### Notable changes
 
@@ -198,7 +198,7 @@ Please refer to the [Changelog](https://github.com/rails/rails/blob/4-0-stable/a
 
 * Deprecate `ActiveSupport::TestCase#pending` method, use `skip` from MiniTest instead.
 
-* `ActiveSupport::Benchmarkable#silence` has been deprecated due to its lack of thread safety. It will be removed without replacement in Rails 4.1.
+* `ActiveSupport::Benchmarkable#silence` has been deprecated due to its lack of thread safety. It will be removed without replacement in Quails 4.1.
 
 * `ActiveSupport::JSON::Variable` is deprecated. Define your own `#as_json` and `#encode_json` methods for custom JSON string literals.
 
@@ -211,7 +211,7 @@ Please refer to the [Changelog](https://github.com/rails/rails/blob/4-0-stable/a
 Action Pack
 -----------
 
-Please refer to the [Changelog](https://github.com/rails/rails/blob/4-0-stable/actionpack/CHANGELOG.md) for detailed changes.
+Please refer to the [Changelog](https://github.com/quails/quails/blob/4-0-stable/actionpack/CHANGELOG.md) for detailed changes.
 
 ### Notable changes
 
@@ -223,7 +223,7 @@ Please refer to the [Changelog](https://github.com/rails/rails/blob/4-0-stable/a
 Active Record
 -------------
 
-Please refer to the [Changelog](https://github.com/rails/rails/blob/4-0-stable/activerecord/CHANGELOG.md) for detailed changes.
+Please refer to the [Changelog](https://github.com/quails/quails/blob/4-0-stable/activerecord/CHANGELOG.md) for detailed changes.
 
 ### Notable changes
 
@@ -234,11 +234,11 @@ Please refer to the [Changelog](https://github.com/rails/rails/blob/4-0-stable/a
       The method `change_table` is also reversible, as long as its block doesn't call `remove`, `change` or `change_default`
 
     * New method `reversible` makes it possible to specify code to be run when migrating up or down.
-      See the [Guide on Migration](https://github.com/rails/rails/blob/master/guides/source/active_record_migrations.md#using-reversible)
+      See the [Guide on Migration](https://github.com/quails/quails/blob/master/guides/source/active_record_migrations.md#using-reversible)
 
     * New method `revert` will revert a whole migration or the given block.
       If migrating down, the given migration / block is run normally.
-      See the [Guide on Migration](https://github.com/rails/rails/blob/master/guides/source/active_record_migrations.md#reverting-previous-migrations)
+      See the [Guide on Migration](https://github.com/quails/quails/blob/master/guides/source/active_record_migrations.md#reverting-previous-migrations)
 
 * Adds PostgreSQL array type support. Any datatype can be used to create an array column, with full migration and schema dumper support.
 
@@ -281,4 +281,4 @@ Please refer to the [Changelog](https://github.com/rails/rails/blob/4-0-stable/a
 Credits
 -------
 
-See the [full list of contributors to Rails](http://contributors.rubyonrails.org/) for the many people who spent many hours making Rails, the stable and robust framework it is. Kudos to all of them.
+See the [full list of contributors to Quails](http://contributors.rubyonquails.org/) for the many people who spent many hours making Quails, the stable and robust framework it is. Kudos to all of them.

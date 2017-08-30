@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/plugin/plugin_generator"
+require "quails/generators/quails/plugin/plugin_generator"
 require "generators/shared_generator_tests"
-require "rails/engine/updater"
+require "quails/engine/updater"
 
 DEFAULT_PLUGIN_FILES = %w(
   .gitignore
@@ -21,9 +21,9 @@ DEFAULT_PLUGIN_FILES = %w(
   test/dummy
 )
 
-class PluginGeneratorTest < Rails::Generators::TestCase
+class PluginGeneratorTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
-  destination File.join(Rails.root, "tmp/bukkits")
+  destination File.join(Quails.root, "tmp/bukkits")
   arguments [destination_root]
 
   def application_path
@@ -44,7 +44,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
     assert_equal "Invalid plugin name 43things. Please give a name which does not start with numbers.\n", content
 
     content = capture(:stderr) { run_generator [File.join(destination_root, "plugin")] }
-    assert_equal "Invalid plugin name plugin. Please give a name which does not match one of the reserved rails words: application, destroy, plugin, runner, test\n", content
+    assert_equal "Invalid plugin name plugin. Please give a name which does not match one of the reserved quails words: application, destroy, plugin, runner, test\n", content
 
     content = capture(:stderr) { run_generator [File.join(destination_root, "Digest")] }
     assert_equal "Invalid plugin name Digest, constant Digest is already in use. Please choose another plugin name.\n", content
@@ -72,25 +72,25 @@ class PluginGeneratorTest < Rails::Generators::TestCase
       assert_match(/require_relative.+test\/dummy\/config\/environment/, content)
       assert_match(/ActiveRecord::Migrator\.migrations_paths.+test\/dummy\/db\/migrate/, content)
       assert_match(/Minitest\.backtrace_filter = Minitest::BacktraceFilter\.new/, content)
-      assert_match(/Rails::TestUnitReporter\.executable = 'bin\/test'/, content)
+      assert_match(/Quails::TestUnitReporter\.executable = 'bin\/test'/, content)
     end
-    assert_file "lib/bukkits/railtie.rb", /module Bukkits\n  class Railtie < ::Rails::Railtie\n  end\nend/
+    assert_file "lib/bukkits/railtie.rb", /module Bukkits\n  class Railtie < ::Quails::Railtie\n  end\nend/
     assert_file "lib/bukkits.rb", /require "bukkits\/railtie"/
     assert_file "test/bukkits_test.rb", /assert_kind_of Module, Bukkits/
     assert_file "bin/test"
-    assert_no_file "bin/rails"
+    assert_no_file "bin/quails"
   end
 
   def test_generating_in_full_mode_with_almost_of_all_skip_options
     run_generator [destination_root, "--full", "-M", "-O", "-C", "-S", "-T"]
-    assert_file "bin/rails" do |content|
-      assert_no_match(/\s+require\s+["']rails\/all["']/, content)
+    assert_file "bin/quails" do |content|
+      assert_no_match(/\s+require\s+["']quails\/all["']/, content)
     end
-    assert_file "bin/rails", /#\s+require\s+["']active_record\/railtie["']/
-    assert_file "bin/rails", /#\s+require\s+["']action_mailer\/railtie["']/
-    assert_file "bin/rails", /#\s+require\s+["']action_cable\/engine["']/
-    assert_file "bin/rails", /#\s+require\s+["']sprockets\/railtie["']/
-    assert_file "bin/rails", /#\s+require\s+["']rails\/test_unit\/railtie["']/
+    assert_file "bin/quails", /#\s+require\s+["']active_record\/railtie["']/
+    assert_file "bin/quails", /#\s+require\s+["']action_mailer\/railtie["']/
+    assert_file "bin/quails", /#\s+require\s+["']action_cable\/engine["']/
+    assert_file "bin/quails", /#\s+require\s+["']sprockets\/railtie["']/
+    assert_file "bin/quails", /#\s+require\s+["']quails\/test_unit\/railtie["']/
   end
 
   def test_generating_test_files_in_full_mode
@@ -124,7 +124,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
     assert_file "Rakefile" do |contents|
       assert_no_match(/APP_RAKEFILE/, contents)
     end
-    assert_file "bin/rails" do |contents|
+    assert_file "bin/quails" do |contents|
       assert_no_match(/APP_PATH/, contents)
     end
   end
@@ -132,7 +132,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
   def test_generating_adds_dummy_app_rake_tasks_without_unit_test_files
     run_generator [destination_root, "-T", "--mountable", "--dummy-path", "my_dummy_app"]
     assert_file "Rakefile", /APP_RAKEFILE/
-    assert_file "bin/rails", /APP_PATH/
+    assert_file "bin/quails", /APP_PATH/
   end
 
   def test_generating_adds_dummy_app_without_javascript_and_assets_deps
@@ -146,12 +146,12 @@ class PluginGeneratorTest < Rails::Generators::TestCase
   end
 
   def test_ensure_that_plugin_options_are_not_passed_to_app_generator
-    FileUtils.cd(Rails.root)
+    FileUtils.cd(Quails.root)
     assert_no_match(/It works from file!.*It works_from_file/, run_generator([destination_root, "-m", "lib/template.rb"]))
   end
 
   def test_ensure_that_test_dummy_can_be_generated_from_a_template
-    FileUtils.cd(Rails.root)
+    FileUtils.cd(Quails.root)
     run_generator([destination_root, "-m", "lib/create_test_dummy_template.rb", "--skip-test"])
     assert_directory "spec/dummy"
     assert_no_directory "test"
@@ -195,13 +195,13 @@ class PluginGeneratorTest < Rails::Generators::TestCase
 
   def test_dev_option
     assert_generates_without_bundler(dev: true)
-    rails_path = File.expand_path("../../..", Rails.root)
-    assert_file "Gemfile", /^gem\s+["']rails["'],\s+path:\s+["']#{Regexp.escape(rails_path)}["']$/
+    quails_path = File.expand_path("../../..", Quails.root)
+    assert_file "Gemfile", /^gem\s+["']quails["'],\s+path:\s+["']#{Regexp.escape(quails_path)}["']$/
   end
 
   def test_edge_option
     assert_generates_without_bundler(edge: true)
-    assert_file "Gemfile", %r{^gem\s+["']rails["'],\s+github:\s+["']#{Regexp.escape("rails/rails")}["']$}
+    assert_file "Gemfile", %r{^gem\s+["']quails["'],\s+github:\s+["']#{Regexp.escape("quails/quails")}["']$}
   end
 
   def test_generation_does_not_run_bundle_install_with_full_and_mountable
@@ -225,7 +225,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
   end
 
   def test_template_from_dir_pwd
-    FileUtils.cd(Rails.root)
+    FileUtils.cd(Quails.root)
     assert_match(/It works from file!/, run_generator([destination_root, "-m", "lib/template.rb"]))
   end
 
@@ -248,7 +248,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
     run_generator [destination_root, "--mountable"]
     FileUtils.cd destination_root
     quietly { system "bundle install" }
-    output = `bin/rails db:migrate 2>&1`
+    output = `bin/quails db:migrate 2>&1`
     assert $?.success?, "Command failed: #{output}"
   end
 
@@ -262,9 +262,9 @@ class PluginGeneratorTest < Rails::Generators::TestCase
     assert_file "app/views"
     assert_file "app/helpers"
     assert_file "app/mailers"
-    assert_file "bin/rails", /\s+require\s+["']rails\/all["']/
-    assert_file "config/routes.rb", /Rails.application.routes.draw do/
-    assert_file "lib/bukkits/engine.rb", /module Bukkits\n  class Engine < ::Rails::Engine\n  end\nend/
+    assert_file "bin/quails", /\s+require\s+["']quails\/all["']/
+    assert_file "config/routes.rb", /Quails.application.routes.draw do/
+    assert_file "lib/bukkits/engine.rb", /module Bukkits\n  class Engine < ::Quails::Engine\n  end\nend/
     assert_file "lib/bukkits.rb", /require "bukkits\/engine"/
   end
 
@@ -278,11 +278,11 @@ class PluginGeneratorTest < Rails::Generators::TestCase
     assert_file "hyphenated-name/app/views"
     assert_file "hyphenated-name/app/helpers"
     assert_file "hyphenated-name/app/mailers"
-    assert_file "hyphenated-name/bin/rails"
-    assert_file "hyphenated-name/config/routes.rb",              /Rails.application.routes.draw do/
-    assert_file "hyphenated-name/lib/hyphenated/name/engine.rb", /module Hyphenated\n  module Name\n    class Engine < ::Rails::Engine\n    end\n  end\nend/
+    assert_file "hyphenated-name/bin/quails"
+    assert_file "hyphenated-name/config/routes.rb",              /Quails.application.routes.draw do/
+    assert_file "hyphenated-name/lib/hyphenated/name/engine.rb", /module Hyphenated\n  module Name\n    class Engine < ::Quails::Engine\n    end\n  end\nend/
     assert_file "hyphenated-name/lib/hyphenated/name.rb",        /require "hyphenated\/name\/engine"/
-    assert_file "hyphenated-name/bin/rails",                     /\.\.\/lib\/hyphenated\/name\/engine/
+    assert_file "hyphenated-name/bin/quails",                     /\.\.\/lib\/hyphenated\/name\/engine/
   end
 
   def test_creating_engine_with_hyphenated_and_underscored_name_in_full_mode
@@ -295,11 +295,11 @@ class PluginGeneratorTest < Rails::Generators::TestCase
     assert_file "my_hyphenated-name/app/views"
     assert_file "my_hyphenated-name/app/helpers"
     assert_file "my_hyphenated-name/app/mailers"
-    assert_file "my_hyphenated-name/bin/rails"
-    assert_file "my_hyphenated-name/config/routes.rb",              /Rails\.application\.routes\.draw do/
-    assert_file "my_hyphenated-name/lib/my_hyphenated/name/engine.rb", /module MyHyphenated\n  module Name\n    class Engine < ::Rails::Engine\n    end\n  end\nend/
+    assert_file "my_hyphenated-name/bin/quails"
+    assert_file "my_hyphenated-name/config/routes.rb",              /Quails\.application\.routes\.draw do/
+    assert_file "my_hyphenated-name/lib/my_hyphenated/name/engine.rb", /module MyHyphenated\n  module Name\n    class Engine < ::Quails::Engine\n    end\n  end\nend/
     assert_file "my_hyphenated-name/lib/my_hyphenated/name.rb",        /require "my_hyphenated\/name\/engine"/
-    assert_file "my_hyphenated-name/bin/rails",                     /\.\.\/lib\/my_hyphenated\/name\/engine/
+    assert_file "my_hyphenated-name/bin/quails",                     /\.\.\/lib\/my_hyphenated\/name\/engine/
   end
 
   def test_being_quiet_while_creating_dummy_application
@@ -328,7 +328,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
       assert_match(/ActiveRecord::Migrator\.migrations_paths.+\.\.\/test\/dummy\/db\/migrate/, content)
       assert_match(/ActiveRecord::Migrator\.migrations_paths.+<<.+\.\.\/db\/migrate/, content)
       assert_match(/ActionDispatch::IntegrationTest\.fixture_path = ActiveSupport::TestCase\.fixture_pat/, content)
-      assert_no_match(/Rails::TestUnitReporter\.executable = 'bin\/test'/, content)
+      assert_no_match(/Quails::TestUnitReporter\.executable = 'bin\/test'/, content)
     end
     assert_no_file "bin/test"
   end
@@ -340,7 +340,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
     assert_file "hyphenated-name/app/assets/images/hyphenated/name"
     assert_file "hyphenated-name/config/routes.rb",                                          /Hyphenated::Name::Engine\.routes\.draw do/
     assert_file "hyphenated-name/lib/hyphenated/name/version.rb",                            /module Hyphenated\n  module Name\n    VERSION = '0\.1\.0'\n  end\nend/
-    assert_file "hyphenated-name/lib/hyphenated/name/engine.rb",                             /module Hyphenated\n  module Name\n    class Engine < ::Rails::Engine\n      isolate_namespace Hyphenated::Name\n    end\n  end\nend/
+    assert_file "hyphenated-name/lib/hyphenated/name/engine.rb",                             /module Hyphenated\n  module Name\n    class Engine < ::Quails::Engine\n      isolate_namespace Hyphenated::Name\n    end\n  end\nend/
     assert_file "hyphenated-name/lib/hyphenated/name.rb",                                    /require "hyphenated\/name\/engine"/
     assert_file "hyphenated-name/test/dummy/config/routes.rb",                               /mount Hyphenated::Name::Engine => "\/hyphenated-name"/
     assert_file "hyphenated-name/app/controllers/hyphenated/name/application_controller.rb", /module Hyphenated\n  module Name\n    class ApplicationController < ActionController::Base\n      protect_from_forgery with: :exception\n    end\n  end\nend\n/
@@ -362,7 +362,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
     assert_file "my_hyphenated-name/app/assets/images/my_hyphenated/name"
     assert_file "my_hyphenated-name/config/routes.rb",                                             /MyHyphenated::Name::Engine\.routes\.draw do/
     assert_file "my_hyphenated-name/lib/my_hyphenated/name/version.rb",                            /module MyHyphenated\n  module Name\n    VERSION = '0\.1\.0'\n  end\nend/
-    assert_file "my_hyphenated-name/lib/my_hyphenated/name/engine.rb",                             /module MyHyphenated\n  module Name\n    class Engine < ::Rails::Engine\n      isolate_namespace MyHyphenated::Name\n    end\n  end\nend/
+    assert_file "my_hyphenated-name/lib/my_hyphenated/name/engine.rb",                             /module MyHyphenated\n  module Name\n    class Engine < ::Quails::Engine\n      isolate_namespace MyHyphenated::Name\n    end\n  end\nend/
     assert_file "my_hyphenated-name/lib/my_hyphenated/name.rb",                                    /require "my_hyphenated\/name\/engine"/
     assert_file "my_hyphenated-name/test/dummy/config/routes.rb",                                  /mount MyHyphenated::Name::Engine => "\/my_hyphenated-name"/
     assert_file "my_hyphenated-name/app/controllers/my_hyphenated/name/application_controller.rb", /module MyHyphenated\n  module Name\n    class ApplicationController < ActionController::Base\n      protect_from_forgery with: :exception\n    end\n  end\nend\n/
@@ -384,7 +384,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
     assert_file "deep-hyphenated-name/app/assets/images/deep/hyphenated/name"
     assert_file "deep-hyphenated-name/config/routes.rb",                                               /Deep::Hyphenated::Name::Engine\.routes\.draw do/
     assert_file "deep-hyphenated-name/lib/deep/hyphenated/name/version.rb",                            /module Deep\n  module Hyphenated\n    module Name\n      VERSION = '0\.1\.0'\n    end\n  end\nend/
-    assert_file "deep-hyphenated-name/lib/deep/hyphenated/name/engine.rb",                             /module Deep\n  module Hyphenated\n    module Name\n      class Engine < ::Rails::Engine\n        isolate_namespace Deep::Hyphenated::Name\n      end\n    end\n  end\nend/
+    assert_file "deep-hyphenated-name/lib/deep/hyphenated/name/engine.rb",                             /module Deep\n  module Hyphenated\n    module Name\n      class Engine < ::Quails::Engine\n        isolate_namespace Deep::Hyphenated::Name\n      end\n    end\n  end\nend/
     assert_file "deep-hyphenated-name/lib/deep/hyphenated/name.rb",                                    /require "deep\/hyphenated\/name\/engine"/
     assert_file "deep-hyphenated-name/test/dummy/config/routes.rb",                                    /mount Deep::Hyphenated::Name::Engine => "\/deep-hyphenated-name"/
     assert_file "deep-hyphenated-name/app/controllers/deep/hyphenated/name/application_controller.rb", /module Deep\n  module Hyphenated\n    module Name\n      class ApplicationController < ActionController::Base\n        protect_from_forgery with: :exception\n      end\n    end\n  end\nend\n/
@@ -408,16 +408,16 @@ class PluginGeneratorTest < Rails::Generators::TestCase
 
   def test_usage_of_engine_commands
     run_generator [destination_root, "--full"]
-    assert_file "bin/rails", /ENGINE_PATH = File\.expand_path\('\.\.\/lib\/bukkits\/engine', __dir__\)/
-    assert_file "bin/rails", /ENGINE_ROOT = File\.expand_path\('\.\.', __dir__\)/
-    assert_file "bin/rails", %r|APP_PATH = File\.expand_path\('\.\./test/dummy/config/application', __dir__\)|
-    assert_file "bin/rails", /require 'rails\/all'/
-    assert_file "bin/rails", /require 'rails\/engine\/commands'/
+    assert_file "bin/quails", /ENGINE_PATH = File\.expand_path\('\.\.\/lib\/bukkits\/engine', __dir__\)/
+    assert_file "bin/quails", /ENGINE_ROOT = File\.expand_path\('\.\.', __dir__\)/
+    assert_file "bin/quails", %r|APP_PATH = File\.expand_path\('\.\./test/dummy/config/application', __dir__\)|
+    assert_file "bin/quails", /require 'quails\/all'/
+    assert_file "bin/quails", /require 'quails\/engine\/commands'/
   end
 
   def test_shebang
     run_generator [destination_root, "--full"]
-    assert_file "bin/rails", /#!\/usr\/bin\/env ruby/
+    assert_file "bin/quails", /#!\/usr\/bin\/env ruby/
   end
 
   def test_passing_dummy_path_as_a_parameter
@@ -445,7 +445,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
   def test_creating_dummy_without_tests_but_with_dummy_path
     run_generator [destination_root, "--dummy_path", "spec/dummy", "--skip-test"]
     assert_directory "spec/dummy"
-    assert_file "spec/dummy/config/application.rb", /#\s+require\s+["']rails\/test_unit\/railtie["']/
+    assert_file "spec/dummy/config/application.rb", /#\s+require\s+["']quails\/test_unit\/railtie["']/
     assert_no_directory "test"
     assert_file ".gitignore" do |contents|
       assert_match(/spec\/dummy/, contents)
@@ -461,7 +461,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
   end
 
   def test_ensure_that_gitignore_can_be_generated_from_a_template_for_dummy_path
-    FileUtils.cd(Rails.root)
+    FileUtils.cd(Quails.root)
     run_generator([destination_root, "--dummy_path", "spec/dummy", "--skip-test"])
     assert_file ".gitignore" do |contents|
       assert_match(/spec\/dummy/, contents)
@@ -494,7 +494,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
     assert_no_file "bukkits.gemspec"
     assert_file "Gemfile" do |contents|
       assert_no_match("gemspec", contents)
-      assert_match(/gem 'rails'/, contents)
+      assert_match(/gem 'quails'/, contents)
       assert_match_sqlite3(contents)
     end
   end
@@ -504,15 +504,15 @@ class PluginGeneratorTest < Rails::Generators::TestCase
     assert_no_file "bukkits.gemspec"
     assert_file "Gemfile" do |contents|
       assert_no_match("gemspec", contents)
-      assert_match(/gem 'rails'/, contents)
+      assert_match(/gem 'quails'/, contents)
       assert_match_sqlite3(contents)
     end
   end
 
   def test_creating_plugin_in_app_directory_adds_gemfile_entry
     # simulate application existence
-    gemfile_path = "#{Rails.root}/Gemfile"
-    Object.const_set("APP_PATH", Rails.root)
+    gemfile_path = "#{Quails.root}/Gemfile"
+    Object.const_set("APP_PATH", Quails.root)
     FileUtils.touch gemfile_path
 
     run_generator
@@ -525,8 +525,8 @@ class PluginGeneratorTest < Rails::Generators::TestCase
 
   def test_creating_plugin_only_specify_plugin_name_in_app_directory_adds_gemfile_entry
     # simulate application existence
-    gemfile_path = "#{Rails.root}/Gemfile"
-    Object.const_set("APP_PATH", Rails.root)
+    gemfile_path = "#{Quails.root}/Gemfile"
+    Object.const_set("APP_PATH", Quails.root)
     FileUtils.touch gemfile_path
 
     FileUtils.cd(destination_root)
@@ -540,8 +540,8 @@ class PluginGeneratorTest < Rails::Generators::TestCase
 
   def test_skipping_gemfile_entry
     # simulate application existence
-    gemfile_path = "#{Rails.root}/Gemfile"
-    Object.const_set("APP_PATH", Rails.root)
+    gemfile_path = "#{Quails.root}/Gemfile"
+    Object.const_set("APP_PATH", Quails.root)
     FileUtils.touch gemfile_path
 
     run_generator [destination_root, "--skip-gemfile-entry"]
@@ -558,7 +558,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
     run_generator [destination_root, "--mountable"]
 
     capture(:stdout) do
-      `#{destination_root}/bin/rails g controller admin/dashboard foo`
+      `#{destination_root}/bin/quails g controller admin/dashboard foo`
     end
 
     assert_file "config/routes.rb" do |contents|
@@ -641,7 +641,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
     run_generator [destination_root, "--mountable", "--api"]
 
     capture(:stdout) do
-      `#{destination_root}/bin/rails g scaffold article`
+      `#{destination_root}/bin/quails g scaffold article`
     end
 
     assert_file "app/models/bukkits/article.rb"
@@ -657,7 +657,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
   def test_model_with_existent_application_record_in_mountable_engine
     run_generator [destination_root, "--mountable"]
     capture(:stdout) do
-      `#{destination_root}/bin/rails g model article`
+      `#{destination_root}/bin/quails g model article`
     end
 
     assert_file "app/models/bukkits/article.rb", /class Article < ApplicationRecord/
@@ -667,7 +667,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
     run_generator [destination_root, "--mountable"]
     FileUtils.rm "#{destination_root}/app/mailers/bukkits/application_mailer.rb"
     capture(:stdout) do
-      `#{destination_root}/bin/rails g mailer User`
+      `#{destination_root}/bin/quails g mailer User`
     end
 
     assert_file "#{destination_root}/app/mailers/bukkits/application_mailer.rb" do |mailer|
@@ -679,7 +679,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
   def test_generate_mailer_layouts_when_does_not_exist_in_mountable_engine
     run_generator [destination_root, "--mountable"]
     capture(:stdout) do
-      `#{destination_root}/bin/rails g mailer User`
+      `#{destination_root}/bin/quails g mailer User`
     end
 
     assert_file "#{destination_root}/app/views/layouts/bukkits/mailer.text.erb" do |view|
@@ -695,7 +695,7 @@ class PluginGeneratorTest < Rails::Generators::TestCase
     run_generator [destination_root, "--mountable"]
     FileUtils.rm "#{destination_root}/app/jobs/bukkits/application_job.rb"
     capture(:stdout) do
-      `#{destination_root}/bin/rails g job refresh_counters`
+      `#{destination_root}/bin/quails g job refresh_counters`
     end
 
     assert_file "#{destination_root}/app/jobs/bukkits/application_job.rb" do |record|
@@ -708,11 +708,11 @@ class PluginGeneratorTest < Rails::Generators::TestCase
     run_generator [destination_root, "--mountable"]
 
     Object.const_set("ENGINE_ROOT", destination_root)
-    FileUtils.rm("#{destination_root}/bin/rails")
+    FileUtils.rm("#{destination_root}/bin/quails")
 
-    quietly { Rails::Engine::Updater.run(:create_bin_files) }
+    quietly { Quails::Engine::Updater.run(:create_bin_files) }
 
-    assert_file "#{destination_root}/bin/rails" do |content|
+    assert_file "#{destination_root}/bin/quails" do |content|
       assert_match(%r|APP_PATH = File\.expand_path\('\.\./test/dummy/config/application', __dir__\)|, content)
     end
   ensure

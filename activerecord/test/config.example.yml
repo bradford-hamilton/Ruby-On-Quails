@@ -17,17 +17,17 @@ connections:
 
   jdbcmysql:
     arunit:
-      username: rails
+      username: quails
       encoding: utf8
     arunit2:
-      username: rails
+      username: quails
       encoding: utf8
 
   jdbcpostgresql:
     arunit:
-      username: <%= ENV['user'] || 'rails' %>
+      username: <%= ENV['user'] || 'quails' %>
     arunit2:
-      username: <%= ENV['user'] || 'rails' %>
+      username: <%= ENV['user'] || 'quails' %>
 
   jdbcsqlite3:
     arunit:
@@ -53,11 +53,11 @@ connections:
 
   mysql2:
     arunit:
-      username: rails
+      username: quails
       encoding: utf8
       collation: utf8_unicode_ci
     arunit2:
-      username: rails
+      username: quails
       encoding: utf8
 
   oracle:

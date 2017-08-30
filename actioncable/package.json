@@ -1,24 +1,24 @@
 {
   "name": "actioncable",
   "version": "5.2.0-alpha",
-  "description": "WebSocket framework for Ruby on Rails.",
+  "description": "WebSocket framework for Ruby on Quails.",
   "main": "lib/assets/compiled/action_cable.js",
   "files": [
     "lib/assets/compiled/*.js"
   ],
   "repository": {
     "type": "git",
-    "url": "rails/rails"
+    "url": "quails/quails"
   },
   "keywords": [
     "websockets",
     "actioncable",
-    "rails"
+    "quails"
   ],
   "author": "David Heinemeier Hansson <david@loudthinking.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rails/rails/issues"
+    "url": "https://github.com/quails/quails/issues"
   },
-  "homepage": "http://rubyonrails.org/"
+  "homepage": "http://rubyonquails.org/"
 }

@@ -146,9 +146,9 @@ class EventedFileUpdateCheckerPathHelperTest < ActiveSupport::TestCase
 
   test "#filter_out_descendants returns the same collection if there are no descendants (several)" do
     paths = %w(
-      /Rails.root/app/controllers
-      /Rails.root/app/models
-      /Rails.root/app/helpers
+      /Quails.root/app/controllers
+      /Quails.root/app/models
+      /Quails.root/app/helpers
     ).map { |path| pn(path) }
 
     assert_equal paths, @ph.filter_out_descendants(paths)
@@ -156,11 +156,11 @@ class EventedFileUpdateCheckerPathHelperTest < ActiveSupport::TestCase
 
   test "#filter_out_descendants filters out descendants preserving order" do
     paths = %w(
-      /Rails.root/app/controllers
-      /Rails.root/app/controllers/concerns
-      /Rails.root/app/models
-      /Rails.root/app/models/concerns
-      /Rails.root/app/helpers
+      /Quails.root/app/controllers
+      /Quails.root/app/controllers/concerns
+      /Quails.root/app/models
+      /Quails.root/app/models/concerns
+      /Quails.root/app/helpers
     ).map { |path| pn(path) }
 
     assert_equal paths.values_at(0, 2, 4), @ph.filter_out_descendants(paths)

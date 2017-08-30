@@ -2,7 +2,7 @@
 
 require "abstract_unit"
 
-# The exhaustive tests are in the rails-html-sanitizer gem.
+# The exhaustive tests are in the quails-html-sanitizer gem.
 # This tests that the helpers hook up correctly to the sanitizer classes.
 class SanitizeHelperTest < ActionView::TestCase
   tests ActionView::Helpers::SanitizeHelper
@@ -10,7 +10,7 @@ class SanitizeHelperTest < ActionView::TestCase
   def test_strip_links
     assert_equal "Dont touch me", strip_links("Dont touch me")
     assert_equal "on my mind\nall day long", strip_links("<a href='almost'>on my mind</a>\n<A href='almost'>all day long</A>")
-    assert_equal "Magic", strip_links("<a href='http://www.rubyonrails.com/'>Mag<a href='http://www.ruby-lang.org/'>ic")
+    assert_equal "Magic", strip_links("<a href='http://www.rubyonquails.com/'>Mag<a href='http://www.ruby-lang.org/'>ic")
     assert_equal "My mind\nall <b>day</b> long", strip_links("<a href='almost'>My mind</a>\n<A href='almost'>all <b>day</b> long</A>")
     assert_equal "&lt;malformed &amp; link", strip_links('<<a href="https://example.org">malformed & link</a>')
   end

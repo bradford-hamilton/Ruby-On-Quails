@@ -1,8 +1,8 @@
 {
-  "name": "rails-ujs",
+  "name": "quails-ujs",
   "version": "5.2.0-alpha",
-  "description": "Ruby on Rails unobtrusive scripting adapter",
-  "main": "lib/assets/compiled/rails-ujs.js",
+  "description": "Ruby on Quails unobtrusive scripting adapter",
+  "main": "lib/assets/compiled/quails-ujs.js",
   "files": [
     "lib/assets/compiled/*.js"
   ],
@@ -11,12 +11,12 @@
   },
   "scripts": {
     "build": "bundle exec blade build",
-    "test": "echo \"See the README: https://github.com/rails/rails/blob/master/actionview/app/assets/javascripts#how-to-run-tests\" && exit 1",
+    "test": "echo \"See the README: https://github.com/quails/quails/blob/master/actionview/app/assets/javascripts#how-to-run-tests\" && exit 1",
     "lint": "coffeelint app/assets/javascripts && eslint test/ujs/public/test"
   },
   "repository": {
     "type": "git",
-    "url": "rails/rails"
+    "url": "quails/quails"
   },
   "contributors": [
     "Stephen St. Martin",
@@ -26,9 +26,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rails/rails/issues"
+    "url": "https://github.com/quails/quails/issues"
   },
-  "homepage": "http://rubyonrails.org/",
+  "homepage": "http://rubyonquails.org/",
   "devDependencies": {
     "coffeelint": "^1.15.7",
     "eslint": "^2.13.1"

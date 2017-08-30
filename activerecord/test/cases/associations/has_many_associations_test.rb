@@ -1618,11 +1618,11 @@ class HasManyAssociationsTest < ActiveRecord::TestCase
   def test_depends_and_nullify
     num_accounts = Account.count
 
-    core = companies(:rails_core)
-    assert_equal accounts(:rails_core_account), core.account
+    core = companies(:quails_core)
+    assert_equal accounts(:quails_core_account), core.account
     assert_equal companies(:leetsoft, :jadedpixel), core.companies
     core.destroy
-    assert_nil accounts(:rails_core_account).reload.firm_id
+    assert_nil accounts(:quails_core_account).reload.firm_id
     assert_nil companies(:leetsoft).reload.client_of
     assert_nil companies(:jadedpixel).reload.client_of
 
@@ -1698,7 +1698,7 @@ class HasManyAssociationsTest < ActiveRecord::TestCase
 
   def test_replace_with_less_and_dependent_nullify
     num_companies = Company.count
-    companies(:rails_core).companies = []
+    companies(:quails_core).companies = []
     assert_equal num_companies, Company.count
   end
 

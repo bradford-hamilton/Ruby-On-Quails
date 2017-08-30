@@ -906,7 +906,7 @@ module ActiveRecord
       # Adds a new foreign key. +from_table+ is the table with the key column,
       # +to_table+ contains the referenced primary key.
       #
-      # The foreign key will be named after the following pattern: <tt>fk_rails_<identifier></tt>.
+      # The foreign key will be named after the following pattern: <tt>fk_quails_<identifier></tt>.
       # +identifier+ is a 10 character long string which is deterministically generated from the
       # +from_table+ and +column+. A custom name can be specified with the <tt>:name</tt> option.
       #
@@ -916,7 +916,7 @@ module ActiveRecord
       #
       # generates:
       #
-      #   ALTER TABLE "articles" ADD CONSTRAINT fk_rails_e74ce85cbc FOREIGN KEY ("author_id") REFERENCES "authors" ("id")
+      #   ALTER TABLE "articles" ADD CONSTRAINT fk_quails_e74ce85cbc FOREIGN KEY ("author_id") REFERENCES "authors" ("id")
       #
       # ====== Creating a foreign key on a specific column
       #
@@ -924,7 +924,7 @@ module ActiveRecord
       #
       # generates:
       #
-      #   ALTER TABLE "articles" ADD CONSTRAINT fk_rails_58ca3d3a82 FOREIGN KEY ("author_id") REFERENCES "users" ("lng_id")
+      #   ALTER TABLE "articles" ADD CONSTRAINT fk_quails_58ca3d3a82 FOREIGN KEY ("author_id") REFERENCES "users" ("lng_id")
       #
       # ====== Creating a cascading foreign key
       #
@@ -932,7 +932,7 @@ module ActiveRecord
       #
       # generates:
       #
-      #   ALTER TABLE "articles" ADD CONSTRAINT fk_rails_e74ce85cbc FOREIGN KEY ("author_id") REFERENCES "authors" ("id") ON DELETE CASCADE
+      #   ALTER TABLE "articles" ADD CONSTRAINT fk_quails_e74ce85cbc FOREIGN KEY ("author_id") REFERENCES "authors" ("id") ON DELETE CASCADE
       #
       # The +options+ hash can include the following keys:
       # [<tt>:column</tt>]
@@ -940,7 +940,7 @@ module ActiveRecord
       # [<tt>:primary_key</tt>]
       #   The primary key column name on +to_table+. Defaults to +id+.
       # [<tt>:name</tt>]
-      #   The constraint name. Defaults to <tt>fk_rails_<identifier></tt>.
+      #   The constraint name. Defaults to <tt>fk_quails_<identifier></tt>.
       # [<tt>:on_delete</tt>]
       #   Action that happens <tt>ON DELETE</tt>. Valid values are +:nullify+, +:cascade+ and +:restrict+
       # [<tt>:on_update</tt>]
@@ -1311,7 +1311,7 @@ module ActiveRecord
             identifier = "#{table_name}_#{options.fetch(:column)}_fk"
             hashed_identifier = Digest::SHA256.hexdigest(identifier).first(10)
 
-            "fk_rails_#{hashed_identifier}"
+            "fk_quails_#{hashed_identifier}"
           end
         end
 

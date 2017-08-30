@@ -1,74 +1,74 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-The Rails Initialization Process
+The Quails Initialization Process
 ================================
 
-This guide explains the internals of the initialization process in Rails.
-It is an extremely in-depth guide and recommended for advanced Rails developers.
+This guide explains the internals of the initialization process in Quails.
+It is an extremely in-depth guide and recommended for advanced Quails developers.
 
 After reading this guide, you will know:
 
-* How to use `rails server`.
-* The timeline of Rails' initialization sequence.
+* How to use `quails server`.
+* The timeline of Quails' initialization sequence.
 * Where different files are required by the boot sequence.
-* How the Rails::Server interface is defined and used.
+* How the Quails::Server interface is defined and used.
 
 --------------------------------------------------------------------------------
 
 This guide goes through every method call that is
-required to boot up the Ruby on Rails stack for a default Rails
+required to boot up the Ruby on Quails stack for a default Quails
 application, explaining each part in detail along the way. For this
-guide, we will be focusing on what happens when you execute `rails server`
+guide, we will be focusing on what happens when you execute `quails server`
 to boot your app.
 
-NOTE: Paths in this guide are relative to Rails or a Rails application unless otherwise specified.
+NOTE: Paths in this guide are relative to Quails or a Quails application unless otherwise specified.
 
-TIP: If you want to follow along while browsing the Rails [source
-code](https://github.com/rails/rails), we recommend that you use the `t`
+TIP: If you want to follow along while browsing the Quails [source
+code](https://github.com/quails/quails), we recommend that you use the `t`
 key binding to open the file finder inside GitHub and find files
 quickly.
 
 Launch!
 -------
 
-Let's start to boot and initialize the app. A Rails application is usually
-started by running `rails console` or `rails server`.
+Let's start to boot and initialize the app. A Quails application is usually
+started by running `quails console` or `quails server`.
 
-### `railties/exe/rails`
+### `railties/exe/quails`
 
-The `rails` in the command `rails server` is a ruby executable in your load
+The `quails` in the command `quails server` is a ruby executable in your load
 path. This executable contains the following lines:
 
 ```ruby
 version = ">= 0"
-load Gem.bin_path('railties', 'rails', version)
+load Gem.bin_path('railties', 'quails', version)
 ```
 
-If you try out this command in a Rails console, you would see that this loads
-`railties/exe/rails`. A part of the file `railties/exe/rails.rb` has the
+If you try out this command in a Quails console, you would see that this loads
+`railties/exe/quails`. A part of the file `railties/exe/quails.rb` has the
 following code:
 
 ```ruby
-require "rails/cli"
+require "quails/cli"
 ```
 
-The file `railties/lib/rails/cli` in turn calls
-`Rails::AppLoader.exec_app`.
+The file `railties/lib/quails/cli` in turn calls
+`Quails::AppLoader.exec_app`.
 
-### `railties/lib/rails/app_loader.rb`
+### `railties/lib/quails/app_loader.rb`
 
 The primary goal of the function `exec_app` is to execute your app's
-`bin/rails`. If the current directory does not have a `bin/rails`, it will
-navigate upwards until it finds a `bin/rails` executable. Thus one can invoke a
-`rails` command from anywhere inside a rails application.
+`bin/quails`. If the current directory does not have a `bin/quails`, it will
+navigate upwards until it finds a `bin/quails` executable. Thus one can invoke a
+`quails` command from anywhere inside a quails application.
 
-For `rails server` the equivalent of the following command is executed:
+For `quails server` the equivalent of the following command is executed:
 
 ```bash
-$ exec ruby bin/rails server
+$ exec ruby bin/quails server
 ```
 
-### `bin/rails`
+### `bin/quails`
 
 This file is as follows:
 
@@ -76,10 +76,10 @@ This file is as follows:
 #!/usr/bin/env ruby
 APP_PATH = File.expand_path('../config/application', __dir__)
 require_relative '../config/boot'
-require 'rails/commands'
+require 'quails/commands'
 ```
 
-The `APP_PATH` constant will be used later in `rails/commands`. The `config/boot` file referenced here is the `config/boot.rb` file in our application which is responsible for loading Bundler and setting it up.
+The `APP_PATH` constant will be used later in `quails/commands`. The `config/boot` file referenced here is the `config/boot.rb` file in our application which is responsible for loading Bundler and setting it up.
 
 ### `config/boot.rb`
 
@@ -91,13 +91,13 @@ ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
 require 'bundler/setup' # Set up gems listed in the Gemfile.
 ```
 
-In a standard Rails application, there's a `Gemfile` which declares all
+In a standard Quails application, there's a `Gemfile` which declares all
 dependencies of the application. `config/boot.rb` sets
 `ENV['BUNDLE_GEMFILE']` to the location of this file. If the Gemfile
 exists, then `bundler/setup` is required. The require is used by Bundler to
 configure the load path for your Gemfile's dependencies.
 
-A standard Rails application depends on several gems, specifically:
+A standard Quails application depends on several gems, specifically:
 
 * actioncable
 * actionmailer
@@ -119,17 +119,17 @@ A standard Rails application depends on several gems, specifically:
 * rack-cache
 * rack-mount
 * rack-test
-* rails
+* quails
 * railties
 * rake
 * sqlite3
 * thor
 * tzinfo
 
-### `rails/commands.rb`
+### `quails/commands.rb`
 
 Once `config/boot.rb` has finished, the next file that is required is
-`rails/commands`, which helps in expanding aliases. In the current case, the
+`quails/commands`, which helps in expanding aliases. In the current case, the
 `ARGV` array simply contains `server` which will be passed over:
 
 ```ruby
@@ -148,25 +148,25 @@ aliases = {
 command = ARGV.shift
 command = aliases[command] || command
 
-Rails::Command.invoke command, ARGV
+Quails::Command.invoke command, ARGV
 ```
 
-If we had used `s` rather than `server`, Rails would have used the `aliases`
+If we had used `s` rather than `server`, Quails would have used the `aliases`
 defined here to find the matching command.
 
-### `rails/command.rb`
+### `quails/command.rb`
 
-When one types a Rails command, `invoke` tries to lookup a command for the given
+When one types a Quails command, `invoke` tries to lookup a command for the given
 namespace and executes the command if found.
 
-If Rails doesn't recognize the command, it hands the reins over to Rake
+If Quails doesn't recognize the command, it hands the reins over to Rake
 to run a task of the same name.
 
-As shown, `Rails::Command` displays the help output automatically if the `args`
+As shown, `Quails::Command` displays the help output automatically if the `args`
 are empty.
 
 ```ruby
-module Rails::Command
+module Quails::Command
   class << self
     def invoke(namespace, args = [], **config)
       namespace = namespace.to_s
@@ -183,20 +183,20 @@ module Rails::Command
 end
 ```
 
-With the `server` command, Rails will further run the following code:
+With the `server` command, Quails will further run the following code:
 
 ```ruby
-module Rails
+module Quails
   module Command
     class ServerCommand < Base # :nodoc:
       def perform
         set_application_directory!
 
-        Rails::Server.new.tap do |server|
+        Quails::Server.new.tap do |server|
           # Require application after server sets environment to propagate
           # the --environment option.
           require APP_PATH
-          Dir.chdir(Rails.application.root)
+          Dir.chdir(Quails.application.root)
           server.start
         end
       end
@@ -205,20 +205,20 @@ module Rails
 end
 ```
 
-This file will change into the Rails root directory (a path two directories up
+This file will change into the Quails root directory (a path two directories up
 from `APP_PATH` which points at `config/application.rb`), but only if the
-`config.ru` file isn't found. This then starts up the `Rails::Server` class.
+`config.ru` file isn't found. This then starts up the `Quails::Server` class.
 
 ### `actionpack/lib/action_dispatch.rb`
 
-Action Dispatch is the routing component of the Rails framework.
+Action Dispatch is the routing component of the Quails framework.
 It adds functionality like routing, session, and common middlewares.
 
-### `rails/commands/server/server_command.rb`
+### `quails/commands/server/server_command.rb`
 
-The `Rails::Server` class is defined in this file by inheriting from
-`Rack::Server`. When `Rails::Server.new` is called, this calls the `initialize`
-method in `rails/commands/server/server_command.rb`:
+The `Quails::Server` class is defined in this file by inheriting from
+`Rack::Server`. When `Quails::Server.new` is called, this calls the `initialize`
+method in `quails/commands/server/server_command.rb`:
 
 ```ruby
 def initialize(*)
@@ -231,7 +231,7 @@ Firstly, `super` is called which calls the `initialize` method on `Rack::Server`
 
 ### Rack: `lib/rack/server.rb`
 
-`Rack::Server` is responsible for providing a common server interface for all Rack-based applications, which Rails is now a part of.
+`Rack::Server` is responsible for providing a common server interface for all Rack-based applications, which Quails is now a part of.
 
 The `initialize` method in `Rack::Server` simply sets a couple of variables:
 
@@ -245,8 +245,8 @@ end
 In this case, `options` will be `nil` so nothing happens in this method.
 
 After `super` has finished in `Rack::Server`, we jump back to
-`rails/commands/server/server_command.rb`. At this point, `set_environment`
-is called within the context of the `Rails::Server` object and this method
+`quails/commands/server/server_command.rb`. At this point, `set_environment`
+is called within the context of the `Quails::Server` object and this method
 doesn't appear to do much at first glance:
 
 ```ruby
@@ -305,7 +305,7 @@ end
 ```
 
 The class **is** defined in `Rack::Server`, but is overwritten in
-`Rails::Server` to take different arguments. Its `parse!` method looks
+`Quails::Server` to take different arguments. Its `parse!` method looks
 like this:
 
 ```ruby
@@ -314,13 +314,13 @@ def parse!(args)
 
   option_parser(options).parse! args
 
-  options[:log_stdout] = options[:daemonize].blank? && (options[:environment] || Rails.env) == "development"
+  options[:log_stdout] = options[:daemonize].blank? && (options[:environment] || Quails.env) == "development"
   options[:server]     = args.shift
   options
 end
 ```
 
-This method will set up keys for the `options` which Rails will then be
+This method will set up keys for the `options` which Quails will then be
 able to use to determine how its server should run. After `initialize`
 has finished, we jump back into the server command where `APP_PATH` (which was
 set earlier) is required.
@@ -328,10 +328,10 @@ set earlier) is required.
 ### `config/application`
 
 When `require APP_PATH` is executed, `config/application.rb` is loaded (recall
-that `APP_PATH` is defined in `bin/rails`). This file exists in your application
+that `APP_PATH` is defined in `bin/quails`). This file exists in your application
 and it's free for you to change based on your needs.
 
-### `Rails::Server#start`
+### `Quails::Server#start`
 
 After `config/application` is loaded, `server.start` is called. This method is
 defined like this:
@@ -351,18 +351,18 @@ end
 private
   def print_boot_information
     ...
-    puts "=> Run `rails server -h` for more startup options"
+    puts "=> Run `quails server -h` for more startup options"
   end
 
   def create_tmp_directories
     %w(cache pids sockets).each do |dir_to_make|
-      FileUtils.mkdir_p(File.join(Rails.root, 'tmp', dir_to_make))
+      FileUtils.mkdir_p(File.join(Quails.root, 'tmp', dir_to_make))
     end
   end
 
   def setup_dev_caching
     if options[:environment] == "development"
-      Rails::DevCaching.enable_by_argument(options[:caching])
+      Quails::DevCaching.enable_by_argument(options[:caching])
     end
   end
 
@@ -370,20 +370,20 @@ private
     wrapped_app # touch the app so the logger is set up
 
     console = ActiveSupport::Logger.new(STDOUT)
-    console.formatter = Rails.logger.formatter
-    console.level = Rails.logger.level
+    console.formatter = Quails.logger.formatter
+    console.level = Quails.logger.level
 
-    unless ActiveSupport::Logger.logger_outputs_to?(Rails.logger, STDOUT)
-      Rails.logger.extend(ActiveSupport::Logger.broadcast(console))
+    unless ActiveSupport::Logger.logger_outputs_to?(Quails.logger, STDOUT)
+      Quails.logger.extend(ActiveSupport::Logger.broadcast(console))
     end
   end
 ```
 
-This is where the first output of the Rails initialization happens. This method
+This is where the first output of the Quails initialization happens. This method
 creates a trap for `INT` signals, so if you `CTRL-C` the server, it will exit the
 process. As we can see from the code here, it will create the `tmp/cache`,
 `tmp/pids`, and `tmp/sockets` directories. It then enables caching in development
-if `rails server` is called with `--dev-caching`. Finally, it calls `wrapped_app` which is
+if `quails server` is called with `--dev-caching`. Finally, it calls `wrapped_app` which is
 responsible for creating the Rack app, before creating and assigning an instance
 of `ActiveSupport::Logger`.
 
@@ -433,7 +433,7 @@ def start &blk
 end
 ```
 
-The interesting part for a Rails app is the last line, `server.run`. Here we encounter the `wrapped_app` method again, which this time
+The interesting part for a Quails app is the last line, `server.run`. Here we encounter the `wrapped_app` method again, which this time
 we're going to explore more (even though it was executed before, and
 thus memoized by now).
 
@@ -487,7 +487,7 @@ def self.new_from_string(builder_script, file="(rackup)")
 end
 ```
 
-The `initialize` method of `Rack::Builder` will take the block here and execute it within an instance of `Rack::Builder`. This is where the majority of the initialization process of Rails happens. The `require` line for `config/environment.rb` in `config.ru` is the first to run:
+The `initialize` method of `Rack::Builder` will take the block here and execute it within an instance of `Rack::Builder`. This is where the majority of the initialization process of Quails happens. The `require` line for `config/environment.rb` in `config.ru` is the first to run:
 
 ```ruby
 require_relative 'config/environment'
@@ -495,7 +495,7 @@ require_relative 'config/environment'
 
 ### `config/environment.rb`
 
-This file is the common file required by `config.ru` (`rails server`) and Passenger. This is where these two ways to run the server meet; everything before this point has been Rack and Rails setup.
+This file is the common file required by `config.ru` (`quails server`) and Passenger. This is where these two ways to run the server meet; everything before this point has been Rack and Quails setup.
 
 This file begins with requiring `config/application.rb`:
 
@@ -511,26 +511,26 @@ This file requires `config/boot.rb`:
 require_relative 'boot'
 ```
 
-But only if it hasn't been required before, which would be the case in `rails server`
+But only if it hasn't been required before, which would be the case in `quails server`
 but **wouldn't** be the case with Passenger.
 
 Then the fun begins!
 
-Loading Rails
+Loading Quails
 -------------
 
 The next line in `config/application.rb` is:
 
 ```ruby
-require 'rails/all'
+require 'quails/all'
 ```
 
-### `railties/lib/rails/all.rb`
+### `railties/lib/quails/all.rb`
 
-This file is responsible for requiring all the individual frameworks of Rails:
+This file is responsible for requiring all the individual frameworks of Quails:
 
 ```ruby
-require "rails"
+require "quails"
 
 %w(
   active_record/railtie
@@ -540,7 +540,7 @@ require "rails"
   active_job/railtie
   action_cable/engine
   active_storage/engine
-  rails/test_unit/railtie
+  quails/test_unit/railtie
   sprockets/railtie
 ).each do |railtie|
   begin
@@ -550,24 +550,24 @@ require "rails"
 end
 ```
 
-This is where all the Rails frameworks are loaded and thus made
+This is where all the Quails frameworks are loaded and thus made
 available to the application. We won't go into detail of what happens
 inside each of those frameworks, but you're encouraged to try and
 explore them on your own.
 
-For now, just keep in mind that common functionality like Rails engines,
-I18n and Rails configuration are all being defined here.
+For now, just keep in mind that common functionality like Quails engines,
+I18n and Quails configuration are all being defined here.
 
 ### Back to `config/environment.rb`
 
 The rest of `config/application.rb` defines the configuration for the
-`Rails::Application` which will be used once the application is fully
-initialized. When `config/application.rb` has finished loading Rails and defined
+`Quails::Application` which will be used once the application is fully
+initialized. When `config/application.rb` has finished loading Quails and defined
 the application namespace, we go back to `config/environment.rb`. Here, the
-application is initialized with `Rails.application.initialize!`, which is
-defined in `rails/application.rb`.
+application is initialized with `Quails.application.initialize!`, which is
+defined in `quails/application.rb`.
 
-### `railties/lib/rails/application.rb`
+### `railties/lib/quails/application.rb`
 
 The `initialize!` method looks like this:
 
@@ -581,7 +581,7 @@ end
 ```
 
 As you can see, you can only initialize an app once. The initializers are run through
-the `run_initializers` method which is defined in `railties/lib/rails/initializable.rb`:
+the `run_initializers` method which is defined in `railties/lib/quails/initializable.rb`:
 
 ```ruby
 def run_initializers(group=:default, *args)
@@ -593,17 +593,17 @@ def run_initializers(group=:default, *args)
 end
 ```
 
-The `run_initializers` code itself is tricky. What Rails is doing here is
+The `run_initializers` code itself is tricky. What Quails is doing here is
 traversing all the class ancestors looking for those that respond to an
 `initializers` method. It then sorts the ancestors by name, and runs them.
 For example, the `Engine` class will make all the engines available by
 providing an `initializers` method on them.
 
-The `Rails::Application` class, as defined in `railties/lib/rails/application.rb`
+The `Quails::Application` class, as defined in `railties/lib/quails/application.rb`
 defines `bootstrap`, `railtie`, and `finisher` initializers. The `bootstrap` initializers
 prepare the application (like initializing the logger) while the `finisher`
 initializers (like building the middleware stack) are run last. The `railtie`
-initializers are the initializers which have been defined on the `Rails::Application`
+initializers are the initializers which have been defined on the `Quails::Application`
 itself and are run between the `bootstrap` and `finishers`.
 
 After this is done we go back to `Rack::Server`.
@@ -633,7 +633,7 @@ private
   end
 ```
 
-At this point `app` is the Rails app itself (a middleware), and what
+At this point `app` is the Quails app itself (a middleware), and what
 happens next is Rack will call all the provided middlewares:
 
 ```ruby
@@ -704,9 +704,9 @@ end
 ```
 
 We won't dig into the server configuration itself, but this is
-the last piece of our journey in the Rails initialization process.
+the last piece of our journey in the Quails initialization process.
 
 This high level overview will help you understand when your code is
-executed and how, and overall become a better Rails developer. If you
-still want to know more, the Rails source code itself is probably the
+executed and how, and overall become a better Quails developer. If you
+still want to know more, the Quails source code itself is probably the
 best place to go next.

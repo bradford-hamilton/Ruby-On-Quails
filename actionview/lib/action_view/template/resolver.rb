@@ -309,7 +309,7 @@ module ActionView
   #
   # ==== Examples
   #
-  # Default pattern, loads views the same way as previous versions of rails, eg. when you're
+  # Default pattern, loads views the same way as previous versions of quails, eg. when you're
   # looking for <tt>users/new</tt> it will produce query glob: <tt>users/new{.{en},}{.{html,js},}{.{erb,haml},}</tt>
   #
   #   FileSystemResolver.new("/path/to/views", ":prefix/:action{.:locale,}{.:formats,}{+:variants,}{.:handlers,}")
@@ -322,11 +322,11 @@ module ActionView
   #
   # If you don't specify a pattern then the default will be used.
   #
-  # In order to use any of the customized resolvers above in a Rails application, you just need
+  # In order to use any of the customized resolvers above in a Quails application, you just need
   # to configure ActionController::Base.view_paths in an initializer, for example:
   #
   #   ActionController::Base.view_paths = FileSystemResolver.new(
-  #     Rails.root.join("app/views"),
+  #     Quails.root.join("app/views"),
   #     ":prefix/:action{.:locale,}{.:formats,}{+:variants,}{.:handlers,}",
   #   )
   #
@@ -360,7 +360,7 @@ module ActionView
     alias :== :eql?
   end
 
-  # An Optimized resolver for Rails' most common case.
+  # An Optimized resolver for Quails' most common case.
   class OptimizedFileSystemResolver < FileSystemResolver #:nodoc:
     def build_query(path, details)
       query = escape_entry(File.join(@path, path))

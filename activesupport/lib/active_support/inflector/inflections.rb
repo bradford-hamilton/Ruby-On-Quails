@@ -233,7 +233,7 @@ module ActiveSupport
     # Only rules for English are provided.
     #
     #   ActiveSupport::Inflector.inflections(:en) do |inflect|
-    #     inflect.uncountable 'rails'
+    #     inflect.uncountable 'quails'
     #   end
     def inflections(locale = :en)
       if block_given?

@@ -19,9 +19,9 @@ module ActiveRecord
       end
 
       # Returns the maximum allowed length for an index name. This
-      # limit is enforced by \Rails and is less than or equal to
+      # limit is enforced by \Quails and is less than or equal to
       # #index_name_length. The gap between
-      # #index_name_length is to allow internal \Rails
+      # #index_name_length is to allow internal \Quails
       # operations to use prefixes in temporary operations.
       def allowed_index_name_length
         index_name_length

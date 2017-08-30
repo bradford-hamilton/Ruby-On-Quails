@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 require "abstract_unit"
-require "rails/engine"
+require "quails/engine"
 
 class TestRoutingMount < ActionDispatch::IntegrationTest
   Router = ActionDispatch::Routing::RouteSet.new
 
-  class AppWithRoutes < Rails::Engine
+  class AppWithRoutes < Quails::Engine
     def self.routes
       @routes ||= ActionDispatch::Routing::RouteSet.new
     end
   end
 
-  # Test for mounting apps that respond to routes, but aren't Rails-like apps.
+  # Test for mounting apps that respond to routes, but aren't Quails-like apps.
   class SinatraLikeApp
     def self.routes; Object.new; end
 

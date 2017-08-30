@@ -45,7 +45,7 @@ module ApplicationTests
           require "#{app_path}/config/environment"
         end
 
-        Rails.application
+        Quails.application
       ensure
         ENV.delete "RAILS_ENV"
       end
@@ -70,43 +70,43 @@ module ApplicationTests
       FileUtils.mv("#{app_path}/config/__environments__", "#{app_path}/config/environments")
     end
 
-    test "Rails.env does not set the RAILS_ENV environment variable which would leak out into rake tasks" do
-      require "rails"
+    test "Quails.env does not set the RAILS_ENV environment variable which would leak out into rake tasks" do
+      require "quails"
 
       switch_env "RAILS_ENV", nil do
-        Rails.env = "development"
-        assert_equal "development", Rails.env
+        Quails.env = "development"
+        assert_equal "development", Quails.env
         assert_nil ENV["RAILS_ENV"]
       end
     end
 
-    test "Rails.env falls back to development if RAILS_ENV is blank and RACK_ENV is nil" do
-      with_rails_env("") do
-        assert_equal "development", Rails.env
+    test "Quails.env falls back to development if RAILS_ENV is blank and RACK_ENV is nil" do
+      with_quails_env("") do
+        assert_equal "development", Quails.env
       end
     end
 
-    test "Rails.env falls back to development if RACK_ENV is blank and RAILS_ENV is nil" do
+    test "Quails.env falls back to development if RACK_ENV is blank and RAILS_ENV is nil" do
       with_rack_env("") do
-        assert_equal "development", Rails.env
+        assert_equal "development", Quails.env
       end
     end
 
     test "By default logs tags are not set in development" do
       restore_default_config
 
-      with_rails_env "development" do
+      with_quails_env "development" do
         app "development"
-        assert Rails.application.config.log_tags.blank?
+        assert Quails.application.config.log_tags.blank?
       end
     end
 
     test "By default logs are tagged with :request_id in production" do
       restore_default_config
 
-      with_rails_env "production" do
+      with_quails_env "production" do
         app "production"
-        assert_equal [:request_id], Rails.application.config.log_tags
+        assert_equal [:request_id], Quails.application.config.log_tags
       end
     end
 
@@ -123,7 +123,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal "MyLogger", Rails.application.config.logger.class.name
+      assert_equal "MyLogger", Quails.application.config.logger.class.name
     end
 
     test "a renders exception on pending migration" do
@@ -154,41 +154,41 @@ module ApplicationTests
       end
     end
 
-    test "Rails.groups returns available groups" do
-      require "rails"
+    test "Quails.groups returns available groups" do
+      require "quails"
 
-      Rails.env = "development"
-      assert_equal [:default, "development"], Rails.groups
-      assert_equal [:default, "development", :assets], Rails.groups(assets: [:development])
-      assert_equal [:default, "development", :another, :assets], Rails.groups(:another, assets: %w(development))
+      Quails.env = "development"
+      assert_equal [:default, "development"], Quails.groups
+      assert_equal [:default, "development", :assets], Quails.groups(assets: [:development])
+      assert_equal [:default, "development", :another, :assets], Quails.groups(:another, assets: %w(development))
 
-      Rails.env = "test"
-      assert_equal [:default, "test"], Rails.groups(assets: [:development])
+      Quails.env = "test"
+      assert_equal [:default, "test"], Quails.groups(assets: [:development])
 
       ENV["RAILS_GROUPS"] = "javascripts,stylesheets"
-      assert_equal [:default, "test", "javascripts", "stylesheets"], Rails.groups
+      assert_equal [:default, "test", "javascripts", "stylesheets"], Quails.groups
     end
 
-    test "Rails.application is nil until app is initialized" do
-      require "rails"
-      assert_nil Rails.application
+    test "Quails.application is nil until app is initialized" do
+      require "quails"
+      assert_nil Quails.application
       app "development"
-      assert_equal AppTemplate::Application.instance, Rails.application
+      assert_equal AppTemplate::Application.instance, Quails.application
     end
 
-    test "Rails.application responds to all instance methods" do
+    test "Quails.application responds to all instance methods" do
       app "development"
-      assert_equal Rails.application.routes_reloader, AppTemplate::Application.routes_reloader
+      assert_equal Quails.application.routes_reloader, AppTemplate::Application.routes_reloader
     end
 
-    test "Rails::Application responds to paths" do
+    test "Quails::Application responds to paths" do
       app "development"
       assert_equal ["#{app_path}/app/views"], AppTemplate::Application.paths["app/views"].expanded
     end
 
     test "the application root is set correctly" do
       app "development"
-      assert_equal Pathname.new(app_path), Rails.application.root
+      assert_equal Pathname.new(app_path), Quails.application.root
     end
 
     test "the application root can be seen from the application singleton" do
@@ -206,7 +206,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal Pathname.new(new_app), Rails.application.root
+      assert_equal Pathname.new(new_app), Quails.application.root
     end
 
     test "the application root is Dir.pwd if there is no config.ru" do
@@ -216,28 +216,28 @@ module ApplicationTests
 
       Dir.chdir("#{app_path}") do
         app "development"
-        assert_equal Pathname.new("#{app_path}"), Rails.application.root
+        assert_equal Pathname.new("#{app_path}"), Quails.application.root
       end
     end
 
-    test "Rails.root should be a Pathname" do
+    test "Quails.root should be a Pathname" do
       add_to_config <<-RUBY
         config.root = "#{app_path}"
       RUBY
 
       app "development"
 
-      assert_instance_of Pathname, Rails.root
+      assert_instance_of Pathname, Quails.root
     end
 
-    test "Rails.public_path should be a Pathname" do
+    test "Quails.public_path should be a Pathname" do
       add_to_config <<-RUBY
         config.paths["public"] = "somewhere"
       RUBY
 
       app "development"
 
-      assert_instance_of Pathname, Rails.public_path
+      assert_instance_of Pathname, Quails.public_path
     end
 
     test "does not eager load controller actions in development" do
@@ -313,7 +313,7 @@ module ApplicationTests
 
     test "application is always added to eager_load namespaces" do
       app "development"
-      assert_includes Rails.application.config.eager_load_namespaces, AppTemplate::Application
+      assert_includes Quails.application.config.eager_load_namespaces, AppTemplate::Application
     end
 
     test "the application can be eager loaded even when there are no frameworks" do
@@ -346,12 +346,12 @@ module ApplicationTests
 
     test "filter_parameters should be able to set via config.filter_parameters in an initializer" do
       app_file "config/initializers/filter_parameters_logging.rb", <<-RUBY
-        Rails.application.config.filter_parameters += [ :password, :foo, 'bar' ]
+        Quails.application.config.filter_parameters += [ :password, :foo, 'bar' ]
       RUBY
 
       app "development"
 
-      assert_equal [:password, :foo, "bar"], Rails.application.env_config["action_dispatch.parameter_filter"]
+      assert_equal [:password, :foo, "bar"], Quails.application.env_config["action_dispatch.parameter_filter"]
     end
 
     test "config.to_prepare is forwarded to ActionDispatch" do
@@ -390,19 +390,19 @@ module ApplicationTests
       assert_utf8
     end
 
-    test "config.paths.public sets Rails.public_path" do
+    test "config.paths.public sets Quails.public_path" do
       add_to_config <<-RUBY
         config.paths["public"] = "somewhere"
       RUBY
 
       app "development"
-      assert_equal Pathname.new(app_path).join("somewhere"), Rails.public_path
+      assert_equal Pathname.new(app_path).join("somewhere"), Quails.public_path
     end
 
     test "In production mode, config.public_file_server.enabled is off by default" do
       restore_default_config
 
-      with_rails_env "production" do
+      with_quails_env "production" do
         app "production"
         assert_not app.config.public_file_server.enabled
       end
@@ -411,7 +411,7 @@ module ApplicationTests
     test "In production mode, config.public_file_server.enabled is enabled when RAILS_SERVE_STATIC_FILES is set" do
       restore_default_config
 
-      with_rails_env "production" do
+      with_quails_env "production" do
         switch_env "RAILS_SERVE_STATIC_FILES", "1" do
           app "production"
           assert app.config.public_file_server.enabled
@@ -422,7 +422,7 @@ module ApplicationTests
     test "In production mode, STDOUT logging is enabled when RAILS_LOG_TO_STDOUT is set" do
       restore_default_config
 
-      with_rails_env "production" do
+      with_quails_env "production" do
         switch_env "RAILS_LOG_TO_STDOUT", "1" do
           app "production"
           assert ActiveSupport::Logger.logger_outputs_to?(app.config.logger, STDOUT)
@@ -433,7 +433,7 @@ module ApplicationTests
     test "In production mode, config.public_file_server.enabled is disabled when RAILS_SERVE_STATIC_FILES is blank" do
       restore_default_config
 
-      with_rails_env "production" do
+      with_quails_env "production" do
         switch_env "RAILS_SERVE_STATIC_FILES", " " do
           app "production"
           assert_not app.config.public_file_server.enabled
@@ -469,7 +469,7 @@ module ApplicationTests
 
       message = app.message_verifier(:sensitive_value).generate("some_value")
 
-      assert_equal "some_value", Rails.application.message_verifier(:sensitive_value).verify(message)
+      assert_equal "some_value", Quails.application.message_verifier(:sensitive_value).verify(message)
 
       secret = app.key_generator.generate_key("sensitive_value")
       verifier = ActiveSupport::MessageVerifier.new(secret)
@@ -478,7 +478,7 @@ module ApplicationTests
 
     test "application message verifier can be used when the key_generator is ActiveSupport::LegacyKeyGenerator" do
       app_file "config/initializers/secret_token.rb", <<-RUBY
-        Rails.application.config.secret_token = "b3c631c314c0bbca50c1b2843150fe33"
+        Quails.application.config.secret_token = "b3c631c314c0bbca50c1b2843150fe33"
       RUBY
       app_file "config/secrets.yml", <<-YAML
         development:
@@ -487,15 +487,15 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal app.env_config["action_dispatch.key_generator"], Rails.application.key_generator
+      assert_equal app.env_config["action_dispatch.key_generator"], Quails.application.key_generator
       assert_equal app.env_config["action_dispatch.key_generator"].class, ActiveSupport::LegacyKeyGenerator
       message = app.message_verifier(:sensitive_value).generate("some_value")
-      assert_equal "some_value", Rails.application.message_verifier(:sensitive_value).verify(message)
+      assert_equal "some_value", Quails.application.message_verifier(:sensitive_value).verify(message)
     end
 
     test "warns when secrets.secret_key_base is blank and config.secret_token is set" do
       app_file "config/initializers/secret_token.rb", <<-RUBY
-        Rails.application.config.secret_token = "b3c631c314c0bbca50c1b2843150fe33"
+        Quails.application.config.secret_token = "b3c631c314c0bbca50c1b2843150fe33"
       RUBY
       app_file "config/secrets.yml", <<-YAML
         development:
@@ -522,7 +522,7 @@ module ApplicationTests
 
     test "prefer secrets.secret_token over config.secret_token" do
       app_file "config/initializers/secret_token.rb", <<-RUBY
-        Rails.application.config.secret_token = ""
+        Quails.application.config.secret_token = ""
       RUBY
       app_file "config/secrets.yml", <<-YAML
         development:
@@ -567,7 +567,7 @@ module ApplicationTests
     test "secret_key_base is copied from config to secrets when not set" do
       remove_file "config/secrets.yml"
       app_file "config/initializers/secret_token.rb", <<-RUBY
-        Rails.application.config.secret_key_base = "3b7cd727ee24e8444053437c36cc66c3"
+        Quails.application.config.secret_key_base = "3b7cd727ee24e8444053437c36cc66c3"
       RUBY
 
       app "development"
@@ -576,7 +576,7 @@ module ApplicationTests
 
     test "config.secret_token over-writes a blank secrets.secret_token" do
       app_file "config/initializers/secret_token.rb", <<-RUBY
-        Rails.application.config.secret_token = "b3c631c314c0bbca50c1b2843150fe33"
+        Quails.application.config.secret_token = "b3c631c314c0bbca50c1b2843150fe33"
       RUBY
       app_file "config/secrets.yml", <<-YAML
         development:
@@ -640,7 +640,7 @@ module ApplicationTests
 
     test "config.secret_key_base over-writes a blank secrets.secret_key_base" do
       app_file "config/initializers/secret_token.rb", <<-RUBY
-        Rails.application.config.secret_key_base = "iaminallyoursecretkeybase"
+        Quails.application.config.secret_key_base = "iaminallyoursecretkeybase"
       RUBY
       app_file "config/secrets.yml", <<-YAML
         development:
@@ -654,7 +654,7 @@ module ApplicationTests
 
     test "uses ActiveSupport::LegacyKeyGenerator as app.key_generator when secrets.secret_key_base is blank" do
       app_file "config/initializers/secret_token.rb", <<-RUBY
-        Rails.application.config.secret_token = "b3c631c314c0bbca50c1b2843150fe33"
+        Quails.application.config.secret_token = "b3c631c314c0bbca50c1b2843150fe33"
       RUBY
       app_file "config/secrets.yml", <<-YAML
         development:
@@ -670,7 +670,7 @@ module ApplicationTests
 
     test "uses ActiveSupport::LegacyKeyGenerator with config.secret_token as app.key_generator when secrets.secret_key_base is blank" do
       app_file "config/initializers/secret_token.rb", <<-RUBY
-        Rails.application.config.secret_token = ""
+        Quails.application.config.secret_token = ""
       RUBY
       app_file "config/secrets.yml", <<-YAML
         development:
@@ -721,7 +721,7 @@ module ApplicationTests
           label(attribute) + super(attribute, *args)
         end
       end
-      Rails.configuration.action_view.default_form_builder = "CustomFormBuilder"
+      Quails.configuration.action_view.default_form_builder = "CustomFormBuilder"
       RUBY
 
       app_file "app/models/post.rb", <<-RUBY
@@ -753,7 +753,7 @@ module ApplicationTests
 
     test "form_with can be configured with form_with_generates_remote_forms" do
       app_file "config/initializers/form_builder.rb", <<-RUBY
-      Rails.configuration.action_view.form_with_generates_remote_forms = false
+      Quails.configuration.action_view.form_with_generates_remote_forms = false
       RUBY
 
       app_file "app/models/post.rb", <<-RUBY
@@ -881,7 +881,7 @@ module ApplicationTests
 
     test "sets ActionDispatch.test_app" do
       make_basic_app
-      assert_equal Rails.application, ActionDispatch.test_app
+      assert_equal Quails.application, ActionDispatch.test_app
     end
 
     test "sets ActionDispatch::Response.default_charset" do
@@ -1004,7 +1004,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal "Wellington", Rails.application.config.time_zone
+      assert_equal "Wellington", Quails.application.config.time_zone
     end
 
     test "raises when an invalid timezone is defined in the config" do
@@ -1026,7 +1026,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal :wednesday, Rails.application.config.beginning_of_week
+      assert_equal :wednesday, Quails.application.config.beginning_of_week
     end
 
     test "raises when an invalid beginning of week is defined in the config" do
@@ -1285,7 +1285,7 @@ module ApplicationTests
 
     test "config.action_controller.permit_all_parameters can be configured in an initializer" do
       app_file "config/initializers/permit_all_parameters.rb", <<-RUBY
-        Rails.application.config.action_controller.permit_all_parameters = true
+        Quails.application.config.action_controller.permit_all_parameters = true
       RUBY
 
       app "development"
@@ -1297,7 +1297,7 @@ module ApplicationTests
 
     test "config.action_controller.always_permitted_parameters can be configured in an initializer" do
       app_file "config/initializers/always_permitted_parameters.rb", <<-RUBY
-        Rails.application.config.action_controller.always_permitted_parameters = []
+        Quails.application.config.action_controller.always_permitted_parameters = []
       RUBY
 
       app "development"
@@ -1309,7 +1309,7 @@ module ApplicationTests
 
     test "config.action_controller.action_on_unpermitted_parameters can be configured in an initializer" do
       app_file "config/initializers/action_on_unpermitted_parameters.rb", <<-RUBY
-        Rails.application.config.action_controller.action_on_unpermitted_parameters = :raise
+        Quails.application.config.action_controller.action_on_unpermitted_parameters = :raise
       RUBY
 
       app "development"
@@ -1340,14 +1340,14 @@ module ApplicationTests
       assert_equal "XML", last_response.body
     end
 
-    test "Rails.application#env_config exists and include some existing parameters" do
+    test "Quails.application#env_config exists and include some existing parameters" do
       make_basic_app
 
       assert_equal      app.env_config["action_dispatch.parameter_filter"],  app.config.filter_parameters
       assert_equal      app.env_config["action_dispatch.show_exceptions"],   app.config.action_dispatch.show_exceptions
-      assert_equal      app.env_config["action_dispatch.logger"],            Rails.logger
-      assert_equal      app.env_config["action_dispatch.backtrace_cleaner"], Rails.backtrace_cleaner
-      assert_equal      app.env_config["action_dispatch.key_generator"],     Rails.application.key_generator
+      assert_equal      app.env_config["action_dispatch.logger"],            Quails.logger
+      assert_equal      app.env_config["action_dispatch.backtrace_cleaner"], Quails.backtrace_cleaner
+      assert_equal      app.env_config["action_dispatch.key_generator"],     Quails.application.key_generator
     end
 
     test "config.colorize_logging default is true" do
@@ -1396,14 +1396,14 @@ module ApplicationTests
         application.config.logger = Logger.new(STDOUT)
         application.config.log_level = :info
       end
-      assert_equal Logger::INFO, Rails.logger.level
+      assert_equal Logger::INFO, Quails.logger.level
     end
 
     test "respond_to? accepts include_private" do
       make_basic_app
 
-      assert_not Rails.configuration.respond_to?(:method_missing)
-      assert Rails.configuration.respond_to?(:method_missing, true)
+      assert_not Quails.configuration.respond_to?(:method_missing)
+      assert Quails.configuration.respond_to?(:method_missing, true)
     end
 
     test "config.active_record.dump_schema_after_migration is false on production" do
@@ -1432,7 +1432,7 @@ module ApplicationTests
 
     test "rake_tasks block works at instance level" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Quails.application.configure do
           config.ran_block = false
 
           rake_tasks do
@@ -1442,19 +1442,19 @@ module ApplicationTests
       RUBY
 
       app "development"
-      assert_not Rails.configuration.ran_block
+      assert_not Quails.configuration.ran_block
 
       require "rake"
       require "rake/testtask"
       require "rdoc/task"
 
-      Rails.application.load_tasks
-      assert Rails.configuration.ran_block
+      Quails.application.load_tasks
+      assert Quails.configuration.ran_block
     end
 
     test "generators block works at instance level" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Quails.application.configure do
           config.ran_block = false
 
           generators do
@@ -1464,15 +1464,15 @@ module ApplicationTests
       RUBY
 
       app "development"
-      assert_not Rails.configuration.ran_block
+      assert_not Quails.configuration.ran_block
 
-      Rails.application.load_generators
-      assert Rails.configuration.ran_block
+      Quails.application.load_generators
+      assert Quails.configuration.ran_block
     end
 
     test "console block works at instance level" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Quails.application.configure do
           config.ran_block = false
 
           console do
@@ -1482,15 +1482,15 @@ module ApplicationTests
       RUBY
 
       app "development"
-      assert_not Rails.configuration.ran_block
+      assert_not Quails.configuration.ran_block
 
-      Rails.application.load_console
-      assert Rails.configuration.ran_block
+      Quails.application.load_console
+      assert Quails.configuration.ran_block
     end
 
     test "runner block works at instance level" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Quails.application.configure do
           config.ran_block = false
 
           runner do
@@ -1500,16 +1500,16 @@ module ApplicationTests
       RUBY
 
       app "development"
-      assert_not Rails.configuration.ran_block
+      assert_not Quails.configuration.ran_block
 
-      Rails.application.load_runner
-      assert Rails.configuration.ran_block
+      Quails.application.load_runner
+      assert Quails.configuration.ran_block
     end
 
     test "loading the first existing database configuration available" do
       app_file "config/environments/development.rb", <<-RUBY
 
-      Rails.application.configure do
+      Quails.application.configure do
         config.paths.add 'config/database', with: 'config/nonexistent.yml'
         config.paths['config/database'] << 'config/database.yml'
         end
@@ -1517,14 +1517,14 @@ module ApplicationTests
 
       app "development"
 
-      assert_kind_of Hash, Rails.application.config.database_configuration
+      assert_kind_of Hash, Quails.application.config.database_configuration
     end
 
     test "raises with proper error message if no database configuration found" do
       FileUtils.rm("#{app_path}/config/database.yml")
       err = assert_raises RuntimeError do
         app "development"
-        Rails.application.config.database_configuration
+        Quails.application.config.database_configuration
       end
       assert_match "config/database", err.message
     end
@@ -1541,7 +1541,7 @@ module ApplicationTests
 
       app "development"
 
-      ar_config = Rails.application.config.database_configuration
+      ar_config = Quails.application.config.database_configuration
       assert_equal "sqlite3", ar_config["development"]["adapter"]
       assert_equal "bobby",   ar_config["development"]["username"]
       assert_equal "dev_db",  ar_config["development"]["database"]
@@ -1557,7 +1557,7 @@ module ApplicationTests
 
       app "development"
 
-      ar_config = Rails.application.config.database_configuration
+      ar_config = Quails.application.config.database_configuration
       assert_equal "sqlite3", ar_config["development"]["adapter"]
       assert_equal "bobby",   ar_config["development"]["username"]
       assert_equal "dev_db",  ar_config["development"]["database"]
@@ -1566,13 +1566,13 @@ module ApplicationTests
     test "config.action_mailer.show_previews defaults to true in development" do
       app "development"
 
-      assert Rails.application.config.action_mailer.show_previews
+      assert Quails.application.config.action_mailer.show_previews
     end
 
     test "config.action_mailer.show_previews defaults to false in production" do
       app "production"
 
-      assert_equal false, Rails.application.config.action_mailer.show_previews
+      assert_equal false, Quails.application.config.action_mailer.show_previews
     end
 
     test "config.action_mailer.show_previews can be set in the configuration file" do
@@ -1582,7 +1582,7 @@ module ApplicationTests
 
       app "production"
 
-      assert_equal true, Rails.application.config.action_mailer.show_previews
+      assert_equal true, Quails.application.config.action_mailer.show_previews
     end
 
     test "config_for loads custom configuration from yaml files" do
@@ -1597,7 +1597,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal "custom key", Rails.application.config.my_custom_config["key"]
+      assert_equal "custom key", Quails.application.config.my_custom_config["key"]
     end
 
     test "config_for uses the Pathname object if it is provided" do
@@ -1607,12 +1607,12 @@ module ApplicationTests
       RUBY
 
       add_to_config <<-RUBY
-        config.my_custom_config = config_for(Pathname.new(Rails.root.join("config/custom.yml")))
+        config.my_custom_config = config_for(Pathname.new(Quails.root.join("config/custom.yml")))
       RUBY
 
       app "development"
 
-      assert_equal "custom key", Rails.application.config.my_custom_config["key"]
+      assert_equal "custom key", Quails.application.config.my_custom_config["key"]
     end
 
     test "config_for raises an exception if the file does not exist" do
@@ -1639,7 +1639,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal({}, Rails.application.config.my_custom_config)
+      assert_equal({}, Quails.application.config.my_custom_config)
     end
 
     test "config_for with empty file returns an empty hash" do
@@ -1652,7 +1652,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal({}, Rails.application.config.my_custom_config)
+      assert_equal({}, Quails.application.config.my_custom_config)
     end
 
     test "default SQLite3Adapter.represent_boolean_as_integer for 5.1 is false" do
@@ -1687,7 +1687,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/new_framework_defaults_5_2.rb", <<-RUBY
-        Rails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
+        Quails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
       RUBY
 
       app_file "app/models/post.rb", <<-RUBY
@@ -1713,7 +1713,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal "custom key", Rails.application.config.my_custom_config["key"]
+      assert_equal "custom key", Quails.application.config.my_custom_config["key"]
     end
 
     test "config_for with syntax error show a more descriptive exception" do
@@ -1746,12 +1746,12 @@ module ApplicationTests
       RUBY
       require "#{app_path}/config/environment"
 
-      assert_equal "unicorn", Rails.application.config.my_custom_config["key"]
+      assert_equal "unicorn", Quails.application.config.my_custom_config["key"]
     end
 
     test "api_only is false by default" do
       app "development"
-      refute Rails.application.config.api_only
+      refute Quails.application.config.api_only
     end
 
     test "api_only generator config is set when api_only is set" do
@@ -1760,8 +1760,8 @@ module ApplicationTests
       RUBY
       app "development"
 
-      Rails.application.load_generators
-      assert Rails.configuration.api_only
+      Quails.application.load_generators
+      assert Quails.configuration.api_only
     end
 
     test "debug_exception_response_format is :api by default if api_only is enabled" do
@@ -1770,7 +1770,7 @@ module ApplicationTests
       RUBY
       app "development"
 
-      assert_equal :api, Rails.configuration.debug_exception_response_format
+      assert_equal :api, Quails.configuration.debug_exception_response_format
     end
 
     test "debug_exception_response_format can be overridden" do
@@ -1779,14 +1779,14 @@ module ApplicationTests
       RUBY
 
       app_file "config/environments/development.rb", <<-RUBY
-      Rails.application.configure do
+      Quails.application.configure do
         config.debug_exception_response_format = :default
       end
       RUBY
 
       app "development"
 
-      assert_equal :default, Rails.configuration.debug_exception_response_format
+      assert_equal :default, Quails.configuration.debug_exception_response_format
     end
 
     test "controller force_ssl declaration can be used even if session_store is disabled" do
@@ -1798,7 +1798,7 @@ module ApplicationTests
         force_ssl
 
         def index
-          render plain: "Yay! You're on Rails!"
+          render plain: "Yay! You're on Quails!"
         end
       end
 

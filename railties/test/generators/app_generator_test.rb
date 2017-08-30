@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/app/app_generator"
+require "quails/generators/quails/app/app_generator"
 require "generators/shared_generator_tests"
 
 DEFAULT_APP_FILES = %w(
@@ -38,7 +38,7 @@ DEFAULT_APP_FILES = %w(
   app/views/layouts/mailer.html.erb
   app/views/layouts/mailer.text.erb
   bin/bundle
-  bin/rails
+  bin/quails
   bin/rake
   bin/setup
   bin/update
@@ -91,7 +91,7 @@ DEFAULT_APP_FILES = %w(
   tmp/cache/assets
 )
 
-class AppGeneratorTest < Rails::Generators::TestCase
+class AppGeneratorTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
   arguments [destination_root]
 
@@ -123,33 +123,33 @@ class AppGeneratorTest < Rails::Generators::TestCase
 
   def test_invalid_application_name_is_fixed
     run_generator [File.join(destination_root, "things-43")]
-    assert_file "things-43/config/environment.rb", /Rails\.application\.initialize!/
+    assert_file "things-43/config/environment.rb", /Quails\.application\.initialize!/
     assert_file "things-43/config/application.rb", /^module Things43$/
   end
 
   def test_application_new_exits_with_non_zero_code_on_invalid_application_name
-    quietly { system "rails new test --no-rc" }
+    quietly { system "quails new test --no-rc" }
     assert_equal false, $?.success?
   end
 
-  def test_application_new_exits_with_message_and_non_zero_code_when_generating_inside_existing_rails_directory
+  def test_application_new_exits_with_message_and_non_zero_code_when_generating_inside_existing_quails_directory
     app_root = File.join(destination_root, "myfirstapp")
     run_generator [app_root]
     output = nil
     Dir.chdir(app_root) do
-      output = `rails new mysecondapp`
+      output = `quails new mysecondapp`
     end
-    assert_equal "Can't initialize a new Rails application within the directory of another, please change to a non-Rails directory first.\nType 'rails' for help.\n", output
+    assert_equal "Can't initialize a new Quails application within the directory of another, please change to a non-Quails directory first.\nType 'quails' for help.\n", output
     assert_equal false, $?.success?
   end
 
-  def test_application_new_show_help_message_inside_existing_rails_directory
+  def test_application_new_show_help_message_inside_existing_quails_directory
     app_root = File.join(destination_root, "myfirstapp")
     run_generator [app_root]
     output = Dir.chdir(app_root) do
-      `rails new --help`
+      `quails new --help`
     end
-    assert_match(/rails new APP_PATH \[options\]/, output)
+    assert_match(/quails new APP_PATH \[options\]/, output)
     assert_equal true, $?.success?
   end
 
@@ -159,18 +159,18 @@ class AppGeneratorTest < Rails::Generators::TestCase
 
     run_generator [app_root]
 
-    stub_rails_application(app_moved_root) do
-      Rails.application.stub(:is_a?, -> *args { Rails::Application }) do
+    stub_quails_application(app_moved_root) do
+      Quails.application.stub(:is_a?, -> *args { Quails::Application }) do
         FileUtils.mv(app_root, app_moved_root)
 
         # make sure we are in correct dir
         FileUtils.cd(app_moved_root)
 
-        generator = Rails::Generators::AppGenerator.new ["rails"], [],
+        generator = Quails::Generators::AppGenerator.new ["quails"], [],
                                                                    destination_root: app_moved_root, shell: @shell
         generator.send(:app_const)
         quietly { generator.send(:update_config_files) }
-        assert_file "myapp_moved/config/environment.rb", /Rails\.application\.initialize!/
+        assert_file "myapp_moved/config/environment.rb", /Quails\.application\.initialize!/
       end
     end
   end
@@ -179,8 +179,8 @@ class AppGeneratorTest < Rails::Generators::TestCase
     app_root = File.join(destination_root, "myapp")
     run_generator [app_root]
 
-    stub_rails_application(app_root) do
-      generator = Rails::Generators::AppGenerator.new ["rails"], [], destination_root: app_root, shell: @shell
+    stub_quails_application(app_root) do
+      generator = Quails::Generators::AppGenerator.new ["quails"], [], destination_root: app_root, shell: @shell
       generator.send(:app_const)
       quietly { generator.send(:update_config_files) }
     end
@@ -189,7 +189,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
   def test_new_application_use_json_serialzier
     run_generator
 
-    assert_file("config/initializers/cookies_serializer.rb", /Rails\.application\.config\.action_dispatch\.cookies_serializer = :json/)
+    assert_file("config/initializers/cookies_serializer.rb", /Quails\.application\.config\.action_dispatch\.cookies_serializer = :json/)
   end
 
   def test_new_application_not_include_api_initializers
@@ -208,7 +208,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
     output = nil
 
     Dir.chdir(app_root) do
-      output = `./bin/rails r "puts Rails.application.config.assets.unknown_asset_fallback"`
+      output = `./bin/quails r "puts Quails.application.config.assets.unknown_asset_fallback"`
     end
 
     assert_equal "false\n", output
@@ -218,11 +218,11 @@ class AppGeneratorTest < Rails::Generators::TestCase
     app_root = File.join(destination_root, "myapp")
     run_generator [app_root]
 
-    stub_rails_application(app_root) do
-      generator = Rails::Generators::AppGenerator.new ["rails"], [], destination_root: app_root, shell: @shell
+    stub_quails_application(app_root) do
+      generator = Quails::Generators::AppGenerator.new ["quails"], [], destination_root: app_root, shell: @shell
       generator.send(:app_const)
       quietly { generator.send(:update_config_files) }
-      assert_file("#{app_root}/config/initializers/cookies_serializer.rb", /Rails\.application\.config\.action_dispatch\.cookies_serializer = :json/)
+      assert_file("#{app_root}/config/initializers/cookies_serializer.rb", /Quails\.application\.config\.action_dispatch\.cookies_serializer = :json/)
     end
   end
 
@@ -232,12 +232,12 @@ class AppGeneratorTest < Rails::Generators::TestCase
 
     FileUtils.rm("#{app_root}/config/initializers/cookies_serializer.rb")
 
-    stub_rails_application(app_root) do
-      generator = Rails::Generators::AppGenerator.new ["rails"], [], destination_root: app_root, shell: @shell
+    stub_quails_application(app_root) do
+      generator = Quails::Generators::AppGenerator.new ["quails"], [], destination_root: app_root, shell: @shell
       generator.send(:app_const)
       quietly { generator.send(:update_config_files) }
       assert_file("#{app_root}/config/initializers/cookies_serializer.rb",
-                  /Valid options are :json, :marshal, and :hybrid\.\nRails\.application\.config\.action_dispatch\.cookies_serializer = :marshal/)
+                  /Valid options are :json, :marshal, and :hybrid\.\nQuails\.application\.config\.action_dispatch\.cookies_serializer = :marshal/)
     end
   end
 
@@ -247,8 +247,8 @@ class AppGeneratorTest < Rails::Generators::TestCase
 
     assert_no_file "#{app_root}/config/initializers/new_framework_defaults_5_2.rb"
 
-    stub_rails_application(app_root) do
-      generator = Rails::Generators::AppGenerator.new ["rails"], { update: true }, { destination_root: app_root, shell: @shell }
+    stub_quails_application(app_root) do
+      generator = Quails::Generators::AppGenerator.new ["quails"], { update: true }, { destination_root: app_root, shell: @shell }
       generator.send(:app_const)
       quietly { generator.send(:update_config_files) }
 
@@ -260,8 +260,8 @@ class AppGeneratorTest < Rails::Generators::TestCase
     app_root = File.join(destination_root, "myapp")
     run_generator [app_root]
 
-    stub_rails_application(app_root) do
-      generator = Rails::Generators::AppGenerator.new ["rails"], [], destination_root: app_root, shell: @shell
+    stub_quails_application(app_root) do
+      generator = Quails::Generators::AppGenerator.new ["quails"], [], destination_root: app_root, shell: @shell
       generator.send(:app_const)
       quietly { generator.send(:update_config_files) }
       assert_no_file "#{app_root}/config/initializers/cors.rb"
@@ -274,8 +274,8 @@ class AppGeneratorTest < Rails::Generators::TestCase
 
     FileUtils.touch("#{app_root}/config/initializers/cors.rb")
 
-    stub_rails_application(app_root) do
-      generator = Rails::Generators::AppGenerator.new ["rails"], [], destination_root: app_root, shell: @shell
+    stub_quails_application(app_root) do
+      generator = Quails::Generators::AppGenerator.new ["quails"], [], destination_root: app_root, shell: @shell
       generator.send(:app_const)
       quietly { generator.send(:update_config_files) }
       assert_file "#{app_root}/config/initializers/cors.rb"
@@ -289,7 +289,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
     FileUtils.cd(app_root) do
       # For avoid conflict file
       FileUtils.rm("#{app_root}/config/secrets.yml")
-      quietly { system("bin/rails app:update") }
+      quietly { system("bin/quails app:update") }
     end
 
     assert_no_file "#{app_root}/config/cable.yml"
@@ -300,7 +300,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
 
   def test_application_names_are_not_singularized
     run_generator [File.join(destination_root, "hats")]
-    assert_file "hats/config/environment.rb", /Rails\.application\.initialize!/
+    assert_file "hats/config/environment.rb", /Quails\.application\.initialize!/
   end
 
   def test_gemfile_has_no_whitespace_errors
@@ -397,7 +397,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
   def test_generator_has_assets_gems
     run_generator
 
-    assert_gem "sass-rails"
+    assert_gem "sass-quails"
     assert_gem "uglifier"
   end
 
@@ -409,7 +409,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
   def test_generator_if_skip_test_is_given
     run_generator [destination_root, "--skip-test"]
 
-    assert_file "config/application.rb", /#\s+require\s+["']rails\/test_unit\/railtie["']/
+    assert_file "config/application.rb", /#\s+require\s+["']quails\/test_unit\/railtie["']/
 
     assert_file "Gemfile" do |content|
       assert_no_match(/capybara/, content)
@@ -435,7 +435,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
     run_generator [destination_root, "--skip-system-test"]
 
     Dir.chdir(destination_root) do
-      quietly { `./bin/rails g scaffold User` }
+      quietly { `./bin/quails g scaffold User` }
 
       assert_no_file("test/application_system_test_case.rb")
       assert_no_file("test/system/users_test.rb")
@@ -453,10 +453,10 @@ class AppGeneratorTest < Rails::Generators::TestCase
     end
   end
 
-  def test_rails_ujs_is_the_default_ujs_library
+  def test_quails_ujs_is_the_default_ujs_library
     run_generator
     assert_file "app/assets/javascripts/application.js" do |contents|
-      assert_match %r{^//= require rails-ujs}, contents
+      assert_match %r{^//= require quails-ujs}, contents
     end
   end
 
@@ -471,7 +471,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
     end
 
     assert_file "Gemfile" do |content|
-      assert_no_match(/coffee-rails/, content)
+      assert_no_match(/coffee-quails/, content)
       assert_no_match(/uglifier/, content)
     end
 
@@ -484,7 +484,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
     run_generator [destination_root, "--skip-coffee"]
 
     assert_file "Gemfile" do |content|
-      assert_no_match(/coffee-rails/, content)
+      assert_no_match(/coffee-quails/, content)
       assert_match(/uglifier/, content)
     end
   end
@@ -531,24 +531,24 @@ class AppGeneratorTest < Rails::Generators::TestCase
   end
 
   def test_template_from_dir_pwd
-    FileUtils.cd(Rails.root)
+    FileUtils.cd(Quails.root)
     assert_match(/It works from file!/, run_generator([destination_root, "-m", "lib/template.rb"]))
   end
 
   def test_usage_read_from_file
     assert_called(File, :read, returns: "USAGE FROM FILE") do
-      assert_equal "USAGE FROM FILE", Rails::Generators::AppGenerator.desc
+      assert_equal "USAGE FROM FILE", Quails::Generators::AppGenerator.desc
     end
   end
 
   def test_default_usage
-    assert_called(Rails::Generators::AppGenerator, :usage_path, returns: nil) do
-      assert_match(/Create rails files for app generator/, Rails::Generators::AppGenerator.desc)
+    assert_called(Quails::Generators::AppGenerator, :usage_path, returns: nil) do
+      assert_match(/Create quails files for app generator/, Quails::Generators::AppGenerator.desc)
     end
   end
 
   def test_default_namespace
-    assert_match "rails:app", Rails::Generators::AppGenerator.namespace
+    assert_match "quails:app", Quails::Generators::AppGenerator.namespace
   end
 
   def test_file_is_added_for_backwards_compatibility
@@ -580,7 +580,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
     run_generator [destination_root, "--dev"]
 
     assert_file "Gemfile" do |content|
-      assert_match(/gem 'web-console',\s+github: 'rails\/web-console'/, content)
+      assert_match(/gem 'web-console',\s+github: 'quails\/web-console'/, content)
       assert_no_match(/\Agem 'web-console', '>= 3\.3\.0'\z/, content)
     end
   end
@@ -589,7 +589,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
     run_generator [destination_root, "--edge"]
 
     assert_file "Gemfile" do |content|
-      assert_match(/gem 'web-console',\s+github: 'rails\/web-console'/, content)
+      assert_match(/gem 'web-console',\s+github: 'quails\/web-console'/, content)
       assert_no_match(/\Agem 'web-console', '>= 3\.3\.0'\z/, content)
     end
   end
@@ -600,13 +600,13 @@ class AppGeneratorTest < Rails::Generators::TestCase
 
   def test_dev_option
     assert_generates_with_bundler dev: true
-    rails_path = File.expand_path("../../..", Rails.root)
-    assert_file "Gemfile", /^gem\s+["']rails["'],\s+path:\s+["']#{Regexp.escape(rails_path)}["']$/
+    quails_path = File.expand_path("../../..", Quails.root)
+    assert_file "Gemfile", /^gem\s+["']quails["'],\s+path:\s+["']#{Regexp.escape(quails_path)}["']$/
   end
 
   def test_edge_option
     assert_generates_with_bundler edge: true
-    assert_file "Gemfile", %r{^gem\s+["']rails["'],\s+github:\s+["']#{Regexp.escape("rails/rails")}["']$}
+    assert_file "Gemfile", %r{^gem\s+["']quails["'],\s+github:\s+["']#{Regexp.escape("quails/quails")}["']$}
   end
 
   def test_spring
@@ -728,7 +728,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
   end
 
   def test_after_bundle_callback
-    path = "http://example.org/rails_template"
+    path = "http://example.org/quails_template"
     template = %{ after_bundle { run 'echo ran after_bundle' } }.dup
     template.instance_eval "def read; self; end" # Make the string respond to read
 
@@ -763,9 +763,9 @@ class AppGeneratorTest < Rails::Generators::TestCase
   end
 
   private
-    def stub_rails_application(root)
-      Rails.application.config.root = root
-      Rails.application.class.stub(:name, "Myapp") do
+    def stub_quails_application(root)
+      Quails.application.config.root = root
+      Quails.application.class.stub(:name, "Myapp") do
         yield
       end
     end

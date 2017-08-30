@@ -14,12 +14,12 @@ class HelpTest < ActiveSupport::TestCase
   end
 
   test "command works" do
-    output = Dir.chdir(app_path) { `bin/rails help` }
-    assert_match "The most common rails commands are", output
+    output = Dir.chdir(app_path) { `bin/quails help` }
+    assert_match "The most common quails commands are", output
   end
 
   test "short-cut alias works" do
-    output = Dir.chdir(app_path) { `bin/rails -h` }
-    assert_match "The most common rails commands are", output
+    output = Dir.chdir(app_path) { `bin/quails -h` }
+    assert_match "The most common quails commands are", output
   end
 end

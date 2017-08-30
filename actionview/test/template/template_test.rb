@@ -169,8 +169,8 @@ class TestERBTemplate < ActiveSupport::TestCase
   end
 
   # TODO: This is currently handled inside ERB. The case of explicitly
-  # lying about encodings via the normal Rails API should be handled
-  # inside Rails.
+  # lying about encodings via the normal Quails API should be handled
+  # inside Quails.
   def test_lying_with_magic_comment
     assert_raises(ActionView::Template::Error) do
       @template = new_template("# encoding: UTF-8\nhello \xFCmlat", virtual_path: nil)

@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 <% if options[:skip_gemspec] -%>
-<%= '# ' if options.dev? || options.edge? -%>gem 'rails', '<%= Array(rails_version_specifier).join("', '") %>'
+<%= '# ' if options.dev? || options.edge? -%>gem 'quails', '<%= Array(quails_version_specifier).join("', '") %>'
 <% else -%>
 # Declare your gem's dependencies in <%= name %>.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -16,13 +16,13 @@ group :development do
 end
 <% else -%>
 # Declare any dependencies that are still in development here instead of in
-# your gemspec. These might include edge Rails or gems from your path or
+# your gemspec. These might include edge Quails or gems from your path or
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 <% end -%>
 
 <% if options.dev? || options.edge? -%>
-# Your gem is dependent on dev or edge Rails. Once you can lock this
+# Your gem is dependent on dev or edge Quails. Once you can lock this
 # dependency down to a specific version, move it to your gemspec.
 <% max_width = gemfile_entries.map { |g| g.name.length }.max -%>
 <% gemfile_entries.each do |gem| -%>

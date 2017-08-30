@@ -64,11 +64,11 @@ module ActionDispatch
         return [404, { "X-Cascade" => "pass" }, ["Not Found"]]
       end
 
-      def recognize(rails_req)
-        find_routes(rails_req).each do |match, parameters, route|
+      def recognize(quails_req)
+        find_routes(quails_req).each do |match, parameters, route|
           unless route.path.anchored
-            rails_req.script_name = match.to_s
-            rails_req.path_info   = match.post_match.sub(/^([^\/])/, '/\1')
+            quails_req.script_name = match.to_s
+            quails_req.path_info   = match.post_match.sub(/^([^\/])/, '/\1')
           end
 
           parameters = route.defaults.merge parameters

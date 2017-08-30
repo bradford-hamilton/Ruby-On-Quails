@@ -26,8 +26,8 @@ App.getVal = function(el) {
 
 App.disabled = function(el) {
   return el.is('input,textarea,select,button') ?
-    (el.is(':disabled') && $.rails.getData(el[0], 'ujs:disabled')) :
-    $.rails.getData(el[0], 'ujs:disabled')
+    (el.is(':disabled') && $.quails.getData(el[0], 'ujs:disabled')) :
+    $.quails.getData(el[0], 'ujs:disabled')
 }
 
 App.checkEnabledState = function(el, text) {

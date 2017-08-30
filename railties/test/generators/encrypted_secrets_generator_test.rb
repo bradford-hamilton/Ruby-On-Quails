@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/encrypted_secrets/encrypted_secrets_generator"
+require "quails/generators/quails/encrypted_secrets/encrypted_secrets_generator"
 
-class EncryptedSecretsGeneratorTest < Rails::Generators::TestCase
+class EncryptedSecretsGeneratorTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
 
   def setup
@@ -18,7 +18,7 @@ class EncryptedSecretsGeneratorTest < Rails::Generators::TestCase
 
     assert File.exist?("config/secrets.yml.enc")
     assert_no_match(/# production:\n#   external_api_key: \w+/, IO.binread("config/secrets.yml.enc"))
-    assert_match(/# production:\n#   external_api_key: \w+/, Rails::Secrets.read)
+    assert_match(/# production:\n#   external_api_key: \w+/, Quails::Secrets.read)
   end
 
   def test_appends_to_gitignore

@@ -3,11 +3,11 @@
 # Note:
 # It is important to keep this file as light as possible
 # the goal for tests that require this is to test booting up
-# Rails from an empty state, so anything added here could
+# Quails from an empty state, so anything added here could
 # hide potential failures
 #
 # It is also good to know what is the bare minimum to get
-# Rails booted up.
+# Quails booted up.
 require "fileutils"
 
 require "bundler/setup" unless defined?(Bundler)
@@ -24,7 +24,7 @@ require "active_support/core_ext/object/blank"
 require "active_support/testing/isolation"
 require "active_support/core_ext/kernel/reporting"
 require "tmpdir"
-require "rails/secrets"
+require "quails/secrets"
 
 module TestHelpers
   module Paths
@@ -45,7 +45,7 @@ module TestHelpers
       RAILS_FRAMEWORK_ROOT
     end
 
-    def rails_root
+    def quails_root
       app_path
     end
   end
@@ -61,7 +61,7 @@ module TestHelpers
           require "#{app_path}/config/environment"
         end
 
-        Rails.application
+        Quails.application
       end
     ensure
       ENV["RAILS_ENV"] = old_env
@@ -83,7 +83,7 @@ module TestHelpers
       assert_equal 200, resp[0]
       assert_match "text/html", resp[1]["Content-Type"]
       assert_match "charset=utf-8", resp[1]["Content-Type"]
-      assert extract_body(resp).match(/Yay! You.*re on Rails!/)
+      assert extract_body(resp).match(/Yay! You.*re on Quails!/)
     end
 
     def assert_success(resp)
@@ -106,7 +106,7 @@ module TestHelpers
   module Generation
     # Build an application by invoking the generator and going through the whole stack.
     def build_app(options = {})
-      @prev_rails_env = ENV["RAILS_ENV"]
+      @prev_quails_env = ENV["RAILS_ENV"]
       ENV["RAILS_ENV"] = "development"
       ENV["SECRET_KEY_BASE"] ||= SecureRandom.hex(16)
 
@@ -156,17 +156,17 @@ module TestHelpers
     end
 
     def teardown_app
-      ENV["RAILS_ENV"] = @prev_rails_env if @prev_rails_env
+      ENV["RAILS_ENV"] = @prev_quails_env if @prev_quails_env
     end
 
     # Make a very basic app, without creating the whole directory structure.
     # This is faster and simpler than the method above.
     def make_basic_app
-      require "rails"
+      require "quails"
       require "action_controller/railtie"
       require "action_view/railtie"
 
-      @app = Class.new(Rails::Application)
+      @app = Class.new(Quails::Application)
       @app.config.eager_load = false
       @app.secrets.secret_key_base = "3b7cd727ee24e8444053437c36cc66c4"
       @app.config.session_store :cookie_store, key: "_myapp_session"
@@ -195,7 +195,7 @@ module TestHelpers
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           get ':controller(/:action)'
         end
       RUBY
@@ -238,13 +238,13 @@ module TestHelpers
 
     def script(script)
       Dir.chdir(app_path) do
-        `#{Gem.ruby} #{app_path}/bin/rails #{script}`
+        `#{Gem.ruby} #{app_path}/bin/quails #{script}`
       end
     end
 
     def add_to_top_of_config(str)
       environment = File.read("#{app_path}/config/application.rb")
-      if environment =~ /(Rails::Application\s*)/
+      if environment =~ /(Quails::Application\s*)/
         File.open("#{app_path}/config/application.rb", "w") do |f|
           f.puts $` + $1 + "\n#{str}\n" + $'
         end
@@ -317,16 +317,16 @@ class ActiveSupport::TestCase
   include ActiveSupport::Testing::Stream
 end
 
-# Create a scope and build a fixture rails app
+# Create a scope and build a fixture quails app
 Module.new do
   extend TestHelpers::Paths
 
-  # Build a rails app
+  # Build a quails app
   FileUtils.rm_rf(app_template_path)
   FileUtils.mkdir(app_template_path)
 
-  `#{Gem.ruby} #{RAILS_FRAMEWORK_ROOT}/railties/exe/rails new #{app_template_path} --skip-gemfile --skip-listen --no-rc`
+  `#{Gem.ruby} #{RAILS_FRAMEWORK_ROOT}/railties/exe/quails new #{app_template_path} --skip-gemfile --skip-listen --no-rc`
   File.open("#{app_template_path}/config/boot.rb", "w") do |f|
-    f.puts "require 'rails/all'"
+    f.puts "require 'quails/all'"
   end
 end unless defined?(RAILS_ISOLATED_ENGINE)

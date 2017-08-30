@@ -4,7 +4,7 @@ require_relative "../../named_base"
 
 module Css # :nodoc:
   module Generators # :nodoc:
-    class AssetsGenerator < Rails::Generators::NamedBase # :nodoc:
+    class AssetsGenerator < Quails::Generators::NamedBase # :nodoc:
       source_root File.expand_path("templates", __dir__)
 
       def copy_stylesheet

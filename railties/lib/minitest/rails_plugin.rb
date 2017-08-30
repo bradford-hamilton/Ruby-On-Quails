@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "active_support/core_ext/module/attribute_accessors"
-require "rails/test_unit/reporter"
-require "rails/test_unit/runner"
+require "quails/test_unit/reporter"
+require "quails/test_unit/runner"
 
 module Minitest
   class SuppressedSummaryReporter < SummaryReporter
@@ -12,8 +12,8 @@ module Minitest
     end
   end
 
-  def self.plugin_rails_options(opts, options)
-    Rails::TestUnit::Runner.attach_before_load_options(opts)
+  def self.plugin_quails_options(opts, options)
+    Quails::TestUnit::Runner.attach_before_load_options(opts)
 
     opts.on("-b", "--backtrace", "Show the complete backtrace") do
       options[:full_backtrace] = true
@@ -37,18 +37,18 @@ module Minitest
 
   # Owes great inspiration to test runner trailblazers like RSpec,
   # minitest-reporters, maxitest and others.
-  def self.plugin_rails_init(options)
+  def self.plugin_quails_init(options)
     unless options[:full_backtrace] || ENV["BACKTRACE"]
-      # Plugin can run without Rails loaded, check before filtering.
-      Minitest.backtrace_filter = ::Rails.backtrace_cleaner if ::Rails.respond_to?(:backtrace_cleaner)
+      # Plugin can run without Quails loaded, check before filtering.
+      Minitest.backtrace_filter = ::Quails.backtrace_cleaner if ::Quails.respond_to?(:backtrace_cleaner)
     end
 
     # Replace progress reporter for colors.
     reporter.reporters.delete_if { |reporter| reporter.kind_of?(SummaryReporter) || reporter.kind_of?(ProgressReporter) }
     reporter << SuppressedSummaryReporter.new(options[:io], options)
-    reporter << ::Rails::TestUnitReporter.new(options[:io], options)
+    reporter << ::Quails::TestUnitReporter.new(options[:io], options)
   end
 
-  # Backwardscompatibility with Rails 5.0 generated plugin test scripts
+  # Backwardscompatibility with Quails 5.0 generated plugin test scripts
   mattr_reader :run_via, default: {}
 end

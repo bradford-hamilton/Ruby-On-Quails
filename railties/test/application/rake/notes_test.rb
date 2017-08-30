@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/source_annotation_extractor"
+require "quails/source_annotation_extractor"
 
 module ApplicationTests
   module RakeTests
@@ -10,7 +10,7 @@ module ApplicationTests
 
       def setup
         build_app
-        require "rails/all"
+        require "quails/all"
         super
       end
 
@@ -76,7 +76,7 @@ module ApplicationTests
 
         app_file "some_other_dir/blah.rb", "# TODO: note in some_other directory"
 
-        run_rake_notes "SOURCE_ANNOTATION_DIRECTORIES='some_other_dir' bin/rails notes" do |output, lines|
+        run_rake_notes "SOURCE_ANNOTATION_DIRECTORIES='some_other_dir' bin/quails notes" do |output, lines|
           assert_match(/note in app directory/, output)
           assert_match(/note in config directory/, output)
           assert_match(/note in db directory/, output)
@@ -97,7 +97,7 @@ module ApplicationTests
         app_file "test/some_test.rb", 1000.times.map { "" }.join("\n") << "# TODO: note in test directory"
 
         app_file "lib/tasks/notes_custom.rake", <<-EOS
-          require 'rails/source_annotation_extractor'
+          require 'quails/source_annotation_extractor'
           task :notes_custom do
             tags = 'TODO|FIXME'
             opts = { dirs: %w(lib test), tag: true }
@@ -105,7 +105,7 @@ module ApplicationTests
           end
         EOS
 
-        run_rake_notes "bin/rails notes_custom" do |output, lines|
+        run_rake_notes "bin/quails notes_custom" do |output, lines|
           assert_match(/\[FIXME\] note in lib directory/, output)
           assert_match(/\[TODO\] note in test directory/, output)
           assert_no_match(/OPTIMIZE/, output)
@@ -143,8 +143,8 @@ module ApplicationTests
 
       private
 
-        def run_rake_notes(command = "bin/rails notes")
-          boot_rails
+        def run_rake_notes(command = "bin/quails notes")
+          boot_quails
           load_tasks
 
           Dir.chdir(app_path) do
@@ -160,10 +160,10 @@ module ApplicationTests
           require "rdoc/task"
           require "rake/testtask"
 
-          Rails.application.load_tasks
+          Quails.application.load_tasks
         end
 
-        def boot_rails
+        def boot_quails
           require "#{app_path}/config/environment"
         end
     end

@@ -128,10 +128,10 @@ module ActiveRecord
 
   class PendingMigrationError < MigrationError#:nodoc:
     def initialize(message = nil)
-      if !message && defined?(Rails.env)
-        super("Migrations are pending. To resolve this issue, run:\n\n        bin/rails db:migrate RAILS_ENV=#{::Rails.env}")
+      if !message && defined?(Quails.env)
+        super("Migrations are pending. To resolve this issue, run:\n\n        bin/quails db:migrate RAILS_ENV=#{::Quails.env}")
       elsif !message
-        super("Migrations are pending. To resolve this issue, run:\n\n        bin/rails db:migrate")
+        super("Migrations are pending. To resolve this issue, run:\n\n        bin/quails db:migrate")
       else
         super
       end
@@ -148,9 +148,9 @@ module ActiveRecord
 
   class NoEnvironmentInSchemaError < MigrationError #:nodoc:
     def initialize
-      msg = "Environment data not found in the schema. To resolve this issue, run: \n\n        bin/rails db:environment:set"
-      if defined?(Rails.env)
-        super("#{msg} RAILS_ENV=#{::Rails.env}")
+      msg = "Environment data not found in the schema. To resolve this issue, run: \n\n        bin/quails db:environment:set"
+      if defined?(Quails.env)
+        super("#{msg} RAILS_ENV=#{::Quails.env}")
       else
         super(msg)
       end
@@ -171,9 +171,9 @@ module ActiveRecord
       msg =  "You are attempting to modify a database that was last run in `#{ stored }` environment.\n".dup
       msg << "You are running in `#{ current }` environment. "
       msg << "If you are sure you want to continue, first set the environment using:\n\n"
-      msg << "        bin/rails db:environment:set"
-      if defined?(Rails.env)
-        super("#{msg} RAILS_ENV=#{::Rails.env}\n\n")
+      msg << "        bin/quails db:environment:set"
+      if defined?(Quails.env)
+        super("#{msg} RAILS_ENV=#{::Quails.env}\n\n")
       else
         super("#{msg}\n\n")
       end
@@ -323,12 +323,12 @@ module ActiveRecord
   # Migrations of that kind should raise an <tt>ActiveRecord::IrreversibleMigration</tt>
   # exception in their +down+ method.
   #
-  # == Running migrations from within Rails
+  # == Running migrations from within Quails
   #
-  # The Rails package has several tools to help create and apply migrations.
+  # The Quails package has several tools to help create and apply migrations.
   #
   # To generate a new migration, you can use
-  #   rails generate migration MyNewMigration
+  #   quails generate migration MyNewMigration
   #
   # where MyNewMigration is the name of your migration. The generator will
   # create an empty migration file <tt>timestamp_my_new_migration.rb</tt>
@@ -337,7 +337,7 @@ module ActiveRecord
   #
   # There is a special syntactic shortcut to generate migrations that add fields to a table.
   #
-  #   rails generate migration add_fieldname_to_tablename fieldname:string
+  #   quails generate migration add_fieldname_to_tablename fieldname:string
   #
   # This will generate the file <tt>timestamp_add_fieldname_to_tablename.rb</tt>, which will look like this:
   #   class AddFieldnameToTablename < ActiveRecord::Migration[5.0]
@@ -347,16 +347,16 @@ module ActiveRecord
   #   end
   #
   # To run migrations against the currently configured database, use
-  # <tt>rails db:migrate</tt>. This will update the database by running all of the
+  # <tt>quails db:migrate</tt>. This will update the database by running all of the
   # pending migrations, creating the <tt>schema_migrations</tt> table
   # (see "About the schema_migrations table" section below) if missing. It will also
   # invoke the db:schema:dump task, which will update your db/schema.rb file
   # to match the structure of your database.
   #
   # To roll the database back to a previous migration version, use
-  # <tt>rails db:migrate VERSION=X</tt> where <tt>X</tt> is the version to which
+  # <tt>quails db:migrate VERSION=X</tt> where <tt>X</tt> is the version to which
   # you wish to downgrade. Alternatively, you can also use the STEP option if you
-  # wish to rollback last few migrations. <tt>rails db:migrate STEP=2</tt> will rollback
+  # wish to rollback last few migrations. <tt>quails db:migrate STEP=2</tt> will rollback
   # the latest two migrations.
   #
   # If any of the migrations throw an <tt>ActiveRecord::IrreversibleMigration</tt> exception,
@@ -451,7 +451,7 @@ module ActiveRecord
   #
   # == Timestamped Migrations
   #
-  # By default, Rails generates migrations that look like:
+  # By default, Quails generates migrations that look like:
   #
   #    20080717013526_your_migration_name.rb
   #
@@ -525,7 +525,7 @@ module ActiveRecord
       super
       if subclass.superclass == Migration
         raise StandardError, "Directly inheriting from ActiveRecord::Migration is not supported. " \
-          "Please specify the Rails release the migration was written for:\n" \
+          "Please specify the Quails release the migration was written for:\n" \
           "\n" \
           "  class #{subclass} < ActiveRecord::Migration[4.2]"
       end
@@ -581,10 +581,10 @@ module ActiveRecord
       def load_schema_if_pending!
         if ActiveRecord::Migrator.needs_migration? || !ActiveRecord::Migrator.any_migrations?
           # Roundtrip to Rake to allow plugins to hook into database initialization.
-          FileUtils.cd Rails.root do
+          FileUtils.cd Quails.root do
             current_config = Base.connection_config
             Base.clear_all_connections!
-            system("bin/rails db:test:prepare")
+            system("bin/quails db:test:prepare")
             # Establish a new connection, the old database may be gone (db:test:prepare uses purge)
             Base.establish_connection(current_config)
           end

@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 require "rack"
-require "rails"
+require "quails"
 require "action_controller/railtie"
 require "action_view/railtie"
 require "blade"
 require "json"
 
 module UJS
-  class Server < Rails::Application
+  class Server < Quails::Application
     routes.append do
-      get "/rails-ujs.js" => Blade::Assets.environment
+      get "/quails-ujs.js" => Blade::Assets.environment
       get "/" => "tests#index"
       match "/echo" => "tests#echo", via: :all
       get "/error" => proc { |env| [403, {}, []] }
@@ -19,7 +19,7 @@ module UJS
     config.cache_classes = false
     config.eager_load = false
     config.secret_key_base = "59d7a4dbd349fa3838d79e330e39690fc22b931e7dc17d9162f03d633d526fbb92dfdb2dc9804c8be3e199631b9c1fbe43fc3e4fc75730b515851849c728d5c7"
-    config.paths["app/views"].unshift("#{Rails.root}/views")
+    config.paths["app/views"].unshift("#{Quails.root}/views")
     config.public_file_server.enabled = true
     config.logger = Logger.new(STDOUT)
     config.log_level = :error

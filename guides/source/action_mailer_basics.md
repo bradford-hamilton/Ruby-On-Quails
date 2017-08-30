@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
 Action Mailer Basics
 ====================
@@ -9,7 +9,7 @@ Mailer. It also covers how to test your mailers.
 
 After reading this guide, you will know:
 
-* How to send and receive email within a Rails application.
+* How to send and receive email within a Quails application.
 * How to generate and edit an Action Mailer class and mailer view.
 * How to configure Action Mailer for your environment.
 * How to test your Action Mailer classes.
@@ -35,7 +35,7 @@ views.
 #### Create the Mailer
 
 ```bash
-$ bin/rails generate mailer UserMailer
+$ bin/quails generate mailer UserMailer
 create  app/mailers/user_mailer.rb
 create  app/mailers/application_mailer.rb
 invoke  erb
@@ -60,7 +60,7 @@ end
 ```
 
 As you can see, you can generate mailers just like you use other generators with
-Rails. Mailers are conceptually similar to controllers, and so we get a mailer,
+Quails. Mailers are conceptually similar to controllers, and so we get a mailer,
 a directory for views, and a test.
 
 If you didn't want to use a generator, you could create your own file inside of
@@ -73,7 +73,7 @@ end
 
 #### Edit the Mailer
 
-Mailers are very similar to Rails controllers. They also have methods called
+Mailers are very similar to Quails controllers. They also have methods called
 "actions" and use views to structure the content. Where a controller generates
 content like HTML to send back to the client, a Mailer creates a message to be
 delivered via email.
@@ -169,8 +169,8 @@ Setting this up is painfully simple.
 First, let's create a simple `User` scaffold:
 
 ```bash
-$ bin/rails generate scaffold user name email login
-$ bin/rails db:migrate
+$ bin/quails generate scaffold user name email login
+$ bin/quails db:migrate
 ```
 
 Now that we have a user model to play with, we will just edit the
@@ -428,7 +428,7 @@ And in order to use this feature, you need to configure your application with th
 ```
 
 Fragment caching is also supported in multipart emails.
-Read more about caching in the [Rails caching guide](caching_with_rails.html).
+Read more about caching in the [Quails caching guide](caching_with_quails.html).
 
 ### Action Mailer Layouts
 
@@ -482,12 +482,12 @@ class UserMailerPreview < ActionMailer::Preview
 end
 ```
 
-Then the preview will be available in <http://localhost:3000/rails/mailers/user_mailer/welcome_email>.
+Then the preview will be available in <http://localhost:3000/quails/mailers/user_mailer/welcome_email>.
 
 If you change something in `app/views/user_mailer/welcome_email.html.erb`
 or the mailer itself, it'll automatically reload and render it so you can
 visually see the new style instantly. A list of previews are also available
-in <http://localhost:3000/rails/mailers>.
+in <http://localhost:3000/quails/mailers>.
 
 By default, these preview classes live in `test/mailers/previews`.
 This can be configured using the `preview_path` option. For example, if you
@@ -495,7 +495,7 @@ want to change it to `lib/mailer_previews`, you can configure it in
 `config/application.rb`:
 
 ```ruby
-config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
+config.action_mailer.preview_path = "#{Quails.root}/lib/mailer_previews"
 ```
 
 ### Generating URLs in Action Mailer Views
@@ -553,8 +553,8 @@ url helper.
 <%= user_url(@user, host: 'example.com') %>
 ```
 
-NOTE: non-`GET` links require [rails-ujs](https://github.com/rails/rails/blob/master/actionview/app/assets/javascripts) or
-[jQuery UJS](https://github.com/rails/jquery-ujs), and won't work in mailer templates.
+NOTE: non-`GET` links require [quails-ujs](https://github.com/quails/quails/blob/master/actionview/app/assets/javascripts) or
+[jQuery UJS](https://github.com/quails/jquery-ujs), and won't work in mailer templates.
 They will result in normal `GET` requests.
 
 ### Adding images in Action Mailer Views
@@ -611,7 +611,7 @@ end
 
 There may be cases in which you want to skip the template rendering step and
 supply the email body as a string. You can achieve this using the `:body`
-option. In such cases don't forget to add the `:content_type` option. Rails
+option. In such cases don't forget to add the `:content_type` option. Quails
 will default to `text/plain` otherwise.
 
 ```ruby
@@ -629,14 +629,14 @@ Receiving Emails
 ----------------
 
 Receiving and parsing emails with Action Mailer can be a rather complex
-endeavor. Before your email reaches your Rails app, you would have had to
+endeavor. Before your email reaches your Quails app, you would have had to
 configure your system to somehow forward emails to your app, which needs to be
-listening for that. So, to receive emails in your Rails app you'll need to:
+listening for that. So, to receive emails in your Quails app you'll need to:
 
 * Implement a `receive` method in your mailer.
 
 * Configure your email server to forward emails from the address(es) you would
-  like your app to receive to `/path/to/app/bin/rails runner
+  like your app to receive to `/path/to/app/bin/quails runner
   'UserMailer.receive(STDIN.read)'`.
 
 Once a method called `receive` is defined in any mailer, Action Mailer will
@@ -741,14 +741,14 @@ files (environment.rb, production.rb, etc...)
 |`smtp_settings`|Allows detailed configuration for `:smtp` delivery method:<ul><li>`:address` - Allows you to use a remote mail server. Just change it from its default `"localhost"` setting.</li><li>`:port` - On the off chance that your mail server doesn't run on port 25, you can change it.</li><li>`:domain` - If you need to specify a HELO domain, you can do it here.</li><li>`:user_name` - If your mail server requires authentication, set the username in this setting.</li><li>`:password` - If your mail server requires authentication, set the password in this setting.</li><li>`:authentication` - If your mail server requires authentication, you need to specify the authentication type here. This is a symbol and one of `:plain` (will send the password in the clear), `:login` (will send password Base64 encoded) or `:cram_md5` (combines a Challenge/Response mechanism to exchange information and a cryptographic Message Digest 5 algorithm to hash important information)</li><li>`:enable_starttls_auto` - Detects if STARTTLS is enabled in your SMTP server and starts to use it. Defaults to `true`.</li><li>`:openssl_verify_mode` - When using TLS, you can set how OpenSSL checks the certificate. This is really useful if you need to validate a self-signed and/or a wildcard certificate. You can use the name of an OpenSSL verify constant ('none' or 'peer') or directly the constant (`OpenSSL::SSL::VERIFY_NONE` or `OpenSSL::SSL::VERIFY_PEER`).</li></ul>|
 |`sendmail_settings`|Allows you to override options for the `:sendmail` delivery method.<ul><li>`:location` - The location of the sendmail executable. Defaults to `/usr/sbin/sendmail`.</li><li>`:arguments` - The command line arguments to be passed to sendmail. Defaults to `-i`.</li></ul>|
 |`raise_delivery_errors`|Whether or not errors should be raised if the email fails to be delivered. This only works if the external email server is configured for immediate delivery.|
-|`delivery_method`|Defines a delivery method. Possible values are:<ul><li>`:smtp` (default), can be configured by using `config.action_mailer.smtp_settings`.</li><li>`:sendmail`, can be configured by using `config.action_mailer.sendmail_settings`.</li><li>`:file`: save emails to files; can be configured by using `config.action_mailer.file_settings`.</li><li>`:test`: save emails to `ActionMailer::Base.deliveries` array.</li></ul>See [API docs](http://api.rubyonrails.org/classes/ActionMailer/Base.html) for more info.|
+|`delivery_method`|Defines a delivery method. Possible values are:<ul><li>`:smtp` (default), can be configured by using `config.action_mailer.smtp_settings`.</li><li>`:sendmail`, can be configured by using `config.action_mailer.sendmail_settings`.</li><li>`:file`: save emails to files; can be configured by using `config.action_mailer.file_settings`.</li><li>`:test`: save emails to `ActionMailer::Base.deliveries` array.</li></ul>See [API docs](http://api.rubyonquails.org/classes/ActionMailer/Base.html) for more info.|
 |`perform_deliveries`|Determines whether deliveries are actually carried out when the `deliver` method is invoked on the Mail message. By default they are, but this can be turned off to help functional testing.|
 |`deliveries`|Keeps an array of all the emails sent out through the Action Mailer with delivery_method :test. Most useful for unit and functional testing.|
 |`default_options`|Allows you to set default values for the `mail` method options (`:from`, `:reply_to`, etc.).|
 
 For a complete writeup of possible configurations see the
 [Configuring Action Mailer](configuring.html#configuring-action-mailer) in
-our Configuring Rails Applications guide.
+our Configuring Quails Applications guide.
 
 ### Example Action Mailer Configuration
 
@@ -815,12 +815,12 @@ Mailer framework. You can do this in an initializer file
 `config/initializers/sandbox_email_interceptor.rb`
 
 ```ruby
-if Rails.env.staging?
+if Quails.env.staging?
   ActionMailer::Base.register_interceptor(SandboxEmailInterceptor)
 end
 ```
 
 NOTE: The example above uses a custom environment called "staging" for a
 production like server but for testing purposes. You can read
-[Creating Rails environments](configuring.html#creating-rails-environments)
-for more information about custom Rails environments.
+[Creating Quails environments](configuring.html#creating-quails-environments)
+for more information about custom Quails environments.

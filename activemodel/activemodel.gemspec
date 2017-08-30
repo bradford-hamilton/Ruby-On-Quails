@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = "activemodel"
   s.version     = version
-  s.summary     = "A toolkit for building modeling frameworks (part of Rails)."
+  s.summary     = "A toolkit for building modeling frameworks (part of Quails)."
   s.description = "A toolkit for building modeling frameworks like Active Record. Rich support for attributes, callbacks, validations, serialization, internationalization, and testing."
 
   s.required_ruby_version = ">= 2.2.2"
@@ -15,14 +15,14 @@ Gem::Specification.new do |s|
 
   s.author   = "David Heinemeier Hansson"
   s.email    = "david@loudthinking.com"
-  s.homepage = "http://rubyonrails.org"
+  s.homepage = "http://rubyonquails.org"
 
   s.files        = Dir["CHANGELOG.md", "MIT-LICENSE", "README.rdoc", "lib/**/*"]
   s.require_path = "lib"
 
   s.metadata = {
-    "source_code_uri" => "https://github.com/rails/rails/tree/v#{version}/activemodel",
-    "changelog_uri"   => "https://github.com/rails/rails/blob/v#{version}/activemodel/CHANGELOG.md"
+    "source_code_uri" => "https://github.com/quails/quails/tree/v#{version}/activemodel",
+    "changelog_uri"   => "https://github.com/quails/quails/blob/v#{version}/activemodel/CHANGELOG.md"
   }
 
   s.add_dependency "activesupport", version

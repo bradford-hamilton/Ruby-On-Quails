@@ -25,7 +25,7 @@
 
 require "active_record"
 require "active_support"
-require "active_support/rails"
+require "active_support/quails"
 require_relative "active_storage/version"
 
 module ActiveStorage

@@ -102,7 +102,7 @@ class String
 
   # Capitalizes all the words and replaces some characters in the string to create
   # a nicer looking title. +titleize+ is meant for creating pretty output. It is not
-  # used in the Rails internals.
+  # used in the Quails internals.
   #
   # The trailing '_id','Id'.. can be kept and capitalized by setting the
   # optional parameter +keep_id_suffix+ to true.
@@ -191,7 +191,7 @@ class String
     ActiveSupport::Inflector.parameterize(self, separator: separator, preserve_case: preserve_case)
   end
 
-  # Creates the name of a table like Rails does for models to table names. This method
+  # Creates the name of a table like Quails does for models to table names. This method
   # uses the +pluralize+ method on the last word in the string.
   #
   #   'RawScaledScorer'.tableize # => "raw_scaled_scorers"
@@ -201,7 +201,7 @@ class String
     ActiveSupport::Inflector.tableize(self)
   end
 
-  # Creates a class name from a plural table name like Rails does for table names to models.
+  # Creates a class name from a plural table name like Quails does for table names to models.
   # Note that this returns a string and not a class. (To convert to an actual class
   # follow +classify+ with +constantize+.)
   #

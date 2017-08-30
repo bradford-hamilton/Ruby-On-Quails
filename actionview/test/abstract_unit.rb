@@ -26,7 +26,7 @@ require "active_record"
 
 require "pp" # require 'pp' early to prevent hidden_methods from not picking up the pretty-print methods until too late
 
-module Rails
+module Quails
   class << self
     def env
       @_env ||= ActiveSupport::StringInquirer.new(ENV["RAILS_ENV"] || ENV["RACK_ENV"] || "test")
@@ -162,7 +162,7 @@ class ActionDispatch::IntegrationTest < ActiveSupport::TestCase
 
   self.app = build_app
 
-  # Stub Rails dispatcher so it does not get controller references and
+  # Stub Quails dispatcher so it does not get controller references and
   # simply return the controller#action as Rack::Body.
   class StubDispatcher < ::ActionDispatch::Routing::RouteSet::Dispatcher
     private
@@ -217,7 +217,7 @@ ActionView::RoutingUrlFor.include(ActionDispatch::Routing::UrlFor)
 
 module ActionController
   class Base
-    # This stub emulates the Railtie including the URL helpers from a Rails application
+    # This stub emulates the Railtie including the URL helpers from a Quails application
     include SharedTestRoutes.url_helpers
     include SharedTestRoutes.mounted_helpers
 

@@ -12,7 +12,7 @@ module ActionView
       # Full usage example:
       #
       #   config/routes.rb:
-      #     Rails.application.routes.draw do
+      #     Quails.application.routes.draw do
       #       resources :posts
       #       root to: "posts#index"
       #     end

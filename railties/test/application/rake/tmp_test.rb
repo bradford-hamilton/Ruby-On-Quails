@@ -26,7 +26,7 @@ module ApplicationTests
           FileUtils.mkdir_p("tmp/screenshots")
           FileUtils.touch("tmp/screenshots/fail.png")
 
-          `rails tmp:clear`
+          `quails tmp:clear`
 
           assert_not File.exist?("tmp/cache/cache_file")
           assert_not File.exist?("tmp/sockets/socket_file")
@@ -36,7 +36,7 @@ module ApplicationTests
 
       test "tmp:clear should work if folder missing" do
         FileUtils.remove_dir("#{app_path}/tmp")
-        errormsg = Dir.chdir(app_path) { `bin/rails tmp:clear` }
+        errormsg = Dir.chdir(app_path) { `bin/quails tmp:clear` }
         assert_predicate $?, :success?
         assert_empty errormsg
       end

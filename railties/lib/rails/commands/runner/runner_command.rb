@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   module Command
     class RunnerCommand < Base # :nodoc:
       class_option :environment, aliases: "-e", type: :string,
-        default: Rails::Command.environment.dup,
+        default: Quails::Command.environment.dup,
         desc: "The environment for the runner to operate under (test/development/production)"
 
       no_commands do
@@ -27,7 +27,7 @@ module Rails
         ENV["RAILS_ENV"] = options[:environment]
 
         require_application_and_environment!
-        Rails.application.load_runner
+        Quails.application.load_runner
 
         ARGV.replace(command_argv)
 

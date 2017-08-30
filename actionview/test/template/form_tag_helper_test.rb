@@ -9,7 +9,7 @@ class FormTagHelperTest < ActionView::TestCase
 
   class WithActiveStorageRoutesControllers < ActionController::Base
     test_routes do
-      post "/rails/active_storage/direct_uploads" => "active_storage/direct_uploads#create", as: :rails_direct_uploads
+      post "/quails/active_storage/direct_uploads" => "active_storage/direct_uploads#create", as: :quails_direct_uploads
     end
 
     def url_options
@@ -188,18 +188,18 @@ class FormTagHelperTest < ActionView::TestCase
     assert_dom_equal "<input name=\"picsplz\" type=\"file\" id=\"picsplz\" class=\"pix\"/>", file_field_tag("picsplz", class: "pix")
   end
 
-  def test_file_field_tag_with_direct_upload_when_rails_direct_uploads_url_is_not_defined
+  def test_file_field_tag_with_direct_upload_when_quails_direct_uploads_url_is_not_defined
     assert_dom_equal(
       "<input name=\"picsplz\" type=\"file\" id=\"picsplz\" class=\"pix\"/>",
       file_field_tag("picsplz", class: "pix", direct_upload: true)
     )
   end
 
-  def test_file_field_tag_with_direct_upload_when_rails_direct_uploads_url_is_defined
+  def test_file_field_tag_with_direct_upload_when_quails_direct_uploads_url_is_defined
     @controller = WithActiveStorageRoutesControllers.new
 
     assert_dom_equal(
-      "<input name=\"picsplz\" type=\"file\" id=\"picsplz\" class=\"pix\" data-direct-upload-url=\"http://testtwo.host/rails/active_storage/direct_uploads\"/>",
+      "<input name=\"picsplz\" type=\"file\" id=\"picsplz\" class=\"pix\" data-direct-upload-url=\"http://testtwo.host/quails/active_storage/direct_uploads\"/>",
       file_field_tag("picsplz", class: "pix", direct_upload: true)
     )
   end

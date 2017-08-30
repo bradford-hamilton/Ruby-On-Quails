@@ -2,7 +2,7 @@
 
 require_relative "../resource/resource_generator"
 
-module Rails
+module Quails
   module Generators
     class ScaffoldGenerator < ResourceGenerator # :nodoc:
       remove_hook_for :resource_controller

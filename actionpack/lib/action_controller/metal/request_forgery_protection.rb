@@ -14,7 +14,7 @@ module ActionController #:nodoc:
   # Controller actions are protected from Cross-Site Request Forgery (CSRF) attacks
   # by including a token in the rendered HTML for your application. This token is
   # stored as a random string in the session, to which an attacker does not have
-  # access. When a request reaches your application, \Rails verifies the received
+  # access. When a request reaches your application, \Quails verifies the received
   # token with the token in the session. All requests are checked except GET requests
   # as these should be idempotent. Keep in mind that all session-oriented requests
   # should be CSRF protected, including JavaScript and HTML requests.
@@ -47,14 +47,14 @@ module ActionController #:nodoc:
   #
   # We may want to disable CSRF protection for APIs since they are typically
   # designed to be state-less. That is, the request API client will handle
-  # the session for you instead of Rails.
+  # the session for you instead of Quails.
   #
   # The token parameter is named <tt>authenticity_token</tt> by default. The name and
   # value of this token must be added to every layout that renders forms by including
   # <tt>csrf_meta_tags</tt> in the HTML +head+.
   #
   # Learn more about CSRF attacks and securing your application in the
-  # {Ruby on Rails Security Guide}[http://guides.rubyonrails.org/security.html].
+  # {Ruby on Quails Security Guide}[http://guides.rubyonquails.org/security.html].
   module RequestForgeryProtection
     extend ActiveSupport::Concern
 

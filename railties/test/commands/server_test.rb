@@ -2,10 +2,10 @@
 
 require "abstract_unit"
 require "env_helpers"
-require "rails/command"
-require "rails/commands/server/server_command"
+require "quails/command"
+require "quails/commands/server/server_command"
 
-class Rails::ServerTest < ActiveSupport::TestCase
+class Quails::ServerTest < ActiveSupport::TestCase
   include EnvHelpers
 
   def test_environment_with_server_option
@@ -25,7 +25,7 @@ class Rails::ServerTest < ActiveSupport::TestCase
   def test_server_option_without_environment
     args = ["thin"]
     with_rack_env nil do
-      with_rails_env nil do
+      with_quails_env nil do
         options = parse_arguments(args)
         assert_equal "development",  options[:environment]
         assert_equal "thin", options[:server]
@@ -33,9 +33,9 @@ class Rails::ServerTest < ActiveSupport::TestCase
     end
   end
 
-  def test_environment_with_rails_env
+  def test_environment_with_quails_env
     with_rack_env nil do
-      with_rails_env "production" do
+      with_quails_env "production" do
         options = parse_arguments
         assert_equal "production", options[:environment]
       end
@@ -43,7 +43,7 @@ class Rails::ServerTest < ActiveSupport::TestCase
   end
 
   def test_environment_with_rack_env
-    with_rails_env nil do
+    with_quails_env nil do
       with_rack_env "production" do
         options = parse_arguments
         assert_equal "production", options[:environment]
@@ -83,7 +83,7 @@ class Rails::ServerTest < ActiveSupport::TestCase
 
   def test_log_stdout
     with_rack_env nil do
-      with_rails_env nil do
+      with_quails_env nil do
         args    = []
         options = parse_arguments(args)
         assert_equal true, options[:log_stdout]
@@ -108,13 +108,13 @@ class Rails::ServerTest < ActiveSupport::TestCase
           assert_equal false, options[:log_stdout]
         end
 
-        with_rails_env "development" do
+        with_quails_env "development" do
           args    = []
           options = parse_arguments(args)
           assert_equal true, options[:log_stdout]
         end
 
-        with_rails_env "production" do
+        with_quails_env "production" do
           args    = []
           options = parse_arguments(args)
           assert_equal false, options[:log_stdout]
@@ -124,17 +124,17 @@ class Rails::ServerTest < ActiveSupport::TestCase
   end
 
   def test_host
-    with_rails_env "development" do
+    with_quails_env "development" do
       options = parse_arguments([])
       assert_equal "localhost", options[:Host]
     end
 
-    with_rails_env "production" do
+    with_quails_env "production" do
       options = parse_arguments([])
       assert_equal "0.0.0.0", options[:Host]
     end
 
-    with_rails_env "development" do
+    with_quails_env "development" do
       args = ["-b", "127.0.0.1"]
       options = parse_arguments(args)
       assert_equal "127.0.0.1", options[:Host]
@@ -176,7 +176,7 @@ class Rails::ServerTest < ActiveSupport::TestCase
   end
 
   def test_default_options
-    server = Rails::Server.new
+    server = Quails::Server.new
     old_default_options = server.default_options
 
     Dir.chdir("..") do
@@ -190,7 +190,7 @@ class Rails::ServerTest < ActiveSupport::TestCase
     ARGV.replace args
 
     options = parse_arguments(args)
-    expected = "bin/rails server  -p 4567 -b 127.0.0.1 -c dummy_config.ru -d -e test -P tmp/server.pid -C --restart"
+    expected = "bin/quails server  -p 4567 -b 127.0.0.1 -c dummy_config.ru -d -e test -P tmp/server.pid -C --restart"
 
     assert_equal expected, options[:restart_cmd]
   ensure
@@ -199,6 +199,6 @@ class Rails::ServerTest < ActiveSupport::TestCase
 
   private
     def parse_arguments(args = [])
-      Rails::Command::ServerCommand.new([], args).server_options
+      Quails::Command::ServerCommand.new([], args).server_options
     end
 end

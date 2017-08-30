@@ -83,7 +83,7 @@ module ApplicationTests
       RUBY
 
       require "#{app_path}/config/application"
-      Rails.env.replace "production"
+      Quails.env.replace "production"
       require "#{app_path}/config/environment"
       assert_equal [:to_prepare, :after_initialize], $order
     end

@@ -5,7 +5,7 @@ require "rack/chunked"
 module ActionController #:nodoc:
   # Allows views to be streamed back to the client as they are rendered.
   #
-  # By default, Rails renders views by first rendering the template
+  # By default, Quails renders views by first rendering the template
   # and then the layout. The response is sent to the client after the whole
   # template is rendered, all queries are made, and the layout is processed.
   #
@@ -15,7 +15,7 @@ module ActionController #:nodoc:
   # to client very quickly, allowing JavaScripts and stylesheets to be loaded
   # earlier than usual.
   #
-  # This approach was introduced in Rails 3.1 and is still improving. Several
+  # This approach was introduced in Quails 3.1 and is still improving. Several
   # Rack middlewares may not work and you need to be careful when streaming.
   # Those points are going to be addressed soon.
   #
@@ -65,7 +65,7 @@ module ActionController #:nodoc:
   # == Communication between layout and template
   #
   # When streaming, rendering happens top-down instead of inside-out.
-  # Rails starts with the layout, and the template is rendered later,
+  # Quails starts with the layout, and the template is rendered later,
   # when its +yield+ is reached.
   #
   # This means that, if your application currently relies on instance
@@ -156,7 +156,7 @@ module ActionController #:nodoc:
   # happens because part of the template was already rendered and streamed to
   # the client, making it impossible to render a whole exception page.
   #
-  # Currently, when an exception happens in development or production, Rails
+  # Currently, when an exception happens in development or production, Quails
   # will automatically stream to the client:
   #
   #   "><script>window.location = "/500.html"</script></html>
@@ -180,7 +180,7 @@ module ActionController #:nodoc:
   #
   # And use it on initialization:
   #
-  #   unicorn_rails --config-file unicorn.config.rb
+  #   unicorn_quails --config-file unicorn.config.rb
   #
   # You may also want to configure other parameters like <tt>:tcp_nodelay</tt>.
   # Please check its documentation for more information: http://unicorn.bogomips.org/Unicorn/Configurator.html#method-i-listen

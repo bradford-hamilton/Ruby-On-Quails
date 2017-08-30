@@ -1,9 +1,9 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-Caching with Rails: An Overview
+Caching with Quails: An Overview
 ===============================
 
-This guide is an introduction to speeding up your Rails application with caching.
+This guide is an introduction to speeding up your Quails application with caching.
 
 Caching means to store content generated during the request-response cycle and
 to reuse it when responding to similar requests.
@@ -12,9 +12,9 @@ Caching is often the most effective way to boost an application's performance.
 Through caching, web sites running on a single server with a single database
 can sustain a load of thousands of concurrent users.
 
-Rails provides a set of caching features out of the box. This guide will teach
+Quails provides a set of caching features out of the box. This guide will teach
 you the scope and purpose of each one of them. Master these techniques and your
-Rails applications can serve millions of views without exorbitant response times
+Quails applications can serve millions of views without exorbitant response times
 or server bills.
 
 After reading this guide, you will know:
@@ -30,7 +30,7 @@ Basic Caching
 -------------
 
 This is an introduction to three types of caching techniques: page, action and
-fragment caching. By default Rails provides fragment caching. In order to use
+fragment caching. By default Quails provides fragment caching. In order to use
 page and action caching you will need to add `actionpack-page_caching` and
 `actionpack-action_caching` to your Gemfile.
 
@@ -50,20 +50,20 @@ For instance, it will not impact low-level caching, that we address
 
 ### Page Caching
 
-Page caching is a Rails mechanism which allows the request for a generated page
+Page caching is a Quails mechanism which allows the request for a generated page
 to be fulfilled by the webserver (i.e. Apache or NGINX) without having to go
-through the entire Rails stack. While this is super fast it can't be applied to
+through the entire Quails stack. While this is super fast it can't be applied to
 every situation (such as pages that need authentication). Also, because the
 webserver is serving a file directly from the filesystem you will need to
 implement cache expiration.
 
-INFO: Page Caching has been removed from Rails 4. See the [actionpack-page_caching gem](https://github.com/rails/actionpack-page_caching).
+INFO: Page Caching has been removed from Quails 4. See the [actionpack-page_caching gem](https://github.com/quails/actionpack-page_caching).
 
 ### Action Caching
 
-Page Caching cannot be used for actions that have before filters - for example, pages that require authentication. This is where Action Caching comes in. Action Caching works like Page Caching except the incoming web request hits the Rails stack so that before filters can be run on it before the cache is served. This allows authentication and other restrictions to be run while still serving the result of the output from a cached copy.
+Page Caching cannot be used for actions that have before filters - for example, pages that require authentication. This is where Action Caching comes in. Action Caching works like Page Caching except the incoming web request hits the Quails stack so that before filters can be run on it before the cache is served. This allows authentication and other restrictions to be run while still serving the result of the output from a cached copy.
 
-INFO: Action Caching has been removed from Rails 4. See the [actionpack-action_caching gem](https://github.com/rails/actionpack-action_caching). See [DHH's key-based cache expiration overview](http://signalvnoise.com/posts/3113-how-key-based-cache-expiration-works) for the newly-preferred method.
+INFO: Action Caching has been removed from Quails 4. See the [actionpack-action_caching gem](https://github.com/quails/actionpack-action_caching). See [DHH's key-based cache expiration overview](http://signalvnoise.com/posts/3113-how-key-based-cache-expiration-works) for the newly-preferred method.
 
 ### Fragment Caching
 
@@ -84,7 +84,7 @@ code:
 <% end %>
 ```
 
-When your application receives its first request to this page, Rails will write
+When your application receives its first request to this page, Quails will write
 a new cache entry with a unique key. A key looks something like this:
 
 ```
@@ -92,9 +92,9 @@ views/products/1-201505056193031061005000/bea67108094918eeba42cd4a6e786901
 ```
 
 The number in the middle is the `product_id` followed by the timestamp value in
-the `updated_at` attribute of the product record. Rails uses the timestamp value
+the `updated_at` attribute of the product record. Quails uses the timestamp value
 to make sure it is not serving stale data. If the value of `updated_at` has
-changed, a new key will be generated. Then Rails will write a new cache to that
+changed, a new key will be generated. Then Quails will write a new cache to that
 key, and the old cache written to the old key will never be used again. This is
 called key-based expiration.
 
@@ -200,7 +200,7 @@ Will load a file named `hotels/hotel.html.erb` in any file mime type, for exampl
 ### Managing dependencies
 
 In order to correctly invalidate the cache, you need to properly define the
-caching dependencies. Rails is clever enough to handle common cases so you don't
+caching dependencies. Quails is clever enough to handle common cases so you don't
 have to specify anything. However, sometimes, when you're dealing with custom
 helpers for instance, you need to explicitly define them.
 
@@ -286,16 +286,16 @@ simply be explicit in a comment, like:
 
 ### Low-Level Caching
 
-Sometimes you need to cache a particular value or query result instead of caching view fragments. Rails' caching mechanism works great for storing __any__ kind of information.
+Sometimes you need to cache a particular value or query result instead of caching view fragments. Quails' caching mechanism works great for storing __any__ kind of information.
 
-The most efficient way to implement low-level caching is using the `Rails.cache.fetch` method. This method does both reading and writing to the cache. When passed only a single argument, the key is fetched and value from the cache is returned. If a block is passed, that block will be executed in the event of a cache miss. The return value of the block will be written to the cache under the given cache key, and that return value will be returned. In case of cache hit, the cached value will be returned without executing the block.
+The most efficient way to implement low-level caching is using the `Quails.cache.fetch` method. This method does both reading and writing to the cache. When passed only a single argument, the key is fetched and value from the cache is returned. If a block is passed, that block will be executed in the event of a cache miss. The return value of the block will be written to the cache under the given cache key, and that return value will be returned. In case of cache hit, the cached value will be returned without executing the block.
 
 Consider the following example. An application has a `Product` model with an instance method that looks up the product's price on a competing website. The data returned by this method would be perfect for low-level caching:
 
 ```ruby
 class Product < ApplicationRecord
   def competing_price
-    Rails.cache.fetch("#{cache_key}/competing_price", expires_in: 12.hours) do
+    Quails.cache.fetch("#{cache_key}/competing_price", expires_in: 12.hours) do
       Competitor::API.find_price(id)
     end
   end
@@ -306,8 +306,8 @@ NOTE: Notice that in this example we used the `cache_key` method, so the resulti
 
 ### SQL Caching
 
-Query caching is a Rails feature that caches the result set returned by each
-query. If Rails encounters the same query again for that request, it will use
+Query caching is a Quails feature that caches the result set returned by each
+query. If Quails encounters the same query again for that request, it will use
 the cached result set as opposed to running the query against the database
 again.
 
@@ -339,7 +339,7 @@ persistent fashion, you can with low level caching.
 Cache Stores
 ------------
 
-Rails provides different stores for the cached data (apart from SQL and page
+Quails provides different stores for the cached data (apart from SQL and page
 caching).
 
 ### Configuration
@@ -354,11 +354,11 @@ config.cache_store = :memory_store, { size: 64.megabytes }
 
 NOTE: Alternatively, you can call `ActionController::Base.cache_store` outside of a configuration block.
 
-You can access the cache by calling `Rails.cache`.
+You can access the cache by calling `Quails.cache`.
 
 ### ActiveSupport::Cache::Store
 
-This class provides the foundation for interacting with the cache in Rails. This is an abstract class and you cannot use it on its own. Rather you must use a concrete implementation of the class tied to a storage engine. Rails ships with several implementations documented below.
+This class provides the foundation for interacting with the cache in Quails. This is an abstract class and you cannot use it on its own. Rather you must use a concrete implementation of the class tied to a storage engine. Quails ships with several implementations documented below.
 
 The main methods to call are `read`, `write`, `delete`, `exist?`, and `fetch`. The fetch method takes a block and will either return an existing value from the cache, or evaluate the block and write the result to the cache if no value exists.
 
@@ -378,7 +378,7 @@ There are some common options used by all cache implementations. These can be pa
 
 You can create your own custom cache store by simply extending
 `ActiveSupport::Cache::Store` and implementing the appropriate methods. This way,
-you can swap in any number of caching technologies into your Rails application.
+you can swap in any number of caching technologies into your Quails application.
 
 To use a custom cache store, simply set the cache store to a new instance of your
 custom class.
@@ -398,17 +398,17 @@ cleanup will occur and the least recently used entries will be removed.
 config.cache_store = :memory_store, { size: 64.megabytes }
 ```
 
-If you're running multiple Ruby on Rails server processes (which is the case
-if you're using Phusion Passenger or puma clustered mode), then your Rails server
+If you're running multiple Ruby on Quails server processes (which is the case
+if you're using Phusion Passenger or puma clustered mode), then your Quails server
 process instances won't be able to share cache data with each other. This cache
 store is not appropriate for large application deployments. However, it can
 work well for small, low traffic sites with only a couple of server processes,
 as well as development and test environments.
 
-New Rails projects are configured to use this implementation in development environment by default.
+New Quails projects are configured to use this implementation in development environment by default.
 
 NOTE: Since processes will not share cache data when using `:memory_store`,
-it will not be possible to manually read, write or expire the cache via the Rails console.
+it will not be possible to manually read, write or expire the cache via the Quails console.
 
 ### ActiveSupport::Cache::FileStore
 
@@ -431,7 +431,7 @@ no explicit `config.cache_store` is supplied.
 
 ### ActiveSupport::Cache::MemCacheStore
 
-This cache store uses Danga's `memcached` server to provide a centralized cache for your application. Rails uses the bundled `dalli` gem by default. This is currently the most popular cache store for production websites. It can be used to provide a single, shared cache cluster with very high performance and redundancy.
+This cache store uses Danga's `memcached` server to provide a centralized cache for your application. Quails uses the bundled `dalli` gem by default. This is currently the most popular cache store for production websites. It can be used to provide a single, shared cache cluster with very high performance and redundancy.
 
 When initializing the cache, you need to specify the addresses for all
 memcached servers in your cluster. If none are specified, it will assume
@@ -446,7 +446,7 @@ config.cache_store = :mem_cache_store, "cache-1.example.com", "cache-2.example.c
 
 ### ActiveSupport::Cache::NullStore
 
-This cache store implementation is meant to be used only in development or test environments and it never stores anything. This can be very useful in development when you have code that interacts directly with `Rails.cache` but caching may interfere with being able to see the results of code changes. With this cache store, all `fetch` and `read` operations will result in a miss.
+This cache store implementation is meant to be used only in development or test environments and it never stores anything. This can be very useful in development when you have code that interacts directly with `Quails.cache` but caching may interfere with being able to see the results of code changes. With this cache store, all `fetch` and `read` operations will result in a miss.
 
 ```ruby
 config.cache_store = :null_store
@@ -464,13 +464,13 @@ You can use Hashes and Arrays of values as cache keys.
 
 ```ruby
 # This is a legal cache key
-Rails.cache.read(site: "mysite", owners: [owner_1, owner_2])
+Quails.cache.read(site: "mysite", owners: [owner_1, owner_2])
 ```
 
-The keys you use on `Rails.cache` will not be the same as those actually used with
+The keys you use on `Quails.cache` will not be the same as those actually used with
 the storage engine. They may be modified with a namespace or altered to fit
 technology backend constraints. This means, for instance, that you can't save
-values with `Rails.cache` and then try to pull them out with the `dalli` gem.
+values with `Quails.cache` and then try to pull them out with the `dalli` gem.
 However, you also don't need to worry about exceeding the memcached size limit or
 violating syntax rules.
 
@@ -481,7 +481,7 @@ Conditional GETs are a feature of the HTTP specification that provide a way for 
 
 They work by using the `HTTP_IF_NONE_MATCH` and `HTTP_IF_MODIFIED_SINCE` headers to pass back and forth both a unique content identifier and the timestamp of when the content was last changed. If the browser makes a request where the content identifier (etag) or last modified since timestamp matches the server's version then the server only needs to send back an empty response with a not modified status.
 
-It is the server's (i.e. our) responsibility to look for a last modified timestamp and the if-none-match header and determine whether or not to send back the full response. With conditional-get support in Rails this is a pretty easy task:
+It is the server's (i.e. our) responsibility to look for a last modified timestamp and the if-none-match header and determine whether or not to send back the full response. With conditional-get support in Quails this is a pretty easy task:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -505,7 +505,7 @@ class ProductsController < ApplicationController
 end
 ```
 
-Instead of an options hash, you can also simply pass in a model. Rails will use the `updated_at` and `cache_key` methods for setting `last_modified` and `etag`:
+Instead of an options hash, you can also simply pass in a model. Quails will use the `updated_at` and `cache_key` methods for setting `last_modified` and `etag`:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -562,7 +562,7 @@ end
 
 ### Strong v/s Weak ETags
 
-Rails generates weak ETags by default. Weak ETags allow semantically equivalent
+Quails generates weak ETags by default. Weak ETags allow semantically equivalent
 responses to have the same ETags, even if their bodies do not match exactly.
 This is useful when we don't want the page to be regenerated for minor changes in
 response body.
@@ -598,13 +598,13 @@ Caching in Development
 ----------------------
 
 It's common to want to test the caching strategy of your application
-in development mode. Rails provides the rake task `dev:cache` to
+in development mode. Quails provides the rake task `dev:cache` to
 easily toggle caching on/off.
 
 ```bash
-$ bin/rails dev:cache
+$ bin/quails dev:cache
 Development mode is now being cached.
-$ bin/rails dev:cache
+$ bin/quails dev:cache
 Development mode is no longer being cached.
 ```
 
@@ -612,4 +612,4 @@ References
 ----------
 
 * [DHH's article on key-based expiration](https://signalvnoise.com/posts/3113-how-key-based-cache-expiration-works)
-* [Ryan Bates' Railscast on cache digests](http://railscasts.com/episodes/387-cache-digests)
+* [Ryan Bates' Quailscast on cache digests](http://quailscasts.com/episodes/387-cache-digests)

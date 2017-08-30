@@ -2,7 +2,7 @@
 
 require_relative "../../generators"
 
-module Rails
+module Quails
   module Command
     class GenerateCommand < Base # :nodoc:
       no_commands do
@@ -10,7 +10,7 @@ module Rails
           require_application_and_environment!
           load_generators
 
-          Rails::Generators.help self.class.command_name
+          Quails::Generators.help self.class.command_name
         end
       end
 
@@ -23,7 +23,7 @@ module Rails
 
         ARGV.shift
 
-        Rails::Generators.invoke generator, args, behavior: :invoke, destination_root: Rails::Command.root
+        Quails::Generators.invoke generator, args, behavior: :invoke, destination_root: Quails::Command.root
       end
     end
   end

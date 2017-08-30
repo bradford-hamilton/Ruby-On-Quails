@@ -2,9 +2,9 @@
 
 require "cgi"
 
-module Rails
+module Quails
   # This module helps build the runtime properties that are displayed in
-  # Rails::InfoController responses. These include the active Rails version,
+  # Quails::InfoController responses. These include the active Quails version,
   # Ruby version, Rack version, and so on.
   module Info
     mattr_accessor :properties, default: []
@@ -56,9 +56,9 @@ module Rails
       end
     end
 
-    # The Rails version.
-    property "Rails version" do
-      Rails.version.to_s
+    # The Quails version.
+    property "Quails version" do
+      Quails.version.to_s
     end
 
     # The Ruby version and platform, e.g. "2.0.0-p247 (x86_64-darwin12.4.0)".
@@ -80,22 +80,22 @@ module Rails
     end
 
     property "Middleware" do
-      Rails.configuration.middleware.map(&:inspect)
+      Quails.configuration.middleware.map(&:inspect)
     end
 
     # The application's location on the filesystem.
     property "Application root" do
-      File.expand_path(Rails.root)
+      File.expand_path(Quails.root)
     end
 
-    # The current Rails environment (development, test, or production).
+    # The current Quails environment (development, test, or production).
     property "Environment" do
-      Rails.env
+      Quails.env
     end
 
     # The name of the database adapter for the current environment.
     property "Database adapter" do
-      ActiveRecord::Base.configurations[Rails.env]["adapter"]
+      ActiveRecord::Base.configurations[Quails.env]["adapter"]
     end
 
     property "Database schema version" do

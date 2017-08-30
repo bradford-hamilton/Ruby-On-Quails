@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/app/app_generator"
+require "quails/generators/quails/app/app_generator"
 
-class ApiAppGeneratorTest < Rails::Generators::TestCase
+class ApiAppGeneratorTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
-  tests Rails::Generators::AppGenerator
+  tests Quails::Generators::AppGenerator
 
   arguments [destination_root, "--api"]
 
   def setup
-    Rails.application = TestApp::Application
+    Quails.application = TestApp::Application
     super
 
     Kernel::silence_warnings do
@@ -22,7 +22,7 @@ class ApiAppGeneratorTest < Rails::Generators::TestCase
 
   def teardown
     super
-    Rails.application = TestApp::Application.instance
+    Quails.application = TestApp::Application.instance
   end
 
   def test_skeleton_is_created
@@ -40,8 +40,8 @@ class ApiAppGeneratorTest < Rails::Generators::TestCase
     end
 
     assert_file "Gemfile" do |content|
-      assert_no_match(/gem 'coffee-rails'/, content)
-      assert_no_match(/gem 'sass-rails'/, content)
+      assert_no_match(/gem 'coffee-quails'/, content)
+      assert_no_match(/gem 'sass-quails'/, content)
       assert_no_match(/gem 'web-console'/, content)
       assert_no_match(/gem 'capybara'/, content)
       assert_no_match(/gem 'selenium-webdriver'/, content)
@@ -66,7 +66,7 @@ class ApiAppGeneratorTest < Rails::Generators::TestCase
   def test_app_update_does_not_generate_unnecessary_config_files
     run_generator
 
-    generator = Rails::Generators::AppGenerator.new ["rails"],
+    generator = Quails::Generators::AppGenerator.new ["quails"],
       { api: true, update: true }, { destination_root: destination_root, shell: @shell }
     quietly { generator.send(:update_config_files) }
 
@@ -77,7 +77,7 @@ class ApiAppGeneratorTest < Rails::Generators::TestCase
   def test_app_update_does_not_generate_unnecessary_bin_files
     run_generator
 
-    generator = Rails::Generators::AppGenerator.new ["rails"],
+    generator = Quails::Generators::AppGenerator.new ["quails"],
       { api: true, update: true }, { destination_root: destination_root, shell: @shell }
     quietly { generator.send(:update_bin_files) }
 
@@ -101,7 +101,7 @@ class ApiAppGeneratorTest < Rails::Generators::TestCase
         app/views/layouts/mailer.html.erb
         app/views/layouts/mailer.text.erb
         bin/bundle
-        bin/rails
+        bin/quails
         bin/rake
         bin/setup
         bin/update

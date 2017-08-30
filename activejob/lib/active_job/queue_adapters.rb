@@ -14,8 +14,8 @@ module ActiveJob
   # * {Sidekiq}[http://sidekiq.org]
   # * {Sneakers}[https://github.com/jondot/sneakers]
   # * {Sucker Punch}[https://github.com/brandonhilkert/sucker_punch]
-  # * {Active Job Async Job}[http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters/AsyncAdapter.html]
-  # * {Active Job Inline}[http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters/InlineAdapter.html]
+  # * {Active Job Async Job}[http://api.rubyonquails.org/classes/ActiveJob/QueueAdapters/AsyncAdapter.html]
+  # * {Active Job Inline}[http://api.rubyonquails.org/classes/ActiveJob/QueueAdapters/InlineAdapter.html]
   #
   # === Backends Features
   #

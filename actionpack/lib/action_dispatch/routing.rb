@@ -5,13 +5,13 @@ require "active_support/core_ext/string/filters"
 module ActionDispatch
   # The routing module provides URL rewriting in native Ruby. It's a way to
   # redirect incoming requests to controllers and actions. This replaces
-  # mod_rewrite rules. Best of all, Rails' \Routing works with any web server.
+  # mod_rewrite rules. Best of all, Quails' \Routing works with any web server.
   # Routes are defined in <tt>config/routes.rb</tt>.
   #
   # Think of creating routes as drawing a map for your requests. The map tells
   # them where to go based on some predefined pattern:
   #
-  #   Rails.application.routes.draw do
+  #   Quails.application.routes.draw do
   #     Pattern 1 tells some request to go to one place
   #     Pattern 2 tell them to go to another
   #     ...
@@ -198,7 +198,7 @@ module ActionDispatch
   #
   # You can reload routes if you feel you must:
   #
-  #   Rails.application.reload_routes!
+  #   Quails.application.reload_routes!
   #
   # This will clear all named routes and reload config/routes.rb if the file has been modified from
   # last load. To absolutely force reloading, use <tt>reload!</tt>.
@@ -241,7 +241,7 @@ module ActionDispatch
   #
   # == View a list of all your routes
   #
-  #   rails routes
+  #   quails routes
   #
   # Target specific controllers by prefixing the command with <tt>-c</tt> option.
   #

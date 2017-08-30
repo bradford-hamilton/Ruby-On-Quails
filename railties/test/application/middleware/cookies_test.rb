@@ -21,15 +21,15 @@ module ApplicationTests
     end
 
     test "always_write_cookie is true by default in development" do
-      require "rails"
-      Rails.env = "development"
+      require "quails"
+      Quails.env = "development"
       require "#{app_path}/config/environment"
       assert_equal true, ActionDispatch::Cookies::CookieJar.always_write_cookie
     end
 
     test "always_write_cookie is false by default in production" do
-      require "rails"
-      Rails.env = "production"
+      require "quails"
+      Quails.env = "production"
       require "#{app_path}/config/environment"
       assert_equal false, ActionDispatch::Cookies::CookieJar.always_write_cookie
     end
@@ -39,8 +39,8 @@ module ApplicationTests
         config.action_dispatch.always_write_cookie = false
       RUBY
 
-      require "rails"
-      Rails.env = "development"
+      require "quails"
+      Quails.env = "development"
       require "#{app_path}/config/environment"
       assert_equal false, ActionDispatch::Cookies::CookieJar.always_write_cookie
     end

@@ -22,13 +22,13 @@
 
 *   Fix modulo operations involving durations
 
-    Rails 5.1 introduced `ActiveSupport::Duration::Scalar` as a wrapper
+    Quails 5.1 introduced `ActiveSupport::Duration::Scalar` as a wrapper
     around numeric values as a way of ensuring a duration was the outcome of
     an expression. However, the implementation was missing support for modulo
     operations. This support has now been added and should result in a duration
     being returned from expressions involving modulo operations.
 
-    Prior to Rails 5.1:
+    Prior to Quails 5.1:
 
         5.minutes % 2.minutes
         => 60
@@ -46,7 +46,7 @@
 
     PR #29163 introduced a change in behavior when a duration was the denominator
     in a calculation - this was incorrect as dividing by a duration should always
-    return a `Numeric`. The behavior of previous versions of Rails has been restored.
+    return a `Numeric`. The behavior of previous versions of Quails has been restored.
 
     Fixes #29592.
 
@@ -84,14 +84,14 @@
 
 *   Default `ActiveSupport::MessageEncryptor` to use AES 256 GCM encryption.
 
-    On for new Rails 5.2 apps. Upgrading apps can find the config as a new
+    On for new Quails 5.2 apps. Upgrading apps can find the config as a new
     framework default.
 
     *Assain Jaleel*
 
 *   Cache: `write_multi`
 
-        Rails.cache.write_multi foo: 'bar', baz: 'qux'
+        Quails.cache.write_multi foo: 'bar', baz: 'qux'
 
     Plus faster fetch_multi with stores that implement `write_multi_entries`.
     Keys that aren't found may be written to the cache store in one shot
@@ -187,4 +187,4 @@
     *Josh Pencheon*
 
 
-Please check [5-1-stable](https://github.com/rails/rails/blob/5-1-stable/activesupport/CHANGELOG.md) for previous changes.
+Please check [5-1-stable](https://github.com/quails/quails/blob/5-1-stable/activesupport/CHANGELOG.md) for previous changes.

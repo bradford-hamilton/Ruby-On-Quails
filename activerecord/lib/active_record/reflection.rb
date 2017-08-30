@@ -447,7 +447,7 @@ module ActiveRecord
         if options[:class_name] && options[:class_name].class == Class
           ActiveSupport::Deprecation.warn(<<-MSG.squish)
             Passing a class to the `class_name` is deprecated and will raise
-            an ArgumentError in Rails 5.2. It eagerloads more classes than
+            an ArgumentError in Quails 5.2. It eagerloads more classes than
             necessary and potentially creates circular dependencies.
 
             Please pass the class name as a string:

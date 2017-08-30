@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 require "active_record"
-require "rails"
+require "quails"
 require "active_model/railtie"
 
 # For now, action_controller must always be present with
-# Rails, so let's make sure that it gets required before
+# Quails, so let's make sure that it gets required before
 # here. This is needed for correctly setting up the middleware.
 # In the future, this might become an optional require.
 require "action_controller/railtie"
 
 module ActiveRecord
   # = Active Record Railtie
-  class Railtie < Rails::Railtie # :nodoc:
+  class Railtie < Quails::Railtie # :nodoc:
     config.active_record = ActiveSupport::OrderedOptions.new
 
     config.app_generators.orm :active_record, migration: true,
@@ -36,9 +36,9 @@ module ActiveRecord
     rake_tasks do
       namespace :db do
         task :load_config do
-          ActiveRecord::Tasks::DatabaseTasks.database_configuration = Rails.application.config.database_configuration
+          ActiveRecord::Tasks::DatabaseTasks.database_configuration = Quails.application.config.database_configuration
 
-          if defined?(ENGINE_ROOT) && engine = Rails::Engine.find(ENGINE_ROOT)
+          if defined?(ENGINE_ROOT) && engine = Quails::Engine.find(ENGINE_ROOT)
             if engine.paths["db/migrate"].existent
               ActiveRecord::Tasks::DatabaseTasks.migrations_paths += engine.paths["db/migrate"].to_a
             end
@@ -55,9 +55,9 @@ module ActiveRecord
     console do |app|
       require_relative "railties/console_sandbox" if app.sandbox?
       require_relative "base"
-      unless ActiveSupport::Logger.logger_outputs_to?(Rails.logger, STDERR, STDOUT)
+      unless ActiveSupport::Logger.logger_outputs_to?(Quails.logger, STDERR, STDOUT)
         console = ActiveSupport::Logger.new(STDERR)
-        Rails.logger.extend ActiveSupport::Logger.broadcast console
+        Quails.logger.extend ActiveSupport::Logger.broadcast console
       end
     end
 
@@ -73,7 +73,7 @@ module ActiveRecord
     end
 
     initializer "active_record.logger" do
-      ActiveSupport.on_load(:active_record) { self.logger ||= ::Rails.logger }
+      ActiveSupport.on_load(:active_record) { self.logger ||= ::Quails.logger }
     end
 
     initializer "active_record.migration_error" do
@@ -125,7 +125,7 @@ module ActiveRecord
     # and then establishes the connection.
     initializer "active_record.initialize_database" do
       ActiveSupport.on_load(:active_record) do
-        self.configurations = Rails.application.config.database_configuration
+        self.configurations = Quails.application.config.database_configuration
 
         begin
           establish_connection
@@ -136,8 +136,8 @@ Oops - You have a database configured, but it doesn't exist yet!
 Here's how to get started:
 
   1. Configure your database in config/database.yml.
-  2. Run `bin/rails db:create` to create the database.
-  3. Run `bin/rails db:setup` to load your database schema.
+  2. Run `bin/quails db:create` to create the database.
+  3. Run `bin/quails db:setup` to load your database schema.
 end_warning
           raise
         end
@@ -185,7 +185,7 @@ end_warning
     initializer "active_record.check_represent_sqlite3_boolean_as_integer" do
       config.after_initialize do
         ActiveSupport.on_load(:active_record_sqlite3adapter) do
-          represent_boolean_as_integer = Rails.application.config.active_record.sqlite3.delete(:represent_boolean_as_integer)
+          represent_boolean_as_integer = Quails.application.config.active_record.sqlite3.delete(:represent_boolean_as_integer)
           unless represent_boolean_as_integer.nil?
             ActiveRecord::ConnectionAdapters::SQLite3Adapter.represent_boolean_as_integer = represent_boolean_as_integer
           end
@@ -204,7 +204,7 @@ by setting up a rake task which runs
 for all models and all boolean columns, after which the flag must be set to
 true by adding the following to your application.rb file:
 
-  Rails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
+  Quails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
 MSG
           end
         end

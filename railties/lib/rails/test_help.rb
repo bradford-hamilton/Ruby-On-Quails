@@ -2,7 +2,7 @@
 
 # Make double-sure the RAILS_ENV is not set to production,
 # so fixtures aren't loaded into that environment
-abort("Abort testing: Your Rails environment is running in production mode!") if Rails.env.production?
+abort("Abort testing: Your Quails environment is running in production mode!") if Quails.env.production?
 
 require "active_support/test_case"
 require "action_controller"
@@ -23,7 +23,7 @@ if defined?(ActiveRecord::Base)
   module ActiveSupport
     class TestCase
       include ActiveRecord::TestFixtures
-      self.fixture_path = "#{Rails.root}/test/fixtures/"
+      self.fixture_path = "#{Quails.root}/test/fixtures/"
       self.file_fixture_path = fixture_path + "files"
     end
   end
@@ -39,14 +39,14 @@ end
 
 class ActionController::TestCase
   def before_setup # :nodoc:
-    @routes = Rails.application.routes
+    @routes = Quails.application.routes
     super
   end
 end
 
 class ActionDispatch::IntegrationTest
   def before_setup # :nodoc:
-    @routes = Rails.application.routes
+    @routes = Quails.application.routes
     super
   end
 end

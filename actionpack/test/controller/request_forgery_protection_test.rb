@@ -175,7 +175,7 @@ end
 # common test methods
 module RequestForgeryProtectionTests
   def setup
-    @token = Base64.strict_encode64("railstestrailstestrailstestrails")
+    @token = Base64.strict_encode64("quailstestquailstestquailstestquails")
     @old_request_forgery_protection_token = ActionController::Base.request_forgery_protection_token
     ActionController::Base.request_forgery_protection_token = :custom_authenticity_token
   end

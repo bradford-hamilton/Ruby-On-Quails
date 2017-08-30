@@ -18,7 +18,7 @@ module ActionDispatch
 
       private
         def register
-          Capybara.register_server :rails_puma do |app, port, host|
+          Capybara.register_server :quails_puma do |app, port, host|
             Rack::Handler::Puma.run(
               app,
               Port: port,
@@ -34,7 +34,7 @@ module ActionDispatch
         end
 
         def set_server
-          Capybara.server = :rails_puma
+          Capybara.server = :quails_puma
         end
 
         def set_port

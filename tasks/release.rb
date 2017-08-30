@@ -22,7 +22,7 @@ directory "pkg"
 # a better solution at the moment.
 npm_version = version.gsub(/\./).with_index { |s, i| i >= 2 ? "-" : s }
 
-(FRAMEWORKS + ["rails"]).each do |framework|
+(FRAMEWORKS + ["quails"]).each do |framework|
   namespace framework do
     gem     = "pkg/#{framework}-#{version}.gem"
     gemspec = "#{framework}.gemspec"
@@ -33,7 +33,7 @@ npm_version = version.gsub(/\./).with_index { |s, i| i >= 2 ? "-" : s }
 
     task :update_versions do
       glob = root.dup
-      if framework == "rails"
+      if framework == "quails"
         glob << "/version.rb"
       else
         glob << "/#{framework}/lib/*"
@@ -66,7 +66,7 @@ npm_version = version.gsub(/\./).with_index { |s, i| i >= 2 ? "-" : s }
           if sh "which npm"
             sh "npm version #{npm_version} --no-git-tag-version"
           else
-            raise "You must have npm installed to release Rails."
+            raise "You must have npm installed to release Quails."
           end
         end
       end
@@ -74,8 +74,8 @@ npm_version = version.gsub(/\./).with_index { |s, i| i >= 2 ? "-" : s }
 
     task gem => %w(update_versions pkg) do
       cmd = ""
-      cmd += "cd #{framework} && " unless framework == "rails"
-      cmd += "bundle exec rake package && " unless framework == "rails"
+      cmd += "cd #{framework} && " unless framework == "quails"
+      cmd += "bundle exec rake package && " unless framework == "quails"
       cmd += "gem build #{gemspec} && mv #{framework}-#{version}.gem #{root}/pkg/"
       sh cmd
     end
@@ -105,7 +105,7 @@ namespace :changelog do
       fname = File.join fw, "CHANGELOG.md"
       current_contents = File.read(fname)
 
-      header = "## Rails #{version} (#{Date.today.strftime('%B %d, %Y')}) ##\n\n"
+      header = "## Quails #{version} (#{Date.today.strftime('%B %d, %Y')}) ##\n\n"
       header += "*   No changes.\n\n\n" if current_contents =~ /\A##/
       contents = header + current_contents
       File.open(fname, "wb") { |f| f.write contents }
@@ -115,10 +115,10 @@ namespace :changelog do
   task :release_date do
     (FRAMEWORKS + ["guides"]).each do |fw|
       require "date"
-      replace = "## Rails #{version} (#{Date.today.strftime('%B %d, %Y')}) ##\n"
+      replace = "## Quails #{version} (#{Date.today.strftime('%B %d, %Y')}) ##\n"
       fname = File.join fw, "CHANGELOG.md"
 
-      contents = File.read(fname).sub(/^(## Rails .*)\n/, replace)
+      contents = File.read(fname).sub(/^(## Quails .*)\n/, replace)
       File.open(fname, "wb") { |f| f.write contents }
     end
   end
@@ -130,7 +130,7 @@ namespace :changelog do
       contents = File.readlines fname
       contents.shift
       changes = []
-      changes << contents.shift until contents.first =~ /^\*Rails \d+\.\d+\.\d+/
+      changes << contents.shift until contents.first =~ /^\*Quails \d+\.\d+\.\d+/
       puts changes.reject { |change| change.strip.empty? }.join
       puts
     end
@@ -138,10 +138,10 @@ namespace :changelog do
 end
 
 namespace :all do
-  task build: FRAMEWORKS.map { |f| "#{f}:build"           } + ["rails:build"]
-  task update_versions: FRAMEWORKS.map { |f| "#{f}:update_versions" } + ["rails:update_versions"]
-  task install: FRAMEWORKS.map { |f| "#{f}:install"         } + ["rails:install"]
-  task push: FRAMEWORKS.map { |f| "#{f}:push"            } + ["rails:push"]
+  task build: FRAMEWORKS.map { |f| "#{f}:build"           } + ["quails:build"]
+  task update_versions: FRAMEWORKS.map { |f| "#{f}:update_versions" } + ["quails:update_versions"]
+  task install: FRAMEWORKS.map { |f| "#{f}:install"         } + ["quails:install"]
+  task push: FRAMEWORKS.map { |f| "#{f}:push"            } + ["quails:push"]
 
   task :ensure_clean_state do
     unless `git status -s | grep -v 'RAILS_VERSION\\|CHANGELOG\\|Gemfile.lock\\|package.json\\|version.rb\\|tasks/release.rb'`.strip.empty?
@@ -156,16 +156,16 @@ namespace :all do
 
   task verify: :install do
     app_name = "pkg/verify-#{version}-#{Time.now.to_i}"
-    sh "rails _#{version}_ new #{app_name} --skip-bundle" # Generate with the right version.
+    sh "quails _#{version}_ new #{app_name} --skip-bundle" # Generate with the right version.
     cd app_name
 
     # Replace the generated gemfile entry with the exact version.
-    File.write("Gemfile", File.read("Gemfile").sub(/^gem 'rails.*/, "gem 'rails', '#{version}'"))
+    File.write("Gemfile", File.read("Gemfile").sub(/^gem 'quails.*/, "gem 'quails', '#{version}'"))
     sh "bundle"
 
-    sh "rails generate scaffold user name admin:boolean && rails db:migrate"
+    sh "quails generate scaffold user name admin:boolean && quails db:migrate"
 
-    puts "Booting a Rails server. Verify the release by:"
+    puts "Booting a Quails server. Verify the release by:"
     puts
     puts "- Seeing the correct release number on the root page"
     puts "- Viewing /users"
@@ -174,7 +174,7 @@ namespace :all do
     puts "- Deleting a user on /users"
     puts "- Whatever else you want."
     begin
-      sh "rails server"
+      sh "quails server"
     rescue Interrupt
       # Server passes along interrupt. Prevent halting verify task.
     end

@@ -283,7 +283,7 @@ module ActionController
     # Spawn a new thread to serve up the controller in. This is to get
     # around the fact that Rack isn't based around IOs and we need to use
     # a thread to stream data from the response bodies. Nobody should call
-    # this method except in Rails internals. Seriously!
+    # this method except in Quails internals. Seriously!
     def new_controller_thread # :nodoc:
       Thread.new {
         t2 = Thread.current

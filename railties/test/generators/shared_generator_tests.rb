@@ -5,9 +5,9 @@
 #
 module SharedGeneratorTests
   def setup
-    Rails.application = TestApp::Application
+    Quails.application = TestApp::Application
     super
-    Rails::Generators::AppGenerator.instance_variable_set("@desc", nil)
+    Quails::Generators::AppGenerator.instance_variable_set("@desc", nil)
 
     Kernel::silence_warnings do
       Thor::Base.shell.send(:attr_accessor, :always_force)
@@ -18,8 +18,8 @@ module SharedGeneratorTests
 
   def teardown
     super
-    Rails::Generators::AppGenerator.instance_variable_set("@desc", nil)
-    Rails.application = TestApp::Application.instance
+    Quails::Generators::AppGenerator.instance_variable_set("@desc", nil)
+    Quails.application = TestApp::Application.instance
   end
 
   def application_path
@@ -51,7 +51,7 @@ module SharedGeneratorTests
     reserved_words = %w[application destroy plugin runner test]
     reserved_words.each do |reserved|
       content = capture(:stderr) { run_generator [File.join(destination_root, reserved)] }
-      assert_match(/Invalid \w+ name #{reserved}\. Please give a name which does not match one of the reserved rails words: application, destroy, plugin, runner, test\n/, content)
+      assert_match(/Invalid \w+ name #{reserved}\. Please give a name which does not match one of the reserved quails words: application, destroy, plugin, runner, test\n/, content)
     end
   end
 
@@ -62,14 +62,14 @@ module SharedGeneratorTests
     end
   end
 
-  def test_shebang_is_added_to_rails_file
+  def test_shebang_is_added_to_quails_file
     run_generator [destination_root, "--ruby", "foo/bar/baz", "--full"]
-    assert_file "bin/rails", /#!foo\/bar\/baz/
+    assert_file "bin/quails", /#!foo\/bar\/baz/
   end
 
   def test_shebang_when_is_the_same_as_default_use_env
     run_generator [destination_root, "--ruby", Thor::Util.ruby_command, "--full"]
-    assert_file "bin/rails", /#!\/usr\/bin\/env/
+    assert_file "bin/quails", /#!\/usr\/bin\/env/
   end
 
   def test_template_raises_an_error_with_invalid_path
@@ -130,7 +130,7 @@ module SharedGeneratorTests
 
   def test_default_frameworks_are_required_when_others_are_removed
     run_generator [destination_root, "--skip-active-record", "--skip-action-mailer", "--skip-action-cable", "--skip-sprockets"]
-    assert_file "#{application_path}/config/application.rb", /require\s+["']rails["']/
+    assert_file "#{application_path}/config/application.rb", /require\s+["']quails["']/
     assert_file "#{application_path}/config/application.rb", /require\s+["']active_model\/railtie["']/
     assert_file "#{application_path}/config/application.rb", /require\s+["']active_job\/railtie["']/
     assert_file "#{application_path}/config/application.rb", /require\s+["']action_controller\/railtie["']/
@@ -140,7 +140,7 @@ module SharedGeneratorTests
 
   def test_generator_without_skips
     run_generator
-    assert_file "#{application_path}/config/application.rb", /\s+require\s+["']rails\/all["']/
+    assert_file "#{application_path}/config/application.rb", /\s+require\s+["']quails\/all["']/
     assert_file "#{application_path}/config/environments/development.rb" do |content|
       assert_match(/config\.action_mailer\.raise_delivery_errors = false/, content)
     end
@@ -225,9 +225,9 @@ module SharedGeneratorTests
     assert_file "#{application_path}/config/application.rb", /#\s+require\s+["']sprockets\/railtie["']/
 
     assert_file "Gemfile" do |content|
-      assert_no_match(/sass-rails/, content)
+      assert_no_match(/sass-quails/, content)
       assert_no_match(/uglifier/, content)
-      assert_no_match(/coffee-rails/, content)
+      assert_no_match(/coffee-quails/, content)
     end
 
     assert_file "#{application_path}/config/environments/development.rb" do |content|

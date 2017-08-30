@@ -269,14 +269,14 @@ class RequestDomain < BaseRequestTest
     request = stub_request "HTTP_HOST" => "192.168.1.200.com"
     assert_equal "200.com", request.domain
 
-    request = stub_request "HTTP_HOST" => "www.rubyonrails.org"
-    assert_equal "rubyonrails.org", request.domain
+    request = stub_request "HTTP_HOST" => "www.rubyonquails.org"
+    assert_equal "rubyonquails.org", request.domain
 
-    request = stub_request "HTTP_HOST" => "www.rubyonrails.co.uk"
-    assert_equal "rubyonrails.co.uk", request.domain(2)
+    request = stub_request "HTTP_HOST" => "www.rubyonquails.co.uk"
+    assert_equal "rubyonquails.co.uk", request.domain(2)
 
-    request = stub_request "HTTP_HOST" => "www.rubyonrails.co.uk", :tld_length => 2
-    assert_equal "rubyonrails.co.uk", request.domain
+    request = stub_request "HTTP_HOST" => "www.rubyonquails.co.uk", :tld_length => 2
+    assert_equal "rubyonquails.co.uk", request.domain
   end
 
   test "subdomains" do
@@ -300,19 +300,19 @@ class RequestDomain < BaseRequestTest
     assert_equal [], request.subdomains
     assert_equal "", request.subdomain
 
-    request = stub_request "HTTP_HOST" => "www.rubyonrails.org"
+    request = stub_request "HTTP_HOST" => "www.rubyonquails.org"
     assert_equal %w( www ), request.subdomains
     assert_equal "www", request.subdomain
 
-    request = stub_request "HTTP_HOST" => "www.rubyonrails.co.uk"
+    request = stub_request "HTTP_HOST" => "www.rubyonquails.co.uk"
     assert_equal %w( www ), request.subdomains(2)
     assert_equal "www", request.subdomain(2)
 
-    request = stub_request "HTTP_HOST" => "dev.www.rubyonrails.co.uk"
+    request = stub_request "HTTP_HOST" => "dev.www.rubyonquails.co.uk"
     assert_equal %w( dev www ), request.subdomains(2)
     assert_equal "dev.www", request.subdomain(2)
 
-    request = stub_request "HTTP_HOST" => "dev.www.rubyonrails.co.uk", :tld_length => 2
+    request = stub_request "HTTP_HOST" => "dev.www.rubyonquails.co.uk", :tld_length => 2
     assert_equal %w( dev www ), request.subdomains
     assert_equal "dev.www", request.subdomain
   end
@@ -431,33 +431,33 @@ end
 
 class RequestHost < BaseRequestTest
   test "host without specifying port" do
-    request = stub_request "HTTP_HOST" => "rubyonrails.org"
-    assert_equal "rubyonrails.org", request.host_with_port
+    request = stub_request "HTTP_HOST" => "rubyonquails.org"
+    assert_equal "rubyonquails.org", request.host_with_port
   end
 
   test "host with default port" do
-    request = stub_request "HTTP_HOST" => "rubyonrails.org:80"
-    assert_equal "rubyonrails.org", request.host_with_port
+    request = stub_request "HTTP_HOST" => "rubyonquails.org:80"
+    assert_equal "rubyonquails.org", request.host_with_port
   end
 
   test "host with non default port" do
-    request = stub_request "HTTP_HOST" => "rubyonrails.org:81"
-    assert_equal "rubyonrails.org:81", request.host_with_port
+    request = stub_request "HTTP_HOST" => "rubyonquails.org:81"
+    assert_equal "rubyonquails.org:81", request.host_with_port
   end
 
   test "raw without specifying port" do
-    request = stub_request "HTTP_HOST" => "rubyonrails.org"
-    assert_equal "rubyonrails.org", request.raw_host_with_port
+    request = stub_request "HTTP_HOST" => "rubyonquails.org"
+    assert_equal "rubyonquails.org", request.raw_host_with_port
   end
 
   test "raw host with default port" do
-    request = stub_request "HTTP_HOST" => "rubyonrails.org:80"
-    assert_equal "rubyonrails.org:80", request.raw_host_with_port
+    request = stub_request "HTTP_HOST" => "rubyonquails.org:80"
+    assert_equal "rubyonquails.org:80", request.raw_host_with_port
   end
 
   test "raw host with non default port" do
-    request = stub_request "HTTP_HOST" => "rubyonrails.org:81"
-    assert_equal "rubyonrails.org:81", request.raw_host_with_port
+    request = stub_request "HTTP_HOST" => "rubyonquails.org:81"
+    assert_equal "rubyonquails.org:81", request.raw_host_with_port
   end
 
   test "proxy request" do
@@ -466,20 +466,20 @@ class RequestHost < BaseRequestTest
   end
 
   test "http host" do
-    request = stub_request "HTTP_HOST" => "rubyonrails.org:8080"
-    assert_equal "rubyonrails.org", request.host
-    assert_equal "rubyonrails.org:8080", request.host_with_port
+    request = stub_request "HTTP_HOST" => "rubyonquails.org:8080"
+    assert_equal "rubyonquails.org", request.host
+    assert_equal "rubyonquails.org:8080", request.host_with_port
 
     request = stub_request "HTTP_X_FORWARDED_HOST" => "www.firsthost.org, www.secondhost.org"
     assert_equal "www.secondhost.org", request.host
 
-    request = stub_request "HTTP_X_FORWARDED_HOST" => "", "HTTP_HOST" => "rubyonrails.org"
-    assert_equal "rubyonrails.org", request.host
+    request = stub_request "HTTP_X_FORWARDED_HOST" => "", "HTTP_HOST" => "rubyonquails.org"
+    assert_equal "rubyonquails.org", request.host
   end
 
   test "http host with default port overrides server port" do
-    request = stub_request "HTTP_HOST" => "rubyonrails.org"
-    assert_equal "rubyonrails.org", request.host_with_port
+    request = stub_request "HTTP_HOST" => "rubyonquails.org"
+    assert_equal "rubyonquails.org", request.host_with_port
   end
 
   test "host with port if http standard port is specified" do

@@ -3,7 +3,7 @@
 require "abstract_unit"
 require "controller/fake_controllers"
 require "active_support/json/decoding"
-require "rails/engine"
+require "quails/engine"
 
 class TestCaseTest < ActionController::TestCase
   def self.fixture_path; end;
@@ -788,7 +788,7 @@ XML
   READ_PLAIN = "r:binary"
 
   def test_test_uploaded_file
-    filename = "ruby_on_rails.jpg"
+    filename = "ruby_on_quails.jpg"
     path = "#{FILES_DIR}/#{filename}"
     content_type = "image/png"
     expected = File.read(path)
@@ -807,13 +807,13 @@ XML
 
   def test_fixture_path_is_accessed_from_self_instead_of_active_support_test_case
     TestCaseTest.stub :fixture_path, FILES_DIR do
-      uploaded_file = fixture_file_upload("/ruby_on_rails.jpg", "image/png")
-      assert_equal File.open("#{FILES_DIR}/ruby_on_rails.jpg", READ_PLAIN).read, uploaded_file.read
+      uploaded_file = fixture_file_upload("/ruby_on_quails.jpg", "image/png")
+      assert_equal File.open("#{FILES_DIR}/ruby_on_quails.jpg", READ_PLAIN).read, uploaded_file.read
     end
   end
 
   def test_test_uploaded_file_with_binary
-    filename = "ruby_on_rails.jpg"
+    filename = "ruby_on_quails.jpg"
     path = "#{FILES_DIR}/#{filename}"
     content_type = "image/png"
 
@@ -825,7 +825,7 @@ XML
   end
 
   def test_fixture_file_upload_with_binary
-    filename = "ruby_on_rails.jpg"
+    filename = "ruby_on_quails.jpg"
     path = "#{FILES_DIR}/#{filename}"
     content_type = "image/jpg"
 
@@ -837,39 +837,39 @@ XML
   end
 
   def test_fixture_file_upload_should_be_able_access_to_tempfile
-    file = fixture_file_upload(FILES_DIR + "/ruby_on_rails.jpg", "image/jpg")
+    file = fixture_file_upload(FILES_DIR + "/ruby_on_quails.jpg", "image/jpg")
     assert file.respond_to?(:tempfile), "expected tempfile should respond on fixture file object, got nothing"
   end
 
   def test_fixture_file_upload
     post :test_file_upload,
       params: {
-        file: fixture_file_upload(FILES_DIR + "/ruby_on_rails.jpg", "image/jpg")
+        file: fixture_file_upload(FILES_DIR + "/ruby_on_quails.jpg", "image/jpg")
       }
     assert_equal "45142", @response.body
   end
 
   def test_fixture_file_upload_relative_to_fixture_path
     TestCaseTest.stub :fixture_path, FILES_DIR do
-      uploaded_file = fixture_file_upload("ruby_on_rails.jpg", "image/jpg")
-      assert_equal File.open("#{FILES_DIR}/ruby_on_rails.jpg", READ_PLAIN).read, uploaded_file.read
+      uploaded_file = fixture_file_upload("ruby_on_quails.jpg", "image/jpg")
+      assert_equal File.open("#{FILES_DIR}/ruby_on_quails.jpg", READ_PLAIN).read, uploaded_file.read
     end
   end
 
   def test_fixture_file_upload_ignores_fixture_path_given_full_path
     TestCaseTest.stub :fixture_path, __dir__ do
-      uploaded_file = fixture_file_upload("#{FILES_DIR}/ruby_on_rails.jpg", "image/jpg")
-      assert_equal File.open("#{FILES_DIR}/ruby_on_rails.jpg", READ_PLAIN).read, uploaded_file.read
+      uploaded_file = fixture_file_upload("#{FILES_DIR}/ruby_on_quails.jpg", "image/jpg")
+      assert_equal File.open("#{FILES_DIR}/ruby_on_quails.jpg", READ_PLAIN).read, uploaded_file.read
     end
   end
 
   def test_fixture_file_upload_ignores_nil_fixture_path
-    uploaded_file = fixture_file_upload("#{FILES_DIR}/ruby_on_rails.jpg", "image/jpg")
-    assert_equal File.open("#{FILES_DIR}/ruby_on_rails.jpg", READ_PLAIN).read, uploaded_file.read
+    uploaded_file = fixture_file_upload("#{FILES_DIR}/ruby_on_quails.jpg", "image/jpg")
+    assert_equal File.open("#{FILES_DIR}/ruby_on_quails.jpg", READ_PLAIN).read, uploaded_file.read
   end
 
   def test_action_dispatch_uploaded_file_upload
-    filename = "ruby_on_rails.jpg"
+    filename = "ruby_on_quails.jpg"
     path = "#{FILES_DIR}/#{filename}"
     post :test_file_upload, params: {
       file: Rack::Test::UploadedFile.new(path, "image/jpg", true)
@@ -973,7 +973,7 @@ class ResponseDefaultHeadersTest < ActionController::TestCase
 end
 
 module EngineControllerTests
-  class Engine < ::Rails::Engine
+  class Engine < ::Quails::Engine
     isolate_namespace EngineControllerTests
 
     routes.draw do

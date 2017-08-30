@@ -62,7 +62,7 @@ module Kindle
     html_pages.each_with_index do |page, section_idx|
       FileUtils::mkdir_p("sections/%03d" % section_idx)
       doc = Nokogiri::HTML(File.open(page))
-      title = doc.at("title").inner_text.gsub("Ruby on Rails Guides: ", "")
+      title = doc.at("title").inner_text.gsub("Ruby on Quails Guides: ", "")
       title = page.capitalize.gsub(".html", "") if title.strip == ""
       File.open("sections/%03d/_section.txt" % section_idx, "w") { |f| f.puts title }
       doc.xpath("//h3[@id]").each_with_index do |h3, item_idx|
@@ -82,8 +82,8 @@ module Kindle
 
   def generate_document_metadata(mobi_outfile)
     puts "=> Generating _document.yml"
-    x = Nokogiri::XML(File.open("rails_guides.opf")).remove_namespaces!
-    cover_jpg = "#{Dir.pwd}/images/rails_guides_kindle_cover.jpg"
+    x = Nokogiri::XML(File.open("quails_guides.opf")).remove_namespaces!
+    cover_jpg = "#{Dir.pwd}/images/quails_guides_kindle_cover.jpg"
     cover_gif = cover_jpg.sub(/jpg$/, "gif")
     puts `convert #{cover_jpg} #{cover_gif}`
     document = {

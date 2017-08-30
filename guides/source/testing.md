@@ -1,35 +1,35 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-A Guide to Testing Rails Applications
+A Guide to Testing Quails Applications
 =====================================
 
-This guide covers built-in mechanisms in Rails for testing your application.
+This guide covers built-in mechanisms in Quails for testing your application.
 
 After reading this guide, you will know:
 
-* Rails testing terminology.
+* Quails testing terminology.
 * How to write unit, functional, integration, and system tests for your application.
 * Other popular testing approaches and plugins.
 
 --------------------------------------------------------------------------------
 
-Why Write Tests for your Rails Applications?
+Why Write Tests for your Quails Applications?
 --------------------------------------------
 
-Rails makes it super easy to write your tests. It starts by producing skeleton test code while you are creating your models and controllers.
+Quails makes it super easy to write your tests. It starts by producing skeleton test code while you are creating your models and controllers.
 
-By running your Rails tests you can ensure your code adheres to the desired functionality even after some major code refactoring.
+By running your Quails tests you can ensure your code adheres to the desired functionality even after some major code refactoring.
 
-Rails tests can also simulate browser requests and thus you can test your application's response without having to test it through your browser.
+Quails tests can also simulate browser requests and thus you can test your application's response without having to test it through your browser.
 
 Introduction to Testing
 -----------------------
 
-Testing support was woven into the Rails fabric from the beginning. It wasn't an "oh! let's bolt on support for running tests because they're new and cool" epiphany.
+Testing support was woven into the Quails fabric from the beginning. It wasn't an "oh! let's bolt on support for running tests because they're new and cool" epiphany.
 
-### Rails Sets up for Testing from the Word Go
+### Quails Sets up for Testing from the Word Go
 
-Rails creates a `test` directory for you as soon as you create a Rails project using `rails new` _application_name_. If you list the contents of this directory then you shall see:
+Quails creates a `test` directory for you as soon as you create a Quails project using `quails new` _application_name_. If you list the contents of this directory then you shall see:
 
 ```bash
 $ ls -F test
@@ -57,20 +57,20 @@ tests.
 
 ### The Test Environment
 
-By default, every Rails application has three environments: development, test, and production.
+By default, every Quails application has three environments: development, test, and production.
 
 Each environment's configuration can be modified similarly. In this case, we can modify our test environment by changing the options found in `config/environments/test.rb`.
 
 NOTE: Your tests are run under `RAILS_ENV=test`.
 
-### Rails meets Minitest
+### Quails meets Minitest
 
-If you remember, we used the `rails generate model` command in the
-[Getting Started with Rails](getting_started.html) guide. We created our first
+If you remember, we used the `quails generate model` command in the
+[Getting Started with Quails](getting_started.html) guide. We created our first
 model, and among other things it created test stubs in the `test` directory:
 
 ```bash
-$ bin/rails generate model article title:string body:text
+$ bin/quails generate model article title:string body:text
 ...
 create  app/models/article.rb
 create  test/models/article_test.rb
@@ -90,7 +90,7 @@ class ArticleTest < ActiveSupport::TestCase
 end
 ```
 
-A line by line examination of this file will help get you oriented to Rails testing code and terminology.
+A line by line examination of this file will help get you oriented to Quails testing code and terminology.
 
 ```ruby
 require 'test_helper'
@@ -107,7 +107,7 @@ The `ArticleTest` class defines a _test case_ because it inherits from `ActiveSu
 Any method defined within a class inherited from `Minitest::Test`
 (which is the superclass of `ActiveSupport::TestCase`) that begins with `test_` (case sensitive) is simply called a test. So, methods defined as `test_password` and `test_valid_password` are legal test names and are run automatically when the test case is run.
 
-Rails also adds a `test` method that takes a test name and a block. It generates a normal `Minitest::Unit` test with method names prefixed with `test_`. So you don't have to worry about naming the methods, and you can write something like:
+Quails also adds a `test` method that takes a test name and a block. It generates a normal `Minitest::Unit` test with method names prefixed with `test_`. So you don't have to worry about naming the methods, and you can write something like:
 
 ```ruby
 test "the truth" do
@@ -156,7 +156,7 @@ end
 Let us run this newly added test (where `6` is the number of line where the test is defined).
 
 ```bash
-$ bin/rails test test/models/article_test.rb:6
+$ bin/quails test test/models/article_test.rb:6
 Run options: --seed 44656
 
 # Running:
@@ -168,7 +168,7 @@ ArticleTest#test_should_not_save_article_without_title [/path/to/blog/test/model
 Expected true to be nil or false
 
 
-bin/rails test test/models/article_test.rb:6
+bin/quails test test/models/article_test.rb:6
 
 
 
@@ -206,7 +206,7 @@ end
 Now the test should pass. Let us verify by running the test again:
 
 ```bash
-$ bin/rails test test/models/article_test.rb:6
+$ bin/quails test test/models/article_test.rb:6
 Run options: --seed 31252
 
 # Running:
@@ -239,7 +239,7 @@ end
 Now you can see even more output in the console from running the tests:
 
 ```bash
-$ bin/rails test test/models/article_test.rb
+$ bin/quails test test/models/article_test.rb
 Run options: --seed 1808
 
 # Running:
@@ -252,7 +252,7 @@ NameError: undefined local variable or method 'some_undefined_variable' for #<Ar
     test/models/article_test.rb:11:in 'block in <class:ArticleTest>'
 
 
-bin/rails test test/models/article_test.rb:9
+bin/quails test test/models/article_test.rb:9
 
 
 
@@ -270,13 +270,13 @@ method. All test methods are executed in random order. The
 can be used to configure test order.
 
 When a test fails you are presented with the corresponding backtrace. By default
-Rails filters that backtrace and will only print lines relevant to your
+Quails filters that backtrace and will only print lines relevant to your
 application. This eliminates the framework noise and helps to focus on your
 code. However there are situations when you want to see the full
 backtrace. Set the `-b` (or `--backtrace`) argument to enable this behavior:
 
 ```bash
-$ bin/rails test -b test/models/article_test.rb
+$ bin/quails test -b test/models/article_test.rb
 ```
 
 If we want this test to pass we can modify it to use `assert_raises` like so:
@@ -298,7 +298,7 @@ By now you've caught a glimpse of some of the assertions that are available. Ass
 
 Here's an extract of the assertions you can use with
 [`Minitest`](https://github.com/seattlerb/minitest), the default testing library
-used by Rails. The `[msg]` parameter is an optional string message you can
+used by Quails. The `[msg]` parameter is an optional string message you can
 specify to make your test failure messages clearer.
 
 | Assertion                                                        | Purpose |
@@ -338,53 +338,53 @@ more up-to-date list, please check
 [Minitest API documentation](http://docs.seattlerb.org/minitest/), specifically
 [`Minitest::Assertions`](http://docs.seattlerb.org/minitest/Minitest/Assertions.html).
 
-Because of the modular nature of the testing framework, it is possible to create your own assertions. In fact, that's exactly what Rails does. It includes some specialized assertions to make your life easier.
+Because of the modular nature of the testing framework, it is possible to create your own assertions. In fact, that's exactly what Quails does. It includes some specialized assertions to make your life easier.
 
 NOTE: Creating your own assertions is an advanced topic that we won't cover in this tutorial.
 
-### Rails Specific Assertions
+### Quails Specific Assertions
 
-Rails adds some custom assertions of its own to the `minitest` framework:
+Quails adds some custom assertions of its own to the `minitest` framework:
 
 | Assertion                                                                         | Purpose |
 | --------------------------------------------------------------------------------- | ------- |
-| [`assert_difference(expressions, difference = 1, message = nil) {...}`](http://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_difference) | Test numeric difference between the return value of an expression as a result of what is evaluated in the yielded block.|
-| [`assert_no_difference(expressions, message = nil, &block)`](http://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_no_difference) | Asserts that the numeric result of evaluating an expression is not changed before and after invoking the passed in block.|
-| [`assert_changes(expressions, message = nil, from:, to:, &block)`](http://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_changes) | Test that the result of evaluating an expression is changed after invoking the passed in block.|
-| [`assert_no_changes(expressions, message = nil, &block)`](http://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_no_changes) | Test the result of evaluating an expression is not changed after invoking the passed in block.|
-| [`assert_nothing_raised { block }`](http://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_nothing_raised) | Ensures that the given block doesn't raise any exceptions.|
-| [`assert_recognizes(expected_options, path, extras={}, message=nil)`](http://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_recognizes) | Asserts that the routing of the given path was handled correctly and that the parsed options (given in the expected_options hash) match path. Basically, it asserts that Rails recognizes the route given by expected_options.|
-| [`assert_generates(expected_path, options, defaults={}, extras = {}, message=nil)`](http://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_generates) | Asserts that the provided options can be used to generate the provided path. This is the inverse of assert_recognizes. The extras parameter is used to tell the request the names and values of additional request parameters that would be in a query string. The message parameter allows you to specify a custom error message for assertion failures.|
-| [`assert_response(type, message = nil)`](http://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_response) | Asserts that the response comes with a specific status code. You can specify `:success` to indicate 200-299, `:redirect` to indicate 300-399, `:missing` to indicate 404, or `:error` to match the 500-599 range. You can also pass an explicit status number or its symbolic equivalent. For more information, see [full list of status codes](http://rubydoc.info/github/rack/rack/master/Rack/Utils#HTTP_STATUS_CODES-constant) and how their [mapping](http://rubydoc.info/github/rack/rack/master/Rack/Utils#SYMBOL_TO_STATUS_CODE-constant) works.|
-| [`assert_redirected_to(options = {}, message=nil)`](http://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_redirected_to) | Asserts that the redirection options passed in match those of the redirect called in the latest action. This match can be partial, such that `assert_redirected_to(controller: "weblog")` will also match the redirection of `redirect_to(controller: "weblog", action: "show")` and so on. You can also pass named routes such as `assert_redirected_to root_path` and Active Record objects such as `assert_redirected_to @article`.|
+| [`assert_difference(expressions, difference = 1, message = nil) {...}`](http://api.rubyonquails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_difference) | Test numeric difference between the return value of an expression as a result of what is evaluated in the yielded block.|
+| [`assert_no_difference(expressions, message = nil, &block)`](http://api.rubyonquails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_no_difference) | Asserts that the numeric result of evaluating an expression is not changed before and after invoking the passed in block.|
+| [`assert_changes(expressions, message = nil, from:, to:, &block)`](http://api.rubyonquails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_changes) | Test that the result of evaluating an expression is changed after invoking the passed in block.|
+| [`assert_no_changes(expressions, message = nil, &block)`](http://api.rubyonquails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_no_changes) | Test the result of evaluating an expression is not changed after invoking the passed in block.|
+| [`assert_nothing_raised { block }`](http://api.rubyonquails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_nothing_raised) | Ensures that the given block doesn't raise any exceptions.|
+| [`assert_recognizes(expected_options, path, extras={}, message=nil)`](http://api.rubyonquails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_recognizes) | Asserts that the routing of the given path was handled correctly and that the parsed options (given in the expected_options hash) match path. Basically, it asserts that Quails recognizes the route given by expected_options.|
+| [`assert_generates(expected_path, options, defaults={}, extras = {}, message=nil)`](http://api.rubyonquails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_generates) | Asserts that the provided options can be used to generate the provided path. This is the inverse of assert_recognizes. The extras parameter is used to tell the request the names and values of additional request parameters that would be in a query string. The message parameter allows you to specify a custom error message for assertion failures.|
+| [`assert_response(type, message = nil)`](http://api.rubyonquails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_response) | Asserts that the response comes with a specific status code. You can specify `:success` to indicate 200-299, `:redirect` to indicate 300-399, `:missing` to indicate 404, or `:error` to match the 500-599 range. You can also pass an explicit status number or its symbolic equivalent. For more information, see [full list of status codes](http://rubydoc.info/github/rack/rack/master/Rack/Utils#HTTP_STATUS_CODES-constant) and how their [mapping](http://rubydoc.info/github/rack/rack/master/Rack/Utils#SYMBOL_TO_STATUS_CODE-constant) works.|
+| [`assert_redirected_to(options = {}, message=nil)`](http://api.rubyonquails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_redirected_to) | Asserts that the redirection options passed in match those of the redirect called in the latest action. This match can be partial, such that `assert_redirected_to(controller: "weblog")` will also match the redirection of `redirect_to(controller: "weblog", action: "show")` and so on. You can also pass named routes such as `assert_redirected_to root_path` and Active Record objects such as `assert_redirected_to @article`.|
 
 You'll see the usage of some of these assertions in the next chapter.
 
 ### A Brief Note About Test Cases
 
-All the basic assertions such as `assert_equal` defined in `Minitest::Assertions` are also available in the classes we use in our own test cases. In fact, Rails provides the following classes for you to inherit from:
+All the basic assertions such as `assert_equal` defined in `Minitest::Assertions` are also available in the classes we use in our own test cases. In fact, Quails provides the following classes for you to inherit from:
 
-* [`ActiveSupport::TestCase`](http://api.rubyonrails.org/classes/ActiveSupport/TestCase.html)
-* [`ActionMailer::TestCase`](http://api.rubyonrails.org/classes/ActionMailer/TestCase.html)
-* [`ActionView::TestCase`](http://api.rubyonrails.org/classes/ActionView/TestCase.html)
-* [`ActiveJob::TestCase`](http://api.rubyonrails.org/classes/ActiveJob/TestCase.html)
-* [`ActionDispatch::IntegrationTest`](http://api.rubyonrails.org/classes/ActionDispatch/IntegrationTest.html)
-* [`ActionDispatch::SystemTestCase`](http://api.rubyonrails.org/classes/ActionDispatch/SystemTestCase.html)
-* [`Rails::Generators::TestCase`](http://api.rubyonrails.org/classes/Rails/Generators/TestCase.html)
+* [`ActiveSupport::TestCase`](http://api.rubyonquails.org/classes/ActiveSupport/TestCase.html)
+* [`ActionMailer::TestCase`](http://api.rubyonquails.org/classes/ActionMailer/TestCase.html)
+* [`ActionView::TestCase`](http://api.rubyonquails.org/classes/ActionView/TestCase.html)
+* [`ActiveJob::TestCase`](http://api.rubyonquails.org/classes/ActiveJob/TestCase.html)
+* [`ActionDispatch::IntegrationTest`](http://api.rubyonquails.org/classes/ActionDispatch/IntegrationTest.html)
+* [`ActionDispatch::SystemTestCase`](http://api.rubyonquails.org/classes/ActionDispatch/SystemTestCase.html)
+* [`Quails::Generators::TestCase`](http://api.rubyonquails.org/classes/Quails/Generators/TestCase.html)
 
 Each of these classes include `Minitest::Assertions`, allowing us to use all of the basic assertions in our tests.
 
 NOTE: For more information on `Minitest`, refer to [its
 documentation](http://docs.seattlerb.org/minitest).
 
-### The Rails Test Runner
+### The Quails Test Runner
 
-We can run all of our tests at once by using the `bin/rails test` command.
+We can run all of our tests at once by using the `bin/quails test` command.
 
-Or we can run a single test file by passing the `bin/rails test` command the filename containing the test cases.
+Or we can run a single test file by passing the `bin/quails test` command the filename containing the test cases.
 
 ```bash
-$ bin/rails test test/models/article_test.rb
+$ bin/quails test test/models/article_test.rb
 Run options: --seed 1559
 
 # Running:
@@ -402,7 +402,7 @@ You can also run a particular test method from the test case by providing the
 `-n` or `--name` flag and the test's method name.
 
 ```bash
-$ bin/rails test test/models/article_test.rb -n test_the_truth
+$ bin/quails test test/models/article_test.rb -n test_the_truth
 Run options: -n test_the_truth --seed 43583
 
 # Running:
@@ -417,20 +417,20 @@ Finished tests in 0.009064s, 110.3266 tests/s, 110.3266 assertions/s.
 You can also run a test at a specific line by providing the line number.
 
 ```bash
-$ bin/rails test test/models/article_test.rb:6 # run specific test and line
+$ bin/quails test test/models/article_test.rb:6 # run specific test and line
 ```
 
 You can also run an entire directory of tests by providing the path to the directory.
 
 ```bash
-$ bin/rails test test/controllers # run all tests from specific directory
+$ bin/quails test test/controllers # run all tests from specific directory
 ```
 
 The test runner also provides a lot of other features like failing fast, deferring test output
 at the end of test run and so on. Check the documentation of the test runner as follows:
 
 ```bash
-$ bin/rails test -h
+$ bin/quails test -h
 minitest options:
     -h, --help                       Display this help.
     -s, --seed SEED                  Sets random seed. Also via env. Eg: SEED=n rake
@@ -438,20 +438,20 @@ minitest options:
     -n, --name PATTERN               Filter run on /regexp/ or string.
         --exclude PATTERN            Exclude /regexp/ or string from run.
 
-Known extensions: rails, pride
+Known extensions: quails, pride
 
-Usage: bin/rails test [options] [files or directories]
+Usage: bin/quails test [options] [files or directories]
 You can run a single test by appending a line number to a filename:
 
-    bin/rails test test/models/user_test.rb:27
+    bin/quails test test/models/user_test.rb:27
 
 You can run multiple files and directories at the same time:
 
-    bin/rails test test/controllers test/integration/login_test.rb
+    bin/quails test test/controllers test/integration/login_test.rb
 
 By default test failures and errors are reported inline during a run.
 
-Rails options:
+Quails options:
     -w, --warnings                   Run with Ruby warnings enabled
     -e, --environment                Run tests in the ENV environment
     -b, --backtrace                  Show the complete backtrace
@@ -463,9 +463,9 @@ Rails options:
 The Test Database
 -----------------
 
-Just about every Rails application interacts heavily with a database and, as a result, your tests will need a database to interact with as well. To write efficient tests, you'll need to understand how to set up this database and populate it with sample data.
+Just about every Quails application interacts heavily with a database and, as a result, your tests will need a database to interact with as well. To write efficient tests, you'll need to understand how to set up this database and populate it with sample data.
 
-By default, every Rails application has three environments: development, test, and production. The database for each one of them is configured in `config/database.yml`.
+By default, every Quails application has three environments: development, test, and production. The database for each one of them is configured in `config/database.yml`.
 
 A dedicated test database allows you to set up and interact with test data in isolation. This way your tests can mangle test data with confidence, without worrying about the data in the development or production databases.
 
@@ -477,17 +477,17 @@ structure. The test helper checks whether your test database has any pending
 migrations. It will try to load your `db/schema.rb` or `db/structure.sql`
 into the test database. If migrations are still pending, an error will be
 raised. Usually this indicates that your schema is not fully migrated. Running
-the migrations against the development database (`bin/rails db:migrate`) will
+the migrations against the development database (`bin/quails db:migrate`) will
 bring the schema up to date.
 
 NOTE: If there were modifications to existing migrations, the test database needs to
-be rebuilt. This can be done by executing `bin/rails db:test:prepare`.
+be rebuilt. This can be done by executing `bin/quails db:test:prepare`.
 
 ### The Low-Down on Fixtures
 
 For good tests, you'll need to give some thought to setting up test data.
-In Rails, you can handle this by defining and customizing fixtures.
-You can find comprehensive documentation in the [Fixtures API documentation](http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
+In Quails, you can handle this by defining and customizing fixtures.
+You can find comprehensive documentation in the [Fixtures API documentation](http://api.rubyonquails.org/classes/ActiveRecord/FixtureSet.html).
 
 #### What Are Fixtures?
 
@@ -495,7 +495,7 @@ _Fixtures_ is a fancy word for sample data. Fixtures allow you to populate your 
 
 NOTE: Fixtures are not designed to create every object that your tests need, and are best managed when only used for default data that can be applied to the common case.
 
-You'll find fixtures under your `test/fixtures` directory. When you run `rails generate model` to create a new model, Rails automatically creates fixture stubs in this directory.
+You'll find fixtures under your `test/fixtures` directory. When you run `quails generate model` to create a new model, Quails automatically creates fixture stubs in this directory.
 
 #### YAML
 
@@ -529,18 +529,18 @@ about:
 
 # In fixtures/articles.yml
 first:
-  title: Welcome to Rails!
+  title: Welcome to Quails!
   body: Hello world!
   category: about
 ```
 
-Notice the `category` key of the `first` article found in `fixtures/articles.yml` has a value of `about`. This tells Rails to load the category `about` found in `fixtures/categories.yml`.
+Notice the `category` key of the `first` article found in `fixtures/articles.yml` has a value of `about`. This tells Quails to load the category `about` found in `fixtures/categories.yml`.
 
-NOTE: For associations to reference one another by name, you can use the fixture name instead of specifying the `id:` attribute on the associated fixtures. Rails will auto assign a primary key to be consistent between runs. For more information on this association behavior please read the [Fixtures API documentation](http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
+NOTE: For associations to reference one another by name, you can use the fixture name instead of specifying the `id:` attribute on the associated fixtures. Quails will auto assign a primary key to be consistent between runs. For more information on this association behavior please read the [Fixtures API documentation](http://api.rubyonquails.org/classes/ActiveRecord/FixtureSet.html).
 
 #### ERB'in It Up
 
-ERB allows you to embed Ruby code within templates. The YAML fixture format is pre-processed with ERB when Rails loads fixtures. This allows you to use Ruby to help you generate some sample data. For example, the following code generates a thousand users:
+ERB allows you to embed Ruby code within templates. The YAML fixture format is pre-processed with ERB when Quails loads fixtures. This allows you to use Ruby to help you generate some sample data. For example, the following code generates a thousand users:
 
 ```erb
 <% 1000.times do |n| %>
@@ -552,14 +552,14 @@ user_<%= n %>:
 
 #### Fixtures in Action
 
-Rails automatically loads all fixtures from the `test/fixtures` directory by
+Quails automatically loads all fixtures from the `test/fixtures` directory by
 default. Loading involves three steps:
 
 1. Remove any existing data from the table corresponding to the fixture
 2. Load the fixture data into the table
 3. Dump the fixture data into a method in case you want to access it directly
 
-TIP: In order to remove existing data from the database, Rails tries to disable referential integrity triggers (like foreign keys and check constraints). If you are getting annoying permission errors on running tests, make sure the database user has privilege to disable these triggers in testing environment. (In PostgreSQL, only superusers can disable all triggers. Read more about PostgreSQL permissions [here](http://blog.endpoint.com/2012/10/postgres-system-triggers-error.html)).
+TIP: In order to remove existing data from the database, Quails tries to disable referential integrity triggers (like foreign keys and check constraints). If you are getting annoying permission errors on running tests, make sure the database user has privilege to disable these triggers in testing environment. (In PostgreSQL, only superusers can disable all triggers. Read more about PostgreSQL permissions [here](http://blog.endpoint.com/2012/10/postgres-system-triggers-error.html)).
 
 #### Fixtures are Active Record objects
 
@@ -590,16 +590,16 @@ Model Testing
 
 Model tests are used to test the various models of your application.
 
-Rails model tests are stored under the `test/models` directory. Rails provides
+Quails model tests are stored under the `test/models` directory. Quails provides
 a generator to create a model test skeleton for you.
 
 ```bash
-$ bin/rails generate test_unit:model article title:string body:text
+$ bin/quails generate test_unit:model article title:string body:text
 create  test/models/article_test.rb
 create  test/fixtures/articles.yml
 ```
 
-Model tests don't have their own superclass like `ActionMailer::TestCase` instead they inherit from [`ActiveSupport::TestCase`](http://api.rubyonrails.org/classes/ActiveSupport/TestCase.html).
+Model tests don't have their own superclass like `ActionMailer::TestCase` instead they inherit from [`ActiveSupport::TestCase`](http://api.rubyonquails.org/classes/ActiveSupport/TestCase.html).
 
 System Testing
 --------------
@@ -607,11 +607,11 @@ System Testing
 System tests allow you to test user interactions with your application, running tests
 in either a real or a headless browser. System tests uses Capybara under the hood.
 
-For creating Rails system tests, you use the `test/system` directory in your
-application. Rails provides a generator to create a system test skeleton for you.
+For creating Quails system tests, you use the `test/system` directory in your
+application. Quails provides a generator to create a system test skeleton for you.
 
 ```bash
-$ bin/rails generate system_test users
+$ bin/quails generate system_test users
       invoke test_unit
       create test/system/users_test.rb
 ```
@@ -636,7 +636,7 @@ change the default settings.
 
 ### Changing the default settings
 
-Rails makes changing the default settings for system tests very simple. All
+Quails makes changing the default settings for system tests very simple. All
 the setup is abstracted away so you can focus on writing your tests.
 
 When you generate a new application or scaffold, an `application_system_test_case.rb` file
@@ -671,7 +671,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 end
 ```
 
-If your Capybara configuration requires more setup than provided by Rails, this
+If your Capybara configuration requires more setup than provided by Quails, this
 additional configuration could be added into the `application_system_test_case.rb`
 file.
 
@@ -686,7 +686,7 @@ to view screenshots later for debugging.
 
 Two methods are provided: `take_screenshot` and `take_failed_screenshot`.
 `take_failed_screenshot` is automatically included in `after_teardown` inside
-Rails.
+Quails.
 
 The `take_screenshot` helper method can be included anywhere in your tests to
 take a screenshot of the browser.
@@ -701,7 +701,7 @@ created for you. If you didn't use the scaffold generator, start by creating a
 system test skeleton.
 
 ```bash
-$ bin/rails generate system_test articles
+$ bin/quails generate system_test articles
 ```
 
 It should have created a test file placeholder for us. With the output of the
@@ -730,11 +730,11 @@ The test should see that there is an `h1` on the articles index page and pass.
 Run the system tests.
 
 ```bash
-bin/rails test:system
+bin/quails test:system
 ```
 
-NOTE: By default, running `bin/rails test` won't run your system tests.
-Make sure to run `bin/rails test:system` to actually run them.
+NOTE: By default, running `bin/quails test` won't run your system tests.
+Make sure to run `bin/quails test:system` to actually run them.
 
 #### Creating articles system test
 
@@ -782,10 +782,10 @@ Integration Testing
 
 Integration tests are used to test how various parts of your application interact. They are generally used to test important workflows within our application.
 
-For creating Rails integration tests, we use the `test/integration` directory for our application. Rails provides a generator to create an integration test skeleton for us.
+For creating Quails integration tests, we use the `test/integration` directory for our application. Quails provides a generator to create an integration test skeleton for us.
 
 ```bash
-$ bin/rails generate integration_test user_flows
+$ bin/quails generate integration_test user_flows
       exists  test/integration/
       create  test/integration/user_flows_test.rb
 ```
@@ -808,11 +808,11 @@ Here the test is inheriting from `ActionDispatch::IntegrationTest`. This makes s
 
 In addition to the standard testing helpers, inheriting from `ActionDispatch::IntegrationTest` comes with some additional helpers available when writing integration tests. Let's get briefly introduced to the three categories of helpers we get to choose from.
 
-For dealing with the integration test runner, see [`ActionDispatch::Integration::Runner`](http://api.rubyonrails.org/classes/ActionDispatch/Integration/Runner.html).
+For dealing with the integration test runner, see [`ActionDispatch::Integration::Runner`](http://api.rubyonquails.org/classes/ActionDispatch/Integration/Runner.html).
 
-When performing requests, we will have [`ActionDispatch::Integration::RequestHelpers`](http://api.rubyonrails.org/classes/ActionDispatch/Integration/RequestHelpers.html) available for our use.
+When performing requests, we will have [`ActionDispatch::Integration::RequestHelpers`](http://api.rubyonquails.org/classes/ActionDispatch/Integration/RequestHelpers.html) available for our use.
 
-If we need to modify the session, or state of our integration test, take a look at [`ActionDispatch::Integration::Session`](http://api.rubyonrails.org/classes/ActionDispatch/Integration/Session.html) to help.
+If we need to modify the session, or state of our integration test, take a look at [`ActionDispatch::Integration::Session`](http://api.rubyonquails.org/classes/ActionDispatch/Integration/Session.html) to help.
 
 ### Implementing an integration test
 
@@ -821,7 +821,7 @@ Let's add an integration test to our blog application. We'll start with a basic 
 We'll start by generating our integration test skeleton:
 
 ```bash
-$ bin/rails generate integration_test blog_flow
+$ bin/quails generate integration_test blog_flow
 ```
 
 It should have created a test file placeholder for us. With the output of the
@@ -894,7 +894,7 @@ We were able to successfully test a very small workflow for visiting our blog an
 Functional Tests for Your Controllers
 -------------------------------------
 
-In Rails, testing the various actions of a controller is a form of writing functional tests. Remember your controllers handle the incoming web requests to your application and eventually respond with a rendered view. When writing functional tests, you are testing how your actions handle the requests and the expected result or response, in some cases an HTML view.
+In Quails, testing the various actions of a controller is a form of writing functional tests. Remember your controllers handle the incoming web requests to your application and eventually respond with a rendered view. When writing functional tests, you are testing how your actions handle the requests and the expected result or response, in some cases an HTML view.
 
 ### What to include in your Functional Tests
 
@@ -909,7 +909,7 @@ You should test for things such as:
 The easiest way to see functional tests in action is to generate a controller using the scaffold generator:
 
 ```bash
-$ bin/rails generate scaffold_controller article title:string body:text
+$ bin/quails generate scaffold_controller article title:string body:text
 ...
 create  app/controllers/articles_controller.rb
 ...
@@ -925,7 +925,7 @@ If you already have a controller and just want to generate the test scaffold cod
 each of the seven default actions, you can use the following command:
 
 ```bash
-$ bin/rails generate test_unit:scaffold article
+$ bin/quails generate test_unit:scaffold article
 ...
 invoke  test_unit
 create    test/controllers/articles_controller_test.rb
@@ -944,7 +944,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 end
 ```
 
-In the `test_should_get_index` test, Rails simulates a request on the action called `index`, making sure the request was successful
+In the `test_should_get_index` test, Quails simulates a request on the action called `index`, making sure the request was successful
 and also ensuring that the right response body has been generated.
 
 The `get` method kicks off the web request and populates the results into the `@response`. It can accept up to 6 arguments:
@@ -979,7 +979,7 @@ Let us modify `test_should_create_article` test in `articles_controller_test.rb`
 ```ruby
 test "should create article" do
   assert_difference('Article.count') do
-    post articles_url, params: { article: { body: 'Rails is awesome!', title: 'Hello Rails' } }
+    post articles_url, params: { article: { body: 'Quails is awesome!', title: 'Hello Quails' } }
   end
 
   assert_redirected_to article_path(Article.last)
@@ -997,7 +997,7 @@ request.headers['Authorization'] = ActionController::HttpAuthentication::Basic.
 
 ### Available Request Types for Functional Tests
 
-If you're familiar with the HTTP protocol, you'll know that `get` is a type of request. There are 6 request types supported in Rails functional tests:
+If you're familiar with the HTTP protocol, you'll know that `get` is a type of request. There are 6 request types supported in Quails functional tests:
 
 * `get`
 * `post`
@@ -1100,7 +1100,7 @@ end
 If we run our test now, we should see a failure:
 
 ```bash
-$ bin/rails test test/controllers/articles_controller_test.rb -n test_should_create_article
+$ bin/quails test test/controllers/articles_controller_test.rb -n test_should_create_article
 Run options: -n test_should_create_article --seed 32266
 
 # Running:
@@ -1138,7 +1138,7 @@ end
 Now if we run our tests, we should see it pass:
 
 ```bash
-$ bin/rails test test/controllers/articles_controller_test.rb -n test_should_create_article
+$ bin/quails test test/controllers/articles_controller_test.rb -n test_should_create_article
 Run options: -n test_should_create_article --seed 18981
 
 # Running:
@@ -1210,7 +1210,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   # called after every single test
   teardown do
     # when controller is using cache it may be a good idea to reset it afterwards
-    Rails.cache.clear
+    Quails.cache.clear
   end
 
   test "should show article" do
@@ -1238,7 +1238,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 end
 ```
 
-Similar to other callbacks in Rails, the `setup` and `teardown` methods can also be used by passing a block, lambda, or method name as a symbol to call.
+Similar to other callbacks in Quails, the `setup` and `teardown` methods can also be used by passing a block, lambda, or method name as a symbol to call.
 
 ### Test helpers
 
@@ -1277,11 +1277,11 @@ end
 Testing Routes
 --------------
 
-Like everything else in your Rails application, you can test your routes. Route tests reside in `test/controllers/` or are part of controller tests.
+Like everything else in your Quails application, you can test your routes. Route tests reside in `test/controllers/` or are part of controller tests.
 
-NOTE: If your application has complex routes, Rails provides a number of useful helpers to test them.
+NOTE: If your application has complex routes, Quails provides a number of useful helpers to test them.
 
-For more information on routing assertions available in Rails, see the API documentation for [`ActionDispatch::Assertions::RoutingAssertions`](http://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html).
+For more information on routing assertions available in Quails, see the API documentation for [`ActionDispatch::Assertions::RoutingAssertions`](http://api.rubyonquails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html).
 
 Testing Views
 -------------
@@ -1297,7 +1297,7 @@ There are two forms of `assert_select`:
 For example, you could verify the contents on the title element in your response with:
 
 ```ruby
-assert_select 'title', "Welcome to Rails Testing Guide"
+assert_select 'title', "Welcome to Quails Testing Guide"
 ```
 
 You can also use nested `assert_select` blocks for deeper investigation.
@@ -1327,7 +1327,7 @@ assert_select "ol" do
 end
 ```
 
-This assertion is quite powerful. For more advanced usage, refer to its [documentation](https://github.com/rails/rails-dom-testing/blob/master/lib/rails/dom/testing/assertions/selector_assertions.rb).
+This assertion is quite powerful. For more advanced usage, refer to its [documentation](https://github.com/quails/quails-dom-testing/blob/master/lib/quails/dom/testing/assertions/selector_assertions.rb).
 
 #### Additional View-Based Assertions
 
@@ -1380,7 +1380,7 @@ end
 ```
 
 Moreover, since the test class extends from `ActionView::TestCase`, you have
-access to Rails' helper methods such as `link_to` or `pluralize`.
+access to Quails' helper methods such as `link_to` or `pluralize`.
 
 Testing Your Mailers
 --------------------
@@ -1389,7 +1389,7 @@ Testing mailer classes requires some specific tools to do a thorough job.
 
 ### Keeping the Postman in Check
 
-Your mailer classes - like every other part of your Rails application - should be tested to ensure that they are working as expected.
+Your mailer classes - like every other part of your Quails application - should be tested to ensure that they are working as expected.
 
 The goals of testing your mailer classes are to ensure that:
 
@@ -1523,7 +1523,7 @@ no jobs have already been executed in the scope of each test.
 
 ### Custom Assertions And Testing Jobs Inside Other Components
 
-Active Job ships with a bunch of custom assertions that can be used to lessen the verbosity of tests. For a full list of available assertions, see the API documentation for [`ActiveJob::TestHelper`](http://api.rubyonrails.org/classes/ActiveJob/TestHelper.html).
+Active Job ships with a bunch of custom assertions that can be used to lessen the verbosity of tests. For a full list of available assertions, see the API documentation for [`ActiveJob::TestHelper`](http://api.rubyonquails.org/classes/ActiveJob/TestHelper.html).
 
 It's a good practice to ensure that your jobs correctly get enqueued or performed
 wherever you invoke them (e.g. inside your controllers). This is precisely where
@@ -1547,9 +1547,9 @@ Additional Testing Resources
 
 ### Testing Time-Dependent Code
 
-Rails provides built-in helper methods that enable you to assert that your time-sensitive code works as expected.
+Quails provides built-in helper methods that enable you to assert that your time-sensitive code works as expected.
 
-Here is an example using the [`travel_to`](http://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to) helper:
+Here is an example using the [`travel_to`](http://api.rubyonquails.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to) helper:
 
 ```ruby
 # Lets say that a user is eligible for gifting a month after they register.
@@ -1562,5 +1562,5 @@ end
 assert_equal Date.new(2004, 10, 24), user.activation_date # The change was visible only inside the `travel_to` block.
 ```
 
-Please see [`ActiveSupport::Testing::TimeHelpers` API Documentation](http://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html)
+Please see [`ActiveSupport::Testing::TimeHelpers` API Documentation](http://api.rubyonquails.org/classes/ActiveSupport/Testing/TimeHelpers.html)
 for in-depth information about the available time helpers.

@@ -19,7 +19,7 @@ if ActiveRecord::Base.connection.supports_virtual_columns?
         t.virtual :upper_name,  type: :string,  as: "UPPER(`name`)"
         t.virtual :name_length, type: :integer, as: "LENGTH(`name`)", stored: true
       end
-      VirtualColumn.create(name: "Rails")
+      VirtualColumn.create(name: "Quails")
     end
 
     def teardown
@@ -49,7 +49,7 @@ if ActiveRecord::Base.connection.supports_virtual_columns?
       column = VirtualColumn.columns_hash["lower_name"]
       assert_predicate column, :virtual?
       assert_match %r{\bVIRTUAL\b}, column.extra
-      assert_equal "rails", VirtualColumn.take.lower_name
+      assert_equal "quails", VirtualColumn.take.lower_name
     end
 
     def test_schema_dumping

@@ -6,7 +6,7 @@ require_relative "../../resource_helpers"
 module TestUnit # :nodoc:
   module Generators # :nodoc:
     class ScaffoldGenerator < Base # :nodoc:
-      include Rails::Generators::ResourceHelpers
+      include Quails::Generators::ResourceHelpers
 
       check_class_collision suffix: "ControllerTest"
 

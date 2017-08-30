@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name        = "activestorage"
   s.version     = version
   s.summary     = "Local and cloud file storage framework."
-  s.description = "Attach cloud and local files in Rails applications."
+  s.description = "Attach cloud and local files in Quails applications."
 
   s.required_ruby_version = ">= 2.2.2"
 
@@ -15,14 +15,14 @@ Gem::Specification.new do |s|
 
   s.author   = "David Heinemeier Hansson"
   s.email    = "david@loudthinking.com"
-  s.homepage = "http://rubyonrails.org"
+  s.homepage = "http://rubyonquails.org"
 
   s.files        = Dir["CHANGELOG.md", "MIT-LICENSE", "README.md", "lib/**/*", "app/**/*", "config/**/*"]
   s.require_path = "lib"
 
   s.metadata = {
-    "source_code_uri" => "https://github.com/rails/rails/tree/v#{version}/activestorage",
-    "changelog_uri"   => "https://github.com/rails/rails/blob/v#{version}/activestorage/CHANGELOG.md"
+    "source_code_uri" => "https://github.com/quails/quails/tree/v#{version}/activestorage",
+    "changelog_uri"   => "https://github.com/quails/quails/blob/v#{version}/activestorage/CHANGELOG.md"
   }
 
   s.add_dependency "actionpack", version

@@ -14,7 +14,7 @@ class LoadingTest < ActiveSupport::TestCase
   end
 
   def app
-    @app ||= Rails.application
+    @app ||= Quails.application
   end
 
   test "constants in app are autoloaded" do
@@ -24,7 +24,7 @@ class LoadingTest < ActiveSupport::TestCase
       end
     MODEL
 
-    require "#{rails_root}/config/environment"
+    require "#{quails_root}/config/environment"
     setup_ar!
 
     p = Post.create(title: "omg")
@@ -55,7 +55,7 @@ class LoadingTest < ActiveSupport::TestCase
       end
     CONCERN
 
-    require "#{rails_root}/config/environment"
+    require "#{quails_root}/config/environment"
 
     assert_nothing_raised { Trackable }
     assert_nothing_raised { EmailLoggable }
@@ -70,7 +70,7 @@ class LoadingTest < ActiveSupport::TestCase
       end
     MODEL
 
-    require "#{rails_root}/config/environment"
+    require "#{quails_root}/config/environment"
     setup_ar!
 
     User
@@ -78,7 +78,7 @@ class LoadingTest < ActiveSupport::TestCase
 
   test "load config/environments/environment before Bootstrap initializers" do
     app_file "config/environments/development.rb", <<-RUBY
-      Rails.application.configure do
+      Quails.application.configure do
         config.development_environment_loaded = true
       end
     RUBY
@@ -90,7 +90,7 @@ class LoadingTest < ActiveSupport::TestCase
     RUBY
 
     require "#{app_path}/config/environment"
-    assert ::Rails.application.config.loaded
+    assert ::Quails.application.config.loaded
   end
 
   test "descendants loaded after framework initialization are cleaned on each request without cache classes" do
@@ -105,7 +105,7 @@ class LoadingTest < ActiveSupport::TestCase
     MODEL
 
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Quails.application.routes.draw do
         get '/load',   to: lambda { |env| [200, {}, Post.all] }
         get '/unload', to: lambda { |env| [200, {}, []] }
       end
@@ -114,7 +114,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{quails_root}/config/environment"
     setup_ar!
 
     assert_equal [ActiveStorage::Blob, ActiveStorage::Attachment, ActiveRecord::SchemaMigration, ActiveRecord::InternalMetadata].collect(&:to_s).sort, ActiveRecord::Base.descendants.collect(&:to_s).sort
@@ -126,7 +126,7 @@ class LoadingTest < ActiveSupport::TestCase
 
   test "initialize cant be called twice" do
     require "#{app_path}/config/environment"
-    assert_raise(RuntimeError) { Rails.application.initialize! }
+    assert_raise(RuntimeError) { Quails.application.initialize! }
   end
 
   test "reload constants on development" do
@@ -135,7 +135,7 @@ class LoadingTest < ActiveSupport::TestCase
     RUBY
 
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Quails.application.routes.draw do
         get '/c', to: lambda { |env| [200, {"Content-Type" => "text/plain"}, [User.counter.to_s]] }
       end
     RUBY
@@ -149,7 +149,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{quails_root}/config/environment"
 
     get "/c"
     assert_equal "1", last_response.body
@@ -176,7 +176,7 @@ class LoadingTest < ActiveSupport::TestCase
     RUBY
 
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Quails.application.routes.draw do
         get '/c', to: lambda { |env| [200, {"Content-Type" => "text/plain"}, [User.counter.to_s]] }
       end
     RUBY
@@ -190,7 +190,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{quails_root}/config/environment"
 
     get "/c"
     assert_equal "1", last_response.body
@@ -212,7 +212,7 @@ class LoadingTest < ActiveSupport::TestCase
 
     app_file "config/routes.rb", <<-RUBY
       $counter ||= 0
-      Rails.application.routes.draw do
+      Quails.application.routes.draw do
         get '/c', to: lambda { |env| User.name; [200, {"Content-Type" => "text/plain"}, [$counter.to_s]] }
       end
     RUBY
@@ -226,7 +226,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{quails_root}/config/environment"
 
     get "/c"
     assert_equal "1", last_response.body
@@ -245,7 +245,7 @@ class LoadingTest < ActiveSupport::TestCase
     app_file "config/routes.rb", <<-RUBY
       $counter ||= 1
       $counter  *= 2
-      Rails.application.routes.draw do
+      Quails.application.routes.draw do
         get '/c', to: lambda { |env| User.name; [200, {"Content-Type" => "text/plain"}, [$counter.to_s]] }
       end
     RUBY
@@ -259,7 +259,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{quails_root}/config/environment"
 
     get "/c"
     assert_equal "3", last_response.body
@@ -276,7 +276,7 @@ class LoadingTest < ActiveSupport::TestCase
     RUBY
 
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Quails.application.routes.draw do
         get '/title', to: lambda { |env| [200, {"Content-Type" => "text/plain"}, [Post.new.title]] }
         get '/body',  to: lambda { |env| [200, {"Content-Type" => "text/plain"}, [Post.new.body]] }
       end
@@ -301,7 +301,7 @@ class LoadingTest < ActiveSupport::TestCase
     MIGRATION
 
     Dir.chdir(app_path) { `rake db:migrate` }
-    require "#{rails_root}/config/environment"
+    require "#{quails_root}/config/environment"
 
     get "/title"
     assert_equal "TITLE", last_response.body
@@ -335,12 +335,12 @@ class LoadingTest < ActiveSupport::TestCase
     RUBY
 
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Quails.application.routes.draw do
         get "/:controller(/:action)"
       end
     RUBY
 
-    require "#{rails_root}/config/environment"
+    require "#{quails_root}/config/environment"
 
     require "rack/test"
     extend Rack::Test::Methods
@@ -352,11 +352,11 @@ class LoadingTest < ActiveSupport::TestCase
   def test_initialize_can_be_called_at_any_time
     require "#{app_path}/config/application"
 
-    assert !Rails.initialized?
-    assert !Rails.application.initialized?
-    Rails.initialize!
-    assert Rails.initialized?
-    assert Rails.application.initialized?
+    assert !Quails.initialized?
+    assert !Quails.application.initialized?
+    Quails.initialize!
+    assert Quails.initialized?
+    assert Quails.application.initialized?
   end
 
   private

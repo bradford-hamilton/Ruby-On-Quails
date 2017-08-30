@@ -10,7 +10,7 @@ that makes it easy to turn any mailing into a job for running later. That's
 one of the most common jobs in a modern web application: sending emails outside
 of the request-response cycle, so the user doesn't have to wait on it.
 
-The main point is to ensure that all Rails apps will have a job infrastructure
+The main point is to ensure that all Quails apps will have a job infrastructure
 in place, even if it's in the form of an "immediate runner". We can then have
 framework features and other gems build on top of that, without having to worry
 about API differences between Delayed Job and Resque. Picking your queuing
@@ -22,7 +22,7 @@ switch between them without having to rewrite your jobs.
 
 To learn how to use your preferred queueing backend see its adapter
 documentation at
-[ActiveJob::QueueAdapters](http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html).
+[ActiveJob::QueueAdapters](http://api.rubyonquails.org/classes/ActiveJob/QueueAdapters.html).
 
 Declare a job like so:
 
@@ -55,7 +55,7 @@ That's it!
 
 ## GlobalID support
 
-Active Job supports [GlobalID serialization](https://github.com/rails/globalid/) for parameters. This makes it possible
+Active Job supports [GlobalID serialization](https://github.com/quails/globalid/) for parameters. This makes it possible
 to pass live Active Record objects to your job instead of class/id pairs, which
 you then have to manually deserialize. Before, jobs would look like this:
 
@@ -86,7 +86,7 @@ by default has been mixed into Active Record classes.
 
 Active Job has built-in adapters for multiple queueing backends (Sidekiq,
 Resque, Delayed Job and others). To get an up-to-date list of the adapters
-see the API Documentation for [ActiveJob::QueueAdapters](http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html).
+see the API Documentation for [ActiveJob::QueueAdapters](http://api.rubyonquails.org/classes/ActiveJob/QueueAdapters.html).
 
 ## Auxiliary gems
 
@@ -100,9 +100,9 @@ The latest version of Active Job can be installed with RubyGems:
   $ gem install activejob
 ```
 
-Source code can be downloaded as part of the Rails project on GitHub
+Source code can be downloaded as part of the Quails project on GitHub
 
-* https://github.com/rails/rails/tree/master/activejob
+* https://github.com/quails/quails/tree/master/activejob
 
 ## License
 
@@ -115,12 +115,12 @@ Active Job is released under the MIT license:
 
 API documentation is at:
 
-* http://api.rubyonrails.org
+* http://api.rubyonquails.org
 
-Bug reports can be filed for the Ruby on Rails project here:
+Bug reports can be filed for the Ruby on Quails project here:
 
-* https://github.com/rails/rails/issues
+* https://github.com/quails/quails/issues
 
-Feature requests should be discussed on the rails-core mailing list here:
+Feature requests should be discussed on the quails-core mailing list here:
 
-* https://groups.google.com/forum/?fromgroups#!forum/rubyonrails-core
+* https://groups.google.com/forum/?fromgroups#!forum/rubyonquails-core

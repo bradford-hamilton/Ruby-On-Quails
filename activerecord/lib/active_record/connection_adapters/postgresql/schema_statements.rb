@@ -539,7 +539,7 @@ module ActiveRecord
           end
         end
 
-        # Maps logical Rails types to PostgreSQL-specific data types.
+        # Maps logical Quails types to PostgreSQL-specific data types.
         def type_to_sql(type, limit: nil, precision: nil, scale: nil, array: nil, **) # :nodoc:
           sql = \
             case type.to_s

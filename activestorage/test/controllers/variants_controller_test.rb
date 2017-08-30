@@ -9,7 +9,7 @@ class ActiveStorage::VariantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "showing variant inline" do
-    get rails_blob_variation_url(
+    get quails_blob_variation_url(
       filename: @blob.filename,
       signed_blob_id: @blob.signed_id,
       variation_key: ActiveStorage::Variation.encode(resize: "100x100"))

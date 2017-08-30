@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "rails/generators"
-require "rails/generators/rails/app/app_generator"
+require "quails/generators"
+require "quails/generators/quails/app/app_generator"
 
-module Rails
+module Quails
   class AppUpdater # :nodoc:
     class << self
       def invoke_from_app_generator(method)
@@ -12,15 +12,15 @@ module Rails
 
       def app_generator
         @app_generator ||= begin
-          gen = Rails::Generators::AppGenerator.new ["rails"], generator_options, destination_root: Rails.root
-          File.exist?(Rails.root.join("config", "application.rb")) ? gen.send(:app_const) : gen.send(:valid_const?)
+          gen = Quails::Generators::AppGenerator.new ["quails"], generator_options, destination_root: Quails.root
+          File.exist?(Quails.root.join("config", "application.rb")) ? gen.send(:app_const) : gen.send(:valid_const?)
           gen
         end
       end
 
       private
         def generator_options
-          options = { api: !!Rails.application.config.api_only, update: true }
+          options = { api: !!Quails.application.config.api_only, update: true }
           options[:skip_active_record] = !defined?(ActiveRecord::Railtie)
           options[:skip_action_mailer] = !defined?(ActionMailer::Railtie)
           options[:skip_action_cable]  = !defined?(ActionCable::Engine)

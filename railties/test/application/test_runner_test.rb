@@ -18,7 +18,7 @@ module ApplicationTests
     end
 
     def test_run_via_backwardscompatibility
-      require "minitest/rails_plugin"
+      require "minitest/quails_plugin"
 
       assert_nothing_raised do
         Minitest.run_via[:ruby] = true
@@ -92,7 +92,7 @@ module ApplicationTests
       create_test_file :controllers, "foobar_controller"
 
       Dir.chdir(app_path) do
-        `bin/rails test:units`.tap do |output|
+        `bin/quails test:units`.tap do |output|
           assert_match "FooTest", output
           assert_match "BarHelperTest", output
           assert_match "BazUnitTest", output
@@ -141,7 +141,7 @@ module ApplicationTests
       create_test_file :models, "foo"
 
       Dir.chdir(app_path) do
-        `bin/rails test:functionals`.tap do |output|
+        `bin/quails test:functionals`.tap do |output|
           assert_match "FooMailerTest", output
           assert_match "BarControllerTest", output
           assert_match "BazFunctionalTest", output
@@ -237,7 +237,7 @@ module ApplicationTests
 
         class EnvTest < ActiveSupport::TestCase
           def test_env
-            puts Rails.env
+            puts Quails.env
           end
         end
       RUBY
@@ -259,12 +259,12 @@ module ApplicationTests
         run_test_command("-e development test/unit/env_test.rb")
     end
 
-    def test_generated_scaffold_works_with_rails_test
+    def test_generated_scaffold_works_with_quails_test
       create_scaffold
       assert_match "0 failures, 0 errors, 0 skips", run_test_command("")
     end
 
-    def test_generated_controller_works_with_rails_test
+    def test_generated_controller_works_with_quails_test
       create_controller
       assert_match "0 failures, 0 errors, 0 skips", run_test_command("")
     end
@@ -475,7 +475,7 @@ module ApplicationTests
     def test_shows_filtered_backtrace_by_default
       create_backtrace_test
 
-      assert_match "Rails::BacktraceCleaner", run_test_command("test/unit/backtrace_test.rb")
+      assert_match "Quails::BacktraceCleaner", run_test_command("test/unit/backtrace_test.rb")
     end
 
     def test_backtrace_option
@@ -494,8 +494,8 @@ module ApplicationTests
       end
     end
 
-    def test_run_app_without_rails_loaded
-      # Simulate a real Rails app boot.
+    def test_run_app_without_quails_loaded
+      # Simulate a real Quails app boot.
       app_file "config/boot.rb", <<-RUBY
         ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
 
@@ -509,7 +509,7 @@ module ApplicationTests
       create_test_file :models, "post", pass: false
 
       output = run_test_command("test/models/post_test.rb")
-      expect = %r{Running:\n\nPostTest\nF\n\nFailure:\nPostTest#test_truth \[[^\]]+test/models/post_test.rb:6\]:\nwups!\n\nbin/rails test test/models/post_test.rb:4\n\n\n\n}
+      expect = %r{Running:\n\nPostTest\nF\n\nFailure:\nPostTest#test_truth \[[^\]]+test/models/post_test.rb:6\]:\nwups!\n\nbin/quails test test/models/post_test.rb:4\n\n\n\n}
       assert_match expect, output
     end
 
@@ -536,7 +536,7 @@ module ApplicationTests
       create_test_file :models, "account"
       create_test_file :models, "post", pass: false
       # This specifically verifies TEST for backwards compatibility with rake test
-      # as bin/rails test already supports running tests from a single file more cleanly.
+      # as bin/quails test already supports running tests from a single file more cleanly.
       output = Dir.chdir(app_path) { `bin/rake test TEST=test/models/post_test.rb` }
 
       assert_match "PostTest", output, "passing TEST= should run selected test"
@@ -552,16 +552,16 @@ module ApplicationTests
       assert_match "Execute test", output
     end
 
-    def test_rails_db_create_all_restores_db_connection
+    def test_quails_db_create_all_restores_db_connection
       create_test_file :models, "account"
-      output = Dir.chdir(app_path) { `bin/rails db:create:all db:migrate && echo ".tables" | rails dbconsole` }
+      output = Dir.chdir(app_path) { `bin/quails db:create:all db:migrate && echo ".tables" | quails dbconsole` }
       assert_match "ar_internal_metadata", output, "tables should be dumped"
     end
 
-    def test_rails_db_create_all_restores_db_connection_after_drop
+    def test_quails_db_create_all_restores_db_connection_after_drop
       create_test_file :models, "account"
-      Dir.chdir(app_path) { `bin/rails db:create:all` } # create all to avoid warnings
-      output = Dir.chdir(app_path) { `bin/rails db:drop:all db:create:all db:migrate && echo ".tables" | rails dbconsole` }
+      Dir.chdir(app_path) { `bin/quails db:create:all` } # create all to avoid warnings
+      output = Dir.chdir(app_path) { `bin/quails db:drop:all db:create:all db:migrate && echo ".tables" | quails dbconsole` }
       assert_match "ar_internal_metadata", output, "tables should be dumped"
     end
 
@@ -588,7 +588,7 @@ module ApplicationTests
 
     def test_rake_db_and_test_tasks_parses_args_correctly
       create_test_file :models, "account"
-      output = Dir.chdir(app_path) { `bin/rake db:migrate test:models TESTOPTS='-v' && echo ".tables" | rails dbconsole` }
+      output = Dir.chdir(app_path) { `bin/rake db:migrate test:models TESTOPTS='-v' && echo ".tables" | quails dbconsole` }
       assert_match "AccountTest#test_truth", output
       assert_match "ar_internal_metadata", output
     end
@@ -680,7 +680,7 @@ module ApplicationTests
 
     private
       def run_test_command(arguments = "test/unit/test_test.rb")
-        Dir.chdir(app_path) { `bin/rails t #{arguments}` }
+        Dir.chdir(app_path) { `bin/quails t #{arguments}` }
       end
 
       def create_model_with_fixture
@@ -748,7 +748,7 @@ module ApplicationTests
 
           class EnvTest < ActiveSupport::TestCase
             def test_env
-              puts "Current Environment: \#{Rails.env}"
+              puts "Current Environment: \#{Quails.env}"
             end
           end
         RUBY
@@ -765,7 +765,7 @@ module ApplicationTests
       end
 
       def run_migration
-        Dir.chdir(app_path) { `bin/rails db:migrate` }
+        Dir.chdir(app_path) { `bin/quails db:migrate` }
       end
   end
 end

@@ -1,29 +1,29 @@
 #= require_tree ../utils
 
-{ matches, getData, setData, stopEverything, formElements } = Rails
+{ matches, getData, setData, stopEverything, formElements } = Quails
 
-Rails.handleDisabledElement = (e) ->
+Quails.handleDisabledElement = (e) ->
   element = this
   stopEverything(e) if element.disabled
 
 # Unified function to enable an element (link, button and form)
-Rails.enableElement = (e) ->
+Quails.enableElement = (e) ->
   element = if e instanceof Event then e.target else e
-  if matches(element, Rails.linkDisableSelector)
+  if matches(element, Quails.linkDisableSelector)
     enableLinkElement(element)
-  else if matches(element, Rails.buttonDisableSelector) or matches(element, Rails.formEnableSelector)
+  else if matches(element, Quails.buttonDisableSelector) or matches(element, Quails.formEnableSelector)
     enableFormElement(element)
-  else if matches(element, Rails.formSubmitSelector)
+  else if matches(element, Quails.formSubmitSelector)
     enableFormElements(element)
 
 # Unified function to disable an element (link, button and form)
-Rails.disableElement = (e) ->
+Quails.disableElement = (e) ->
   element = if e instanceof Event then e.target else e
-  if matches(element, Rails.linkDisableSelector)
+  if matches(element, Quails.linkDisableSelector)
     disableLinkElement(element)
-  else if matches(element, Rails.buttonDisableSelector) or matches(element, Rails.formDisableSelector)
+  else if matches(element, Quails.buttonDisableSelector) or matches(element, Quails.formDisableSelector)
     disableFormElement(element)
-  else if matches(element, Rails.formSubmitSelector)
+  else if matches(element, Quails.formSubmitSelector)
     disableFormElements(element)
 
 #  Replace element's html with the 'data-disable-with' after storing original html
@@ -50,7 +50,7 @@ enableLinkElement = (element) ->
 #  - Replaces element text with value of 'data-disable-with' attribute
 #  - Sets disabled property to true
 disableFormElements = (form) ->
-  formElements(form, Rails.formDisableSelector).forEach(disableFormElement)
+  formElements(form, Quails.formDisableSelector).forEach(disableFormElement)
 
 disableFormElement = (element) ->
   replacement = element.getAttribute('data-disable-with')
@@ -68,7 +68,7 @@ disableFormElement = (element) ->
 #  - Replaces element text with cached value from 'ujs:enable-with' data store (created in `disableFormElements`)
 #  - Sets disabled property to false
 enableFormElements = (form) ->
-  formElements(form, Rails.formEnableSelector).forEach(enableFormElement)
+  formElements(form, Quails.formEnableSelector).forEach(enableFormElement)
 
 enableFormElement = (element) ->
   originalText = getData(element, 'ujs:enable-with')

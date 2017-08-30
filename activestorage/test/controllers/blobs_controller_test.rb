@@ -9,7 +9,7 @@ class ActiveStorage::BlobsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "showing blob utilizes browser caching" do
-    get rails_blob_url(@blob)
+    get quails_blob_url(@blob)
 
     assert_redirected_to(/racecar\.jpg/)
     assert_equal "max-age=300, private", @response.headers["Cache-Control"]

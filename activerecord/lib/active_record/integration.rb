@@ -20,7 +20,7 @@ module ActiveRecord
       # Indicates whether to use a stable #cache_key method that is accompanied
       # by a changing version in the #cache_version method.
       #
-      # This is +false+, by default until Rails 6.0.
+      # This is +false+, by default until Quails 6.0.
       class_attribute :cache_versioning, instance_writer: false, default: false
     end
 
@@ -56,7 +56,7 @@ module ActiveRecord
     #   Product.new.cache_key     # => "products/new"
     #   Product.find(5).cache_key # => "products/5"
     #
-    # If ActiveRecord::Base.cache_versioning is turned off, as it was in Rails 5.1 and earlier,
+    # If ActiveRecord::Base.cache_versioning is turned off, as it was in Quails 5.1 and earlier,
     # the cache key will also include a version.
     #
     #   Product.cache_versioning = false
@@ -94,7 +94,7 @@ module ActiveRecord
     # cache_version, but this method can be overwritten to return something else.
     #
     # Note, this method will return nil if ActiveRecord::Base.cache_versioning is set to
-    # +false+ (which it is by default until Rails 6.0).
+    # +false+ (which it is by default until Quails 6.0).
     def cache_version
       if cache_versioning && timestamp = try(:updated_at)
         timestamp.utc.to_s(:usec)

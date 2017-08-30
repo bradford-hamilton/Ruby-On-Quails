@@ -15,22 +15,22 @@ require "active_support/core_ext/module/attribute_accessors"
 require "active_support/core_ext/string/indent"
 require "active_support/core_ext/string/inflections"
 
-module Rails
+module Quails
   module Generators
-    include Rails::Command::Behavior
+    include Quails::Command::Behavior
 
-    autoload :Actions,         "rails/generators/actions"
-    autoload :ActiveModel,     "rails/generators/active_model"
-    autoload :Base,            "rails/generators/base"
-    autoload :Migration,       "rails/generators/migration"
-    autoload :NamedBase,       "rails/generators/named_base"
-    autoload :ResourceHelpers, "rails/generators/resource_helpers"
-    autoload :TestCase,        "rails/generators/test_case"
+    autoload :Actions,         "quails/generators/actions"
+    autoload :ActiveModel,     "quails/generators/active_model"
+    autoload :Base,            "quails/generators/base"
+    autoload :Migration,       "quails/generators/migration"
+    autoload :NamedBase,       "quails/generators/named_base"
+    autoload :ResourceHelpers, "quails/generators/resource_helpers"
+    autoload :TestCase,        "quails/generators/test_case"
 
     mattr_accessor :namespace
 
     DEFAULT_ALIASES = {
-      rails: {
+      quails: {
         actions: "-a",
         orm: "-o",
         javascripts: "-j",
@@ -50,7 +50,7 @@ module Rails
     }
 
     DEFAULT_OPTIONS = {
-      rails: {
+      quails: {
         api: false,
         assets: true,
         force_plural: false,
@@ -106,7 +106,7 @@ module Rails
       # Shoulda then can tell generators to search for test_unit generators when
       # some of them are not available by adding a fallback:
       #
-      #   Rails::Generators.fallbacks[:shoulda] = :test_unit
+      #   Quails::Generators.fallbacks[:shoulda] = :test_unit
       def fallbacks
         @fallbacks ||= {}
       end
@@ -118,7 +118,7 @@ module Rails
       def api_only!
         hide_namespaces "assets", "helper", "css", "js"
 
-        options[:rails].merge!(
+        options[:quails].merge!(
           api: true,
           assets: false,
           helper: false,
@@ -126,7 +126,7 @@ module Rails
         )
 
         if ARGV.first == "mailer"
-          options[:rails].merge!(template_engine: :erb)
+          options[:quails].merge!(template_engine: :erb)
         end
       end
 
@@ -137,18 +137,18 @@ module Rails
 
       # Returns an array of generator namespaces that are hidden.
       # Generator namespaces may be hidden for a variety of reasons.
-      # Some are aliased such as "rails:migration" and can be
+      # Some are aliased such as "quails:migration" and can be
       # invoked with the shorter "migration", others are private to other generators
       # such as "css:scaffold".
       def hidden_namespaces
         @hidden_namespaces ||= begin
-          orm      = options[:rails][:orm]
-          test     = options[:rails][:test_framework]
-          template = options[:rails][:template_engine]
-          css      = options[:rails][:stylesheet_engine]
+          orm      = options[:quails][:orm]
+          test     = options[:quails][:test_framework]
+          template = options[:quails][:template_engine]
+          css      = options[:quails][:stylesheet_engine]
 
           [
-            "rails",
+            "quails",
             "resource_route",
             "#{orm}:migration",
             "#{orm}:model",
@@ -179,7 +179,7 @@ module Rails
 
       # Show help message with available generators.
       def help(command = "generate")
-        puts "Usage: rails #{command} GENERATOR [args] [options]"
+        puts "Usage: quails #{command} GENERATOR [args] [options]"
         puts
         puts "General options:"
         puts "  -h, [--help]     # Print generator's options and usage"
@@ -213,30 +213,30 @@ module Rails
           groups[base] << namespace
         end
 
-        rails = groups.delete("rails")
-        rails.map! { |n| n.sub(/^rails:/, "") }
-        rails.delete("app")
-        rails.delete("plugin")
-        rails.delete("encrypted_secrets")
+        quails = groups.delete("quails")
+        quails.map! { |n| n.sub(/^quails:/, "") }
+        quails.delete("app")
+        quails.delete("plugin")
+        quails.delete("encrypted_secrets")
 
         hidden_namespaces.each { |n| groups.delete(n.to_s) }
 
-        [[ "rails", rails ]] + groups.sort.to_a
+        [[ "quails", quails ]] + groups.sort.to_a
       end
 
-      # Rails finds namespaces similar to Thor, it only adds one rule:
+      # Quails finds namespaces similar to Thor, it only adds one rule:
       #
-      # Generators names must end with "_generator.rb". This is required because Rails
+      # Generators names must end with "_generator.rb". This is required because Quails
       # looks in load paths and loads the generator just before it's going to be used.
       #
-      #   find_by_namespace :webrat, :rails, :integration
+      #   find_by_namespace :webrat, :quails, :integration
       #
       # Will search for the following generators:
       #
-      #   "rails:webrat", "webrat:integration", "webrat"
+      #   "quails:webrat", "webrat:integration", "webrat"
       #
-      # Notice that "rails:generators:webrat" could be loaded as well, what
-      # Rails looks for is the first and last parts of the namespace.
+      # Notice that "quails:generators:webrat" could be loaded as well, what
+      # Quails looks for is the first and last parts of the namespace.
       def find_by_namespace(name, base = nil, context = nil) #:nodoc:
         lookups = []
         lookups << "#{base}:#{name}"    if base
@@ -245,7 +245,7 @@ module Rails
         unless base || context
           unless name.to_s.include?(?:)
             lookups << "#{name}:#{name}"
-            lookups << "rails:#{name}"
+            lookups << "quails:#{name}"
           end
           lookups << "#{name}"
         end
@@ -275,7 +275,7 @@ module Rails
           suggestions = options.sort_by { |suggested| levenshtein_distance(namespace.to_s, suggested) }.first(3)
           msg =  "Could not find generator '#{namespace}'. ".dup
           msg << "Maybe you meant #{ suggestions.map { |s| "'#{s}'" }.to_sentence(last_word_connector: " or ", locale: :en) }\n"
-          msg << "Run `rails generate --help` for more options."
+          msg << "Run `quails generate --help` for more options."
           puts msg
         end
       end
@@ -308,7 +308,7 @@ module Rails
         end
 
         def lookup_paths # :doc:
-          @lookup_paths ||= %w( rails/generators generators )
+          @lookup_paths ||= %w( quails/generators generators )
         end
 
         def file_lookup_paths # :doc:

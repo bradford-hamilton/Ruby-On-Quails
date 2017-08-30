@@ -209,7 +209,7 @@ module ActionController
 
     # By default, never raise an UnpermittedParameters exception if these
     # params are present. The default includes both 'controller' and 'action'
-    # because they are added by Rails and should be of no concern. One way
+    # because they are added by Quails and should be of no concern. One way
     # to change these is to specify `always_permitted_parameters` in your
     # config. For instance:
     #
@@ -472,7 +472,7 @@ module ActionController
     # You may declare that the parameter should be an array of permitted scalars
     # by mapping it to an empty array:
     #
-    #   params = ActionController::Parameters.new(tags: ["rails", "parameters"])
+    #   params = ActionController::Parameters.new(tags: ["quails", "parameters"])
     #   params.permit(tags: [])
     #
     # Sometimes it is not possible or convenient to declare the valid keys of
@@ -759,7 +759,7 @@ module ActionController
     end
 
     def self.hook_into_yaml_loading # :nodoc:
-      # Wire up YAML format compatibility with Rails 4.2 and Psych 2.0.8 and 2.0.9+.
+      # Wire up YAML format compatibility with Quails 4.2 and Psych 2.0.8 and 2.0.9+.
       # Makes the YAML parser call `init_with` when it encounters the keys below
       # instead of trying its own parsing routines.
       YAML.load_tags["!ruby/hash-with-ivars:ActionController::Parameters"] = name

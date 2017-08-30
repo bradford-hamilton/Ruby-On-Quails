@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "active_support/rails"
+require "active_support/quails"
 require "abstract_controller"
 require "action_dispatch"
 require_relative "action_controller/metal/live"

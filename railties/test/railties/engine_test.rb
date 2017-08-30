@@ -15,7 +15,7 @@ module RailtiesTest
       @plugin = engine "bukkits" do |plugin|
         plugin.write "lib/bukkits.rb", <<-RUBY
           module Bukkits
-            class Engine < ::Rails::Engine
+            class Engine < ::Quails::Engine
               railtie_name "bukkits"
             end
           end
@@ -28,7 +28,7 @@ module RailtiesTest
       teardown_app
     end
 
-    def boot_rails
+    def boot_quails
       require "#{app_path}/config/environment"
     end
 
@@ -36,18 +36,18 @@ module RailtiesTest
       @plugin.write "app/assets/javascripts/engine.js.erb", "<%= :alert %>();"
       add_to_env_config "development", "config.assets.digest = false"
 
-      boot_rails
+      boot_quails
 
       get "/assets/engine.js"
       assert_match "alert()", last_response.body
     end
 
     test "rake environment can be called in the engine" do
-      boot_rails
+      boot_quails
 
       @plugin.write "Rakefile", <<-RUBY
         APP_RAKEFILE = '#{app_path}/Rakefile'
-        load 'rails/tasks/engine.rake'
+        load 'quails/tasks/engine.rake'
         task :foo => :environment do
           puts "Task ran"
         end
@@ -84,7 +84,7 @@ module RailtiesTest
 
       add_to_config "ActiveRecord::Base.timestamped_migrations = false"
 
-      boot_rails
+      boot_quails
 
       Dir.chdir(app_path) do
         output = `bundle exec rake bukkits:install:migrations`
@@ -114,7 +114,7 @@ module RailtiesTest
       @blog = engine "blog" do |plugin|
         plugin.write "lib/blog.rb", <<-RUBY
           module Blog
-            class Engine < ::Rails::Engine
+            class Engine < ::Quails::Engine
             end
           end
         RUBY
@@ -132,7 +132,7 @@ module RailtiesTest
 
       add_to_config("config.railties_order = [Bukkits::Engine, Blog::Engine, :all, :main_app]")
 
-      boot_rails
+      boot_quails
 
       Dir.chdir(app_path) do
         output = `bundle exec rake railties:install:migrations`.split("\n")
@@ -146,7 +146,7 @@ module RailtiesTest
       @api = engine "api" do |plugin|
         plugin.write "lib/api.rb", <<-RUBY
           module Api
-            class Engine < ::Rails::Engine; end
+            class Engine < ::Quails::Engine; end
           end
         RUBY
       end
@@ -155,7 +155,7 @@ module RailtiesTest
       @core = engine "core" do |plugin|
         plugin.write "lib/core.rb", <<-RUBY
           module Core
-            class Engine < ::Rails::Engine; end
+            class Engine < ::Quails::Engine; end
           end
         RUBY
       end
@@ -168,7 +168,7 @@ module RailtiesTest
         class CreateKeys < ActiveRecord::Migration::Current; end
       RUBY
 
-      boot_rails
+      boot_quails
 
       Dir.chdir(app_path) do
         output = `bundle exec rake railties:install:migrations`.split("\n")
@@ -181,7 +181,7 @@ module RailtiesTest
     test "mountable engine should copy migrations within engine_path" do
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
             isolate_namespace Bukkits
           end
         end
@@ -194,12 +194,12 @@ module RailtiesTest
 
       @plugin.write "Rakefile", <<-RUBY
         APP_RAKEFILE = '#{app_path}/Rakefile'
-        load 'rails/tasks/engine.rake'
+        load 'quails/tasks/engine.rake'
       RUBY
 
       add_to_config "ActiveRecord::Base.timestamped_migrations = false"
 
-      boot_rails
+      boot_quails
 
       Dir.chdir(@plugin.path) do
         output = `bundle exec rake app:bukkits:install:migrations`
@@ -210,29 +210,29 @@ module RailtiesTest
     end
 
     test "no rake task without migrations" do
-      boot_rails
+      boot_quails
       require "rake"
       require "rdoc/task"
       require "rake/testtask"
-      Rails.application.load_tasks
+      Quails.application.load_tasks
       assert !Rake::Task.task_defined?("bukkits:install:migrations")
     end
 
     test "puts its lib directory on load path" do
-      boot_rails
+      boot_quails
       require "another"
       assert_equal "Another", Another.name
     end
 
     test "puts its models directory on autoload path" do
       @plugin.write "app/models/my_bukkit.rb", "class MyBukkit ; end"
-      boot_rails
+      boot_quails
       assert_nothing_raised { MyBukkit }
     end
 
     test "puts its controllers directory on autoload path" do
       @plugin.write "app/controllers/bukkit_controller.rb", "class BukkitController ; end"
-      boot_rails
+      boot_quails
       assert_nothing_raised { BukkitController }
     end
 
@@ -246,7 +246,7 @@ module RailtiesTest
 
       @plugin.write "app/views/bukkit/index.html.erb", "Hello bukkits"
 
-      boot_rails
+      boot_quails
 
       require "action_controller"
       require "rack/mock"
@@ -265,7 +265,7 @@ module RailtiesTest
       @plugin.write "app/views/bukkit/index.html.erb", "Hello bukkits"
       app_file "app/views/bukkit/index.html.erb", "Hi bukkits"
 
-      boot_rails
+      boot_quails
 
       require "action_controller"
       require "rack/mock"
@@ -291,7 +291,7 @@ module RailtiesTest
 
       @plugin.write "app/views/bukkit/index.html.erb", "Hello <%= bukkits %>"
 
-      boot_rails
+      boot_quails
 
       require "rack/mock"
       response = BukkitController.action(:index).call(Rack::MockRequest.env_for("/"))
@@ -302,7 +302,7 @@ module RailtiesTest
       @plugin.write "app/anything/foo.rb", <<-RUBY
         module Foo; end
       RUBY
-      boot_rails
+      boot_quails
       assert Foo
     end
 
@@ -314,12 +314,12 @@ module RailtiesTest
           end
         end
 
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           get "/sprokkit", :to => Sprokkit
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
       get "/sprokkit"
       assert_equal "I am a Sprokkit", last_response.body
@@ -335,7 +335,7 @@ module RailtiesTest
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           get 'foo', :to => 'foo#index'
         end
       RUBY
@@ -349,13 +349,13 @@ module RailtiesTest
       RUBY
 
       @plugin.write "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           get 'foo', to: 'bar#index'
           get 'bar', to: 'bar#index'
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
       get "/foo"
       assert_equal "foo", last_response.body
@@ -372,11 +372,11 @@ module RailtiesTest
         end
       RUBY
 
-      boot_rails
+      boot_quails
       require "rake"
       require "rdoc/task"
       require "rake/testtask"
-      Rails.application.load_tasks
+      Quails.application.load_tasks
       Rake::Task[:foo].invoke
       assert $executed
     end
@@ -402,7 +402,7 @@ en:
   foo: "3"
 YAML
 
-      boot_rails
+      boot_quails
 
       expected_locales = %W(
         #{RAILS_FRAMEWORK_ROOT}/activesupport/lib/active_support/locale/en.yml
@@ -416,7 +416,7 @@ YAML
 
       actual_locales = I18n.load_path.map { |path|
         File.expand_path(path)
-      } & expected_locales # remove locales external to Rails
+      } & expected_locales # remove locales external to Quails
 
       assert_equal expected_locales, actual_locales
 
@@ -426,7 +426,7 @@ YAML
 
     test "namespaced controllers with namespaced routes" do
       @plugin.write "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           namespace :admin do
             namespace :foo do
               get "bar", to: "bar#index"
@@ -443,7 +443,7 @@ YAML
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
       get "/admin/foo/bar"
       assert_equal 200, last_response.status
@@ -456,7 +456,7 @@ YAML
         $plugin_initializer = true
       RUBY
 
-      boot_rails
+      boot_quails
       assert $plugin_initializer
     end
 
@@ -474,22 +474,22 @@ YAML
       RUBY
 
       add_to_config "config.middleware.use Bukkits"
-      boot_rails
+      boot_quails
     end
 
     test "initializers are executed after application configuration initializers" do
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
             initializer "dummy_initializer" do
             end
           end
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
-      initializers = Rails.application.initializers.tsort
+      initializers = Quails.application.initializers.tsort
       dummy_index  = initializers.index  { |i| i.name == "dummy_initializer" }
       config_index = initializers.rindex { |i| i.name == :load_config_initializers }
       stack_index  = initializers.index  { |i| i.name == :build_middleware_stack }
@@ -515,7 +515,7 @@ YAML
 
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
             endpoint lambda { |env| [200, {'Content-Type' => 'text/html'}, ['Hello World']] }
             config.middleware.use ::RailtiesTest::EngineTest::Upcaser
           end
@@ -523,12 +523,12 @@ YAML
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           mount(Bukkits::Engine => "/bukkits")
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
       get("/bukkits")
       assert_equal "HELLO WORLD", last_response.body
@@ -550,12 +550,12 @@ YAML
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           mount(Bukkits::Engine => "/:username")
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
       get("/arunagw")
       assert_equal "arunagw", last_response.body
@@ -565,7 +565,7 @@ YAML
     test "it provides routes as default endpoint" do
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
           end
         end
       RUBY
@@ -577,12 +577,12 @@ YAML
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           mount(Bukkits::Engine => "/bukkits")
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
       get("/bukkits/foo")
       assert_equal "foo", last_response.body
@@ -591,7 +591,7 @@ YAML
     test "it loads its environments file" do
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
             config.paths["config/environments"].push "config/environments/additional.rb"
           end
         end
@@ -609,7 +609,7 @@ YAML
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
       assert Bukkits::Engine.config.environment_loaded
       assert Bukkits::Engine.config.additional_environment_loaded
@@ -618,28 +618,28 @@ YAML
     test "it passes router in env" do
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
             endpoint lambda { |env| [200, {'Content-Type' => 'text/html'}, ['hello']] }
           end
         end
       RUBY
 
       require "rack/file"
-      boot_rails
+      boot_quails
 
       env = Rack::MockRequest.env_for("/")
       Bukkits::Engine.call(env)
       assert_equal Bukkits::Engine.routes, env["action_dispatch.routes"]
 
       env = Rack::MockRequest.env_for("/")
-      Rails.application.call(env)
-      assert_equal Rails.application.routes, env["action_dispatch.routes"]
+      Quails.application.call(env)
+      assert_equal Quails.application.routes, env["action_dispatch.routes"]
     end
 
     test "isolated engine should include only its own routes and helpers" do
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
             isolate_namespace Bukkits
           end
         end
@@ -662,7 +662,7 @@ YAML
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           get "/bar" => "bar#index", as: "bar"
           mount Bukkits::Engine => "/bukkits", as: "bukkits"
         end
@@ -728,7 +728,7 @@ YAML
 
       add_to_config("config.action_dispatch.show_exceptions = false")
 
-      boot_rails
+      boot_quails
 
       assert_equal "bukkits_", Bukkits.table_name_prefix
       assert_equal "bukkits", Bukkits::Engine.engine_name
@@ -755,7 +755,7 @@ YAML
     test "isolated engine should avoid namespace in names if that's possible" do
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
             isolate_namespace Bukkits
           end
         end
@@ -779,7 +779,7 @@ YAML
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           mount Bukkits::Engine => "/bukkits", as: "bukkits"
         end
       RUBY
@@ -805,7 +805,7 @@ YAML
 
       add_to_config("config.action_dispatch.show_exceptions = false")
 
-      boot_rails
+      boot_quails
 
       get("/bukkits/posts/new")
       assert_match(/name="post\[title\]"/, last_response.body)
@@ -815,7 +815,7 @@ YAML
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
           module Awesome
-            class Engine < ::Rails::Engine
+            class Engine < ::Quails::Engine
               isolate_namespace Bukkits::Awesome
             end
           end
@@ -823,7 +823,7 @@ YAML
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           mount Bukkits::Awesome::Engine => "/bukkits", :as => "bukkits"
         end
       RUBY
@@ -844,7 +844,7 @@ YAML
 
       add_to_config("config.action_dispatch.show_exceptions = false")
 
-      boot_rails
+      boot_quails
 
       get("/bukkits/foo")
       assert_equal "ok", last_response.body
@@ -856,13 +856,13 @@ YAML
       RUBY
 
       app_file "db/seeds.rb", <<-RUBY
-        Rails.application.config.app_seeds_loaded = true
+        Quails.application.config.app_seeds_loaded = true
       RUBY
 
-      boot_rails
+      boot_quails
 
-      Rails.application.load_seed
-      assert Rails.application.config.app_seeds_loaded
+      Quails.application.load_seed
+      assert Quails.application.config.app_seeds_loaded
       assert_raise(NoMethodError) { Bukkits::Engine.config.bukkits_seeds_loaded }
 
       Bukkits::Engine.load_seed
@@ -871,14 +871,14 @@ YAML
 
     test "skips nonexistent seed data" do
       FileUtils.rm "#{app_path}/db/seeds.rb"
-      boot_rails
-      assert_nil Rails.application.load_seed
+      boot_quails
+      assert_nil Quails.application.load_seed
     end
 
     test "using namespace more than once on one module should not overwrite railtie_namespace method" do
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module AppTemplate
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
             isolate_namespace(AppTemplate)
           end
         end
@@ -888,7 +888,7 @@ YAML
         plugin.write "lib/loaded_first.rb", <<-RUBY
           module AppTemplate
             module LoadedFirst
-              class Engine < ::Rails::Engine
+              class Engine < ::Quails::Engine
                 isolate_namespace(AppTemplate)
               end
             end
@@ -897,10 +897,10 @@ YAML
       end
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do end
+        Quails.application.routes.draw do end
       RUBY
 
-      boot_rails
+      boot_quails
 
       assert_equal AppTemplate::LoadedFirst::Engine, AppTemplate.railtie_namespace
     end
@@ -926,13 +926,13 @@ YAML
 
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
             isolate_namespace(Bukkits)
           end
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
       get("/foo")
       assert_equal "foo", last_response.body
@@ -944,7 +944,7 @@ YAML
     test "setting generators for engine and overriding app generator's" do
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
             config.generators do |g|
               g.orm             :data_mapper
               g.template_engine :haml
@@ -966,14 +966,14 @@ YAML
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
-      app_generators = Rails.application.config.generators.options[:rails]
+      app_generators = Quails.application.config.generators.options[:quails]
       assert_equal :mongoid  , app_generators[:orm]
       assert_equal :liquid   , app_generators[:template_engine]
       assert_equal :test_unit, app_generators[:test_framework]
 
-      generators = Bukkits::Engine.config.generators.options[:rails]
+      generators = Bukkits::Engine.config.generators.options[:quails]
       assert_equal :data_mapper, generators[:orm]
       assert_equal :haml      , generators[:template_engine]
       assert_equal :rspec     , generators[:test_framework]
@@ -982,19 +982,19 @@ YAML
     test "engine should get default generators with ability to overwrite them" do
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
             config.generators.test_framework :rspec
           end
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
-      generators = Bukkits::Engine.config.generators.options[:rails]
+      generators = Bukkits::Engine.config.generators.options[:quails]
       assert_equal :active_record, generators[:orm]
       assert_equal :rspec        , generators[:test_framework]
 
-      app_generators = Rails.application.config.generators.options[:rails]
+      app_generators = Quails.application.config.generators.options[:quails]
       assert_equal :test_unit    , app_generators[:test_framework]
     end
 
@@ -1005,13 +1005,13 @@ YAML
             "foo"
           end
 
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
             isolate_namespace(Bukkits)
           end
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
       assert_equal "foo", Bukkits.table_name_prefix
     end
@@ -1019,25 +1019,25 @@ YAML
     test "fetching engine by path" do
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
           end
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
-      assert_equal Bukkits::Engine.instance, Rails::Engine.find(@plugin.path)
+      assert_equal Bukkits::Engine.instance, Quails::Engine.find(@plugin.path)
 
       # check expanding paths
       engine_dir = @plugin.path.chomp("/").split("/").last
       engine_path = File.join(@plugin.path, "..", engine_dir)
-      assert_equal Bukkits::Engine.instance, Rails::Engine.find(engine_path)
+      assert_equal Bukkits::Engine.instance, Quails::Engine.find(engine_path)
     end
 
     test "gather isolated engine's helpers in Engine#helpers" do
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
             isolate_namespace Bukkits
           end
         end
@@ -1071,7 +1071,7 @@ YAML
 
       add_to_config("config.action_dispatch.show_exceptions = false")
 
-      boot_rails
+      boot_quails
 
       assert_equal [:bar, :baz], Bukkits::Engine.helpers.public_instance_methods.sort
     end
@@ -1080,7 +1080,7 @@ YAML
       @blog = engine "blog" do |plugin|
         plugin.write "lib/blog.rb", <<-RUBY
           module Blog
-            class Engine < ::Rails::Engine
+            class Engine < ::Quails::Engine
             end
           end
         RUBY
@@ -1088,7 +1088,7 @@ YAML
 
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
             isolate_namespace Bukkits
           end
         end
@@ -1107,7 +1107,7 @@ YAML
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           get "/foo" => "main#foo"
           get "/bar" => "main#bar"
         end
@@ -1148,7 +1148,7 @@ YAML
       add_to_config("config.railties_order = [:all, :main_app, Blog::Engine]")
       add_to_env_config "development", "config.assets.digest = false"
 
-      boot_rails
+      boot_quails
 
       get("/foo")
       assert_equal "Bukkit's foo partial", last_response.body.strip
@@ -1163,14 +1163,14 @@ YAML
       assert_match "// App's bar js", last_response.body.strip
 
       # ensure that railties are not added twice
-      railties = Rails.application.send(:ordered_railties).map(&:class)
+      railties = Quails.application.send(:ordered_railties).map(&:class)
       assert_equal railties, railties.uniq
     end
 
     test "railties_order adds :all with lowest priority if not given" do
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
           end
         end
       RUBY
@@ -1184,7 +1184,7 @@ YAML
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           get "/foo" => "main#foo"
         end
       RUBY
@@ -1199,7 +1199,7 @@ YAML
 
       add_to_config("config.railties_order = [Bukkits::Engine]")
 
-      boot_rails
+      boot_quails
 
       get("/foo")
       assert_equal "Bukkit's foo partial", last_response.body.strip
@@ -1211,7 +1211,7 @@ YAML
 
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
             isolate_namespace ::Bukkits
           end
         end
@@ -1239,12 +1239,12 @@ YAML
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           mount Bukkits::Engine => "/"
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
       expected = <<-TEXT
         script_name:
@@ -1260,7 +1260,7 @@ YAML
     test "paths are properly generated when application is mounted at sub-path" do
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
             isolate_namespace Bukkits
           end
         end
@@ -1275,7 +1275,7 @@ YAML
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           get '/bar' => 'bar#index', :as => 'bar'
           mount Bukkits::Engine => "/bukkits", :as => "bukkits"
         end
@@ -1295,7 +1295,7 @@ YAML
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
       get("/bukkits/bukkit", {}, { "SCRIPT_NAME" => "/foo" })
       assert_equal "/foo/bar", last_response.body
@@ -1309,7 +1309,7 @@ YAML
 
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Quails::Engine
             isolate_namespace Bukkits
           end
         end
@@ -1324,7 +1324,7 @@ YAML
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           get '/bar' => 'bar#index', :as => 'bar'
           mount Bukkits::Engine => "/bukkits", :as => "bukkits"
         end
@@ -1344,7 +1344,7 @@ YAML
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
       get("/bukkits/bukkit", {}, { "SCRIPT_NAME" => "/foo" })
       assert_equal "/foo/bar", last_response.body
@@ -1367,7 +1367,7 @@ YAML
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           scope "/fruits" do
             mount Bukkits::Engine => "/bukkits", as: :fruit_bukkits
           end
@@ -1387,7 +1387,7 @@ YAML
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
       get("/through_fruits")
       assert_equal "/fruits/bukkits/posts", last_response.body
@@ -1410,7 +1410,7 @@ YAML
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           resources :fruits do
             mount Bukkits::Engine => "/bukkits"
           end
@@ -1430,7 +1430,7 @@ YAML
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
       get("/through_fruits")
       assert_equal "/fruits/1/bukkits/posts", last_response.body
@@ -1449,7 +1449,7 @@ YAML
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           resources :fruits do
             mount Bukkits::Engine => "/bukkits"
           end
@@ -1462,7 +1462,7 @@ YAML
         end
       RUBY
 
-      boot_rails
+      boot_quails
 
       get("/fruits/1/bukkits/posts")
       assert_equal "/fruits/2/bukkits/posts", last_response.body
@@ -1470,7 +1470,7 @@ YAML
 
   private
     def app
-      Rails.application
+      Quails.application
     end
   end
 end

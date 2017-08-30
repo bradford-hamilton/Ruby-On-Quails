@@ -1,8 +1,8 @@
 #= require_tree ../utils
 
-{ fire, stopEverything } = Rails
+{ fire, stopEverything } = Quails
 
-Rails.handleConfirm = (e) ->
+Quails.handleConfirm = (e) ->
   stopEverything(e) unless allowAction(this)
 
 # For 'data-confirm' attribute:

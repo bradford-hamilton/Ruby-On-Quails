@@ -5,9 +5,9 @@ require "active_support/file_update_checker"
 require_relative "../engine/configuration"
 require_relative "../source_annotation_extractor"
 
-module Rails
+module Quails
   class Application
-    class Configuration < ::Rails::Engine::Configuration
+    class Configuration < ::Quails::Engine::Configuration
       attr_accessor :allow_concurrency, :asset_host, :autoflush_log,
                     :cache_classes, :cache_store, :consider_all_requests_local, :console,
                     :eager_load, :exceptions_app, :file_watcher, :filter_parameters,
@@ -141,7 +141,7 @@ module Rails
           paths.add "config/secrets",     with: "config", glob: "secrets.yml{,.enc}"
           paths.add "config/environment", with: "config/environment.rb"
           paths.add "lib/templates"
-          paths.add "log",                with: "log/#{Rails.env}.log"
+          paths.add "log",                with: "log/#{Quails.env}.log"
           paths.add "public"
           paths.add "public/javascripts"
           paths.add "public/stylesheets"
@@ -181,7 +181,7 @@ module Rails
               "Please note that YAML must be consistently indented using spaces. Tabs are not allowed. " \
               "Error: #{e.message}"
       rescue => e
-        raise e, "Cannot load `Rails.application.database_configuration`:\n#{e.message}", e.backtrace
+        raise e, "Cannot load `Quails.application.database_configuration`:\n#{e.message}", e.backtrace
       end
 
       def colorize_logging
@@ -199,7 +199,7 @@ module Rails
             begin
               ActionDispatch::Session::ActiveRecordStore
             rescue NameError
-              raise "`ActiveRecord::SessionStore` is extracted out of Rails into a gem. " \
+              raise "`ActiveRecord::SessionStore` is extracted out of Quails into a gem. " \
                 "Please add `activerecord-session_store` to your Gemfile to use it."
             end
           end

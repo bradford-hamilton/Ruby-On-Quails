@@ -4,7 +4,7 @@ require "yaml"
 require "active_support/message_encryptor"
 require "active_support/core_ext/string/strip"
 
-module Rails
+module Quails
   # Greatly inspired by Ara T. Howard's magnificent sekrets gem. 😘
   class Secrets # :nodoc:
     class MissingKeyError < RuntimeError

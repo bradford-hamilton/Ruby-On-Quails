@@ -7,7 +7,7 @@ asyncTest('find csrf token', 1, function() {
 
   $('#qunit-fixture').append('<meta name="csrf-token" content="' + correctToken + '"/>')
 
-  currentToken = $.rails.csrfToken()
+  currentToken = $.quails.csrfToken()
 
   start()
   equal(currentToken, correctToken)
@@ -18,7 +18,7 @@ asyncTest('find csrf param', 1, function() {
 
   $('#qunit-fixture').append('<meta name="csrf-param" content="' + correctParam + '"/>')
 
-  currentParam = $.rails.csrfParam()
+  currentParam = $.quails.csrfParam()
 
   start()
   equal(currentParam, correctParam)

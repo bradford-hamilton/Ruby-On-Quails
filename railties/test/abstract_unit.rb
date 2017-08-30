@@ -10,10 +10,10 @@ require "fileutils"
 require "active_support"
 require "action_controller"
 require "action_view"
-require "rails/all"
+require "quails/all"
 
 module TestApp
-  class Application < Rails::Application
+  class Application < Quails::Application
     config.root = __dir__
     secrets.secret_key_base = "b3c631c314c0bbca50c1b2843150fe33"
   end

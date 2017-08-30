@@ -12,8 +12,8 @@ module ActionView
     # as images, JavaScripts, stylesheets, and feeds. These methods do not verify
     # the assets exist before linking to them:
     #
-    #   image_tag("rails.png")
-    #   # => <img src="/assets/rails.png" />
+    #   image_tag("quails.png")
+    #   # => <img src="/assets/quails.png" />
     #   stylesheet_link_tag("application")
     #   # => <link href="/assets/application.css?body=1" media="screen" rel="stylesheet" />
     module AssetTagHelper
@@ -229,8 +229,8 @@ module ActionView
       #   # => <img height="32" src="/icons/icon.gif" width="32" />
       #   image_tag("/icons/icon.gif", class: "menu_icon")
       #   # => <img class="menu_icon" src="/icons/icon.gif" />
-      #   image_tag("/icons/icon.gif", data: { title: 'Rails Application' })
-      #   # => <img data-title="Rails Application" src="/icons/icon.gif" />
+      #   image_tag("/icons/icon.gif", data: { title: 'Quails Application' })
+      #   # => <img data-title="Quails Application" src="/icons/icon.gif" />
       #   image_tag("icon.png", srcset: { "icon_2x.png" => "2x", "icon_4x.png" => "4x" })
       #   # => <img src="/assets/icon.png" srcset="/assets/icon_2x.png 2x, /assets/icon_4x.png 4x">
       #   image_tag("pic.jpg", srcset: [["pic_1024.jpg", "1024w"], ["pic_1980.jpg", "1980w"]], sizes: "100vw")
@@ -239,11 +239,11 @@ module ActionView
       # Active Storage (images that are uploaded by the users of your app):
       #
       #   image_tag(user.avatar)
-      #   # => <img src="/rails/active_storage/blobs/.../tiger.jpg" />
+      #   # => <img src="/quails/active_storage/blobs/.../tiger.jpg" />
       #   image_tag(user.avatar.variant(resize: "100x100"))
-      #   # => <img src="/rails/active_storage/variants/.../tiger.jpg" />
+      #   # => <img src="/quails/active_storage/variants/.../tiger.jpg" />
       #   image_tag(user.avatar.variant(resize: "100x100"), size: '100')
-      #   # => <img width="100" height="100" src="/rails/active_storage/variants/.../tiger.jpg" />
+      #   # => <img width="100" height="100" src="/quails/active_storage/variants/.../tiger.jpg" />
       def image_tag(source, options = {})
         options = options.symbolize_keys
         check_for_image_tag_errors(options)
@@ -271,8 +271,8 @@ module ActionView
       #
       # ==== Examples
       #
-      #   image_alt('rails.png')
-      #   # => Rails
+      #   image_alt('quails.png')
+      #   # => Quails
       #
       #   image_alt('hyphenated-file-name.png')
       #   # => Hyphenated file name
@@ -280,7 +280,7 @@ module ActionView
       #   image_alt('underscored_file_name.png')
       #   # => Underscored file name
       def image_alt(src)
-        ActiveSupport::Deprecation.warn("image_alt is deprecated and will be removed from Rails 6.0. You must explicitly set alt text on images.")
+        ActiveSupport::Deprecation.warn("image_alt is deprecated and will be removed from Quails 6.0. You must explicitly set alt text on images.")
 
         File.basename(src, ".*".freeze).sub(/-[[:xdigit:]]{32,64}\z/, "".freeze).tr("-_".freeze, " ".freeze).capitalize
       end

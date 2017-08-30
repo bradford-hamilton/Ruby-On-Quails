@@ -7,7 +7,7 @@ require "active_support/core_ext/module/anonymous"
 require "active_support/core_ext/hash/keys"
 require "active_support/testing/constant_lookup"
 require_relative "template_assertions"
-require "rails-dom-testing"
+require "quails-dom-testing"
 
 module ActionController
   class Metal
@@ -25,7 +25,7 @@ module ActionController
     end
   end
 
-  # ActionController::TestCase will be deprecated and moved to a gem in Rails 5.1.
+  # ActionController::TestCase will be deprecated and moved to a gem in Quails 5.1.
   # Please use ActionDispatch::IntegrationTest going forward.
   class TestRequest < ActionDispatch::TestRequest #:nodoc:
     DEFAULT_ENV = ActionDispatch::TestRequest::DEFAULT_ENV.dup
@@ -40,7 +40,7 @@ module ActionController
     # Create a new test request with default `env` values.
     def self.create(controller_class)
       env = {}
-      env = Rails.application.env_config.merge(env) if defined?(Rails.application) && Rails.application
+      env = Quails.application.env_config.merge(env) if defined?(Quails.application) && Quails.application
       env["rack.request.cookie_hash"] = {}.with_indifferent_access
       new(default_env.merge(env), new_session, controller_class)
     end
@@ -218,10 +218,10 @@ module ActionController
   #
   # == Use integration style controller tests over functional style controller tests.
   #
-  # Rails discourages the use of functional tests in favor of integration tests
+  # Quails discourages the use of functional tests in favor of integration tests
   # (use ActionDispatch::IntegrationTest).
   #
-  # New Rails applications no longer generate functional style controller tests and they should
+  # New Quails applications no longer generate functional style controller tests and they should
   # only be used for backward compatibility. Integration style controller tests perform actual
   # requests, whereas functional style controller tests merely simulate a request. Besides,
   # integration tests are as fast as functional tests and provide lot of helpers such as +as+,
@@ -275,7 +275,7 @@ module ActionController
   #      after calling +post+. If the various assert methods are not sufficient, then you
   #      may use this object to inspect the HTTP response in detail.
   #
-  # (Earlier versions of \Rails required each functional test to subclass
+  # (Earlier versions of \Quails required each functional test to subclass
   # Test::Unit::TestCase and define @controller, @request, @response in +setup+.)
   #
   # == Controller is automatically inferred
@@ -329,7 +329,7 @@ module ActionController
       extend ActiveSupport::Concern
       include ActionDispatch::TestProcess
       include ActiveSupport::Testing::ConstantLookup
-      include Rails::Dom::Testing::Assertions
+      include Quails::Dom::Testing::Assertions
 
       attr_reader :response, :request
 

@@ -2,10 +2,10 @@ load_paths:
   - app/assets/javascripts
 
 logical_paths:
-  - rails-ujs.js
+  - quails-ujs.js
 
 build:
   logical_paths:
-    - rails-ujs.js
+    - quails-ujs.js
   path: lib/assets/compiled
   clean: true

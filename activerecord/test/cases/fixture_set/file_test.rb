@@ -24,9 +24,9 @@ module ActiveRecord
         File.open(::File.join(FIXTURES_ROOT, "accounts.yml")) do |fh|
           assert_equal ["signals37",
                         "unknown",
-                        "rails_core_account",
+                        "quails_core_account",
                         "last_account",
-                        "rails_core_account_2",
+                        "quails_core_account_2",
                         "odegy_account"].sort, fh.to_a.map(&:first).sort
         end
       end
@@ -139,7 +139,7 @@ END
 
       def test_erb_filename
         filename = "filename.yaml"
-        erb = File.new(filename).send(:prepare_erb, "<% Rails.env %>\n")
+        erb = File.new(filename).send(:prepare_erb, "<% Quails.env %>\n")
         assert_equal erb.filename, filename
       end
 

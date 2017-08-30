@@ -326,7 +326,7 @@ module ActionDispatch
 
       def create_session(app)
         klass = APP_SESSIONS[app] ||= Class.new(Integration::Session) {
-          # If the app is a Rails app, make url_helpers available on the session.
+          # If the app is a Quails app, make url_helpers available on the session.
           # This makes app.url_for and app.foo_path available in the console.
           if app.respond_to?(:routes)
             include app.routes.url_helpers
@@ -595,7 +595,7 @@ module ActionDispatch
   # +response_parser+ defines how the response body should be parsed through
   # +parsed_body+.
   #
-  # Consult the Rails Testing Guide for more.
+  # Consult the Quails Testing Guide for more.
 
   class IntegrationTest < ActiveSupport::TestCase
     include TestProcess::FixtureFile

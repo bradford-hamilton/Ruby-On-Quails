@@ -27,7 +27,7 @@ class UrlHelperTest < ActiveSupport::TestCase
   include routes.url_helpers
 
   include ActionView::Helpers::JavaScriptHelper
-  include Rails::Dom::Testing::Assertions::DomAssertions
+  include Quails::Dom::Testing::Assertions::DomAssertions
   include ActionView::Context
   include RenderERBUtils
 

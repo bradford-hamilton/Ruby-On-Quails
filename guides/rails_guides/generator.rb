@@ -8,12 +8,12 @@ require "active_support/core_ext/object/blank"
 require "action_controller"
 require "action_view"
 
-require "rails_guides/markdown"
-require "rails_guides/indexer"
-require "rails_guides/helpers"
-require "rails_guides/levenshtein"
+require "quails_guides/markdown"
+require "quails_guides/indexer"
+require "quails_guides/helpers"
+require "quails_guides/levenshtein"
 
-module RailsGuides
+module QuailsGuides
   class Generator
     GUIDES_RE = /\.(?:erb|md)\z/
 
@@ -55,14 +55,14 @@ module RailsGuides
       end
 
       def generate_mobi
-        require "rails_guides/kindle"
+        require "quails_guides/kindle"
         out = "#{@output_dir}/kindlegen.out"
         Kindle.generate(@output_dir, mobi, out)
         puts "(kindlegen log at #{out})."
       end
 
       def mobi
-        mobi  = "ruby_on_rails_guides_#{@version || @edge[0, 7]}"
+        mobi  = "ruby_on_quails_guides_#{@version || @edge[0, 7]}"
         mobi += ".#{@language}" if @language
         mobi += ".mobi"
       end
@@ -157,7 +157,7 @@ module RailsGuides
             result = view.render(layout: layout, formats: [$1], file: $`)
           else
             body = File.read("#{@source_dir}/#{guide}")
-            result = RailsGuides::Markdown.new(
+            result = QuailsGuides::Markdown.new(
               view:    view,
               layout:  layout,
               edge:    @edge,

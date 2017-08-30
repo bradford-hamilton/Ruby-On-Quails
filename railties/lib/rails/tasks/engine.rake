@@ -11,7 +11,7 @@ task "load_app" do
       require_relative "../engine/updater"
       # desc "Adds new executables to the engine bin/ directory"
       task :bin do
-        Rails::Engine::Updater.run(:create_bin_files)
+        Quails::Engine::Updater.run(:create_bin_files)
       end
     end
   end
@@ -39,11 +39,11 @@ namespace :db do
   desc "Display status of migrations"
   app_task "migrate:status"
 
-  desc "Create the database from config/database.yml for the current Rails.env (use db:create:all to create all databases in the config)"
+  desc "Create the database from config/database.yml for the current Quails.env (use db:create:all to create all databases in the config)"
   app_task "create"
   app_task "create:all"
 
-  desc "Drops the database for the current Rails.env (use db:drop:all to drop all databases)"
+  desc "Drops the database for the current Quails.env (use db:drop:all to drop all databases)"
   app_task "drop"
   app_task "drop:all"
 
@@ -75,7 +75,7 @@ end
 def find_engine_path(path)
   return File.expand_path(Dir.pwd) if path == "/"
 
-  if Rails::Engine.find(path)
+  if Quails::Engine.find(path)
     path
   else
     find_engine_path(File.expand_path("..", path))

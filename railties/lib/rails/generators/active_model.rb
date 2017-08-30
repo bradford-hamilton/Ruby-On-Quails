@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   module Generators
-    # ActiveModel is a class to be implemented by each ORM to allow Rails to
+    # ActiveModel is a class to be implemented by each ORM to allow Quails to
     # generate customized controller code.
     #
     # The API has the same methods as ActiveRecord, but each method returns a

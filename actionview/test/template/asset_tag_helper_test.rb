@@ -194,12 +194,12 @@ class AssetTagHelperTest < ActionView::TestCase
     %(image_tag("google.com.png")) => %(<img src="/images/google.com.png" />),
     %(image_tag("slash..png")) => %(<img src="/images/slash..png" />),
     %(image_tag(".pdf.png")) => %(<img src="/images/.pdf.png" />),
-    %(image_tag("http://www.rubyonrails.com/images/rails.png")) => %(<img src="http://www.rubyonrails.com/images/rails.png" />),
-    %(image_tag("//www.rubyonrails.com/images/rails.png")) => %(<img src="//www.rubyonrails.com/images/rails.png" />),
+    %(image_tag("http://www.rubyonquails.com/images/quails.png")) => %(<img src="http://www.rubyonquails.com/images/quails.png" />),
+    %(image_tag("//www.rubyonquails.com/images/quails.png")) => %(<img src="//www.rubyonquails.com/images/quails.png" />),
     %(image_tag("mouse.png", :alt => nil)) => %(<img src="/images/mouse.png" />),
     %(image_tag("data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==", :alt => nil)) => %(<img src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />),
     %(image_tag("")) => %(<img src="" />),
-    %(image_tag("gold.png", data: { title: 'Rails Application' })) => %(<img data-title="Rails Application" src="/images/gold.png" />),
+    %(image_tag("gold.png", data: { title: 'Quails Application' })) => %(<img data-title="Quails Application" src="/images/gold.png" />),
     %(image_tag("rss.gif", srcset: "/assets/pic_640.jpg 640w, /assets/pic_1024.jpg 1024w")) => %(<img srcset="/assets/pic_640.jpg 640w, /assets/pic_1024.jpg 1024w" src="/images/rss.gif" />),
     %(image_tag("rss.gif", srcset: { "pic_640.jpg" => "640w", "pic_1024.jpg" => "1024w" })) => %(<img srcset="/images/pic_640.jpg 640w, /images/pic_1024.jpg 1024w" src="/images/rss.gif" />),
     %(image_tag("rss.gif", srcset: [["pic_640.jpg", "640w"], ["pic_1024.jpg", "1024w"]])) => %(<img srcset="/images/pic_640.jpg 640w, /images/pic_1024.jpg 1024w" src="/images/rss.gif" />)
@@ -252,8 +252,8 @@ class AssetTagHelperTest < ActionView::TestCase
     %(video_tag("error.avi", "size" => 100)) => %(<video height="100" src="/videos/error.avi" width="100"></video>),
     %(video_tag("error.avi", "size" => "100 x 100")) => %(<video src="/videos/error.avi"></video>),
     %(video_tag("error.avi", "size" => "x")) => %(<video src="/videos/error.avi"></video>),
-    %(video_tag("http://media.rubyonrails.org/video/rails_blog_2.mov")) => %(<video src="http://media.rubyonrails.org/video/rails_blog_2.mov"></video>),
-    %(video_tag("//media.rubyonrails.org/video/rails_blog_2.mov")) => %(<video src="//media.rubyonrails.org/video/rails_blog_2.mov"></video>),
+    %(video_tag("http://media.rubyonquails.org/video/quails_blog_2.mov")) => %(<video src="http://media.rubyonquails.org/video/quails_blog_2.mov"></video>),
+    %(video_tag("//media.rubyonquails.org/video/quails_blog_2.mov")) => %(<video src="//media.rubyonquails.org/video/quails_blog_2.mov"></video>),
     %(video_tag("multiple.ogg", "multiple.avi")) => %(<video><source src="/videos/multiple.ogg" /><source src="/videos/multiple.avi" /></video>),
     %(video_tag(["multiple.ogg", "multiple.avi"])) => %(<video><source src="/videos/multiple.ogg" /><source src="/videos/multiple.avi" /></video>),
     %(video_tag(["multiple.ogg", "multiple.avi"], :size => "160x120", :controls => true)) => %(<video controls="controls" height="120" width="160"><source src="/videos/multiple.ogg" /><source src="/videos/multiple.avi" /></video>)
@@ -290,8 +290,8 @@ class AssetTagHelperTest < ActionView::TestCase
   AudioLinkToTag = {
     %(audio_tag("xml.wav")) => %(<audio src="/audios/xml.wav"></audio>),
     %(audio_tag("rss.wav", :autoplay => true, :controls => true)) => %(<audio autoplay="autoplay" controls="controls" src="/audios/rss.wav"></audio>),
-    %(audio_tag("http://media.rubyonrails.org/audio/rails_blog_2.mov")) => %(<audio src="http://media.rubyonrails.org/audio/rails_blog_2.mov"></audio>),
-    %(audio_tag("//media.rubyonrails.org/audio/rails_blog_2.mov")) => %(<audio src="//media.rubyonrails.org/audio/rails_blog_2.mov"></audio>),
+    %(audio_tag("http://media.rubyonquails.org/audio/quails_blog_2.mov")) => %(<audio src="http://media.rubyonquails.org/audio/quails_blog_2.mov"></audio>),
+    %(audio_tag("//media.rubyonquails.org/audio/quails_blog_2.mov")) => %(<audio src="//media.rubyonquails.org/audio/quails_blog_2.mov"></audio>),
     %(audio_tag("audio.mp3", "audio.ogg")) => %(<audio><source src="/audios/audio.mp3" /><source src="/audios/audio.ogg" /></audio>),
     %(audio_tag(["audio.mp3", "audio.ogg"])) => %(<audio><source src="/audios/audio.mp3" /><source src="/audios/audio.ogg" /></audio>),
     %(audio_tag(["audio.mp3", "audio.ogg"], :preload => 'none', :controls => true)) => %(<audio preload="none" controls="controls"><source src="/audios/audio.mp3" /><source src="/audios/audio.ogg" /></audio>)
@@ -464,13 +464,13 @@ class AssetTagHelperTest < ActionView::TestCase
   def test_image_alt
     [nil, "/", "/foo/bar/", "foo/bar/"].each do |prefix|
       assert_deprecated do
-        assert_equal "Rails", image_alt("#{prefix}rails.png")
+        assert_equal "Quails", image_alt("#{prefix}quails.png")
       end
       assert_deprecated do
-        assert_equal "Rails", image_alt("#{prefix}rails-9c0a079bdd7701d7e729bd956823d153.png")
+        assert_equal "Quails", image_alt("#{prefix}quails-9c0a079bdd7701d7e729bd956823d153.png")
       end
       assert_deprecated do
-        assert_equal "Rails", image_alt("#{prefix}rails-f56ef62bc41b040664e801a38f068082a75d506d9048307e8096737463503d0b.png")
+        assert_equal "Quails", image_alt("#{prefix}quails-f56ef62bc41b040664e801a38f068082a75d506d9048307e8096737463503d0b.png")
       end
       assert_deprecated do
         assert_equal "Long file name with hyphens", image_alt("#{prefix}long-file-name-with-hyphens.png")
@@ -565,7 +565,7 @@ class AssetTagHelperTest < ActionView::TestCase
   end
 
   def test_should_not_modify_source_string
-    source = "/images/rails.png"
+    source = "/images/quails.png"
     copy = source.dup
     image_tag(source)
     assert_equal copy, source
@@ -594,8 +594,8 @@ class AssetTagHelperTest < ActionView::TestCase
     @controller.config.asset_host = Proc.new { nil }
     @controller.request = Struct.new(:base_url, :script_name).new("http://www.example.com", nil)
 
-    assert_equal "/images/rails.png", image_path("rails.png")
-    assert_equal "http://www.example.com/images/rails.png", image_url("rails.png")
+    assert_equal "/images/quails.png", image_path("quails.png")
+    assert_equal "http://www.example.com/images/quails.png", image_url("quails.png")
   end
 
   def test_caching_image_path_with_caching_and_proc_asset_host_using_request

@@ -2,7 +2,7 @@
 
 require_relative "../configuration"
 
-module Rails
+module Quails
   class Railtie
     class Configuration
       def initialize
@@ -37,7 +37,7 @@ module Rails
       # application once it is defined and the default_middlewares are
       # created
       def app_middleware
-        @@app_middleware ||= Rails::Configuration::MiddlewareStackProxy.new
+        @@app_middleware ||= Quails::Configuration::MiddlewareStackProxy.new
       end
 
       # This allows you to modify application's generators from Railties.
@@ -45,7 +45,7 @@ module Rails
       # Values set on app_generators will become defaults for application, unless
       # application overwrites them.
       def app_generators
-        @@app_generators ||= Rails::Configuration::Generators.new
+        @@app_generators ||= Quails::Configuration::Generators.new
         yield(@@app_generators) if block_given?
         @@app_generators
       end
@@ -77,7 +77,7 @@ module Rails
       end
 
       # Defines generic callbacks to run before #after_initialize. Useful for
-      # Rails::Railtie subclasses.
+      # Quails::Railtie subclasses.
       def to_prepare(&blk)
         to_prepare_blocks << blk if blk
       end

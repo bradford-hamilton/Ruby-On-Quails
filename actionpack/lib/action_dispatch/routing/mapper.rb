@@ -309,7 +309,7 @@ module ActionDispatch
             hash = check_part(:controller, controller, path_params, {}) do |part|
               translate_controller(part) {
                 message = "'#{part}' is not a supported controller name. This can lead to potential routing problems.".dup
-                message << " See http://guides.rubyonrails.org/routing.html#specifying-a-controller-to-use"
+                message << " See http://guides.rubyonquails.org/routing.html#specifying-a-controller-to-use"
 
                 raise ArgumentError, message
               }
@@ -609,15 +609,15 @@ module ActionDispatch
               mount(SomeRackApp => "some_route")
           MSG
 
-          rails_app = rails_app? app
-          options[:as] ||= app_name(app, rails_app)
+          quails_app = quails_app? app
+          options[:as] ||= app_name(app, quails_app)
 
           target_as       = name_for_action(options[:as], path)
           options[:via] ||= :all
 
           match(path, options.merge(to: app, anchor: false, format: false))
 
-          define_generate_prefix(app, target_as) if rails_app
+          define_generate_prefix(app, target_as) if quails_app
           self
         end
 
@@ -638,12 +638,12 @@ module ActionDispatch
         end
 
         private
-          def rails_app?(app)
-            app.is_a?(Class) && app < Rails::Railtie
+          def quails_app?(app)
+            app.is_a?(Class) && app < Quails::Railtie
           end
 
-          def app_name(app, rails_app)
-            if rails_app
+          def app_name(app, quails_app)
+            if quails_app
               app.railtie_name
             elsif app.is_a?(Class)
               class_name = app.name
@@ -745,7 +745,7 @@ module ActionDispatch
       #   end
       #
       # This will create a number of routes for each of the posts and comments
-      # controller. For <tt>Admin::PostsController</tt>, Rails will create:
+      # controller. For <tt>Admin::PostsController</tt>, Quails will create:
       #
       #   GET       /admin/posts
       #   GET       /admin/posts/new
@@ -1295,7 +1295,7 @@ module ActionDispatch
           self
         end
 
-        # In Rails, a resourceful route provides a mapping between HTTP verbs
+        # In Quails, a resourceful route provides a mapping between HTTP verbs
         # and URLs and controller actions. By convention, each action also maps
         # to particular CRUD operations in a database. A single entry in the
         # routing file, such as
@@ -1465,7 +1465,7 @@ module ActionDispatch
         #     end
         #   end
         #
-        # This will enable Rails to recognize paths such as <tt>/photos/search</tt>
+        # This will enable Quails to recognize paths such as <tt>/photos/search</tt>
         # with GET, and route to the search action of +PhotosController+. It will also
         # create the <tt>search_photos_url</tt> and <tt>search_photos_path</tt>
         # route helpers.
@@ -1600,7 +1600,7 @@ module ActionDispatch
           end
         end
 
-        # You can specify what Rails should route "/" to with the root method:
+        # You can specify what Quails should route "/" to with the root method:
         #
         #   root to: 'pages#main'
         #
@@ -1612,7 +1612,7 @@ module ActionDispatch
         #
         # You should put the root route at the top of <tt>config/routes.rb</tt>,
         # because this means it will be matched first. As this is the most popular route
-        # of most Rails applications, this is beneficial.
+        # of most Quails applications, this is beneficial.
         def root(path, options = {})
           if path.is_a?(String)
             options[:to] = path
@@ -2041,7 +2041,7 @@ module ActionDispatch
         # of routing helpers, e.g:
         #
         #   direct :homepage do
-        #     "http://www.rubyonrails.org"
+        #     "http://www.rubyonquails.org"
         #   end
         #
         #   direct :commentable do |model|
@@ -2076,7 +2076,7 @@ module ActionDispatch
         # block is executed, e.g. generating a URL inside a controller action or a view.
         # If the block is executed where there isn't a params object such as this:
         #
-        #   Rails.application.routes.url_helpers.browse_path
+        #   Quails.application.routes.url_helpers.browse_path
         #
         # then it will raise a +NameError+. Because of this you need to be aware of the
         # context in which you will use your custom URL helper when defining it.

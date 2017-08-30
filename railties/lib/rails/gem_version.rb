@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Rails
-  # Returns the version of the currently loaded Rails as a <tt>Gem::Version</tt>
+module Quails
+  # Returns the version of the currently loaded Quails as a <tt>Gem::Version</tt>
   def self.gem_version
     Gem::Version.new VERSION::STRING
   end

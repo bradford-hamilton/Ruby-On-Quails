@@ -35,7 +35,7 @@ module ActiveSupport
   #
   # Log subscriber also has some helpers to deal with logging and automatically
   # flushes all logs when the request finishes (via action_dispatch.callback
-  # notification) in a Rails environment.
+  # notification) in a Quails environment.
   class LogSubscriber < Subscriber
     # Embed in a String to clear all previous ANSI sequences.
     CLEAR   = "\e[0m"
@@ -55,8 +55,8 @@ module ActiveSupport
 
     class << self
       def logger
-        @logger ||= if defined?(Rails) && Rails.respond_to?(:logger)
-          Rails.logger
+        @logger ||= if defined?(Quails) && Quails.respond_to?(:logger)
+          Quails.logger
         end
       end
 

@@ -205,7 +205,7 @@ class FinderTest < ActiveRecord::TestCase
   end
 
   # Ensure +exists?+ runs without an error by excluding distinct value.
-  # See https://github.com/rails/rails/pull/26981.
+  # See https://github.com/quails/quails/pull/26981.
   def test_exists_with_order_and_distinct
     assert_equal true, Topic.order(:id).distinct.exists?
   end
@@ -700,9 +700,9 @@ class FinderTest < ActiveRecord::TestCase
   end
 
   def test_find_with_hash_conditions_on_joined_table_and_with_range
-    firms = DependentFirm.joins(:account).where(name: "RailsCore", accounts: { credit_limit: 55..60 })
+    firms = DependentFirm.joins(:account).where(name: "QuailsCore", accounts: { credit_limit: 55..60 })
     assert_equal 1, firms.size
-    assert_equal companies(:rails_core), firms.first
+    assert_equal companies(:quails_core), firms.first
   end
 
   def test_find_on_hash_conditions_with_explicit_table_name_and_aggregate
@@ -934,7 +934,7 @@ class FinderTest < ActiveRecord::TestCase
   end
 
   def test_find_by_one_attribute_with_conditions
-    assert_equal accounts(:rails_core_account), Account.where("firm_id = ?", 6).find_by_credit_limit(50)
+    assert_equal accounts(:quails_core_account), Account.where("firm_id = ?", 6).find_by_credit_limit(50)
   end
 
   def test_find_by_one_attribute_that_is_an_aggregate
@@ -1075,7 +1075,7 @@ class FinderTest < ActiveRecord::TestCase
 
   def test_select_values
     assert_equal ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"], Company.connection.select_values("SELECT id FROM companies ORDER BY id").map!(&:to_s)
-    assert_equal ["37signals", "Summit", "Microsoft", "Flamboyant Software", "Ex Nihilo", "RailsCore", "Leetsoft", "Jadedpixel", "Odegy", "Ex Nihilo Part Deux", "Apex"], Company.connection.select_values("SELECT name FROM companies ORDER BY id")
+    assert_equal ["37signals", "Summit", "Microsoft", "Flamboyant Software", "Ex Nihilo", "QuailsCore", "Leetsoft", "Jadedpixel", "Odegy", "Ex Nihilo Part Deux", "Apex"], Company.connection.select_values("SELECT name FROM companies ORDER BY id")
   end
 
   def test_select_rows

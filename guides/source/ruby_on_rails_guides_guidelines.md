@@ -1,13 +1,13 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-Ruby on Rails Guides Guidelines
+Ruby on Quails Guides Guidelines
 ===============================
 
-This guide documents guidelines for writing Ruby on Rails Guides. This guide follows itself in a graceful loop, serving itself as an example.
+This guide documents guidelines for writing Ruby on Quails Guides. This guide follows itself in a graceful loop, serving itself as an example.
 
 After reading this guide, you will know:
 
-* About the conventions to be used in Rails documentation.
+* About the conventions to be used in Quails documentation.
 * How to generate guides locally.
 
 --------------------------------------------------------------------------------
@@ -53,43 +53,43 @@ Use the same inline formatting as regular text:
 Linking to the API
 ------------------
 
-Links to the API (`api.rubyonrails.org`) are processed by the guides generator in the following manner:
+Links to the API (`api.rubyonquails.org`) are processed by the guides generator in the following manner:
 
 Links that include a release tag are left untouched. For example
 
 ```
-http://api.rubyonrails.org/v5.0.1/classes/ActiveRecord/Attributes/ClassMethods.html
+http://api.rubyonquails.org/v5.0.1/classes/ActiveRecord/Attributes/ClassMethods.html
 ```
 
 is not modified.
 
 Please use these in release notes, since they should point to the corresponding version no matter the target being generated.
 
-If the link does not include a release tag and edge guides are being generated, the domain is replaced by `edgeapi.rubyonrails.org`. For example,
+If the link does not include a release tag and edge guides are being generated, the domain is replaced by `edgeapi.rubyonquails.org`. For example,
 
 ```
-http://api.rubyonrails.org/classes/ActionDispatch/Response.html
-```
-
-becomes
-
-```
-http://edgeapi.rubyonrails.org/classes/ActionDispatch/Response.html
-```
-
-If the link does not include a release tag and release guides are being generated, the Rails version is injected. For example, if we are generating the guides for v5.1.0 the link
-
-```
-http://api.rubyonrails.org/classes/ActionDispatch/Response.html
+http://api.rubyonquails.org/classes/ActionDispatch/Response.html
 ```
 
 becomes
 
 ```
-http://api.rubyonrails.org/v5.1.0/classes/ActionDispatch/Response.html
+http://edgeapi.rubyonquails.org/classes/ActionDispatch/Response.html
 ```
 
-Please don't link to `edgeapi.rubyonrails.org` manually.
+If the link does not include a release tag and release guides are being generated, the Quails version is injected. For example, if we are generating the guides for v5.1.0 the link
+
+```
+http://api.rubyonquails.org/classes/ActionDispatch/Response.html
+```
+
+becomes
+
+```
+http://api.rubyonquails.org/v5.1.0/classes/ActionDispatch/Response.html
+```
+
+Please don't link to `edgeapi.rubyonquails.org` manually.
 
 
 API Documentation Guidelines

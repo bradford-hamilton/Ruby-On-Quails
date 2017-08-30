@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   module Generators
     class HelperGenerator < NamedBase # :nodoc:
       check_class_collision suffix: "Helper"

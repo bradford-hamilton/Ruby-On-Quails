@@ -1,9 +1,9 @@
 require_relative 'boot'
 
 <% if include_all_railties? -%>
-require 'rails/all'
+require 'quails/all'
 <% else -%>
-require "rails"
+require "quails"
 # Pick the frameworks you want:
 require "active_model/railtie"
 require "active_job/railtie"
@@ -14,17 +14,17 @@ require "action_view/railtie"
 require "active_storage/engine"
 <%= comment_if :skip_action_cable %>require "action_cable/engine"
 <%= comment_if :skip_sprockets %>require "sprockets/railtie"
-<%= comment_if :skip_test %>require "rails/test_unit/railtie"
+<%= comment_if :skip_test %>require "quails/test_unit/railtie"
 <% end -%>
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(*Rails.groups)
+Bundler.require(*Quails.groups)
 
 module <%= app_const_base %>
-  class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults <%= Rails::VERSION::STRING.to_f %>
+  class Application < Quails::Application
+    # Initialize configuration defaults for originally generated Quails version.
+    config.load_defaults <%= Quails::VERSION::STRING.to_f %>
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

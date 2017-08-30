@@ -2,7 +2,7 @@
 
 require "yaml"
 
-module RailsGuides
+module QuailsGuides
   module Helpers
     def guide(name, url, options = {}, &block)
       link = content_tag(:a, href: url) { name }

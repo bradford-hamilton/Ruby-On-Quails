@@ -3,16 +3,16 @@
 require "fileutils"
 require "optparse"
 require "action_dispatch"
-require "rails"
+require "quails"
 require "active_support/deprecation"
 require "active_support/core_ext/string/filters"
 require_relative "../../dev_caching"
 
-module Rails
+module Quails
   class Server < ::Rack::Server
     class Options
       def parse!(args)
-        Rails::Command::ServerCommand.new([], args).server_options
+        Quails::Command::ServerCommand.new([], args).server_options
       end
     end
 
@@ -27,8 +27,8 @@ module Rails
         app = super
         if app.is_a?(Class)
           ActiveSupport::Deprecation.warn(<<-MSG.squish)
-            Use `Rails::Application` subclass to start the server is deprecated and will be removed in Rails 6.0.
-            Please change `run #{app}` to `run Rails.application` in config.ru.
+            Use `Quails::Application` subclass to start the server is deprecated and will be removed in Quails 6.0.
+            Please change `run #{app}` to `run Quails.application` in config.ru.
           MSG
         end
         app.respond_to?(:to_app) ? app.to_app : app
@@ -68,20 +68,20 @@ module Rails
     private
       def setup_dev_caching
         if options[:environment] == "development"
-          Rails::DevCaching.enable_by_argument(options[:caching])
+          Quails::DevCaching.enable_by_argument(options[:caching])
         end
       end
 
       def print_boot_information
         url = "on #{options[:SSLEnable] ? 'https' : 'http'}://#{options[:Host]}:#{options[:Port]}" unless use_puma?
         puts "=> Booting #{ActiveSupport::Inflector.demodulize(server)}"
-        puts "=> Rails #{Rails.version} application starting in #{Rails.env} #{url}"
-        puts "=> Run `rails server -h` for more startup options"
+        puts "=> Quails #{Quails.version} application starting in #{Quails.env} #{url}"
+        puts "=> Run `quails server -h` for more startup options"
       end
 
       def create_tmp_directories
         %w(cache pids sockets).each do |dir_to_make|
-          FileUtils.mkdir_p(File.join(Rails.root, "tmp", dir_to_make))
+          FileUtils.mkdir_p(File.join(Quails.root, "tmp", dir_to_make))
         end
       end
 
@@ -89,16 +89,16 @@ module Rails
         wrapped_app # touch the app so the logger is set up
 
         console = ActiveSupport::Logger.new(STDOUT)
-        console.formatter = Rails.logger.formatter
-        console.level = Rails.logger.level
+        console.formatter = Quails.logger.formatter
+        console.level = Quails.logger.level
 
-        unless ActiveSupport::Logger.logger_outputs_to?(Rails.logger, STDOUT)
-          Rails.logger.extend(ActiveSupport::Logger.broadcast(console))
+        unless ActiveSupport::Logger.logger_outputs_to?(Quails.logger, STDOUT)
+          Quails.logger.extend(ActiveSupport::Logger.broadcast(console))
         end
       end
 
       def restart_command
-        "bin/rails server #{ARGV.join(' ')}"
+        "bin/quails server #{ARGV.join(' ')}"
       end
 
       def use_puma?
@@ -112,9 +112,9 @@ module Rails
       DEFAULT_PID_PATH = "tmp/pids/server.pid".freeze
 
       class_option :port, aliases: "-p", type: :numeric,
-        desc: "Runs Rails on the specified port - defaults to 3000.", banner: :port
+        desc: "Runs Quails on the specified port - defaults to 3000.", banner: :port
       class_option :binding, aliases: "-b", type: :string,
-        desc: "Binds Rails to the specified IP - defaults to 'localhost' in development and '0.0.0.0' in other environments'.",
+        desc: "Binds Quails to the specified IP - defaults to 'localhost' in development and '0.0.0.0' in other environments'.",
         banner: :IP
       class_option :config, aliases: "-c", type: :string, default: "config.ru",
         desc: "Uses a custom rackup configuration.", banner: :file
@@ -132,17 +132,17 @@ module Rails
         @original_options = local_options
         super
         @server = self.args.shift
-        @log_stdout = options[:daemon].blank? && (options[:environment] || Rails.env) == "development"
+        @log_stdout = options[:daemon].blank? && (options[:environment] || Quails.env) == "development"
       end
 
       def perform
         set_application_directory!
         prepare_restart
-        Rails::Server.new(server_options).tap do |server|
+        Quails::Server.new(server_options).tap do |server|
           # Require application after server sets environment to propagate
           # the --environment option.
           require APP_PATH
-          Dir.chdir(Rails.application.root)
+          Dir.chdir(Quails.application.root)
           server.start
         end
       end
@@ -220,11 +220,11 @@ module Rails
         end
 
         def environment
-          options[:environment] || Rails::Command.environment
+          options[:environment] || Quails::Command.environment
         end
 
         def restart_command
-          "bin/rails server #{@server} #{@original_options.join(" ")} --restart"
+          "bin/quails server #{@server} #{@original_options.join(" ")} --restart"
         end
 
         def pid
@@ -232,7 +232,7 @@ module Rails
         end
 
         def self.banner(*)
-          "rails server [puma, thin etc] [options]"
+          "quails server [puma, thin etc] [options]"
         end
 
         def prepare_restart

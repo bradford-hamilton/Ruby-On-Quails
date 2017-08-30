@@ -6,8 +6,8 @@ if defined?(Rake.application) && Rake.application.top_level_tasks.grep(/^(defaul
   ENV["RAILS_ENV"] ||= Rake.application.options.show_tasks ? "development" : "test"
 end
 
-module Rails
-  class TestUnitRailtie < Rails::Railtie
+module Quails
+  class TestUnitRailtie < Quails::Railtie
     config.app_generators do |c|
       c.test_framework :test_unit, fixture: true,
                                    fixture_replacement: nil
@@ -18,12 +18,12 @@ module Rails
 
     initializer "test_unit.line_filtering" do
       ActiveSupport.on_load(:active_support_test_case) {
-        ActiveSupport::TestCase.extend Rails::LineFiltering
+        ActiveSupport::TestCase.extend Quails::LineFiltering
       }
     end
 
     rake_tasks do
-      load "rails/test_unit/testing.rake"
+      load "quails/test_unit/testing.rake"
     end
   end
 end

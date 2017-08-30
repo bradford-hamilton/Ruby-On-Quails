@@ -33,7 +33,7 @@ module ViewBehavior
   def test_reading
     books = Ebook.all
     assert_equal [books(:rfr).id], books.map(&:id)
-    assert_equal ["Ruby for Rails"], books.map(&:name)
+    assert_equal ["Ruby for Quails"], books.map(&:name)
   end
 
   def test_views
@@ -62,7 +62,7 @@ module ViewBehavior
   end
 
   def test_attributes
-    assert_equal({ "id" => 2, "name" => "Ruby for Rails", "status" => 0 },
+    assert_equal({ "id" => 2, "name" => "Ruby for Quails", "status" => 0 },
                  Ebook.first.attributes)
   end
 
@@ -118,7 +118,7 @@ if ActiveRecord::Base.connection.supports_views?
 
     def test_reading
       books = Paperback.all
-      assert_equal ["Agile Web Development with Rails"], books.map(&:name)
+      assert_equal ["Agile Web Development with Quails"], books.map(&:name)
     end
 
     def test_views
@@ -141,7 +141,7 @@ if ActiveRecord::Base.connection.supports_views?
     end
 
     def test_attributes
-      assert_equal({ "name" => "Agile Web Development with Rails", "status" => 2 },
+      assert_equal({ "name" => "Agile Web Development with Quails", "status" => 2 },
                    Paperback.first.attributes)
     end
 
@@ -188,10 +188,10 @@ if ActiveRecord::Base.connection.supports_views?
       end
 
       def test_insert_record
-        PrintedBook.create! name: "Rails in Action", status: 0, format: "paperback"
+        PrintedBook.create! name: "Quails in Action", status: 0, format: "paperback"
 
         new_book = PrintedBook.last
-        assert_equal "Rails in Action", new_book.name
+        assert_equal "Quails in Action", new_book.name
       end
 
       def test_update_record_to_fail_view_conditions

@@ -52,5 +52,5 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # end
 #
 
-# Allow puma to be restarted by `rails restart` command.
+# Allow puma to be restarted by `quails restart` command.
 plugin :tmp_restart

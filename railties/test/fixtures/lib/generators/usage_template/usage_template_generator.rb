@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "rails/generators"
+require "quails/generators"
 
-class UsageTemplateGenerator < Rails::Generators::Base
+class UsageTemplateGenerator < Quails::Generators::Base
   source_root File.expand_path("templates", __dir__)
 end

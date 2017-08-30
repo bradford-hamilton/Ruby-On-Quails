@@ -1,9 +1,9 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-Debugging Rails Applications
+Debugging Quails Applications
 ============================
 
-This guide introduces techniques for debugging Ruby on Rails applications.
+This guide introduces techniques for debugging Ruby on Quails applications.
 
 After reading this guide, you will know:
 
@@ -17,7 +17,7 @@ After reading this guide, you will know:
 View Helpers for Debugging
 --------------------------
 
-One common task is to inspect the contents of a variable. Rails provides three different ways to do this:
+One common task is to inspect the contents of a variable. Quails provides three different ways to do this:
 
 * `debug`
 * `to_yaml`
@@ -41,15 +41,15 @@ You'll see something like this:
 --- !ruby/object Article
 attributes:
   updated_at: 2008-09-05 22:55:47
-  body: It's a very helpful guide for debugging your Rails app.
-  title: Rails debugging guide
+  body: It's a very helpful guide for debugging your Quails app.
+  title: Quails debugging guide
   published: t
   id: "1"
   created_at: 2008-09-05 22:55:47
 attributes_cache: {}
 
 
-Title: Rails debugging guide
+Title: Quails debugging guide
 ```
 
 ### `to_yaml`
@@ -70,14 +70,14 @@ The above code will render something like this:
 --- !ruby/object Article
 attributes:
 updated_at: 2008-09-05 22:55:47
-body: It's a very helpful guide for debugging your Rails app.
-title: Rails debugging guide
+body: It's a very helpful guide for debugging your Quails app.
+title: Quails debugging guide
 published: t
 id: "1"
 created_at: 2008-09-05 22:55:47
 attributes_cache: {}
 
-Title: Rails debugging guide
+Title: Quails debugging guide
 ```
 
 ### `inspect`
@@ -97,17 +97,17 @@ Will render:
 ```
 [1, 2, 3, 4, 5]
 
-Title: Rails debugging guide
+Title: Quails debugging guide
 ```
 
 The Logger
 ----------
 
-It can also be useful to save information to log files at runtime. Rails maintains a separate log file for each runtime environment.
+It can also be useful to save information to log files at runtime. Quails maintains a separate log file for each runtime environment.
 
 ### What is the Logger?
 
-Rails makes use of the `ActiveSupport::Logger` class to write log information. Other loggers, such as `Log4r`, may also be substituted.
+Quails makes use of the `ActiveSupport::Logger` class to write log information. Other loggers, such as `Log4r`, may also be substituted.
 
 You can specify an alternative logger in `config/application.rb` or any other environment file, for example:
 
@@ -119,17 +119,17 @@ config.logger = Log4r::Logger.new("Application Log")
 Or in the `Initializer` section, add _any_ of the following
 
 ```ruby
-Rails.logger = Logger.new(STDOUT)
-Rails.logger = Log4r::Logger.new("Application Log")
+Quails.logger = Logger.new(STDOUT)
+Quails.logger = Log4r::Logger.new("Application Log")
 ```
 
-TIP: By default, each log is created under `Rails.root/log/` and the log file is named after the environment in which the application is running.
+TIP: By default, each log is created under `Quails.root/log/` and the log file is named after the environment in which the application is running.
 
 ### Log Levels
 
 When something is logged, it's printed into the corresponding log if the log
 level of the message is equal to or higher than the configured log level. If you
-want to know the current log level, you can call the `Rails.logger.level`
+want to know the current log level, you can call the `Quails.logger.level`
 method.
 
 The available log levels are: `:debug`, `:info`, `:warn`, `:error`, `:fatal`,
@@ -138,12 +138,12 @@ respectively. To change the default log level, use
 
 ```ruby
 config.log_level = :warn # In any environment initializer, or
-Rails.logger.level = 0 # at any time
+Quails.logger.level = 0 # at any time
 ```
 
 This is useful when you want to log under development or staging without flooding your production log with unnecessary information.
 
-TIP: The default Rails log level is `debug` in all environments.
+TIP: The default Quails log level is `debug` in all environments.
 
 ### Sending Messages
 
@@ -188,11 +188,11 @@ Here's an example of the log generated when this controller action is executed:
 ```
 Started POST "/articles" for 127.0.0.1 at 2017-08-20 20:53:10 +0900
 Processing by ArticlesController#create as HTML
-  Parameters: {"utf8"=>"✓", "authenticity_token"=>"xhuIbSBFytHCE1agHgvrlKnSVIOGD6jltW2tO+P6a/ACjQ3igjpV4OdbsZjIhC98QizWH9YdKokrqxBCJrtoqQ==", "article"=>{"title"=>"Debugging Rails", "body"=>"I'm learning how to print in logs!!!", "published"=>"0"}, "commit"=>"Create Article"}
-New article: {"id"=>nil, "title"=>"Debugging Rails", "body"=>"I'm learning how to print in logs!!!", "published"=>false, "created_at"=>nil, "updated_at"=>nil}
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"xhuIbSBFytHCE1agHgvrlKnSVIOGD6jltW2tO+P6a/ACjQ3igjpV4OdbsZjIhC98QizWH9YdKokrqxBCJrtoqQ==", "article"=>{"title"=>"Debugging Quails", "body"=>"I'm learning how to print in logs!!!", "published"=>"0"}, "commit"=>"Create Article"}
+New article: {"id"=>nil, "title"=>"Debugging Quails", "body"=>"I'm learning how to print in logs!!!", "published"=>false, "created_at"=>nil, "updated_at"=>nil}
 Article should be valid: true
    (0.1ms)  BEGIN
-  SQL (0.4ms)  INSERT INTO "articles" ("title", "body", "published", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Debugging Rails"], ["body", "I'm learning how to print in logs!!!"], ["published", "f"], ["created_at", "2017-08-20 11:53:10.010435"], ["updated_at", "2017-08-20 11:53:10.010435"]]
+  SQL (0.4ms)  INSERT INTO "articles" ("title", "body", "published", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Debugging Quails"], ["body", "I'm learning how to print in logs!!!"], ["published", "f"], ["created_at", "2017-08-20 11:53:10.010435"], ["updated_at", "2017-08-20 11:53:10.010435"]]
    (0.3ms)  COMMIT
 The article was saved and now the user is going to be redirected...
 Redirected to http://localhost:3000/articles/1
@@ -215,7 +215,7 @@ logger.tagged("BCX") { logger.tagged("Jason") { logger.info "Stuff" } } # Logs "
 ```
 
 ### Impact of Logs on Performance
-Logging will always have a small impact on the performance of your Rails app,
+Logging will always have a small impact on the performance of your Quails app,
         particularly when logging to disk. Additionally, there are a few subtleties:
 
 Using the `:debug` level will have a greater performance penalty than `:fatal`,
@@ -253,21 +253,21 @@ sort of error tracking is not effective in finding the root cause of a problem.
 When you actually need to journey into your running source code, the debugger
 is your best companion.
 
-The debugger can also help you if you want to learn about the Rails source code
+The debugger can also help you if you want to learn about the Quails source code
 but don't know where to start. Just debug any request to your application and
 use this guide to learn how to move from the code you have written into the
-underlying Rails code.
+underlying Quails code.
 
 ### Setup
 
 You can use the `byebug` gem to set breakpoints and step through live code in
-Rails. To install it, just run:
+Quails. To install it, just run:
 
 ```bash
 $ gem install byebug
 ```
 
-Inside any Rails application you can then invoke the debugger by calling the
+Inside any Quails application you can then invoke the debugger by calling the
 `byebug` method.
 
 Here's an example:
@@ -313,8 +313,8 @@ For example:
 
 ```bash
 => Booting Puma
-=> Rails 5.1.0 application starting in development on http://0.0.0.0:3000
-=> Run `rails server -h` for more startup options
+=> Quails 5.1.0 application starting in development on http://0.0.0.0:3000
+=> Run `quails server -h` for more startup options
 Puma starting in single mode...
 * Version 3.4.0 (ruby 2.3.1-p112), codename: Owl Bowl Brawl
 * Min threads: 5, max threads: 5
@@ -899,7 +899,7 @@ to use it in production.
 Debugging Memory Leaks
 ----------------------
 
-A Ruby application (on Rails or not), can leak memory — either in the Ruby code
+A Ruby application (on Quails or not), can leak memory — either in the Ruby code
 or at the C code level.
 
 In this section, you will learn how to find and fix such leaks by using tool
@@ -922,27 +922,27 @@ by Evan Weaver.
 Plugins for Debugging
 ---------------------
 
-There are some Rails plugins to help you to find errors and debug your
+There are some Quails plugins to help you to find errors and debug your
 application. Here is a list of useful plugins for debugging:
 
-* [Footnotes](https://github.com/josevalim/rails-footnotes) Every Rails page has
+* [Footnotes](https://github.com/josevalim/quails-footnotes) Every Quails page has
 footnotes that give request information and link back to your source via
 TextMate.
 * [Query Trace](https://github.com/ruckus/active-record-query-trace/tree/master) Adds query
 origin tracing to your logs.
-* [Query Reviewer](https://github.com/nesquena/query_reviewer) This Rails plugin
+* [Query Reviewer](https://github.com/nesquena/query_reviewer) This Quails plugin
 not only runs "EXPLAIN" before each of your select queries in development, but
 provides a small DIV in the rendered output of each page with the summary of
 warnings for each query that it analyzed.
 * [Exception Notifier](https://github.com/smartinez87/exception_notification/tree/master)
 Provides a mailer object and a default set of templates for sending email
-notifications when errors occur in a Rails application.
+notifications when errors occur in a Quails application.
 * [Better Errors](https://github.com/charliesome/better_errors) Replaces the
-standard Rails error page with a new one containing more contextual information,
+standard Quails error page with a new one containing more contextual information,
 like source code and variable inspection.
-* [RailsPanel](https://github.com/dejan/rails_panel) Chrome extension for Rails
+* [QuailsPanel](https://github.com/dejan/quails_panel) Chrome extension for Quails
 development that will end your tailing of development.log. Have all information
-about your Rails app requests in the browser — in the Developer Tools panel.
+about your Quails app requests in the browser — in the Developer Tools panel.
 Provides insight to db/rendering/total times, parameter list, rendered views and
 more.
 * [Pry](https://github.com/pry/pry) An IRB alternative and runtime developer console.
@@ -951,4 +951,4 @@ References
 ----------
 
 * [byebug Homepage](https://github.com/deivid-rodriguez/byebug)
-* [web-console Homepage](https://github.com/rails/web-console)
+* [web-console Homepage](https://github.com/quails/web-console)

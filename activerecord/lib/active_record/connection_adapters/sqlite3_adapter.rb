@@ -20,11 +20,11 @@ module ActiveRecord
         raise ArgumentError, "No database file specified. Missing argument: database"
       end
 
-      # Allow database path relative to Rails.root, but only if the database
+      # Allow database path relative to Quails.root, but only if the database
       # path is not the special path that tells sqlite to build a database only
       # in memory.
       if ":memory:" != config[:database]
-        config[:database] = File.expand_path(config[:database], Rails.root) if defined?(Rails.root)
+        config[:database] = File.expand_path(config[:database], Quails.root) if defined?(Quails.root)
         dirname = File.dirname(config[:database])
         Dir.mkdir(dirname) unless File.directory?(dirname)
       end
@@ -87,7 +87,7 @@ module ActiveRecord
       # for all models and all boolean columns, after which the flag must be set
       # to true by adding the following to your <tt>application.rb</tt> file:
       #
-      #   Rails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
+      #   Quails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
       class_attribute :represent_boolean_as_integer, default: false
 
       class StatementPool < ConnectionAdapters::StatementPool
@@ -161,7 +161,7 @@ module ActiveRecord
       end
 
       # Returns 62. SQLite supports index names up to 64
-      # characters. The rest is used by Rails internally to perform
+      # characters. The rest is used by Quails internally to perform
       # temporary rename operations
       def allowed_index_name_length
         index_name_length - 2

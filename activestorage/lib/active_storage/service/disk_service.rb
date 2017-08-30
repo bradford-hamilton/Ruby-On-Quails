@@ -61,12 +61,12 @@ module ActiveStorage
         verified_key_with_expiration = ActiveStorage.verifier.generate(key, expires_in: expires_in, purpose: :blob_key)
 
         generated_url =
-          if defined?(Rails.application)
-            Rails.application.routes.url_helpers.rails_disk_service_path \
+          if defined?(Quails.application)
+            Quails.application.routes.url_helpers.quails_disk_service_path \
               verified_key_with_expiration,
               filename: filename, disposition: disposition, content_type: content_type
           else
-            "/rails/active_storage/disk/#{verified_key_with_expiration}/#{filename}?content_type=#{content_type}&disposition=#{disposition}"
+            "/quails/active_storage/disk/#{verified_key_with_expiration}/#{filename}?content_type=#{content_type}&disposition=#{disposition}"
           end
 
         payload[:url] = generated_url
@@ -89,10 +89,10 @@ module ActiveStorage
         )
 
         generated_url =
-          if defined?(Rails.application)
-            Rails.application.routes.url_helpers.update_rails_disk_service_path verified_token_with_expiration
+          if defined?(Quails.application)
+            Quails.application.routes.url_helpers.update_quails_disk_service_path verified_token_with_expiration
           else
-            "/rails/active_storage/disk/#{verified_token_with_expiration}"
+            "/quails/active_storage/disk/#{verified_token_with_expiration}"
           end
 
         payload[:url] = generated_url

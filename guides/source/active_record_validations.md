@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
 Active Record Validations
 =========================
@@ -42,7 +42,7 @@ database. For example, it may be important to your application to ensure that
 every user provides a valid email address and mailing address. Model-level
 validations are the best way to ensure that only valid data is saved into your
 database. They are database agnostic, cannot be bypassed by end users, and are
-convenient to test and maintain. Rails makes them easy to use, provides
+convenient to test and maintain. Quails makes them easy to use, provides
 built-in helpers for common needs, and allows you to create your own validation
 methods as well.
 
@@ -66,7 +66,7 @@ controller-level validations. Here's a summary of the pros and cons:
   idea to keep your controllers skinny, as it will make your application a
   pleasure to work with in the long run.
 
-Choose these in certain, specific cases. It's the opinion of the Rails team
+Choose these in certain, specific cases. It's the opinion of the Quails team
 that model-level validations are the most appropriate in most circumstances.
 
 ### When Does Validation Happen?
@@ -84,10 +84,10 @@ class Person < ApplicationRecord
 end
 ```
 
-We can see how it works by looking at some `rails console` output:
+We can see how it works by looking at some `quails console` output:
 
 ```ruby
-$ bin/rails console
+$ bin/quails console
 >> p = Person.new(name: "John Doe")
 => #<Person id: nil, name: "John Doe", created_at: nil, updated_at: nil>
 >> p.new_record?
@@ -149,8 +149,8 @@ false` as an argument. This technique should be used with caution.
 
 ### `valid?` and `invalid?`
 
-Before saving an Active Record object, Rails runs your validations.
-If these validations produce any errors, Rails does not save the object.
+Before saving an Active Record object, Quails runs your validations.
+If these validations produce any errors, Quails does not save the object.
 
 You can also run these validations on your own. `valid?` triggers your validations
 and returns true if no errors were found in the object, and false otherwise.
@@ -1018,7 +1018,7 @@ own custom validators.
 You can also create methods that verify the state of your models and add
 messages to the `errors` collection when they are invalid. You must then
 register these methods by using the `validate`
-([API](http://api.rubyonrails.org/classes/ActiveModel/Validations/ClassMethods.html#method-i-validate))
+([API](http://api.rubyonquails.org/classes/ActiveModel/Validations/ClassMethods.html#method-i-validate))
 class method, passing in the symbols for the validation methods' names.
 
 You can pass more than one symbol for each class method and the respective
@@ -1065,7 +1065,7 @@ end
 Working with Validation Errors
 ------------------------------
 
-In addition to the `valid?` and `invalid?` methods covered earlier, Rails provides a number of methods for working with the `errors` collection and inquiring about the validity of objects.
+In addition to the `valid?` and `invalid?` methods covered earlier, Quails provides a number of methods for working with the `errors` collection and inquiring about the validity of objects.
 
 The following is a list of the most commonly used methods. Please refer to the `ActiveModel::Errors` documentation for a list of all the available methods.
 
@@ -1185,7 +1185,7 @@ person.errors.details[:name]
 # => [{error: :invalid_characters, not_allowed: "!@#%*()_-+="}]
 ```
 
-All built in Rails validators populate the details hash with the corresponding
+All built in Quails validators populate the details hash with the corresponding
 validator type.
 
 ### `errors[:base]`
@@ -1248,11 +1248,11 @@ Once you've created a model and added validations, if that model is created via
 a web form, you probably want to display an error message when one of the
 validations fail.
 
-Because every application handles this kind of thing differently, Rails does
+Because every application handles this kind of thing differently, Quails does
 not include any view helpers to help you generate these messages directly.
-However, due to the rich number of methods Rails gives you to interact with
+However, due to the rich number of methods Quails gives you to interact with
 validations in general, it's fairly easy to build your own. In addition, when
-generating a scaffold, Rails will put some ERB into the `_form.html.erb` that
+generating a scaffold, Quails will put some ERB into the `_form.html.erb` that
 it generates that displays the full list of errors on that model.
 
 Assuming we have a model that's been saved in an instance variable named
@@ -1272,7 +1272,7 @@ Assuming we have a model that's been saved in an instance variable named
 <% end %>
 ```
 
-Furthermore, if you use the Rails form helpers to generate your forms, when
+Furthermore, if you use the Quails form helpers to generate your forms, when
 a validation error occurs on a field, it will generate an extra `<div>` around
 the entry.
 
@@ -1283,7 +1283,7 @@ the entry.
 ```
 
 You can then style this div however you'd like. The default scaffold that
-Rails generates, for example, adds this CSS rule:
+Quails generates, for example, adds this CSS rule:
 
 ```
 .field_with_errors {

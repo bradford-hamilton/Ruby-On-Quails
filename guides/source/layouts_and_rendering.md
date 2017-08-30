@@ -1,13 +1,13 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-Layouts and Rendering in Rails
+Layouts and Rendering in Quails
 ==============================
 
 This guide covers the basic layout features of Action Controller and Action View.
 
 After reading this guide, you will know:
 
-* How to use the various rendering methods built into Rails.
+* How to use the various rendering methods built into Quails.
 * How to create layouts with multiple content sections.
 * How to use partials to DRY up your views.
 * How to use nested layouts (sub-templates).
@@ -17,9 +17,9 @@ After reading this guide, you will know:
 Overview: How the Pieces Fit Together
 -------------------------------------
 
-This guide focuses on the interaction between Controller and View in the Model-View-Controller triangle. As you know, the Controller is responsible for orchestrating the whole process of handling a request in Rails, though it normally hands off any heavy code to the Model. But then, when it's time to send a response back to the user, the Controller hands things off to the View. It's that handoff that is the subject of this guide.
+This guide focuses on the interaction between Controller and View in the Model-View-Controller triangle. As you know, the Controller is responsible for orchestrating the whole process of handling a request in Quails, though it normally hands off any heavy code to the Model. But then, when it's time to send a response back to the user, the Controller hands things off to the View. It's that handoff that is the subject of this guide.
 
-In broad strokes, this involves deciding what should be sent as the response and calling an appropriate method to create that response. If the response is a full-blown view, Rails also does some extra work to wrap the view in a layout and possibly to pull in partial views. You'll see all of those paths later in this guide.
+In broad strokes, this involves deciding what should be sent as the response and calling an appropriate method to create that response. If the response is a full-blown view, Quails also does some extra work to wrap the view in a layout and possibly to pull in partial views. You'll see all of those paths later in this guide.
 
 Creating Responses
 ------------------
@@ -32,7 +32,7 @@ From the controller's point of view, there are three ways to create an HTTP resp
 
 ### Rendering by Default: Convention Over Configuration in Action
 
-You've heard that Rails promotes "convention over configuration". Default rendering is an excellent example of this. By default, controllers in Rails automatically render views with names that correspond to valid routes. For example, if you have this code in your `BooksController` class:
+You've heard that Quails promotes "convention over configuration". Default rendering is an excellent example of this. By default, controllers in Quails automatically render views with names that correspond to valid routes. For example, if you have this code in your `BooksController` class:
 
 ```ruby
 class BooksController < ApplicationController
@@ -51,7 +51,7 @@ And you have a view file `app/views/books/index.html.erb`:
 <h1>Books are coming soon!</h1>
 ```
 
-Rails will automatically render `app/views/books/index.html.erb` when you navigate to `/books` and you will see "Books are coming soon!" on your screen.
+Quails will automatically render `app/views/books/index.html.erb` when you navigate to `/books` and you will see "Books are coming soon!" on your screen.
 
 However a coming soon screen is only minimally useful, so you will soon create your `Book` model and add the index action to `BooksController`:
 
@@ -63,7 +63,7 @@ class BooksController < ApplicationController
 end
 ```
 
-Note that we don't have explicit render at the end of the index action in accordance with "convention over configuration" principle. The rule is that if you do not explicitly render something at the end of a controller action, Rails will automatically look for the `action_name.html.erb` template in the controller's view path and render it. So in this case, Rails will render the `app/views/books/index.html.erb` file.
+Note that we don't have explicit render at the end of the index action in accordance with "convention over configuration" principle. The rule is that if you do not explicitly render something at the end of a controller action, Quails will automatically look for the `action_name.html.erb` template in the controller's view path and render it. So in this case, Quails will render the `app/views/books/index.html.erb` file.
 
 If we want to display the properties of all the books in our view, we can do so with an ERB template like this:
 
@@ -95,11 +95,11 @@ If we want to display the properties of all the books in our view, we can do so 
 <%= link_to "New book", new_book_path %>
 ```
 
-NOTE: The actual rendering is done by subclasses of `ActionView::TemplateHandlers`. This guide does not dig into that process, but it's important to know that the file extension on your view controls the choice of template handler. Beginning with Rails 2, the standard extensions are `.erb` for ERB (HTML with embedded Ruby), and `.builder` for Builder (XML generator).
+NOTE: The actual rendering is done by subclasses of `ActionView::TemplateHandlers`. This guide does not dig into that process, but it's important to know that the file extension on your view controls the choice of template handler. Beginning with Quails 2, the standard extensions are `.erb` for ERB (HTML with embedded Ruby), and `.builder` for Builder (XML generator).
 
 ### Using `render`
 
-In most cases, the `ActionController::Base#render` method does the heavy lifting of rendering your application's content for use by a browser. There are a variety of ways to customize the behavior of `render`. You can render the default view for a Rails template, or a specific template, or a file, or inline code, or nothing at all. You can render text, JSON, or XML. You can specify the content type or HTTP status of the rendered response as well.
+In most cases, the `ActionController::Base#render` method does the heavy lifting of rendering your application's content for use by a browser. There are a variety of ways to customize the behavior of `render`. You can render the default view for a Quails template, or a specific template, or a file, or inline code, or nothing at all. You can render text, JSON, or XML. You can specify the content type or HTTP status of the rendered response as well.
 
 TIP: If you want to see the exact results of a call to `render` without needing to inspect it in a browser, you can call `render_to_string`. This method takes exactly the same options as `render`, but it returns a string instead of sending a response back to the browser.
 
@@ -141,7 +141,7 @@ What if you want to render a template from an entirely different controller from
 render "products/show"
 ```
 
-Rails knows that this view belongs to a different controller because of the embedded slash character in the string. If you want to be explicit, you can use the `:template` option (which was required on Rails 2.2 and earlier):
+Quails knows that this view belongs to a different controller because of the embedded slash character in the string. If you want to be explicit, you can use the `:template` option (which was required on Quails 2.2 and earlier):
 
 ```ruby
 render template: "products/show"
@@ -163,7 +163,7 @@ since an attacker could use this action to access security sensitive files in yo
 
 NOTE: By default, the file is rendered using the current layout.
 
-TIP: If you're running Rails on Microsoft Windows, you should use the `:file` option to
+TIP: If you're running Quails on Microsoft Windows, you should use the `:file` option to
 render a file, because Windows filenames do not have the same format as Unix filenames.
 
 #### Wrapping it up
@@ -183,10 +183,10 @@ render "books/edit"
 render "books/edit.html.erb"
 render template: "books/edit"
 render template: "books/edit.html.erb"
-render "/path/to/rails/app/views/books/edit"
-render "/path/to/rails/app/views/books/edit.html.erb"
-render file: "/path/to/rails/app/views/books/edit"
-render file: "/path/to/rails/app/views/books/edit.html.erb"
+render "/path/to/quails/app/views/books/edit"
+render "/path/to/quails/app/views/books/edit.html.erb"
+render file: "/path/to/quails/app/views/books/edit"
+render file: "/path/to/quails/app/views/books/edit.html.erb"
 ```
 
 Which one you use is really a matter of style and convention, but the rule of thumb is to use the simplest one that makes sense for the code you are writing.
@@ -199,7 +199,7 @@ The `render` method can do without a view completely, if you're willing to use t
 render inline: "<% products.each do |p| %><p><%= p.name %></p><% end %>"
 ```
 
-WARNING: There is seldom any good reason to use this option. Mixing ERB into your controllers defeats the MVC orientation of Rails and will make it harder for other developers to follow the logic of your project. Use a separate erb view instead.
+WARNING: There is seldom any good reason to use this option. Mixing ERB into your controllers defeats the MVC orientation of Quails and will make it harder for other developers to follow the logic of your project. Use a separate erb view instead.
 
 By default, inline rendering uses ERB. You can force it to use Builder instead with the `:type` option:
 
@@ -220,7 +220,7 @@ TIP: Rendering pure text is most useful when you're responding to Ajax or web
 service requests that are expecting something other than proper HTML.
 
 NOTE: By default, if you use the `:plain` option, the text is rendered without
-using the current layout. If you want Rails to put the text into the current
+using the current layout. If you want Quails to put the text into the current
 layout, you need to add the `layout: true` option and use the `.text.erb`
 extension for the layout file.
 
@@ -241,7 +241,7 @@ NOTE: When using `html:` option, HTML entities will be escaped if the string is 
 
 #### Rendering JSON
 
-JSON is a JavaScript data format used by many Ajax libraries. Rails has built-in support for converting objects to JSON and rendering that JSON back to the browser:
+JSON is a JavaScript data format used by many Ajax libraries. Quails has built-in support for converting objects to JSON and rendering that JSON back to the browser:
 
 ```ruby
 render json: @product
@@ -251,7 +251,7 @@ TIP: You don't need to call `to_json` on the object that you want to render. If 
 
 #### Rendering XML
 
-Rails also has built-in support for converting objects to XML and rendering that XML back to the caller:
+Quails also has built-in support for converting objects to XML and rendering that XML back to the caller:
 
 ```ruby
 render xml: @product
@@ -261,10 +261,10 @@ TIP: You don't need to call `to_xml` on the object that you want to render. If y
 
 #### Rendering Vanilla JavaScript
 
-Rails can render vanilla JavaScript:
+Quails can render vanilla JavaScript:
 
 ```ruby
-render js: "alert('Hello Rails');"
+render js: "alert('Hello Quails');"
 ```
 
 This will send the supplied string to the browser with a MIME type of `text/javascript`.
@@ -297,7 +297,7 @@ Calls to the `render` method generally accept five options:
 
 ##### The `:content_type` Option
 
-By default, Rails will serve the results of a rendering operation with the MIME content-type of `text/html` (or `application/json` if you use the `:json` option, or `application/xml` for the `:xml` option.). There are times when you might like to change this, and you can do so by setting the `:content_type` option:
+By default, Quails will serve the results of a rendering operation with the MIME content-type of `text/html` (or `application/json` if you use the `:json` option, or `application/xml` for the `:xml` option.). There are times when you might like to change this, and you can do so by setting the `:content_type` option:
 
 ```ruby
 render file: filename, content_type: "application/rss"
@@ -307,13 +307,13 @@ render file: filename, content_type: "application/rss"
 
 With most of the options to `render`, the rendered content is displayed as part of the current layout. You'll learn more about layouts and how to use them later in this guide.
 
-You can use the `:layout` option to tell Rails to use a specific file as the layout for the current action:
+You can use the `:layout` option to tell Quails to use a specific file as the layout for the current action:
 
 ```ruby
 render layout: "special_layout"
 ```
 
-You can also tell Rails to render with no layout at all:
+You can also tell Quails to render with no layout at all:
 
 ```ruby
 render layout: false
@@ -329,14 +329,14 @@ render xml: photo, location: photo_url(photo)
 
 ##### The `:status` Option
 
-Rails will automatically generate a response with the correct HTTP status code (in most cases, this is `200 OK`). You can use the `:status` option to change this:
+Quails will automatically generate a response with the correct HTTP status code (in most cases, this is `200 OK`). You can use the `:status` option to change this:
 
 ```ruby
 render status: 500
 render status: :forbidden
 ```
 
-Rails understands both numeric status codes and the corresponding symbols shown below.
+Quails understands both numeric status codes and the corresponding symbols shown below.
 
 | Response Class      | HTTP Status Code | Symbol                           |
 | ------------------- | ---------------- | -------------------------------- |
@@ -405,7 +405,7 @@ NOTE:  If you try to render content along with a non-content status code
 
 ##### The `:formats` Option
 
-Rails uses the format specified in the request (or `:html` by default). You can
+Quails uses the format specified in the request (or `:html` by default). You can
 change this passing the `:formats` option with a symbol or an array:
 
 ```ruby
@@ -417,7 +417,7 @@ If a template with the specified format does not exist an `ActionView::MissingTe
 
 #### Finding Layouts
 
-To find the current layout, Rails first looks for a file in `app/views/layouts` with the same base name as the controller. For example, rendering actions from the `PhotosController` class will use `app/views/layouts/photos.html.erb` (or `app/views/layouts/photos.builder`). If there is no such controller-specific layout, Rails will use `app/views/layouts/application.html.erb` or `app/views/layouts/application.builder`. If there is no `.erb` layout, Rails will use a `.builder` layout if one exists. Rails also provides several ways to more precisely assign specific layouts to individual controllers and actions.
+To find the current layout, Quails first looks for a file in `app/views/layouts` with the same base name as the controller. For example, rendering actions from the `PhotosController` class will use `app/views/layouts/photos.html.erb` (or `app/views/layouts/photos.builder`). If there is no such controller-specific layout, Quails will use `app/views/layouts/application.html.erb` or `app/views/layouts/application.builder`. If there is no `.erb` layout, Quails will use a `.builder` layout if one exists. Quails also provides several ways to more precisely assign specific layouts to individual controllers and actions.
 
 ##### Specifying Layouts for Controllers
 
@@ -576,7 +576,7 @@ There are no items in this list <em>yet</em>.
 
 #### Avoiding Double Render Errors
 
-Sooner or later, most Rails developers will see the error message "Can only render or redirect once per action". While this is annoying, it's relatively easy to fix. Usually it happens because of a fundamental misunderstanding of the way that `render` works.
+Sooner or later, most Quails developers will see the error message "Can only render or redirect once per action". While this is annoying, it's relatively easy to fix. Usually it happens because of a fundamental misunderstanding of the way that `render` works.
 
 For example, here's some code that will trigger this error:
 
@@ -590,7 +590,7 @@ def show
 end
 ```
 
-If `@book.special?` evaluates to `true`, Rails will start the rendering process to dump the `@book` variable into the `special_show` view. But this will _not_ stop the rest of the code in the `show` action from running, and when Rails hits the end of the action, it will start to render the `regular_show` view - and throw an error. The solution is simple: make sure that you have only one call to `render` or `redirect` in a single code path. One thing that can help is `and return`. Here's a patched version of the method:
+If `@book.special?` evaluates to `true`, Quails will start the rendering process to dump the `@book` variable into the `special_show` view. But this will _not_ stop the rest of the code in the `show` action from running, and when Quails hits the end of the action, it will start to render the `regular_show` view - and throw an error. The solution is simple: make sure that you have only one call to `render` or `redirect` in a single code path. One thing that can help is `and return`. Here's a patched version of the method:
 
 ```ruby
 def show
@@ -619,7 +619,7 @@ This will render a book with `special?` set with the `special_show` template, wh
 
 ### Using `redirect_to`
 
-Another way to handle returning responses to an HTTP request is with `redirect_to`. As you've seen, `render` tells Rails which view (or other asset) to use in constructing a response. The `redirect_to` method does something completely different: it tells the browser to send a new request for a different URL. For example, you could redirect from wherever you are in your code to the index of photos in your application with this call:
+Another way to handle returning responses to an HTTP request is with `redirect_to`. As you've seen, `render` tells Quails which view (or other asset) to use in constructing a response. The `redirect_to` method does something completely different: it tells the browser to send a new request for a different URL. For example, you could redirect from wherever you are in your code to the index of photos in your application with this call:
 
 ```ruby
 redirect_to photos_url
@@ -638,7 +638,7 @@ NOTE: `redirect_to` and `redirect_back` do not halt and return immediately from 
 
 #### Getting a Different Redirect Status Code
 
-Rails uses HTTP status code 302, a temporary redirect, when you call `redirect_to`. If you'd like to use a different status code, perhaps 301, a permanent redirect, you can use the `:status` option:
+Quails uses HTTP status code 302, a temporary redirect, when you call `redirect_to`. If you'd like to use a different status code, perhaps 301, a permanent redirect, you can use the `:status` option:
 
 ```ruby
 redirect_to photos_path, status: 301
@@ -648,7 +648,7 @@ Just like the `:status` option for `render`, `:status` for `redirect_to` accepts
 
 #### The Difference Between `render` and `redirect_to`
 
-Sometimes inexperienced developers think of `redirect_to` as a sort of `goto` command, moving execution from one place to another in your Rails code. This is _not_ correct. Your code stops running and waits for a new request for the browser. It just happens that you've told the browser what request it should make next, by sending back an HTTP 302 status code.
+Sometimes inexperienced developers think of `redirect_to` as a sort of `goto` command, moving execution from one place to another in your Quails code. This is _not_ correct. Your code stops running and waits for a new request for the browser. It just happens that you've told the browser what request it should make next, by sending back an HTTP 302 status code.
 
 Consider these actions to see the difference:
 
@@ -747,7 +747,7 @@ Cache-Control: no-cache
 Structuring Layouts
 -------------------
 
-When Rails renders a view as a response, it does so by combining the view with the current layout, using the rules for finding the current layout that were covered earlier in this guide. Within a layout, you have access to three tools for combining different bits of output to form the overall response:
+When Quails renders a view as a response, it does so by combining the view with the current layout, using the rules for finding the current layout that were covered earlier in this guide. Within a layout, you have access to three tools for combining different bits of output to form the overall response:
 
 * Asset tags
 * `yield` and `content_for`
@@ -755,7 +755,7 @@ When Rails renders a view as a response, it does so by combining the view with t
 
 ### Asset Tag Helpers
 
-Asset tag helpers provide methods for generating HTML that link views to feeds, JavaScript, stylesheets, images, videos, and audios. There are six asset tag helpers available in Rails:
+Asset tag helpers provide methods for generating HTML that link views to feeds, JavaScript, stylesheets, images, videos, and audios. There are six asset tag helpers available in Quails:
 
 * `auto_discovery_link_tag`
 * `javascript_include_tag`
@@ -780,16 +780,16 @@ The `auto_discovery_link_tag` helper builds HTML that most browsers and feed rea
 There are three tag options available for the `auto_discovery_link_tag`:
 
 * `:rel` specifies the `rel` value in the link. The default value is "alternate".
-* `:type` specifies an explicit MIME type. Rails will generate an appropriate MIME type automatically.
+* `:type` specifies an explicit MIME type. Quails will generate an appropriate MIME type automatically.
 * `:title` specifies the title of the link. The default value is the uppercase `:type` value, for example, "ATOM" or "RSS".
 
 #### Linking to JavaScript Files with the `javascript_include_tag`
 
 The `javascript_include_tag` helper returns an HTML `script` tag for each source provided.
 
-If you are using Rails with the [Asset Pipeline](asset_pipeline.html) enabled, this helper will generate a link to `/assets/javascripts/` rather than `public/javascripts` which was used in earlier versions of Rails. This link is then served by the asset pipeline.
+If you are using Quails with the [Asset Pipeline](asset_pipeline.html) enabled, this helper will generate a link to `/assets/javascripts/` rather than `public/javascripts` which was used in earlier versions of Quails. This link is then served by the asset pipeline.
 
-A JavaScript file within a Rails application or Rails engine goes in one of three locations: `app/assets`, `lib/assets` or `vendor/assets`. These locations are explained in detail in the [Asset Organization section in the Asset Pipeline Guide](asset_pipeline.html#asset-organization).
+A JavaScript file within a Quails application or Quails engine goes in one of three locations: `app/assets`, `lib/assets` or `vendor/assets`. These locations are explained in detail in the [Asset Organization section in the Asset Pipeline Guide](asset_pipeline.html#asset-organization).
 
 You can specify a full path relative to the document root, or a URL, if you prefer. For example, to link to a JavaScript file that is inside a directory called `javascripts` inside of one of `app/assets`, `lib/assets` or `vendor/assets`, you would do this:
 
@@ -797,7 +797,7 @@ You can specify a full path relative to the document root, or a URL, if you pref
 <%= javascript_include_tag "main" %>
 ```
 
-Rails will then output a `script` tag such as this:
+Quails will then output a `script` tag such as this:
 
 ```html
 <script src='/assets/main.js'></script>
@@ -827,7 +827,7 @@ To include `http://example.com/main.js`:
 
 The `stylesheet_link_tag` helper returns an HTML `<link>` tag for each source provided.
 
-If you are using Rails with the "Asset Pipeline" enabled, this helper will generate a link to `/assets/stylesheets/`. This link is then processed by the Sprockets gem. A stylesheet file can be stored in one of three locations: `app/assets`, `lib/assets` or `vendor/assets`.
+If you are using Quails with the "Asset Pipeline" enabled, this helper will generate a link to `/assets/stylesheets/`. This link is then processed by the Sprockets gem. A stylesheet file can be stored in one of three locations: `app/assets`, `lib/assets` or `vendor/assets`.
 
 You can specify a full path relative to the document root, or a URL. For example, to link to a stylesheet file that is inside a directory called `stylesheets` inside of one of `app/assets`, `lib/assets` or `vendor/assets`, you would do this:
 
@@ -1001,7 +1001,7 @@ The `content_for` method allows you to insert content into a named `yield` block
   <title>A simple page</title>
 <% end %>
 
-<p>Hello, Rails!</p>
+<p>Hello, Quails!</p>
 ```
 
 The result of rendering this page into the supplied layout would be this HTML:
@@ -1012,7 +1012,7 @@ The result of rendering this page into the supplied layout would be this HTML:
   <title>A simple page</title>
   </head>
   <body>
-  <p>Hello, Rails!</p>
+  <p>Hello, Quails!</p>
   </body>
 </html>
 ```
@@ -1215,7 +1215,7 @@ There is also a shorthand for this. Assuming `@products` is a collection of `pro
 <%= render @products %>
 ```
 
-Rails determines the name of the partial to use by looking at the model name in the collection. In fact, you can even create a heterogeneous collection and render it this way, and Rails will choose the proper partial for each member of the collection:
+Quails determines the name of the partial to use by looking at the model name in the collection. In fact, you can even create a heterogeneous collection and render it this way, and Quails will choose the proper partial for each member of the collection:
 
 * `index.html.erb`
 
@@ -1236,7 +1236,7 @@ Rails determines the name of the partial to use by looking at the model name in 
     <p>Employee: <%= employee.name %></p>
     ```
 
-In this case, Rails will use the customer or employee partials as appropriate for each member of the collection.
+In this case, Quails will use the customer or employee partials as appropriate for each member of the collection.
 
 In the event that the collection is empty, `render` will return nil, so it should be fairly simple to provide alternative content.
 
@@ -1264,7 +1264,7 @@ You can also pass in arbitrary local variables to any partial you are rendering 
 
 In this case, the partial will have access to a local variable `title` with the value "Products Page".
 
-TIP: Rails also makes a counter variable available within a partial called by the collection, named after the member of the collection followed by `_counter`. For example, if you're rendering `@products`, within the partial you can refer to `product_counter` to tell you how many times the partial has been rendered. This does not work in conjunction with the `as: :value` option.
+TIP: Quails also makes a counter variable available within a partial called by the collection, named after the member of the collection followed by `_counter`. For example, if you're rendering `@products`, within the partial you can refer to `product_counter` to tell you how many times the partial has been rendered. This does not work in conjunction with the `as: :value` option.
 
 You can also specify a second partial to be rendered between instances of the main partial by using the `:spacer_template` option:
 
@@ -1274,7 +1274,7 @@ You can also specify a second partial to be rendered between instances of the ma
 <%= render partial: @products, spacer_template: "product_ruler" %>
 ```
 
-Rails will render the `_product_ruler` partial (with no data passed in to it) between each pair of `_product` partials.
+Quails will render the `_product_ruler` partial (with no data passed in to it) between each pair of `_product` partials.
 
 #### Collection Partial Layouts
 

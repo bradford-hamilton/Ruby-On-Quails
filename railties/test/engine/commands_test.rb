@@ -3,12 +3,12 @@
 require "abstract_unit"
 require "console_helpers"
 
-class Rails::Engine::CommandsTest < ActiveSupport::TestCase
+class Quails::Engine::CommandsTest < ActiveSupport::TestCase
   include ConsoleHelpers
 
   def setup
     @destination_root = Dir.mktmpdir("bukkits")
-    Dir.chdir(@destination_root) { `bundle exec rails plugin new bukkits --mountable` }
+    Dir.chdir(@destination_root) { `bundle exec quails plugin new bukkits --mountable` }
   end
 
   def teardown
@@ -17,14 +17,14 @@ class Rails::Engine::CommandsTest < ActiveSupport::TestCase
 
   def test_help_command_work_inside_engine
     output = capture(:stderr) do
-      Dir.chdir(plugin_path) { `bin/rails --help` }
+      Dir.chdir(plugin_path) { `bin/quails --help` }
     end
     assert_no_match "NameError", output
   end
 
   def test_runner_command_work_inside_engine
     output = capture(:stdout) do
-      Dir.chdir(plugin_path) { system("bin/rails runner 'puts Rails.env'") }
+      Dir.chdir(plugin_path) { system("bin/quails runner 'puts Quails.env'") }
     end
 
     assert_equal "test", output.strip
@@ -67,7 +67,7 @@ class Rails::Engine::CommandsTest < ActiveSupport::TestCase
 
     def spawn_command(command, fd)
       Process.spawn(
-        "#{plugin_path}/bin/rails #{command}",
+        "#{plugin_path}/bin/quails #{command}",
         in: fd, out: fd, err: fd
       )
     end

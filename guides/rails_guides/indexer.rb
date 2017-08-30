@@ -3,7 +3,7 @@
 require "active_support/core_ext/object/blank"
 require "active_support/core_ext/string/inflections"
 
-module RailsGuides
+module QuailsGuides
   class Indexer
     attr_reader :body, :result, :warnings, :level_hash
 

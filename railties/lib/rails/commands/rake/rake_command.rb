@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   module Command
     class RakeCommand < Base # :nodoc:
-      extend Rails::Command::Actions
+      extend Quails::Command::Actions
 
       namespace "rake"
 
@@ -18,7 +18,7 @@ module Rails
           ARGV.unshift(task) # Prepend the task, so Rake knows how to run it.
 
           Rake.application.standard_exception_handling do
-            Rake.application.init("rails")
+            Rake.application.init("quails")
             Rake.application.load_rakefile
             Rake.application.top_level
           end
@@ -33,7 +33,7 @@ module Rails
             require_application_and_environment!
 
             Rake::TaskManager.record_task_metadata = true
-            Rake.application.instance_variable_set(:@name, "rails")
+            Rake.application.instance_variable_set(:@name, "quails")
             load_tasks
             @rake_tasks = Rake.application.tasks.select(&:comment)
           end

@@ -3,9 +3,9 @@
 require "active_support/core_ext/class/attribute"
 require "minitest"
 
-module Rails
+module Quails
   class TestUnitReporter < Minitest::StatisticsReporter
-    class_attribute :executable, default: "bin/rails test"
+    class_attribute :executable, default: "bin/quails test"
 
     def record(result)
       super
@@ -76,8 +76,8 @@ module Rails
         @app_root ||=
           if defined?(ENGINE_ROOT)
             ENGINE_ROOT
-          elsif Rails.respond_to?(:root)
-            Rails.root
+          elsif Quails.respond_to?(:root)
+            Quails.root
           end
       end
 

@@ -51,11 +51,11 @@ module ActiveSupport
         # Outputs a deprecation warning message
         #
         #   deprecated_method_warning(:method_name)
-        #   # => "method_name is deprecated and will be removed from Rails #{deprecation_horizon}"
+        #   # => "method_name is deprecated and will be removed from Quails #{deprecation_horizon}"
         #   deprecated_method_warning(:method_name, :another_method)
-        #   # => "method_name is deprecated and will be removed from Rails #{deprecation_horizon} (use another_method instead)"
+        #   # => "method_name is deprecated and will be removed from Quails #{deprecation_horizon} (use another_method instead)"
         #   deprecated_method_warning(:method_name, "Optional message")
-        #   # => "method_name is deprecated and will be removed from Rails #{deprecation_horizon} (Optional message)"
+        #   # => "method_name is deprecated and will be removed from Quails #{deprecation_horizon} (Optional message)"
         def deprecated_method_warning(method_name, message = nil)
           warning = "#{method_name} is deprecated and will be removed from #{gem_name} #{deprecation_horizon}"
           case message

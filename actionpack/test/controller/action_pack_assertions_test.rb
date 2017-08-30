@@ -28,13 +28,13 @@ class ActionPackAssertionsController < ActionController::Base
 
   def redirect_to_path() redirect_to "/some/path" end
 
-  def redirect_invalid_external_route() redirect_to "ht_tp://www.rubyonrails.org" end
+  def redirect_invalid_external_route() redirect_to "ht_tp://www.rubyonquails.org" end
 
   def redirect_to_named_route() redirect_to route_one_url end
 
-  def redirect_external() redirect_to "http://www.rubyonrails.org"; end
+  def redirect_external() redirect_to "http://www.rubyonquails.org"; end
 
-  def redirect_external_protocol_relative() redirect_to "//www.rubyonrails.org"; end
+  def redirect_external_protocol_relative() redirect_to "//www.rubyonquails.org"; end
 
   def response404() head "404 AWOL" end
 
@@ -281,7 +281,7 @@ class ActionPackAssertionsControllerTest < ActionController::TestCase
       assert_redirected_to "/foo"
     rescue ActiveSupport::TestCase::Assertion => ex
       assert_no_match(
-        /#{request.protocol}#{request.host}\/\/www.rubyonrails.org/,
+        /#{request.protocol}#{request.host}\/\/www.rubyonquails.org/,
         ex.message,
         "protocol relative url was incorrectly normalized"
       )
@@ -330,10 +330,10 @@ class ActionPackAssertionsControllerTest < ActionController::TestCase
     assert_equal "http://test.host/nothing", @response.redirect_url
 
     process :redirect_external
-    assert_equal "http://www.rubyonrails.org", @response.redirect_url
+    assert_equal "http://www.rubyonquails.org", @response.redirect_url
 
     process :redirect_external_protocol_relative
-    assert_equal "//www.rubyonrails.org", @response.redirect_url
+    assert_equal "//www.rubyonquails.org", @response.redirect_url
   end
 
   def test_no_redirect_url
@@ -365,8 +365,8 @@ class ActionPackAssertionsControllerTest < ActionController::TestCase
   def test_redirect_url_match
     process :redirect_external
     assert @response.redirect?
-    assert_match(/rubyonrails/, @response.redirect_url)
-    assert !/perloffrails/.match(@response.redirect_url)
+    assert_match(/rubyonquails/, @response.redirect_url)
+    assert !/perloffquails/.match(@response.redirect_url)
   end
 
   def test_redirection
@@ -423,7 +423,7 @@ class ActionPackAssertionsControllerTest < ActionController::TestCase
 
   def test_redirect_invalid_external_route
     process :redirect_invalid_external_route
-    assert_redirected_to "http://test.hostht_tp://www.rubyonrails.org"
+    assert_redirected_to "http://test.hostht_tp://www.rubyonquails.org"
   end
 
   def test_redirected_to_url_full_url

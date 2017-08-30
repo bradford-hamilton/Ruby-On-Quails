@@ -806,7 +806,7 @@ class HasAndBelongsToManyAssociationsTest < ActiveRecord::TestCase
 
   def test_symbols_as_keys
     developer = DeveloperWithSymbolsForKeys.new(name: "David")
-    project = ProjectWithSymbolsForKeys.new(name: "Rails Testing")
+    project = ProjectWithSymbolsForKeys.new(name: "Quails Testing")
     project.developers << developer
     project.save!
 

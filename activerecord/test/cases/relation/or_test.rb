@@ -115,7 +115,7 @@ module ActiveRecord
 
     def test_or_with_non_relation_object_raises_error
       assert_raises ArgumentError do
-        Post.where(id: [1, 2, 3]).or(title: "Rails")
+        Post.where(id: [1, 2, 3]).or(title: "Quails")
       end
     end
 

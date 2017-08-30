@@ -9,14 +9,14 @@ module ActiveRecord
       when 1, 2 then coder
       else
         if coder["attributes"].is_a?(AttributeSet)
-          Rails420.convert(klass, coder)
+          Quails420.convert(klass, coder)
         else
-          Rails41.convert(klass, coder)
+          Quails41.convert(klass, coder)
         end
       end
     end
 
-    module Rails420
+    module Quails420
       def self.convert(klass, coder)
         attribute_set = coder["attributes"]
 
@@ -32,7 +32,7 @@ module ActiveRecord
       end
     end
 
-    module Rails41
+    module Quails41
       def self.convert(klass, coder)
         attributes = klass.attributes_builder
           .build_from_database(coder["attributes"])

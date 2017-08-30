@@ -1,18 +1,18 @@
 {
   "name": "activestorage",
   "version": "5.2.0.alpha",
-  "description": "Attach cloud and local files in Rails applications",
+  "description": "Attach cloud and local files in Quails applications",
   "main": "app/assets/javascripts/activestorage.js",
   "files": [
     "app/assets/javascripts/*.js"
   ],
-  "homepage": "http://rubyonrails.org/",
+  "homepage": "http://rubyonquails.org/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rails/rails.git"
+    "url": "git+https://github.com/quails/quails.git"
   },
   "bugs": {
-    "url": "https://github.com/rails/rails/issues"
+    "url": "https://github.com/quails/quails/issues"
   },
   "author": "Javan Makhmali <javan@javan.us>",
   "license": "MIT",

@@ -5,13 +5,13 @@ require "active_support/core_ext/object"
 require_relative "paths"
 require_relative "rack"
 
-module Rails
+module Quails
   module Configuration
-    # MiddlewareStackProxy is a proxy for the Rails middleware stack that allows
+    # MiddlewareStackProxy is a proxy for the Quails middleware stack that allows
     # you to configure middlewares in your application. It works basically as a
     # command recorder, saving each command to be applied after initialization
     # over the default middleware stack, so you can add, swap, or remove any
-    # middleware in Rails.
+    # middleware in Quails.
     #
     # You can add your own middlewares by using the +config.middleware.use+ method:
     #
@@ -118,12 +118,12 @@ module Rails
 
         return @options[method] if args.empty?
 
-        if method == :rails || args.first.is_a?(Hash)
+        if method == :quails || args.first.is_a?(Hash)
           namespace, configuration = method, args.shift
         else
           namespace, configuration = args.shift, args.shift
           namespace = namespace.to_sym if namespace.respond_to?(:to_sym)
-          @options[:rails][method] = namespace
+          @options[:quails][method] = namespace
         end
 
         if configuration

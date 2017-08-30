@@ -1,26 +1,26 @@
-#= require ./rails-ujs/BANNER
-#= export Rails
+#= require ./quails-ujs/BANNER
+#= export Quails
 #= require_self
-#= require_tree ./rails-ujs/utils
-#= require_tree ./rails-ujs/features
-#= require ./rails-ujs/start
+#= require_tree ./quails-ujs/utils
+#= require_tree ./quails-ujs/features
+#= require ./quails-ujs/start
 
-@Rails =
-  # Link elements bound by rails-ujs
+@Quails =
+  # Link elements bound by quails-ujs
   linkClickSelector: 'a[data-confirm], a[data-method], a[data-remote]:not([disabled]), a[data-disable-with], a[data-disable]'
 
-  # Button elements bound by rails-ujs
+  # Button elements bound by quails-ujs
   buttonClickSelector:
     selector: 'button[data-remote]:not([form]), button[data-confirm]:not([form])'
     exclude: 'form button'
 
-  # Select elements bound by rails-ujs
+  # Select elements bound by quails-ujs
   inputChangeSelector: 'select[data-remote], input[data-remote], textarea[data-remote]'
 
-  # Form elements bound by rails-ujs
+  # Form elements bound by quails-ujs
   formSubmitSelector: 'form'
 
-  # Form input elements bound by rails-ujs
+  # Form input elements bound by quails-ujs
   formInputClickSelector: 'form input[type=submit], form input[type=image], form button[type=submit], form button:not([type]), input[type=submit][form], input[type=image][form], button[type=submit][form], button[form]:not([type])'
 
   # Form input elements disabled during form submission

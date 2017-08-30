@@ -10,7 +10,7 @@
 
     *Yoshiyuki Hirano*
 
-*   Skip unused components when running `bin/rails` in Rails plugin.
+*   Skip unused components when running `bin/quails` in Quails plugin.
 
     *Yoshiyuki Hirano*
 
@@ -22,18 +22,18 @@
 
     *bogdanvlviv*
 
-*   Deprecate support of use `Rails::Application` subclass to start Rails server.
+*   Deprecate support of use `Quails::Application` subclass to start Quails server.
 
     *Yuji Yaginuma*
 
 *   Add `ruby x.x.x` version to `Gemfile` and create `.ruby-version`
-    root file containing the current Ruby version when new Rails applications are
+    root file containing the current Ruby version when new Quails applications are
     created.
 
     *Alberto Almagro*
 
 *   Support `-` as a platform-agnostic way to run a script from stdin with
-    `rails runner`
+    `quails runner`
 
     *Cody Cutrer*
 
@@ -47,36 +47,36 @@
     *Robin Dupret*
 
 *   Passing the environment's name as a regular argument to the
-    `rails dbconsole` and `rails console` commands is deprecated.
+    `quails dbconsole` and `quails console` commands is deprecated.
     The `-e` option should be used instead.
 
     Previously:
 
-        $ bin/rails dbconsole production
+        $ bin/quails dbconsole production
 
     Now:
 
-        $ bin/rails dbconsole -e production
+        $ bin/quails dbconsole -e production
 
     *Robin Dupret*, *Kasper Timm Hansen*
 
-*   Allow passing a custom connection name to the `rails dbconsole`
+*   Allow passing a custom connection name to the `quails dbconsole`
     command when using a 3-level database configuration.
 
-        $ bin/rails dbconsole -c replica
+        $ bin/quails dbconsole -c replica
 
     *Robin Dupret*, *Jeremy Daer*
 
-*   Skip unused components when running `bin/rails app:update`.
+*   Skip unused components when running `bin/quails app:update`.
 
     If the initial app generation skipped Action Cable, Active Record etc.,
     the update task honors those skips too.
 
     *Yuji Yaginuma*
 
-*   Make Rails' test runner work better with minitest plugins.
+*   Make Quails' test runner work better with minitest plugins.
 
-    By demoting the Rails test runner to just another minitest plugin —
+    By demoting the Quails test runner to just another minitest plugin —
     and thereby not eager loading it — we can co-exist much better with
     other minitest plugins such as pride and minitest-focus.
 
@@ -88,7 +88,7 @@
 
     *Yuji Yaginuma*
 
-*   Add `rails secrets:show` command.
+*   Add `quails secrets:show` command.
 
     *Yuji Yaginuma*
 
@@ -110,7 +110,7 @@
 
     *Yuji Yaginuma*
 
-*   Allow irb options to be passed from `rails console` command.
+*   Allow irb options to be passed from `quails console` command.
 
     Fixes #28988.
 
@@ -126,4 +126,4 @@
     *Jan Krutisch*
 
 
-Please check [5-1-stable](https://github.com/rails/rails/blob/5-1-stable/railties/CHANGELOG.md) for previous changes.
+Please check [5-1-stable](https://github.com/quails/quails/blob/5-1-stable/railties/CHANGELOG.md) for previous changes.

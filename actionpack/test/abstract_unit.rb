@@ -38,7 +38,7 @@ require "active_model"
 
 require "pp" # require 'pp' early to prevent hidden_methods from not picking up the pretty-print methods until too late
 
-module Rails
+module Quails
   class << self
     def env
       @_env ||= ActiveSupport::StringInquirer.new(ENV["RAILS_ENV"] || ENV["RACK_ENV"] || "test")
@@ -121,7 +121,7 @@ class ActionDispatch::IntegrationTest < ActiveSupport::TestCase
   end
 
   class DeadEndRoutes < ActionDispatch::Routing::RouteSet
-    # Stub Rails dispatcher so it does not get controller references and
+    # Stub Quails dispatcher so it does not get controller references and
     # simply return the controller#action as Rack::Body.
     class NullController < ::ActionController::Metal
       def self.dispatch(action, req, res)
@@ -222,7 +222,7 @@ module ActionController
   end
 
   class Base
-    # This stub emulates the Railtie including the URL helpers from a Rails application
+    # This stub emulates the Railtie including the URL helpers from a Quails application
     extend AbstractController::Railties::RoutesHelpers.with(SharedTestRoutes)
     include SharedTestRoutes.mounted_helpers
 
@@ -380,7 +380,7 @@ class ForkingExecutor
   def initialize(size)
     @size  = size
     @queue = Server.new
-    file   = File.join Dir.tmpdir, Dir::Tmpname.make_tmpname("rails-tests", "fd")
+    file   = File.join Dir.tmpdir, Dir::Tmpname.make_tmpname("quails-tests", "fd")
     @url   = "drbunix://#{file}"
     @pool  = nil
     DRb.start_service @url, @queue

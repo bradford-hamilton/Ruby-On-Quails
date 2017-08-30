@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require "abstract_unit"
-require "rails/initializable"
+require "quails/initializable"
 
 module InitializableTests
   class Foo
-    include Rails::Initializable
+    include Quails::Initializable
     attr_accessor :foo, :bar
 
     initializer :start do
@@ -22,7 +22,7 @@ module InitializableTests
   end
 
   class Parent
-    include Rails::Initializable
+    include Quails::Initializable
 
     initializer :one do
       $arr << 1
@@ -34,7 +34,7 @@ module InitializableTests
   end
 
   class Child < Parent
-    include Rails::Initializable
+    include Quails::Initializable
 
     initializer :three, before: :one do
       $arr << 3
@@ -52,7 +52,7 @@ module InitializableTests
   end
 
   class Instance
-    include Rails::Initializable
+    include Quails::Initializable
 
     initializer :one, group: :assets do
       $arr << 1
@@ -72,7 +72,7 @@ module InitializableTests
   end
 
   class WithArgs
-    include Rails::Initializable
+    include Quails::Initializable
 
     initializer :foo do |arg|
       $with_arg = arg
@@ -81,7 +81,7 @@ module InitializableTests
 
   class OverriddenInitializer
     class MoreInitializers
-      include Rails::Initializable
+      include Quails::Initializable
 
       initializer :startup, before: :last do
         $arr << 3
@@ -96,7 +96,7 @@ module InitializableTests
       end
     end
 
-    include Rails::Initializable
+    include Quails::Initializable
 
     initializer :first do
       $arr << 1
@@ -113,7 +113,7 @@ module InitializableTests
 
   module Interdependent
     class PluginA
-      include Rails::Initializable
+      include Quails::Initializable
 
       initializer "plugin_a.startup" do
         $arr << 1
@@ -125,7 +125,7 @@ module InitializableTests
     end
 
     class PluginB
-      include Rails::Initializable
+      include Quails::Initializable
 
       initializer "plugin_b.startup", after: "plugin_a.startup" do
         $arr << 2
@@ -137,7 +137,7 @@ module InitializableTests
     end
 
     class Application
-      include Rails::Initializable
+      include Quails::Initializable
       def self.initializers
         PluginB.initializers + PluginA.initializers
       end
@@ -169,7 +169,7 @@ module InitializableTests
     test "creating initializer without a block raises an error" do
       assert_raise(ArgumentError) do
         Class.new do
-          include Rails::Initializable
+          include Quails::Initializable
 
           initializer :foo
         end

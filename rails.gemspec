@@ -4,10 +4,10 @@ version = File.read(File.expand_path("RAILS_VERSION", __dir__)).strip
 
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
-  s.name        = "rails"
+  s.name        = "quails"
   s.version     = version
   s.summary     = "Full-stack web application framework."
-  s.description = "Ruby on Rails is a full-stack web framework optimized for programmer happiness and sustainable productivity. It encourages beautiful code by favoring convention over configuration."
+  s.description = "Ruby on Quails is a full-stack web framework optimized for programmer happiness and sustainable productivity. It encourages beautiful code by favoring convention over configuration."
 
   s.required_ruby_version     = ">= 2.2.2"
   s.required_rubygems_version = ">= 1.8.11"
@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
 
   s.author   = "David Heinemeier Hansson"
   s.email    = "david@loudthinking.com"
-  s.homepage = "http://rubyonrails.org"
+  s.homepage = "http://rubyonquails.org"
 
   s.files = ["README.md"]
 
@@ -32,5 +32,5 @@ Gem::Specification.new do |s|
   s.add_dependency "railties",      version
 
   s.add_dependency "bundler",         ">= 1.3.0"
-  s.add_dependency "sprockets-rails", ">= 2.0.0"
+  s.add_dependency "sprockets-quails", ">= 2.0.0"
 end

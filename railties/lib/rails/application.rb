@@ -8,24 +8,24 @@ require "active_support/message_verifier"
 require_relative "engine"
 require_relative "secrets"
 
-module Rails
+module Quails
   # An Engine with the responsibility of coordinating the whole boot process.
   #
   # == Initialization
   #
-  # Rails::Application is responsible for executing all railties and engines
+  # Quails::Application is responsible for executing all railties and engines
   # initializers. It also executes some bootstrap initializers (check
-  # Rails::Application::Bootstrap) and finishing initializers, after all the others
-  # are executed (check Rails::Application::Finisher).
+  # Quails::Application::Bootstrap) and finishing initializers, after all the others
+  # are executed (check Quails::Application::Finisher).
   #
   # == Configuration
   #
-  # Besides providing the same configuration as Rails::Engine and Rails::Railtie,
+  # Besides providing the same configuration as Quails::Engine and Quails::Railtie,
   # the application object has several specific configurations, for example
   # "cache_classes", "consider_all_requests_local", "filter_parameters",
   # "logger" and so forth.
   #
-  # Check Rails::Application::Configuration to see them all.
+  # Check Quails::Application::Configuration to see them all.
   #
   # == Routes
   #
@@ -44,7 +44,7 @@ module Rails
   #
   #   1)  require "config/boot.rb" to setup load paths
   #   2)  require railties and engines
-  #   3)  Define Rails.application as "class MyApp::Application < Rails::Application"
+  #   3)  Define Quails.application as "class MyApp::Application < Quails::Application"
   #   4)  Run config.before_configuration callbacks
   #   5)  Load config/environments/ENV.rb
   #   6)  Run config.before_initialize callbacks
@@ -58,13 +58,13 @@ module Rails
   # == Multiple Applications
   #
   # If you decide to define multiple applications, then the first application
-  # that is initialized will be set to +Rails.application+, unless you override
+  # that is initialized will be set to +Quails.application+, unless you override
   # it with a different application.
   #
   # To create a new application, you can instantiate a new instance of a class
   # that has already been created:
   #
-  #   class Application < Rails::Application
+  #   class Application < Quails::Application
   #   end
   #
   #   first_application  = Application.new
@@ -76,19 +76,19 @@ module Rails
   # the configuration.
   #
   # If you decide to define Rake tasks, runners, or initializers in an
-  # application other than +Rails.application+, then you must run them manually.
+  # application other than +Quails.application+, then you must run them manually.
   class Application < Engine
-    autoload :Bootstrap,              "rails/application/bootstrap"
-    autoload :Configuration,          "rails/application/configuration"
-    autoload :DefaultMiddlewareStack, "rails/application/default_middleware_stack"
-    autoload :Finisher,               "rails/application/finisher"
-    autoload :Railties,               "rails/engine/railties"
-    autoload :RoutesReloader,         "rails/application/routes_reloader"
+    autoload :Bootstrap,              "quails/application/bootstrap"
+    autoload :Configuration,          "quails/application/configuration"
+    autoload :DefaultMiddlewareStack, "quails/application/default_middleware_stack"
+    autoload :Finisher,               "quails/application/finisher"
+    autoload :Railties,               "quails/engine/railties"
+    autoload :RoutesReloader,         "quails/application/routes_reloader"
 
     class << self
       def inherited(base)
         super
-        Rails.app_class = base
+        Quails.app_class = base
         add_lib_to_load_path!(find_root(base.called_from))
         ActiveSupport.run_load_hooks(:before_configuration, base)
       end
@@ -107,8 +107,8 @@ module Rails
 
       # Makes the +new+ method public.
       #
-      # Note that Rails::Application inherits from Rails::Engine, which
-      # inherits from Rails::Railtie and the +new+ method on Rails::Railtie is
+      # Note that Quails::Application inherits from Quails::Engine, which
+      # inherits from Quails::Railtie and the +new+ method on Quails::Railtie is
       # private
       public :new
     end
@@ -169,11 +169,11 @@ module Rails
     # Returns the application's KeyGenerator
     def key_generator
       # number of iterations selected based on consultation with the google security
-      # team. Details at https://github.com/rails/rails/pull/6952#issuecomment-7661220
+      # team. Details at https://github.com/quails/quails/pull/6952#issuecomment-7661220
       @caching_key_generator ||=
         if secrets.secret_key_base
           unless secrets.secret_key_base.kind_of?(String)
-            raise ArgumentError, "`secret_key_base` for #{Rails.env} environment must be a type of String, change this value in `config/secrets.yml`"
+            raise ArgumentError, "`secret_key_base` for #{Quails.env} environment must be a type of String, change this value in `config/secrets.yml`"
           end
           key_generator = ActiveSupport::KeyGenerator.new(secrets.secret_key_base, iterations: 1000)
           ActiveSupport::CachingKeyGenerator.new(key_generator)
@@ -195,8 +195,8 @@ module Rails
     #
     # ==== Examples
     #
-    #     message = Rails.application.message_verifier('sensitive_data').generate('my sensible data')
-    #     Rails.application.message_verifier('sensitive_data').verify(message)
+    #     message = Quails.application.message_verifier('sensitive_data').generate('my sensible data')
+    #     Quails.application.message_verifier('sensitive_data').verify(message)
     #     # => 'my sensible data'
     #
     # See the +ActiveSupport::MessageVerifier+ documentation for more information.
@@ -207,7 +207,7 @@ module Rails
       end
     end
 
-    # Convenience for loading config/foo.yml for the current Rails env.
+    # Convenience for loading config/foo.yml for the current Quails env.
     #
     # Example:
     #
@@ -220,10 +220,10 @@ module Rails
     #       namespace: my_app_development
     #
     #     # config/environments/production.rb
-    #     Rails.application.configure do
+    #     Quails.application.configure do
     #       config.middleware.use ExceptionNotifier, config_for(:exception_notification)
     #     end
-    def config_for(name, env: Rails.env)
+    def config_for(name, env: Quails.env)
       if name.is_a?(Pathname)
         yaml = name
       else
@@ -242,7 +242,7 @@ module Rails
         "Error: #{e.message}"
     end
 
-    # Stores some of the Rails initial environment parameters which
+    # Stores some of the Quails initial environment parameters which
     # will be used by middlewares and engines to configure themselves.
     def env_config
       @app_env_config ||= begin
@@ -255,8 +255,8 @@ module Rails
           "action_dispatch.secret_key_base" => secrets.secret_key_base,
           "action_dispatch.show_exceptions" => config.action_dispatch.show_exceptions,
           "action_dispatch.show_detailed_exceptions" => config.consider_all_requests_local,
-          "action_dispatch.logger" => Rails.logger,
-          "action_dispatch.backtrace_cleaner" => Rails.backtrace_cleaner,
+          "action_dispatch.logger" => Quails.logger,
+          "action_dispatch.backtrace_cleaner" => Quails.backtrace_cleaner,
           "action_dispatch.key_generator" => key_generator,
           "action_dispatch.http_auth_salt" => config.action_dispatch.http_auth_salt,
           "action_dispatch.signed_cookie_salt" => config.action_dispatch.signed_cookie_salt,
@@ -276,26 +276,26 @@ module Rails
     end
 
     # Sends the initializers to the +initializer+ method defined in the
-    # Rails::Initializable module. Each Rails::Application class has its own
+    # Quails::Initializable module. Each Quails::Application class has its own
     # set of initializers, as defined by the Initializable module.
     def initializer(name, opts = {}, &block)
       self.class.initializer(name, opts, &block)
     end
 
     # Sends any runner called in the instance of a new application up
-    # to the +runner+ method defined in Rails::Railtie.
+    # to the +runner+ method defined in Quails::Railtie.
     def runner(&blk)
       self.class.runner(&blk)
     end
 
     # Sends any console called in the instance of a new application up
-    # to the +console+ method defined in Rails::Railtie.
+    # to the +console+ method defined in Quails::Railtie.
     def console(&blk)
       self.class.console(&blk)
     end
 
     # Sends any generators called in the instance of a new application up
-    # to the +generators+ method defined in Rails::Railtie.
+    # to the +generators+ method defined in Quails::Railtie.
     def generators(&blk)
       self.class.generators(&blk)
     end
@@ -305,20 +305,20 @@ module Rails
       self.class.isolate_namespace(mod)
     end
 
-    ## Rails internal API
+    ## Quails internal API
 
-    # This method is called just after an application inherits from Rails::Application,
+    # This method is called just after an application inherits from Quails::Application,
     # allowing the developer to load classes in lib and use them during application
     # configuration.
     #
-    #   class MyApplication < Rails::Application
+    #   class MyApplication < Quails::Application
     #     require "my_backend" # in lib/my_backend
     #     config.i18n.backend = MyBackend
     #   end
     #
     # Notice this method takes into consideration the default root path. So if you
     # are changing config.root inside your application definition or having a custom
-    # Rails application, you will need to add lib to $LOAD_PATH on your own in case
+    # Quails application, you will need to add lib to $LOAD_PATH on your own in case
     # you need to load files in lib/ during the application configuration as well.
     def self.add_lib_to_load_path!(root) #:nodoc:
       path = File.join root, "lib"
@@ -384,14 +384,14 @@ module Rails
     #       secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
     #       namespace: my_app_production
     #
-    # +Rails.application.secrets.namespace+ returns +my_app_production+ in the
+    # +Quails.application.secrets.namespace+ returns +my_app_production+ in the
     # production environment.
     def secrets
       @secrets ||= begin
         secrets = ActiveSupport::OrderedOptions.new
         files = config.paths["config/secrets"].existent
         files = files.reject { |path| path.end_with?(".enc") } unless config.read_encrypted_secrets
-        secrets.merge! Rails::Secrets.parse(files, env: Rails.env)
+        secrets.merge! Quails::Secrets.parse(files, env: Quails.env)
 
         # Fallback to config.secret_key_base if secrets.secret_key_base isn't set
         secrets.secret_key_base ||= config.secret_key_base
@@ -510,7 +510,7 @@ module Rails
           "Read the upgrade documentation to learn more about this new config option."
 
         if secrets.secret_token.blank?
-          raise "Missing `secret_key_base` for '#{Rails.env}' environment, set this value in `config/secrets.yml`"
+          raise "Missing `secret_key_base` for '#{Quails.env}' environment, set this value in `config/secrets.yml`"
         end
       end
     end

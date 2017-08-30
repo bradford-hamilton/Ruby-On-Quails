@@ -5,12 +5,12 @@ require "rack/cache/context"
 require "active_support/cache"
 
 module ActionDispatch
-  class RailsMetaStore < Rack::Cache::MetaStore
+  class QuailsMetaStore < Rack::Cache::MetaStore
     def self.resolve(uri)
       new
     end
 
-    def initialize(store = Rails.cache)
+    def initialize(store = Quails.cache)
       @store = store
     end
 
@@ -29,12 +29,12 @@ module ActionDispatch
     ::Rack::Cache::MetaStore::RAILS = self
   end
 
-  class RailsEntityStore < Rack::Cache::EntityStore
+  class QuailsEntityStore < Rack::Cache::EntityStore
     def self.resolve(uri)
       new
     end
 
-    def initialize(store = Rails.cache)
+    def initialize(store = Quails.cache)
       @store = store
     end
 

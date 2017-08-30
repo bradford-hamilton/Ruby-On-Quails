@@ -13,7 +13,7 @@ module ActiveJob
     #
     # To use Backburner set the queue_adapter config to +:backburner+.
     #
-    #   Rails.application.config.active_job.queue_adapter = :backburner
+    #   Quails.application.config.active_job.queue_adapter = :backburner
     class BackburnerAdapter
       def enqueue(job) #:nodoc:
         Backburner::Worker.enqueue JobWrapper, [ job.serialize ], queue: job.queue_name

@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
 The Asset Pipeline
 ==================
@@ -22,28 +22,28 @@ The asset pipeline provides a framework to concatenate and minify or compress
 JavaScript and CSS assets. It also adds the ability to write these assets in
 other languages and pre-processors such as CoffeeScript, Sass and ERB.
 It allows assets in your application to be automatically combined with assets
-from other gems. For example, jquery-rails includes a copy of jquery.js
-and enables AJAX features in Rails.
+from other gems. For example, jquery-quails includes a copy of jquery.js
+and enables AJAX features in Quails.
 
 The asset pipeline is implemented by the
-[sprockets-rails](https://github.com/rails/sprockets-rails) gem,
+[sprockets-quails](https://github.com/quails/sprockets-quails) gem,
 and is enabled by default. You can disable it while creating a new application by
 passing the `--skip-sprockets` option.
 
 ```bash
-rails new appname --skip-sprockets
+quails new appname --skip-sprockets
 ```
 
-Rails automatically adds the `sass-rails`, `coffee-rails` and `uglifier`
+Quails automatically adds the `sass-quails`, `coffee-quails` and `uglifier`
 gems to your Gemfile, which are used by Sprockets for asset compression:
 
 ```ruby
-gem 'sass-rails'
+gem 'sass-quails'
 gem 'uglifier'
-gem 'coffee-rails'
+gem 'coffee-quails'
 ```
 
-Using the `--skip-sprockets` option will prevent Rails from adding
+Using the `--skip-sprockets` option will prevent Quails from adding
 them to your Gemfile, so if you later want to enable
 the asset pipeline you will have to add those gems to your Gemfile. Also,
 creating an application with the `--skip-sprockets` option will generate
@@ -64,7 +64,7 @@ config.assets.css_compressor = :yui
 config.assets.js_compressor = :uglifier
 ```
 
-NOTE: The `sass-rails` gem is automatically used for CSS compression if included
+NOTE: The `sass-quails` gem is automatically used for CSS compression if included
 in the Gemfile and no `config.assets.css_compressor` option is set.
 
 
@@ -78,7 +78,7 @@ requests can mean faster loading for your application.
 Sprockets concatenates all JavaScript files into one master `.js` file and all
 CSS files into one master `.css` file. As you'll learn later in this guide, you
 can customize this strategy to group files any way you like. In production,
-Rails inserts an SHA256 fingerprint into each filename so that the file is
+Quails inserts an SHA256 fingerprint into each filename so that the file is
 cached by the web browser. You can invalidate the cache by altering this
 fingerprint, which happens automatically whenever you change the file contents.
 
@@ -113,9 +113,9 @@ content into the name, usually at the end. For example a CSS file `global.css`
 global-908e25f4bf641868d8683022a5b62f54.css
 ```
 
-This is the strategy adopted by the Rails asset pipeline.
+This is the strategy adopted by the Quails asset pipeline.
 
-Rails' old strategy was to append a date-based query string to every asset linked
+Quails' old strategy was to append a date-based query string to every asset linked
 with a built-in helper. In the source the generated code looked like this:
 
 ```
@@ -134,7 +134,7 @@ work at all with some CDNs for cache invalidation.
 
 2. **The file name can change between nodes in multi-server environments.**
 
-    The default query string in Rails 2.x is based on the modification time of
+    The default query string in Quails 2.x is based on the modification time of
 the files. When assets are deployed to a cluster, there is no guarantee that the
 timestamps will be the same, resulting in different values being used depending
 on which server handles the request.
@@ -161,7 +161,7 @@ More reading:
 How to Use the Asset Pipeline
 -----------------------------
 
-In previous versions of Rails, all assets were located in subdirectories of
+In previous versions of Quails, all assets were located in subdirectories of
 `public` such as `images`, `javascripts` and `stylesheets`. With the asset
 pipeline, the preferred location for these assets is now the `app/assets`
 directory. Files in this directory are served by the Sprockets middleware.
@@ -171,20 +171,20 @@ will be served as static files by the application or web server when
 `config.public_file_server.enabled` is set to true. You should use `app/assets` for
 files that must undergo some pre-processing before they are served.
 
-In production, Rails precompiles these files to `public/assets` by default. The
+In production, Quails precompiles these files to `public/assets` by default. The
 precompiled copies are then served as static assets by the web server. The files
 in `app/assets` are never served directly in production.
 
 ### Controller Specific Assets
 
-When you generate a scaffold or a controller, Rails also generates a JavaScript
-file (or CoffeeScript file if the `coffee-rails` gem is in the `Gemfile`) and a
-Cascading Style Sheet file (or SCSS file if `sass-rails` is in the `Gemfile`)
-for that controller. Additionally, when generating a scaffold, Rails generates
-the file scaffolds.css (or scaffolds.scss if `sass-rails` is in the
+When you generate a scaffold or a controller, Quails also generates a JavaScript
+file (or CoffeeScript file if the `coffee-quails` gem is in the `Gemfile`) and a
+Cascading Style Sheet file (or SCSS file if `sass-quails` is in the `Gemfile`)
+for that controller. Additionally, when generating a scaffold, Quails generates
+the file scaffolds.css (or scaffolds.scss if `sass-quails` is in the
 `Gemfile`.)
 
-For example, if you generate a `ProjectsController`, Rails will also add a new
+For example, if you generate a `ProjectsController`, Quails will also add a new
 file at `app/assets/javascripts/projects.coffee` and another at
 `app/assets/stylesheets/projects.scss`. By default these files will be ready
 to use by your application immediately using the `require_tree` directive. See
@@ -208,7 +208,7 @@ precompiling works.
 
 NOTE: You must have an ExecJS supported runtime in order to use CoffeeScript.
 If you are using macOS or Windows, you have a JavaScript runtime installed in
-your operating system. Check [ExecJS](https://github.com/rails/execjs#readme) documentation to know all supported JavaScript runtimes.
+your operating system. Check [ExecJS](https://github.com/quails/execjs#readme) documentation to know all supported JavaScript runtimes.
 
 You can also disable generation of controller specific asset files by adding the
 following to your `config/application.rb` configuration:
@@ -235,7 +235,7 @@ code for JavaScript plugins and CSS frameworks. Keep in mind that third party
 code with references to other files also processed by the asset Pipeline (images,
 stylesheets, etc.), will need to be rewritten to use helpers like `asset_path`.
 
-WARNING: If you are upgrading from Rails 3, please take into account that assets
+WARNING: If you are upgrading from Quails 3, please take into account that assets
 under `lib/assets` or `vendor/assets` are available for inclusion via the
 application manifests but no longer part of the precompile array. See
 [Precompiling Assets](#precompiling-assets) for guidance.
@@ -280,13 +280,13 @@ is referenced as:
 ```
 
 You can view the search path by inspecting
-`Rails.application.config.assets.paths` in the Rails console.
+`Quails.application.config.assets.paths` in the Quails console.
 
 Besides the standard `assets/*` paths, additional (fully qualified) paths can be
 added to the pipeline in `config/initializers/assets.rb`. For example:
 
 ```ruby
-Rails.application.config.assets.paths << Rails.root.join("lib", "videoplayer", "flash")
+Quails.application.config.assets.paths << Quails.root.join("lib", "videoplayer", "flash")
 ```
 
 Paths are traversed in the order they occur in the search path. By default,
@@ -326,7 +326,7 @@ familiar `javascript_include_tag` and `stylesheet_link_tag`:
 <%= javascript_include_tag "application" %>
 ```
 
-If using the turbolinks gem, which is included by default in Rails, then
+If using the turbolinks gem, which is included by default in Quails, then
 include the 'data-turbolinks-track' option which causes turbolinks to check if
 an asset has been updated and if so loads it into the page:
 
@@ -339,27 +339,27 @@ In regular views you can access images in the `app/assets/images` directory
 like this:
 
 ```erb
-<%= image_tag "rails.png" %>
+<%= image_tag "quails.png" %>
 ```
 
 Provided that the pipeline is enabled within your application (and not disabled
 in the current environment context), this file is served by Sprockets. If a file
-exists at `public/assets/rails.png` it is served by the web server.
+exists at `public/assets/quails.png` it is served by the web server.
 
 Alternatively, a request for a file with an SHA256 hash such as
-`public/assets/rails-f90d8a84c707a8dc923fca1ca1895ae8ed0a09237f6992015fef1e11be77c023.png`
+`public/assets/quails-f90d8a84c707a8dc923fca1ca1895ae8ed0a09237f6992015fef1e11be77c023.png`
 is treated the same way. How these hashes are generated is covered in the [In
 Production](#in-production) section later on in this guide.
 
 Sprockets will also look through the paths specified in `config.assets.paths`,
-which includes the standard application paths and any paths added by Rails
+which includes the standard application paths and any paths added by Quails
 engines.
 
 Images can also be organized into subdirectories if required, and then can be
 accessed by specifying the directory's name in the tag:
 
 ```erb
-<%= image_tag "icons/rails.png" %>
+<%= image_tag "icons/quails.png" %>
 ```
 
 WARNING: If you're precompiling your assets (see [In Production](#in-production)
@@ -398,17 +398,17 @@ Note that the closing tag cannot be of the style `-%>`.
 #### CSS and Sass
 
 When using the asset pipeline, paths to assets must be re-written and
-`sass-rails` provides `-url` and `-path` helpers (hyphenated in Sass,
+`sass-quails` provides `-url` and `-path` helpers (hyphenated in Sass,
 underscored in Ruby) for the following asset classes: image, font, video, audio,
 JavaScript and stylesheet.
 
-* `image-url("rails.png")` returns `url(/assets/rails.png)`
-* `image-path("rails.png")` returns `"/assets/rails.png"`
+* `image-url("quails.png")` returns `url(/assets/quails.png)`
+* `image-path("quails.png")` returns `"/assets/quails.png"`
 
 The more generic form can also be used:
 
-* `asset-url("rails.png")` returns `url(/assets/rails.png)`
-* `asset-path("rails.png")` returns `"/assets/rails.png"`
+* `asset-url("quails.png")` returns `url(/assets/quails.png)`
+* `asset-path("quails.png")` returns `"/assets/quails.png"`
 
 #### JavaScript/CoffeeScript and ERB
 
@@ -436,18 +436,18 @@ These manifest files contain _directives_ - instructions that tell Sprockets
 which files to require in order to build a single CSS or JavaScript file. With
 these directives, Sprockets loads the files specified, processes them if
 necessary, concatenates them into one single file and then compresses them
-(based on value of `Rails.application.config.assets.js_compressor`). By serving
+(based on value of `Quails.application.config.assets.js_compressor`). By serving
 one file rather than many, the load time of pages can be greatly reduced because
 the browser makes fewer requests. Compression also reduces file size, enabling
 the browser to download them faster.
 
 
-For example, a new Rails application includes a default
+For example, a new Quails application includes a default
 `app/assets/javascripts/application.js` file containing the following lines:
 
 ```js
 // ...
-//= require rails-ujs
+//= require quails-ujs
 //= require turbolinks
 //= require_tree .
 ```
@@ -455,7 +455,7 @@ For example, a new Rails application includes a default
 In JavaScript files, Sprockets directives begin with `//=`. In the above case,
 the file is using the `require` and the `require_tree` directives. The `require`
 directive is used to tell Sprockets the files you wish to require. Here, you are
-requiring the files `rails-ujs.js` and `turbolinks.js` that are available somewhere
+requiring the files `quails-ujs.js` and `turbolinks.js` that are available somewhere
 in the search path for Sprockets. You need not supply the extensions explicitly.
 Sprockets assumes you are requiring a `.js` file when done from within a `.js`
 file.
@@ -473,7 +473,7 @@ above some other in the concatenated file, require the prerequisite file first
 in the manifest. Note that the family of `require` directives prevents files
 from being included twice in the output.
 
-Rails also creates a default `app/assets/stylesheets/application.css` file
+Quails also creates a default `app/assets/stylesheets/application.css` file
 which contains these lines:
 
 ```css
@@ -483,9 +483,9 @@ which contains these lines:
 */
 ```
 
-Rails creates both `app/assets/javascripts/application.js` and
+Quails creates both `app/assets/javascripts/application.js` and
 `app/assets/stylesheets/application.css` regardless of whether the
---skip-sprockets option is used when creating a new Rails application. This is
+--skip-sprockets option is used when creating a new Quails application. This is
 so you can easily add asset pipelining later if you like.
 
 The directives that work in JavaScript files also work in stylesheets
@@ -500,7 +500,7 @@ NOTE. If you want to use multiple Sass files, you should generally use the [Sass
 instead of these Sprockets directives. When using Sprockets directives, Sass files exist within
 their own scope, making variables or mixins only available within the document they were defined in.
 
-You can do file globbing as well using `@import "*"`, and `@import "**/*"` to add the whole tree which is equivalent to how `require_tree` works. Check the [sass-rails documentation](https://github.com/rails/sass-rails#features) for more info and important caveats.
+You can do file globbing as well using `@import "*"`, and `@import "**/*"` to add the whole tree which is equivalent to how `require_tree` works. Check the [sass-quails documentation](https://github.com/quails/sass-quails#features) for more info and important caveats.
 
 You can have as many manifest files as you need. For example, the `admin.css`
 and `admin.js` manifest could contain the JS and CSS files that are used for the
@@ -521,7 +521,7 @@ might concatenate three CSS files together this way:
 ### Preprocessing
 
 The file extensions used on an asset determine what preprocessing is applied.
-When a controller or a scaffold is generated with the default Rails gemset, a
+When a controller or a scaffold is generated with the default Quails gemset, a
 CoffeeScript file and a SCSS file are generated in place of a regular JavaScript
 and CSS file. The example used before was a controller called "projects", which
 generated an `app/assets/javascripts/projects.coffee` and an
@@ -531,7 +531,7 @@ In development mode, or if the asset pipeline is disabled, when these files are
 requested they are processed by the processors provided by the `coffee-script`
 and `sass` gems and then sent back to the browser as JavaScript and CSS
 respectively. When asset pipelining is enabled, these files are preprocessed and
-placed in the `public/assets` directory for serving by either the Rails app or
+placed in the `public/assets` directory for serving by either the Quails app or
 web server.
 
 Additional layers of preprocessing can be requested by adding other extensions,
@@ -574,7 +574,7 @@ The `body` param is required by Sprockets.
 
 ### Raise an Error When an Asset is Not Found
 
-If you are using sprockets-rails >= 3.2.0 you can configure what happens
+If you are using sprockets-quails >= 3.2.0 you can configure what happens
 when an asset lookup is performed and nothing is found. If you turn off "asset fallback"
 then an error will be raised when an asset cannot be found.
 
@@ -621,7 +621,7 @@ response.
 If any of the files in the manifest have changed between requests, the server
 responds with a new compiled file.
 
-Debug mode can also be enabled in Rails helper methods:
+Debug mode can also be enabled in Quails helper methods:
 
 ```erb
 <%= stylesheet_link_tag "application", debug: true %>
@@ -637,12 +637,12 @@ In Production
 -------------
 
 In the production environment Sprockets uses the fingerprinting scheme outlined
-above. By default Rails assumes assets have been precompiled and will be
+above. By default Quails assumes assets have been precompiled and will be
 served as static assets by your web server.
 
 During the precompilation phase an SHA256 is generated from the contents of the
 compiled files, and inserted into the filenames as they are written to disk.
-These fingerprinted names are used by the Rails helpers in place of the manifest
+These fingerprinted names are used by the Quails helpers in place of the manifest
 name.
 
 For example this:
@@ -674,7 +674,7 @@ content changes.
 
 ### Precompiling Assets
 
-Rails comes bundled with a task to compile the asset manifests and other
+Quails comes bundled with a task to compile the asset manifests and other
 files in the pipeline.
 
 Compiled assets are written to the location specified in `config.assets.prefix`.
@@ -687,7 +687,7 @@ information on compiling locally.
 The task is:
 
 ```bash
-$ RAILS_ENV=production bin/rails assets:precompile
+$ RAILS_ENV=production bin/quails assets:precompile
 ```
 
 Capistrano (v2.15.1 and above) includes a recipe to handle this in deployment.
@@ -723,7 +723,7 @@ If you have other manifests or individual stylesheets and JavaScript files to
 include, you can add them to the `precompile` array in `config/initializers/assets.rb`:
 
 ```ruby
-Rails.application.config.assets.precompile += %w( admin.js admin.css )
+Quails.application.config.assets.precompile += %w( admin.js admin.css )
 ```
 
 NOTE. Always specify an expected compiled filename that ends with .js or .css,
@@ -731,7 +731,7 @@ even if you want to add Sass or CoffeeScript files to the precompile array.
 
 The task also generates a `.sprockets-manifest-md5hash.json` (where `md5hash` is
 an MD5 hash) that contains a list with all your assets and their respective
-fingerprints. This is used by the Rails helper methods to avoid handing the
+fingerprints. This is used by the Quails helper methods to avoid handing the
 mapping requests back to Sprockets. A typical manifest file looks like:
 
 ```ruby
@@ -753,7 +753,7 @@ The default location for the manifest is the root of the location specified in
 `config.assets.prefix` ('/assets' by default).
 
 NOTE: If there are missing precompiled files in production you will get an
-`Sprockets::Helpers::RailsHelper::AssetPaths::AssetNotPrecompiledError`
+`Sprockets::Helpers::QuailsHelper::AssetPaths::AssetNotPrecompiledError`
 exception indicating the name of the missing file(s).
 
 #### Far-future Expires Header
@@ -864,19 +864,19 @@ CDN stands for [Content Delivery
 Network](https://en.wikipedia.org/wiki/Content_delivery_network), they are
 primarily designed to cache assets all over the world so that when a browser
 requests the asset, a cached copy will be geographically close to that browser.
-If you are serving assets directly from your Rails server in production, the
+If you are serving assets directly from your Quails server in production, the
 best practice is to use a CDN in front of your application.
 
 A common pattern for using a CDN is to set your production application as the
 "origin" server. This means when a browser requests an asset from the CDN and
 there is a cache miss, it will grab the file from your server on the fly and
-then cache it. For example if you are running a Rails application on
+then cache it. For example if you are running a Quails application on
 `example.com` and have a CDN configured at `mycdnsubdomain.fictional-cdn.com`,
 then when a request is made to `mycdnsubdomain.fictional-
 cdn.com/assets/smile.png`, the CDN will query your server once at
 `example.com/assets/smile.png` and cache the request. The next request to the
 CDN that comes in to the same URL will hit the cached copy. When the CDN can
-serve an asset directly the request never touches your Rails server. Since the
+serve an asset directly the request never touches your Quails server. Since the
 assets from a CDN are geographically closer to the browser, the request is
 faster, and since your server doesn't need to spend time serving assets, it can
 focus on serving application code as fast as possible.
@@ -894,9 +894,9 @@ The CDN you provisioned should give you a custom subdomain for your application
 such as `mycdnsubdomain.fictional-cdn.com` (note fictional-cdn.com is not a
 valid CDN provider at the time of this writing). Now that you have configured
 your CDN server, you need to tell browsers to use your CDN to grab assets
-instead of your Rails server directly. You can do this by configuring Rails to
+instead of your Quails server directly. You can do this by configuring Quails to
 set your CDN as the asset host instead of using a relative path. To set your
-asset host in Rails, you need to set `config.action_controller.asset_host` in
+asset host in Quails, you need to set `config.action_controller.asset_host` in
 `config/environments/production.rb`:
 
 ```ruby
@@ -961,7 +961,7 @@ While a CDN is described as being good for caching assets, in reality caches the
 entire request. This includes the body of the asset as well as any headers. The
 most important one being `Cache-Control` which tells the CDN (and web browsers)
 how to cache contents. This means that if someone requests an asset that does
-not exist `/assets/i-dont-exist.png` and your Rails application returns a 404,
+not exist `/assets/i-dont-exist.png` and your Quails application returns a 404,
 then your CDN will likely cache the 404 page if a valid `Cache-Control` header
 is present.
 
@@ -1020,12 +1020,12 @@ header](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9) is a W3C
 specification that describes how a request can be cached. When no CDN is used, a
 browser will use this information to cache contents. This is very helpful for
 assets that are not modified so that a browser does not need to re-download a
-website's CSS or JavaScript on every request. Generally we want our Rails server
+website's CSS or JavaScript on every request. Generally we want our Quails server
 to tell our CDN (and browser) that the asset is "public", that means any cache
 can store the request. Also we commonly want to set `max-age` which is how long
 the cache will store the object before invalidating the cache. The `max-age`
 value is set to seconds with a maximum possible value of `31536000` which is one
-year. You can do this in your Rails application by setting
+year. You can do this in your Quails application by setting
 
 ```
 config.public_file_server.headers = {
@@ -1058,7 +1058,7 @@ If you want to set far future `max-age` in your `Cache-Control` (and you do),
 then make sure when you change your assets that your cache is invalidated. For
 example when changing the smiley face in an image from yellow to blue, you want
 all visitors of your site to get the new blue face. When using a CDN with the
-Rails asset pipeline `config.assets.digest` is set to true by default so that
+Quails asset pipeline `config.assets.digest` is set to true by default so that
 each asset will have a different file name when it is changed. This way you
 don't have to ever manually invalidate any items in your cache. By using a
 different unique asset name instead, your users get the latest asset.
@@ -1078,7 +1078,7 @@ gem.
 ```ruby
 config.assets.css_compressor = :yui
 ```
-The other option for compressing CSS if you have the sass-rails gem installed is
+The other option for compressing CSS if you have the sass-quails gem installed is
 
 ```ruby
 config.assets.css_compressor = :sass
@@ -1102,7 +1102,7 @@ The following line invokes `uglifier` for JavaScript compression.
 config.assets.js_compressor = :uglifier
 ```
 
-NOTE: You will need an [ExecJS](https://github.com/rails/execjs#readme)
+NOTE: You will need an [ExecJS](https://github.com/quails/execjs#readme)
 supported runtime in order to use `uglifier`. If you are using macOS or
 Windows you have a JavaScript runtime installed in your operating system.
 
@@ -1159,7 +1159,7 @@ The X-Sendfile header is a directive to the web server to ignore the response
 from the application, and instead serve a specified file from disk. This option
 is off by default, but can be enabled if your server supports it. When enabled,
 this passes responsibility for serving the file to the web server, which is
-faster. Have a look at [send_file](http://api.rubyonrails.org/classes/ActionController/DataStreaming.html#method-i-send_file)
+faster. Have a look at [send_file](http://api.rubyonquails.org/classes/ActionController/DataStreaming.html#method-i-send_file)
 on how to use this feature.
 
 Apache and NGINX support this option, which can be enabled in
@@ -1205,9 +1205,9 @@ Adding Assets to Your Gems
 
 Assets can also come from external sources in the form of gems.
 
-A good example of this is the `jquery-rails` gem which comes with Rails as the
+A good example of this is the `jquery-quails` gem which comes with Quails as the
 standard JavaScript library gem. This gem contains an engine class which
-inherits from `Rails::Engine`. By doing this, Rails is informed that the
+inherits from `Quails::Engine`. By doing this, Quails is informed that the
 directory for this gem may contain assets and the `app/assets`, `lib/assets` and
 `vendor/assets` directories of this engine are added to the search path of
 Sprockets.
@@ -1217,7 +1217,7 @@ Making Your Library or Gem a Pre-Processor
 
 Sprockets uses Processors, Transformers, Compressors, and Exporters to extend
 Sprockets functionality. Have a look at
-[Extending Sprockets](https://github.com/rails/sprockets/blob/master/guides/extending_sprockets.md)
+[Extending Sprockets](https://github.com/quails/sprockets/blob/master/guides/extending_sprockets.md)
 to learn more. Here we registered a preprocessor to add a comment to the end
 of text/css (.css) files.
 
@@ -1236,16 +1236,16 @@ it as a preprocessor for your mime type.
 Sprockets.register_preprocessor 'text/css', AddComment
 ```
 
-Upgrading from Old Versions of Rails
+Upgrading from Old Versions of Quails
 ------------------------------------
 
-There are a few issues when upgrading from Rails 3.0 or Rails 2.x. The first is
+There are a few issues when upgrading from Quails 3.0 or Quails 2.x. The first is
 moving the files from `public/` to the new locations. See [Asset
 Organization](#asset-organization) above for guidance on the correct locations
 for different file types.
 
 Next will be avoiding duplicate JavaScript files. Since jQuery is the default
-JavaScript library from Rails 3.1 onwards, you don't need to copy `jquery.js`
+JavaScript library from Quails 3.1 onwards, you don't need to copy `jquery.js`
 into `app/assets` and it will be included automatically.
 
 The third is updating the various environment files with the correct default
@@ -1285,7 +1285,7 @@ config.assets.digest = true
 # config.assets.precompile += %w( admin.js admin.css )
 ```
 
-Rails 4 and above no longer set default config values for Sprockets in `test.rb`, so
+Quails 4 and above no longer set default config values for Sprockets in `test.rb`, so
 `test.rb` now requires Sprockets configuration. The old defaults in the test
 environment are: `config.assets.compile = true`, `config.assets.compress = false`,
 `config.assets.debug = false` and `config.assets.digest = false`.
@@ -1293,7 +1293,7 @@ environment are: `config.assets.compile = true`, `config.assets.compress = false
 The following should also be added to your `Gemfile`:
 
 ```ruby
-gem 'sass-rails',   "~> 3.2.3"
-gem 'coffee-rails', "~> 3.2.1"
+gem 'sass-quails',   "~> 3.2.3"
+gem 'coffee-quails', "~> 3.2.1"
 gem 'uglifier'
 ```

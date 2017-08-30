@@ -19,7 +19,7 @@ module ActionController
     #
     #   redirect_to action: "show", id: 5
     #   redirect_to @post
-    #   redirect_to "http://www.rubyonrails.org"
+    #   redirect_to "http://www.rubyonquails.org"
     #   redirect_to "/images/screenshot.jpg"
     #   redirect_to posts_url
     #   redirect_to proc { edit_post_url(@post) }
@@ -75,7 +75,7 @@ module ActionController
     #
     #   redirect_back fallback_location: { action: "show", id: 5 }
     #   redirect_back fallback_location: @post
-    #   redirect_back fallback_location: "http://www.rubyonrails.org"
+    #   redirect_back fallback_location: "http://www.rubyonquails.org"
     #   redirect_back fallback_location: "/images/screenshot.jpg"
     #   redirect_back fallback_location: posts_url
     #   redirect_back fallback_location: proc { edit_post_url(@post) }

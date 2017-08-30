@@ -82,7 +82,7 @@ module AbstractController
       # When the argument is a string or symbol, the method will provide the "_helper" suffix, require the file
       # and include the module in the template class. The second form illustrates how to include custom helpers
       # when working with namespaced controllers, or other cases where the file containing the helper definition is not
-      # in one of Rails' standard load paths:
+      # in one of Quails' standard load paths:
       #   helper :foo             # => requires 'foo_helper' and includes FooHelper
       #   helper 'resources/foo'  # => requires 'resources/foo_helper' and includes Resources::FooHelper
       #

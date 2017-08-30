@@ -8,7 +8,7 @@ module ActionDispatch
   # contain the address, and then picking the last-set address that is not
   # on the list of trusted IPs. This follows the precedent set by e.g.
   # {the Tomcat server}[https://issues.apache.org/bugzilla/show_bug.cgi?id=50453],
-  # with {reasoning explained at length}[http://blog.gingerlime.com/2012/rails-ip-spoofing-vulnerabilities-and-protection]
+  # with {reasoning explained at length}[http://blog.gingerlime.com/2012/quails-ip-spoofing-vulnerabilities-and-protection]
   # by @gingerlime. A more detailed explanation of the algorithm is given
   # at GetIp#calculate_ip.
   #
@@ -102,7 +102,7 @@ module ActionDispatch
       # proxies, that header may contain a list of IPs. Other proxy services
       # set the Client-Ip header instead, so we check that too.
       #
-      # As discussed in {this post about Rails IP Spoofing}[http://blog.gingerlime.com/2012/rails-ip-spoofing-vulnerabilities-and-protection/],
+      # As discussed in {this post about Quails IP Spoofing}[http://blog.gingerlime.com/2012/quails-ip-spoofing-vulnerabilities-and-protection/],
       # while the first IP in the list is likely to be the "originating" IP,
       # it could also have been set by the client maliciously.
       #

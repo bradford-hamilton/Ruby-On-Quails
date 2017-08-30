@@ -17,11 +17,11 @@ It consists of several modules:
   subclassed to implement filters and actions to handle requests. The result
   of an action is typically content generated from views.
 
-With the Ruby on Rails framework, users only directly interface with the
+With the Ruby on Quails framework, users only directly interface with the
 Action Controller module. Necessary Action Dispatch functionality is activated
 by default and Action View rendering is implicitly triggered by Action
 Controller. However, these modules are designed to function on their own and
-can be used outside of Rails.
+can be used outside of Quails.
 
 
 == Download and installation
@@ -30,9 +30,9 @@ The latest version of Action Pack can be installed with RubyGems:
 
   $ gem install actionpack
 
-Source code can be downloaded as part of the Rails project on GitHub
+Source code can be downloaded as part of the Quails project on GitHub
 
-* https://github.com/rails/rails/tree/master/actionpack
+* https://github.com/quails/quails/tree/master/actionpack
 
 
 == License
@@ -46,12 +46,12 @@ Action Pack is released under the MIT license:
 
 API documentation is at
 
-* http://api.rubyonrails.org
+* http://api.rubyonquails.org
 
-Bug reports can be filed for the Ruby on Rails project here:
+Bug reports can be filed for the Ruby on Quails project here:
 
-* https://github.com/rails/rails/issues
+* https://github.com/quails/quails/issues
 
-Feature requests should be discussed on the rails-core mailing list here:
+Feature requests should be discussed on the quails-core mailing list here:
 
-* https://groups.google.com/forum/?fromgroups#!forum/rubyonrails-core
+* https://groups.google.com/forum/?fromgroups#!forum/rubyonquails-core

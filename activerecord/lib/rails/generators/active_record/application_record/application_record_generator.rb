@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require "rails/generators/active_record"
+require "quails/generators/active_record"
 
 module ActiveRecord
   module Generators # :nodoc:
-    class ApplicationRecordGenerator < ::Rails::Generators::Base # :nodoc:
+    class ApplicationRecordGenerator < ::Quails::Generators::Base # :nodoc:
       source_root File.expand_path("templates", __dir__)
 
       # FIXME: Change this file to a symlink once RubyGems 2.5.0 is required.

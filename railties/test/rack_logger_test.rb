@@ -3,13 +3,13 @@
 require "abstract_unit"
 require "active_support/testing/autorun"
 require "active_support/test_case"
-require "rails/rack/logger"
+require "quails/rack/logger"
 require "logger"
 
-module Rails
+module Quails
   module Rack
     class LoggerTest < ActiveSupport::TestCase
-      class TestLogger < Rails::Rack::Logger
+      class TestLogger < Quails::Rack::Logger
         NULL = ::Logger.new File::NULL
 
         attr_reader :logger

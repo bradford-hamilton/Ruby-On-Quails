@@ -2,10 +2,10 @@
 
 # Implements the logic behind the rake tasks for annotations like
 #
-#   rails notes
-#   rails notes:optimize
+#   quails notes
+#   quails notes:optimize
 #
-# and friends. See <tt>rails -T notes</tt> and <tt>railties/lib/rails/tasks/annotations.rake</tt>.
+# and friends. See <tt>quails -T notes</tt> and <tt>railties/lib/quails/tasks/annotations.rake</tt>.
 #
 # Annotation objects are triplets <tt>:line</tt>, <tt>:tag</tt>, <tt>:text</tt> that
 # represent the line where the annotation lives, its tag, and its text. Note

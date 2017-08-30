@@ -39,7 +39,7 @@ module ApplicationTests
         end
       RUBY
 
-      output = Dir.chdir(app_path) { `bin/rails test 2>&1` }
+      output = Dir.chdir(app_path) { `bin/quails test 2>&1` }
       assert_equal 0, $?.to_i, output
       assert_match(/0 failures, 0 errors/, output)
     end
@@ -67,7 +67,7 @@ module ApplicationTests
         end
       RUBY
 
-      output = Dir.chdir(app_path) { `bin/rails test 2>&1` }
+      output = Dir.chdir(app_path) { `bin/quails test 2>&1` }
       assert_equal 0, $?.to_i, output
       assert_match(/0 failures, 0 errors/, output)
     end

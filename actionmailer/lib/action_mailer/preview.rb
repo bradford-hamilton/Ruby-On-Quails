@@ -9,7 +9,7 @@ module ActionMailer
     included do
       # Set the location of mailer previews through app configuration:
       #
-      #     config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
+      #     config.action_mailer.preview_path = "#{Quails.root}/lib/mailer_previews"
       #
       mattr_accessor :preview_path, instance_writer: false
 

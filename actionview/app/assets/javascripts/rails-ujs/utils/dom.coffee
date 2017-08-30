@@ -5,7 +5,7 @@ m = Element.prototype.matches or
     Element.prototype.oMatchesSelector or
     Element.prototype.webkitMatchesSelector
 
-Rails.matches = (element, selector) ->
+Quails.matches = (element, selector) ->
   if selector.exclude?
     m.call(element, selector.selector) and not m.call(element, selector.exclude)
   else
@@ -15,14 +15,14 @@ Rails.matches = (element, selector) ->
 # See: https://developer.mozilla.org/en-US/docs/Glossary/Expando
 expando = '_ujsData'
 
-Rails.getData = (element, key) ->
+Quails.getData = (element, key) ->
   element[expando]?[key]
 
-Rails.setData = (element, key, value) ->
+Quails.setData = (element, key, value) ->
   element[expando] ?= {}
   element[expando][key] = value
 
 # a wrapper for document.querySelectorAll
 # returns an Array
-Rails.$ = (selector) ->
+Quails.$ = (selector) ->
   Array.prototype.slice.call(document.querySelectorAll(selector))

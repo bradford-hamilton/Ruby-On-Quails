@@ -2,8 +2,8 @@
 
 require "isolation/abstract_unit"
 require "console_helpers"
-require "rails/command"
-require "rails/commands/server/server_command"
+require "quails/command"
+require "quails/commands/server/server_command"
 
 module ApplicationTests
   class ServerTest < ActiveSupport::TestCase
@@ -25,24 +25,24 @@ module ApplicationTests
         run AppTemplate::Application
       RUBY
 
-      server = Rails::Server.new(config: "#{app_path}/config.ru")
+      server = Quails::Server.new(config: "#{app_path}/config.ru")
       server.app
 
-      log = File.read(Rails.application.config.paths["log"].first)
-      assert_match(/DEPRECATION WARNING: Use `Rails::Application` subclass to start the server is deprecated/, log)
+      log = File.read(Quails.application.config.paths["log"].first)
+      assert_match(/DEPRECATION WARNING: Use `Quails::Application` subclass to start the server is deprecated/, log)
     end
 
-    test "restart rails server with custom pid file path" do
+    test "restart quails server with custom pid file path" do
       skip "PTY unavailable" unless available_pty?
 
       master, slave = PTY.open
       pid = nil
 
       begin
-        pid = Process.spawn("#{app_path}/bin/rails server -P tmp/dummy.pid", in: slave, out: slave, err: slave)
+        pid = Process.spawn("#{app_path}/bin/quails server -P tmp/dummy.pid", in: slave, out: slave, err: slave)
         assert_output("Listening", master)
 
-        Dir.chdir(app_path) { system("bin/rails restart") }
+        Dir.chdir(app_path) { system("bin/quails restart") }
 
         assert_output("Restarting", master)
         assert_output("Inherited", master)

@@ -1,5 +1,5 @@
 require_relative '../config/environment'
-require 'rails/test_help'
+require 'quails/test_help'
 
 class ActiveSupport::TestCase
 <% unless options[:skip_active_record] -%>

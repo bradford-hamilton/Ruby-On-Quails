@@ -2,7 +2,7 @@
 
 require "rake"
 
-# Load Rails Rakefile extensions
+# Load Quails Rakefile extensions
 %w(
   annotations
   dev
@@ -18,5 +18,5 @@ require "rake"
 ).tap { |arr|
   arr << "statistics" if Rake.application.current_scope.empty?
 }.each do |task|
-  load "rails/tasks/#{task}.rake"
+  load "quails/tasks/#{task}.rake"
 end

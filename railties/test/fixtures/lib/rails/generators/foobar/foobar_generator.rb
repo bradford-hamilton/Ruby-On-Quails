@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 module Foobar
-  class FoobarGenerator < Rails::Generators::Base
+  class FoobarGenerator < Quails::Generators::Base
   end
 end

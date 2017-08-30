@@ -9,7 +9,7 @@ module ActiveSupport
   end
 
   class Deprecation
-    # Default warning behaviors per Rails.env.
+    # Default warning behaviors per Quails.env.
     DEFAULT_BEHAVIORS = {
       raise: ->(message, callstack, deprecation_horizon, gem_name) {
         e = DeprecationException.new(message)
@@ -24,8 +24,8 @@ module ActiveSupport
 
       log: ->(message, callstack, deprecation_horizon, gem_name) {
         logger =
-            if defined?(Rails.logger) && Rails.logger
-              Rails.logger
+            if defined?(Quails.logger) && Quails.logger
+              Quails.logger
             else
               require_relative "../logger"
               ActiveSupport::Logger.new($stderr)
@@ -52,8 +52,8 @@ module ActiveSupport
     #
     # [+raise+]   Raise <tt>ActiveSupport::DeprecationException</tt>.
     # [+stderr+]  Log all deprecation warnings to +$stderr+.
-    # [+log+]     Log all deprecation warnings to +Rails.logger+.
-    # [+notify+]  Use +ActiveSupport::Notifications+ to notify +deprecation.rails+.
+    # [+log+]     Log all deprecation warnings to +Quails.logger+.
+    # [+notify+]  Use +ActiveSupport::Notifications+ to notify +deprecation.quails+.
     # [+silence+] Do nothing.
     #
     # Setting behaviors only affects deprecations that happen after boot time.
@@ -74,13 +74,13 @@ module ActiveSupport
       #
       # [+raise+]   Raise <tt>ActiveSupport::DeprecationException</tt>.
       # [+stderr+]  Log all deprecation warnings to +$stderr+.
-      # [+log+]     Log all deprecation warnings to +Rails.logger+.
-      # [+notify+]  Use +ActiveSupport::Notifications+ to notify +deprecation.rails+.
+      # [+log+]     Log all deprecation warnings to +Quails.logger+.
+      # [+notify+]  Use +ActiveSupport::Notifications+ to notify +deprecation.quails+.
       # [+silence+] Do nothing.
       #
       # Setting behaviors only affects deprecations that happen after boot time.
       # Deprecation warnings raised by gems are not affected by this setting
-      # because they happen before Rails boots up.
+      # because they happen before Quails boots up.
       #
       #   ActiveSupport::Deprecation.behavior = :stderr
       #   ActiveSupport::Deprecation.behavior = [:stderr, :log]

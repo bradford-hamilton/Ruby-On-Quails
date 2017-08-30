@@ -14,7 +14,7 @@ asyncTest('refresh all csrf tokens', 1, function() {
     .append('<meta name="csrf-token" content="' + correctToken + '"/>')
     .append(form)
 
-  $.rails.refreshCSRFTokens()
+  $.quails.refreshCSRFTokens()
   currentToken = $('#qunit-fixture #authenticity_token').val()
 
   start()

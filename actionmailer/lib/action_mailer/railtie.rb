@@ -2,16 +2,16 @@
 
 require "active_job/railtie"
 require "action_mailer"
-require "rails"
+require "quails"
 require "abstract_controller/railties/routes_helpers"
 
 module ActionMailer
-  class Railtie < Rails::Railtie # :nodoc:
+  class Railtie < Quails::Railtie # :nodoc:
     config.action_mailer = ActiveSupport::OrderedOptions.new
     config.eager_load_namespaces << ActionMailer
 
     initializer "action_mailer.logger" do
-      ActiveSupport.on_load(:action_mailer) { self.logger ||= Rails.logger }
+      ActiveSupport.on_load(:action_mailer) { self.logger ||= Quails.logger }
     end
 
     initializer "action_mailer.set_configs" do |app|
@@ -26,11 +26,11 @@ module ActionMailer
       options.assets_dir      ||= paths["public"].first
       options.javascripts_dir ||= paths["public/javascripts"].first
       options.stylesheets_dir ||= paths["public/stylesheets"].first
-      options.show_previews = Rails.env.development? if options.show_previews.nil?
-      options.cache_store ||= Rails.cache
+      options.show_previews = Quails.env.development? if options.show_previews.nil?
+      options.cache_store ||= Quails.cache
 
       if options.show_previews
-        options.preview_path ||= defined?(Rails.root) ? "#{Rails.root}/test/mailers/previews" : nil
+        options.preview_path ||= defined?(Quails.root) ? "#{Quails.root}/test/mailers/previews" : nil
       end
 
       # make sure readers methods get compiled
@@ -69,8 +69,8 @@ module ActionMailer
 
       if options.show_previews
         app.routes.prepend do
-          get "/rails/mailers"         => "rails/mailers#index", internal: true
-          get "/rails/mailers/*path"   => "rails/mailers#preview", internal: true
+          get "/quails/mailers"         => "quails/mailers#index", internal: true
+          get "/quails/mailers/*path"   => "quails/mailers#preview", internal: true
         end
 
         if options.preview_path

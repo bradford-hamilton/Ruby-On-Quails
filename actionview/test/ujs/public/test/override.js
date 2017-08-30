@@ -4,24 +4,24 @@ var realHref
 
 module('override', {
   setup: function() {
-    realHref = $.rails.href
+    realHref = $.quails.href
     $('#qunit-fixture')
       .append($('<a />', {
         href: '/real/href', 'data-remote': 'true', 'data-method': 'delete', 'data-href': '/data/href'
       }))
   },
   teardown: function() {
-    $.rails.href = realHref
+    $.quails.href = realHref
   }
 })
 
 asyncTest('the getter for an element\'s href is publicly accessible', 1, function() {
-  ok($.rails.href)
+  ok($.quails.href)
   start()
 })
 
 asyncTest('the getter for an element\'s href is overridable', 1, function() {
-  $.rails.href = function(element) { return $(element).data('href') }
+  $.quails.href = function(element) { return $(element).data('href') }
   $('#qunit-fixture a')
     .bindNative('ajax:beforeSend', function(e, xhr, options) {
       equal('/data/href', options.url)
@@ -42,14 +42,14 @@ asyncTest('the getter for an element\'s href works normally if not overridden', 
 })
 
 asyncTest('the event selector strings are overridable', 1, function() {
-  ok($.rails.linkClickSelector.indexOf(', a[data-custom-remote-link]') != -1, 'linkClickSelector contains custom selector')
+  ok($.quails.linkClickSelector.indexOf(', a[data-custom-remote-link]') != -1, 'linkClickSelector contains custom selector')
   start()
 })
 
-asyncTest('including rails-ujs multiple times throws error', 1, function() {
+asyncTest('including quails-ujs multiple times throws error', 1, function() {
   throws(function() {
-    Rails.start()
-  }, 'appending rails.js again throws error')
+    Quails.start()
+  }, 'appending quails.js again throws error')
   setTimeout(function() { start() }, 50)
 })
 

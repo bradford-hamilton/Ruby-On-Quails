@@ -237,7 +237,7 @@ module ActiveRecord
     # are needed by the next ones when eager loading is going on.
     #
     # Please see further details in the
-    # {Active Record Query Interface guide}[http://guides.rubyonrails.org/active_record_querying.html#running-explain].
+    # {Active Record Query Interface guide}[http://guides.rubyonquails.org/active_record_querying.html#running-explain].
     def explain
       exec_explain(collecting_queries_for_explain { exec_queries })
     end
@@ -348,11 +348,11 @@ module ActiveRecord
     #   # Update all customers with the given attributes
     #   Customer.update_all wants_email: true
     #
-    #   # Update all books with 'Rails' in their title
-    #   Book.where('title LIKE ?', '%Rails%').update_all(author: 'David')
+    #   # Update all books with 'Quails' in their title
+    #   Book.where('title LIKE ?', '%Quails%').update_all(author: 'David')
     #
     #   # Update all books that match conditions, but limit it to 5 ordered by date
-    #   Book.where('title LIKE ?', '%Rails%').order(:created_at).limit(5).update_all(author: 'David')
+    #   Book.where('title LIKE ?', '%Quails%').order(:created_at).limit(5).update_all(author: 'David')
     #
     #   # Update all invoices and set the number column to its id value.
     #   Invoice.update_all('number = id')

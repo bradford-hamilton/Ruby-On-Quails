@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
 Active Record Associations
 ==========================
@@ -16,7 +16,7 @@ After reading this guide, you will know:
 Why Associations?
 -----------------
 
-In Rails, an _association_ is a connection between two Active Record models. Why do we need associations between models? Because they make common operations simpler and easier in your code. For example, consider a simple Rails application that includes a model for authors and a model for books. Each author can have many books. Without associations, the model declarations would look like this:
+In Quails, an _association_ is a connection between two Active Record models. Why do we need associations between models? Because they make common operations simpler and easier in your code. For example, consider a simple Quails application that includes a model for authors and a model for books. Each author can have many books. Without associations, the model declarations would look like this:
 
 ```ruby
 class Author < ApplicationRecord
@@ -42,7 +42,7 @@ end
 @author.destroy
 ```
 
-With Active Record associations, we can streamline these - and other - operations by declaratively telling Rails that there is a connection between the two models. Here's the revised code for setting up authors and books:
+With Active Record associations, we can streamline these - and other - operations by declaratively telling Quails that there is a connection between the two models. Here's the revised code for setting up authors and books:
 
 ```ruby
 class Author < ApplicationRecord
@@ -66,12 +66,12 @@ Deleting an author and all of its books is *much* easier:
 @author.destroy
 ```
 
-To learn more about the different types of associations, read the next section of this guide. That's followed by some tips and tricks for working with associations, and then by a complete reference to the methods and options for associations in Rails.
+To learn more about the different types of associations, read the next section of this guide. That's followed by some tips and tricks for working with associations, and then by a complete reference to the methods and options for associations in Quails.
 
 The Types of Associations
 -------------------------
 
-Rails supports six types of associations:
+Quails supports six types of associations:
 
 * `belongs_to`
 * `has_one`
@@ -80,7 +80,7 @@ Rails supports six types of associations:
 * `has_one :through`
 * `has_and_belongs_to_many`
 
-Associations are implemented using macro-style calls, so that you can declaratively add features to your models. For example, by declaring that one model `belongs_to` another, you instruct Rails to maintain [Primary Key](https://en.wikipedia.org/wiki/Unique_key)-[Foreign Key](https://en.wikipedia.org/wiki/Foreign_key) information between instances of the two models, and you also get a number of utility methods added to your model.
+Associations are implemented using macro-style calls, so that you can declaratively add features to your models. For example, by declaring that one model `belongs_to` another, you instruct Quails to maintain [Primary Key](https://en.wikipedia.org/wiki/Unique_key)-[Foreign Key](https://en.wikipedia.org/wiki/Foreign_key) information between instances of the two models, and you also get a number of utility methods added to your model.
 
 In the remainder of this guide, you'll learn how to declare and use the various forms of associations. But first, a quick introduction to the situations where each association type is appropriate.
 
@@ -96,7 +96,7 @@ end
 
 ![belongs_to Association Diagram](images/belongs_to.png)
 
-NOTE: `belongs_to` associations _must_ use the singular term. If you used the pluralized form in the above example for the `author` association in the `Book` model, you would be told that there was an "uninitialized constant Book::Authors". This is because Rails automatically infers the class name from the association name. If the association name is wrongly pluralized, then the inferred class will be wrongly pluralized too.
+NOTE: `belongs_to` associations _must_ use the singular term. If you used the pluralized form in the above example for the `author` association in the `Book` model, you would be told that there was an "uninitialized constant Book::Authors". This is because Quails automatically infers the class name from the association name. If the association name is wrongly pluralized, then the inferred class will be wrongly pluralized too.
 
 The corresponding migration might look like this:
 
@@ -270,7 +270,7 @@ class Paragraph < ApplicationRecord
 end
 ```
 
-With `through: :sections` specified, Rails will now understand:
+With `through: :sections` specified, Quails will now understand:
 
 ```ruby
 @document.paragraphs
@@ -402,11 +402,11 @@ class CreateSuppliers < ActiveRecord::Migration[5.0]
 end
 ```
 
-NOTE: Using `t.integer :supplier_id` makes the foreign key naming obvious and explicit. In current versions of Rails, you can abstract away this implementation detail by using `t.references :supplier` instead.
+NOTE: Using `t.integer :supplier_id` makes the foreign key naming obvious and explicit. In current versions of Quails, you can abstract away this implementation detail by using `t.references :supplier` instead.
 
 ### Choosing Between `has_many :through` and `has_and_belongs_to_many`
 
-Rails offers two different ways to declare a many-to-many relationship between models. The simpler way is to use `has_and_belongs_to_many`, which allows you to make the association directly:
+Quails offers two different ways to declare a many-to-many relationship between models. The simpler way is to use `has_and_belongs_to_many`, which allows you to make the association directly:
 
 ```ruby
 class Assembly < ApplicationRecord
@@ -527,7 +527,7 @@ end
 Tips, Tricks, and Warnings
 --------------------------
 
-Here are a few things you should know to make efficient use of Active Record associations in your Rails applications:
+Here are a few things you should know to make efficient use of Active Record associations in your Quails applications:
 
 * Controlling caching
 * Avoiding name collisions
@@ -881,7 +881,7 @@ Does the same as `create_association` above, but raises `ActiveRecord::RecordInv
 
 #### Options for `belongs_to`
 
-While Rails uses intelligent defaults that will work well in most situations, there may be times when you want to customize the behavior of the `belongs_to` association reference. Such customizations can easily be accomplished by passing options and scope blocks when you create the association. For example, this association uses two such options:
+While Quails uses intelligent defaults that will work well in most situations, there may be times when you want to customize the behavior of the `belongs_to` association reference. Such customizations can easily be accomplished by passing options and scope blocks when you create the association. For example, this association uses two such options:
 
 ```ruby
 class Book < ApplicationRecord
@@ -906,7 +906,7 @@ The `belongs_to` association supports these options:
 
 ##### `:autosave`
 
-If you set the `:autosave` option to `true`, Rails will save any loaded members and destroy members that are marked for destruction whenever you save the parent object.
+If you set the `:autosave` option to `true`, Quails will save any loaded members and destroy members that are marked for destruction whenever you save the parent object.
 
 ##### `:class_name`
 
@@ -942,7 +942,7 @@ class Author < ApplicationRecord
 end
 ```
 
-With this declaration, Rails will keep the cache value up to date, and then return that value in response to the `size` method.
+With this declaration, Quails will keep the cache value up to date, and then return that value in response to the `size` method.
 
 Although the `:counter_cache` option is specified on the model that includes
 the `belongs_to` declaration, the actual column must be added to the
@@ -979,7 +979,7 @@ WARNING: You should not specify this option on a `belongs_to` association that i
 
 ##### `:foreign_key`
 
-By convention, Rails assumes that the column used to hold the foreign key on this model is the name of the association with the suffix `_id` added. The `:foreign_key` option lets you set the name of the foreign key directly:
+By convention, Quails assumes that the column used to hold the foreign key on this model is the name of the association with the suffix `_id` added. The `:foreign_key` option lets you set the name of the foreign key directly:
 
 ```ruby
 class Book < ApplicationRecord
@@ -988,11 +988,11 @@ class Book < ApplicationRecord
 end
 ```
 
-TIP: In any case, Rails will not create foreign key columns for you. You need to explicitly define them as part of your migrations.
+TIP: In any case, Quails will not create foreign key columns for you. You need to explicitly define them as part of your migrations.
 
 ##### `:primary_key`
 
-By convention, Rails assumes that the `id` column is used to hold the primary key
+By convention, Quails assumes that the `id` column is used to hold the primary key
 of its tables. The `:primary_key` option allows you to specify a different column.
 
 For example, given we have a `users` table with `guid` as the primary key. If we want a separate `todos` table to hold the foreign key `user_id` in the `guid` column, then we can use `primary_key` to achieve this like so:
@@ -1131,7 +1131,7 @@ If you use `readonly`, then the associated object will be read-only when retriev
 
 ##### `select`
 
-The `select` method lets you override the SQL `SELECT` clause that is used to retrieve data about the associated object. By default, Rails retrieves all columns.
+The `select` method lets you override the SQL `SELECT` clause that is used to retrieve data about the associated object. By default, Quails retrieves all columns.
 
 TIP: If you use the `select` method on a `belongs_to` association, you should also set the `:foreign_key` option to guarantee the correct results.
 
@@ -1229,7 +1229,7 @@ Does the same as `create_association` above, but raises `ActiveRecord::RecordInv
 
 #### Options for `has_one`
 
-While Rails uses intelligent defaults that will work well in most situations, there may be times when you want to customize the behavior of the `has_one` association reference. Such customizations can easily be accomplished by passing options when you create the association. For example, this association uses two such options:
+While Quails uses intelligent defaults that will work well in most situations, there may be times when you want to customize the behavior of the `has_one` association reference. Such customizations can easily be accomplished by passing options when you create the association. For example, this association uses two such options:
 
 ```ruby
 class Supplier < ApplicationRecord
@@ -1257,7 +1257,7 @@ Setting the `:as` option indicates that this is a polymorphic association. Polym
 
 ##### `:autosave`
 
-If you set the `:autosave` option to `true`, Rails will save any loaded members and destroy members that are marked for destruction whenever you save the parent object.
+If you set the `:autosave` option to `true`, Quails will save any loaded members and destroy members that are marked for destruction whenever you save the parent object.
 
 ##### `:class_name`
 
@@ -1287,7 +1287,7 @@ unallowed `NULL` value.
 
 ##### `:foreign_key`
 
-By convention, Rails assumes that the column used to hold the foreign key on the other model is the name of this model with the suffix `_id` added. The `:foreign_key` option lets you set the name of the foreign key directly:
+By convention, Quails assumes that the column used to hold the foreign key on the other model is the name of this model with the suffix `_id` added. The `:foreign_key` option lets you set the name of the foreign key directly:
 
 ```ruby
 class Supplier < ApplicationRecord
@@ -1295,7 +1295,7 @@ class Supplier < ApplicationRecord
 end
 ```
 
-TIP: In any case, Rails will not create foreign key columns for you. You need to explicitly define them as part of your migrations.
+TIP: In any case, Quails will not create foreign key columns for you. You need to explicitly define them as part of your migrations.
 
 ##### `:inverse_of`
 
@@ -1313,7 +1313,7 @@ end
 
 ##### `:primary_key`
 
-By convention, Rails assumes that the column used to hold the primary key of this model is `id`. You can override this and explicitly specify the primary key with the `:primary_key` option.
+By convention, Quails assumes that the column used to hold the primary key of this model is `id`. You can override this and explicitly specify the primary key with the `:primary_key` option.
 
 ##### `:source`
 
@@ -1400,7 +1400,7 @@ If you use the `readonly` method, then the associated object will be read-only w
 
 ##### `select`
 
-The `select` method lets you override the SQL `SELECT` clause that is used to retrieve data about the associated object. By default, Rails retrieves all columns.
+The `select` method lets you override the SQL `SELECT` clause that is used to retrieve data about the associated object. By default, Quails retrieves all columns.
 
 #### Do Any Associated Objects Exist?
 
@@ -1580,7 +1580,7 @@ The `collection.where` method finds objects within the collection based on the c
 
 The `collection.exists?` method checks whether an object meeting the supplied
 conditions exists in the collection. It uses the same syntax and options as
-[`ActiveRecord::Base.exists?`](http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F).
+[`ActiveRecord::Base.exists?`](http://api.rubyonquails.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F).
 
 ##### `collection.build(attributes = {}, ...)`
 
@@ -1624,7 +1624,7 @@ The `collection.reload` method returns a Relation of all of the associated objec
 
 #### Options for `has_many`
 
-While Rails uses intelligent defaults that will work well in most situations, there may be times when you want to customize the behavior of the `has_many` association reference. Such customizations can easily be accomplished by passing options when you create the association. For example, this association uses two such options:
+While Quails uses intelligent defaults that will work well in most situations, there may be times when you want to customize the behavior of the `has_many` association reference. Such customizations can easily be accomplished by passing options when you create the association. For example, this association uses two such options:
 
 ```ruby
 class Author < ApplicationRecord
@@ -1653,7 +1653,7 @@ Setting the `:as` option indicates that this is a polymorphic association, as di
 
 ##### `:autosave`
 
-If you set the `:autosave` option to `true`, Rails will save any loaded members and destroy members that are marked for destruction whenever you save the parent object.
+If you set the `:autosave` option to `true`, Quails will save any loaded members and destroy members that are marked for destruction whenever you save the parent object.
 
 ##### `:class_name`
 
@@ -1681,7 +1681,7 @@ Controls what happens to the associated objects when their owner is destroyed:
 
 ##### `:foreign_key`
 
-By convention, Rails assumes that the column used to hold the foreign key on the other model is the name of this model with the suffix `_id` added. The `:foreign_key` option lets you set the name of the foreign key directly:
+By convention, Quails assumes that the column used to hold the foreign key on the other model is the name of this model with the suffix `_id` added. The `:foreign_key` option lets you set the name of the foreign key directly:
 
 ```ruby
 class Author < ApplicationRecord
@@ -1689,7 +1689,7 @@ class Author < ApplicationRecord
 end
 ```
 
-TIP: In any case, Rails will not create foreign key columns for you. You need to explicitly define them as part of your migrations.
+TIP: In any case, Quails will not create foreign key columns for you. You need to explicitly define them as part of your migrations.
 
 ##### `:inverse_of`
 
@@ -1707,7 +1707,7 @@ end
 
 ##### `:primary_key`
 
-By convention, Rails assumes that the column used to hold the primary key of the association is `id`. You can override this and explicitly specify the primary key with the `:primary_key` option.
+By convention, Quails assumes that the column used to hold the primary key of the association is `id`. You can override this and explicitly specify the primary key with the `:primary_key` option.
 
 Let's say the `users` table has `id` as the primary_key but it also
 has a `guid` column. The requirement is that the `todos` table should
@@ -1868,9 +1868,9 @@ If you use the `readonly` method, then the associated objects will be read-only 
 
 ##### `select`
 
-The `select` method lets you override the SQL `SELECT` clause that is used to retrieve data about the associated objects. By default, Rails retrieves all columns.
+The `select` method lets you override the SQL `SELECT` clause that is used to retrieve data about the associated objects. By default, Quails retrieves all columns.
 
-WARNING: If you specify your own `select`, be sure to include the primary key and foreign key columns of the associated model. If you do not, Rails will throw an error.
+WARNING: If you specify your own `select`, be sure to include the primary key and foreign key columns of the associated model. If you do not, Quails will throw an error.
 
 ##### `distinct`
 
@@ -2012,7 +2012,7 @@ assemblies.reload
 
 ##### Additional Column Methods
 
-If the join table for a `has_and_belongs_to_many` association has additional columns beyond the two foreign keys, these columns will be added as attributes to records retrieved via that association. Records returned with additional attributes will always be read-only, because Rails cannot save changes to those attributes.
+If the join table for a `has_and_belongs_to_many` association has additional columns beyond the two foreign keys, these columns will be added as attributes to records retrieved via that association. Records returned with additional attributes will always be read-only, because Quails cannot save changes to those attributes.
 
 WARNING: The use of extra attributes on the join table in a `has_and_belongs_to_many` association is deprecated. If you require this sort of complex behavior on the table that joins two models in a many-to-many relationship, you should use a `has_many :through` association instead of `has_and_belongs_to_many`.
 
@@ -2109,7 +2109,7 @@ The `collection.where` method finds objects within the collection based on the c
 
 The `collection.exists?` method checks whether an object meeting the supplied
 conditions exists in the collection. It uses the same syntax and options as
-[`ActiveRecord::Base.exists?`](http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F).
+[`ActiveRecord::Base.exists?`](http://api.rubyonquails.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F).
 
 ##### `collection.build(attributes = {})`
 
@@ -2141,7 +2141,7 @@ The `collection.reload` method returns a Relation of all of the associated objec
 
 #### Options for `has_and_belongs_to_many`
 
-While Rails uses intelligent defaults that will work well in most situations, there may be times when you want to customize the behavior of the `has_and_belongs_to_many` association reference. Such customizations can easily be accomplished by passing options when you create the association. For example, this association uses two such options:
+While Quails uses intelligent defaults that will work well in most situations, there may be times when you want to customize the behavior of the `has_and_belongs_to_many` association reference. Such customizations can easily be accomplished by passing options when you create the association. For example, this association uses two such options:
 
 ```ruby
 class Parts < ApplicationRecord
@@ -2161,7 +2161,7 @@ The `has_and_belongs_to_many` association supports these options:
 
 ##### `:association_foreign_key`
 
-By convention, Rails assumes that the column in the join table used to hold the foreign key pointing to the other model is the name of that model with the suffix `_id` added. The `:association_foreign_key` option lets you set the name of the foreign key directly:
+By convention, Quails assumes that the column in the join table used to hold the foreign key pointing to the other model is the name of that model with the suffix `_id` added. The `:association_foreign_key` option lets you set the name of the foreign key directly:
 
 TIP: The `:foreign_key` and `:association_foreign_key` options are useful when setting up a many-to-many self-join. For example:
 
@@ -2176,7 +2176,7 @@ end
 
 ##### `:autosave`
 
-If you set the `:autosave` option to `true`, Rails will save any loaded members and destroy members that are marked for destruction whenever you save the parent object.
+If you set the `:autosave` option to `true`, Quails will save any loaded members and destroy members that are marked for destruction whenever you save the parent object.
 
 ##### `:class_name`
 
@@ -2190,7 +2190,7 @@ end
 
 ##### `:foreign_key`
 
-By convention, Rails assumes that the column in the join table used to hold the foreign key pointing to this model is the name of this model with the suffix `_id` added. The `:foreign_key` option lets you set the name of the foreign key directly:
+By convention, Quails assumes that the column in the join table used to hold the foreign key pointing to this model is the name of this model with the suffix `_id` added. The `:foreign_key` option lets you set the name of the foreign key directly:
 
 ```ruby
 class User < ApplicationRecord
@@ -2304,7 +2304,7 @@ If you use the `readonly` method, then the associated objects will be read-only 
 
 ##### `select`
 
-The `select` method lets you override the SQL `SELECT` clause that is used to retrieve data about the associated objects. By default, Rails retrieves all columns.
+The `select` method lets you override the SQL `SELECT` clause that is used to retrieve data about the associated objects. By default, Quails retrieves all columns.
 
 ##### `distinct`
 
@@ -2343,7 +2343,7 @@ class Author < ApplicationRecord
 end
 ```
 
-Rails passes the object being added or removed to the callback.
+Quails passes the object being added or removed to the callback.
 
 You can stack callbacks on a single event by passing them as an array:
 
@@ -2366,7 +2366,7 @@ If a `before_add` callback throws an exception, the object does not get added to
 
 ### Association Extensions
 
-You're not limited to the functionality that Rails automatically builds into association proxy objects. You can also extend these objects through anonymous modules, adding new finders, creators, or other methods. For example:
+You're not limited to the functionality that Quails automatically builds into association proxy objects. You can also extend these objects through anonymous modules, adding new finders, creators, or other methods. For example:
 
 ```ruby
 class Author < ApplicationRecord
@@ -2410,14 +2410,14 @@ Let's say we have Car, Motorcycle and Bicycle models. We will want to share
 the `color` and `price` fields and some methods for all of them, but having some
 specific behavior for each, and separated controllers too.
 
-Rails makes this quite easy. First, let's generate the base Vehicle model:
+Quails makes this quite easy. First, let's generate the base Vehicle model:
 
 ```bash
-$ rails generate model vehicle type:string color:string price:decimal{10.2}
+$ quails generate model vehicle type:string color:string price:decimal{10.2}
 ```
 
 Did you note we are adding a "type" field? Since all models will be saved in a
-single database table, Rails will save in this column the name of the model that
+single database table, Quails will save in this column the name of the model that
 is being saved. In our example, this can be "Car", "Motorcycle" or "Bicycle."
 STI won't work without a "type" field in the table.
 
@@ -2429,7 +2429,7 @@ table already exists).
 For example, to generate the Car model:
 
 ```bash
-$ rails generate model car --parent=Vehicle
+$ quails generate model car --parent=Vehicle
 ```
 
 The generated model will look like this:

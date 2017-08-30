@@ -173,7 +173,7 @@ db_namespace = namespace :db do
       pending_migrations.each do |pending_migration|
         puts "  %4d %s" % [pending_migration.version, pending_migration.name]
       end
-      abort %{Run `rails db:migrate` to update your database then try again.}
+      abort %{Run `quails db:migrate` to update your database then try again.}
     end
   end
 
@@ -346,7 +346,7 @@ namespace :railties do
     task migrations: :'db:load_config' do
       to_load = ENV["FROM"].blank? ? :all : ENV["FROM"].split(",").map(&:strip)
       railties = {}
-      Rails.application.migration_railties.each do |railtie|
+      Quails.application.migration_railties.each do |railtie|
         next unless to_load == :all || to_load.include?(railtie.railtie_name)
 
         if railtie.respond_to?(:paths) && (path = railtie.paths["db/migrate"].first)

@@ -2,7 +2,7 @@
 
 require "active_support/core_ext/module/delegation"
 
-module Rails
+module Quails
   class Application
     class RoutesReloader
       attr_reader :route_sets, :paths

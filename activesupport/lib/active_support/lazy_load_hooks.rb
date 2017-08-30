@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ActiveSupport
-  # lazy_load_hooks allows Rails to lazily load a lot of components and thus
+  # lazy_load_hooks allows Quails to lazily load a lot of components and thus
   # making the app boot faster. Because of this feature now there is no need to
   # require <tt>ActiveRecord::Base</tt> at boot time purely to apply
   # configuration. Instead a hook is registered that applies configuration once
@@ -31,7 +31,7 @@ module ActiveSupport
       end
     end
 
-    # Declares a block that will be executed when a Rails component is fully
+    # Declares a block that will be executed when a Quails component is fully
     # loaded.
     #
     # Options:

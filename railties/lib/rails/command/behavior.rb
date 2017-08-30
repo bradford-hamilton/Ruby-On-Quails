@@ -2,7 +2,7 @@
 
 require "active_support"
 
-module Rails
+module Quails
   module Command
     module Behavior #:nodoc:
       extend ActiveSupport::Concern
@@ -107,8 +107,8 @@ module Rails
           end
 
           # Convert namespaces to paths by replacing ":" for "/" and adding
-          # an extra lookup. For example, "rails:model" should be searched
-          # in both: "rails/model/model_generator" and "rails/model_generator".
+          # an extra lookup. For example, "quails:model" should be searched
+          # in both: "quails/model/model_generator" and "quails/model_generator".
           def namespaces_to_paths(namespaces)
             paths = []
             namespaces.each do |namespace|

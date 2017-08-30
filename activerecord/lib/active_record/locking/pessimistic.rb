@@ -65,7 +65,7 @@ module ActiveRecord
           if changed?
             ActiveSupport::Deprecation.warn(<<-MSG.squish)
               Locking a record with unpersisted changes is deprecated and will raise an
-              exception in Rails 5.2. Use `save` to persist the changes, or `reload` to
+              exception in Quails 5.2. Use `save` to persist the changes, or `reload` to
               discard them explicitly.
             MSG
           end

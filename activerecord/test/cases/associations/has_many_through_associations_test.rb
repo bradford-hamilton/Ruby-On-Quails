@@ -862,7 +862,7 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
   end
 
   def test_collection_singular_ids_setter
-    company = companies(:rails_core)
+    company = companies(:quails_core)
     dev = Developer.first
 
     company.developer_ids = [dev.id]
@@ -881,7 +881,7 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
   end
 
   def test_collection_singular_ids_setter_raises_exception_when_invalid_ids_set
-    company = companies(:rails_core)
+    company = companies(:quails_core)
     ids = [Developer.first.id, -9999]
     e = assert_raises(ActiveRecord::RecordNotFound) { company.developer_ids = ids }
     msg = "Couldn't find all Developers with 'id': (1, -9999) (found 1 results, but was looking for 2). Couldn't find Developer with id -9999."

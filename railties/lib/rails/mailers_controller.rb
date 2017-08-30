@@ -2,7 +2,7 @@
 
 require_relative "application_controller"
 
-class Rails::MailersController < Rails::ApplicationController # :nodoc:
+class Quails::MailersController < Quails::ApplicationController # :nodoc:
   prepend_view_path ActionDispatch::DebugExceptions::RESCUES_TEMPLATE_PATH
 
   before_action :require_local!, unless: :show_previews?

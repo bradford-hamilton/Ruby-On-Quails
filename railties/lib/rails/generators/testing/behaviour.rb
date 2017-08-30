@@ -8,7 +8,7 @@ require "active_support/testing/stream"
 require "active_support/concern"
 require_relative "../../generators"
 
-module Rails
+module Quails
   module Generators
     module Testing
       module Behaviour
@@ -51,7 +51,7 @@ module Rails
         # Runs the generator configured for this class. The first argument is an array like
         # command line arguments:
         #
-        #   class AppGeneratorTest < Rails::Generators::TestCase
+        #   class AppGeneratorTest < Quails::Generators::TestCase
         #     tests AppGenerator
         #     destination File.expand_path("../tmp", __dir__)
         #     setup :prepare_destination
@@ -76,18 +76,18 @@ module Rails
           @generator ||= generator_class.new(args, options, config.reverse_merge(destination_root: destination_root))
         end
 
-        # Create a Rails::Generators::GeneratedAttribute by supplying the
+        # Create a Quails::Generators::GeneratedAttribute by supplying the
         # attribute type and, optionally, the attribute name:
         #
         #   create_generated_attribute(:string, 'name')
         def create_generated_attribute(attribute_type, name = "test", index = nil)
-          Rails::Generators::GeneratedAttribute.parse([name, attribute_type, index].compact.join(":"))
+          Quails::Generators::GeneratedAttribute.parse([name, attribute_type, index].compact.join(":"))
         end
 
         private
 
           def destination_root_is_set?
-            raise "You need to configure your Rails::Generators::TestCase destination root." unless destination_root
+            raise "You need to configure your Quails::Generators::TestCase destination root." unless destination_root
           end
 
           def ensure_current_path

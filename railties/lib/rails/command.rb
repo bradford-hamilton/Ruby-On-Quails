@@ -8,7 +8,7 @@ require "active_support/core_ext/hash/transform_values"
 
 require "thor"
 
-module Rails
+module Quails
   module Command
     extend ActiveSupport::Autoload
 
@@ -49,23 +49,23 @@ module Rails
         end
       end
 
-      # Rails finds namespaces similar to Thor, it only adds one rule:
+      # Quails finds namespaces similar to Thor, it only adds one rule:
       #
-      # Command names must end with "_command.rb". This is required because Rails
+      # Command names must end with "_command.rb". This is required because Quails
       # looks in load paths and loads the command just before it's going to be used.
       #
-      #   find_by_namespace :webrat, :rails, :integration
+      #   find_by_namespace :webrat, :quails, :integration
       #
       # Will search for the following commands:
       #
-      #   "rails:webrat", "webrat:integration", "webrat"
+      #   "quails:webrat", "webrat:integration", "webrat"
       #
-      # Notice that "rails:commands:webrat" could be loaded as well, what
-      # Rails looks for is the first and last parts of the namespace.
+      # Notice that "quails:commands:webrat" could be loaded as well, what
+      # Quails looks for is the first and last parts of the namespace.
       def find_by_namespace(namespace, command_name = nil) # :nodoc:
         lookups = [ namespace ]
         lookups << "#{namespace}:#{command_name}" if command_name
-        lookups.concat lookups.map { |lookup| "rails:#{lookup}" }
+        lookups.concat lookups.map { |lookup| "quails:#{lookup}" }
 
         lookup(lookups)
 
@@ -73,7 +73,7 @@ module Rails
         namespaces[(lookups & namespaces.keys).first]
       end
 
-      # Returns the root of the Rails engine or app running the command.
+      # Returns the root of the Quails engine or app running the command.
       def root
         if defined?(ENGINE_ROOT)
           Pathname.new(ENGINE_ROOT)
@@ -92,8 +92,8 @@ module Rails
         groups = (subclasses - hidden_commands).group_by { |c| c.namespace.split(":").first }
         groups.transform_values! { |commands| commands.flat_map(&:printing_commands).sort }
 
-        rails = groups.delete("rails")
-        [[ "rails", rails ]] + groups.sort.to_a
+        quails = groups.delete("quails")
+        [[ "quails", quails ]] + groups.sort.to_a
       end
 
       private
@@ -102,7 +102,7 @@ module Rails
         end
 
         def lookup_paths # :doc:
-          @lookup_paths ||= %w( rails/commands commands )
+          @lookup_paths ||= %w( quails/commands commands )
         end
 
         def file_lookup_paths # :doc:

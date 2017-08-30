@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require "rails/test_unit/runner"
+require "quails/test_unit/runner"
 
-module Rails
+module Quails
   module LineFiltering # :nodoc:
     def run(reporter, options = {})
-      options[:filter] = Rails::TestUnit::Runner.compose_filter(self, options[:filter])
+      options[:filter] = Quails::TestUnit::Runner.compose_filter(self, options[:filter])
 
       super
     end

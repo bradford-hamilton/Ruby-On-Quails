@@ -13,7 +13,7 @@ module ActiveJob
     #
     # To use Delayed Job, set the queue_adapter config to +:delayed_job+.
     #
-    #   Rails.application.config.active_job.queue_adapter = :delayed_job
+    #   Quails.application.config.active_job.queue_adapter = :delayed_job
     class DelayedJobAdapter
       def enqueue(job) #:nodoc:
         delayed_job = Delayed::Job.enqueue(JobWrapper.new(job.serialize), queue: job.queue_name, priority: job.priority)

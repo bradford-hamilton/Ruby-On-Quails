@@ -16,8 +16,8 @@ module ActiveSupport
     # Dumps objects in JSON (JavaScript Object Notation).
     # See http://www.json.org for more info.
     #
-    #   ActiveSupport::JSON.encode({ team: 'rails', players: '36' })
-    #   # => "{\"team\":\"rails\",\"players\":\"36\"}"
+    #   ActiveSupport::JSON.encode({ team: 'quails', players: '36' })
+    #   # => "{\"team\":\"quails\",\"players\":\"36\"}"
     def self.encode(value, options = nil)
       Encoding.json_encoder.new(options).encode(value)
     end
@@ -36,7 +36,7 @@ module ActiveSupport
         end
 
         private
-          # Rails does more escaping than the JSON gem natively does (we
+          # Quails does more escaping than the JSON gem natively does (we
           # escape \u2028 and \u2029 and optionally >, <, & to work around
           # certain browser problems).
           ESCAPED_CHARS = {
@@ -116,7 +116,7 @@ module ActiveSupport
         # Defaults to 3 (equivalent to millisecond precision)
         attr_accessor :time_precision
 
-        # Sets the encoder used by Rails to encode Ruby objects into JSON strings
+        # Sets the encoder used by Quails to encode Ruby objects into JSON strings
         # in +Object#to_json+ and +ActiveSupport::JSON.encode+.
         attr_accessor :json_encoder
       end

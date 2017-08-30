@@ -8,16 +8,16 @@ module ActionView
     # This module provides methods for generating asset paths and
     # urls.
     #
-    #   image_path("rails.png")
-    #   # => "/assets/rails.png"
+    #   image_path("quails.png")
+    #   # => "/assets/quails.png"
     #
-    #   image_url("rails.png")
-    #   # => "http://www.example.com/assets/rails.png"
+    #   image_url("quails.png")
+    #   # => "http://www.example.com/assets/quails.png"
     #
     # === Using asset hosts
     #
-    # By default, Rails links to these assets on the current host in the public
-    # folder, but you can direct Rails to link to assets from a dedicated asset
+    # By default, Quails links to these assets on the current host in the public
+    # folder, but you can direct Quails to link to assets from a dedicated asset
     # server by setting <tt>ActionController::Base.asset_host</tt> in the application
     # configuration, typically in <tt>config/environments/production.rb</tt>.
     # For example, you'd define <tt>assets.example.com</tt> to be your asset
@@ -28,8 +28,8 @@ module ActionView
     #
     # Helpers take that into account:
     #
-    #   image_tag("rails.png")
-    #   # => <img src="http://assets.example.com/assets/rails.png" />
+    #   image_tag("quails.png")
+    #   # => <img src="http://assets.example.com/assets/quails.png" />
     #   stylesheet_link_tag("application")
     #   # => <link href="http://assets.example.com/assets/application.css" media="screen" rel="stylesheet" />
     #
@@ -41,8 +41,8 @@ module ActionView
     # <tt>assets%d.example.com</tt> will spread the asset requests over
     # "assets0.example.com", ..., "assets3.example.com".
     #
-    #   image_tag("rails.png")
-    #   # => <img src="http://assets0.example.com/assets/rails.png" />
+    #   image_tag("quails.png")
+    #   # => <img src="http://assets0.example.com/assets/quails.png" />
     #   stylesheet_link_tag("application")
     #   # => <link href="http://assets2.example.com/assets/application.css" media="screen" rel="stylesheet" />
     #
@@ -67,8 +67,8 @@ module ActionView
     #   ActionController::Base.asset_host = Proc.new { |source|
     #     "http://assets#{Digest::MD5.hexdigest(source).to_i(16) % 2 + 1}.example.com"
     #   }
-    #   image_tag("rails.png")
-    #   # => <img src="http://assets1.example.com/assets/rails.png" />
+    #   image_tag("quails.png")
+    #   # => <img src="http://assets1.example.com/assets/quails.png" />
     #   stylesheet_link_tag("application")
     #   # => <link href="http://assets2.example.com/assets/application.css" media="screen" rel="stylesheet" />
     #
@@ -77,7 +77,7 @@ module ActionView
     # you need fewer/more than four hosts, custom host names, etc.
     #
     # As you see the proc takes a +source+ parameter. That's a string with the
-    # absolute path of the asset, for example "/assets/rails.png".
+    # absolute path of the asset, for example "/assets/quails.png".
     #
     #    ActionController::Base.asset_host = Proc.new { |source|
     #      if source.ends_with?('.css')
@@ -86,8 +86,8 @@ module ActionView
     #        "http://assets.example.com"
     #      end
     #    }
-    #   image_tag("rails.png")
-    #   # => <img src="http://assets.example.com/assets/rails.png" />
+    #   image_tag("quails.png")
+    #   # => <img src="http://assets.example.com/assets/quails.png" />
     #   stylesheet_link_tag("application")
     #   # => <link href="http://stylesheets.example.com/assets/application.css" media="screen" rel="stylesheet" />
     #
@@ -120,7 +120,7 @@ module ActionView
       URI_REGEXP = %r{^[-a-z]+://|^(?:cid|data):|^//}i
 
       # This is the entry point for all assets.
-      # When using the asset pipeline (i.e. sprockets and sprockets-rails), the
+      # When using the asset pipeline (i.e. sprockets and sprockets-quails), the
       # behavior is "enhanced". You can bypass the asset pipeline by passing in
       # <tt>skip_pipeline: true</tt> to the options.
       #
@@ -129,7 +129,7 @@ module ActionView
       # === With the asset pipeline
       #
       # All options passed to +asset_path+ will be passed to +compute_asset_path+
-      # which is implemented by sprockets-rails.
+      # which is implemented by sprockets-quails.
       #
       #   asset_path("application.js") # => "/assets/application-60aa4fdc5cea14baf5400fba1abf4f2a46a5166bad4772b1effe341570f07de9.js"
       #
@@ -167,13 +167,13 @@ module ActionView
       # - If <tt>config.relative_url_root</tt> is specified, all assets will have that
       #   root prepended.
       #
-      #     Rails.application.config.relative_url_root = "bar"
+      #     Quails.application.config.relative_url_root = "bar"
       #     asset_path("foo.js", skip_pipeline: true) # => "bar/foo.js"
       #
       # - A different asset host can be specified via <tt>config.action_controller.asset_host</tt>
       #   this is commonly used in conjunction with a CDN.
       #
-      #     Rails.application.config.action_controller.asset_host = "assets.example.com"
+      #     Quails.application.config.action_controller.asset_host = "assets.example.com"
       #     asset_path("foo.js", skip_pipeline: true) # => "http://assets.example.com/foo.js"
       #
       # - An extension name can be specified manually with <tt>extname</tt>.
@@ -369,7 +369,7 @@ module ActionView
       #   image_path("http://www.example.com/img/edit.png")          # => "http://www.example.com/img/edit.png"
       #
       # If you have images as application resources this method may conflict with their named routes.
-      # The alias +path_to_image+ is provided to avoid that. Rails uses the alias internally, and
+      # The alias +path_to_image+ is provided to avoid that. Quails uses the alias internally, and
       # plugin authors are encouraged to do so.
       def image_path(source, options = {})
         path_to_asset(source, { type: :image }.merge!(options))

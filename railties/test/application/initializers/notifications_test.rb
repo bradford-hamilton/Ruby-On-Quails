@@ -22,7 +22,7 @@ module ApplicationTests
       ActiveSupport::Notifications.notifier.wait
     end
 
-    test "rails log_subscribers are added" do
+    test "quails log_subscribers are added" do
       add_to_config <<-RUBY
         config.colorize_logging = false
       RUBY
@@ -41,7 +41,7 @@ module ApplicationTests
       assert_match(/SHOW tables/, logger.logged(:debug).last)
     end
 
-    test "rails load_config_initializer event is instrumented" do
+    test "quails load_config_initializer event is instrumented" do
       app_file "config/initializers/foo.rb", ""
 
       events = []

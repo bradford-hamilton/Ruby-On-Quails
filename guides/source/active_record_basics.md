@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
 Active Record Basics
 ====================
@@ -8,7 +8,7 @@ This guide is an introduction to Active Record.
 After reading this guide, you will know:
 
 * What Object Relational Mapping and Active Record are and how they are used in
-  Rails.
+  Quails.
 * How Active Record fits into the Model-View-Controller paradigm.
 * How to use Active Record models to manipulate data stored in a relational
   database.
@@ -62,7 +62,7 @@ Convention over Configuration in Active Record
 When writing applications using other programming languages or frameworks, it
 may be necessary to write a lot of configuration code. This is particularly true
 for ORM frameworks in general. However, if you follow the conventions adopted by
-Rails, you'll need to write very little configuration (in some cases no
+Quails, you'll need to write very little configuration (in some cases no
 configuration at all) when creating Active Record models. The idea is that if
 you configure your applications in the very same way most of the time then this
 should be the default way. Thus, explicit configuration would be needed
@@ -71,9 +71,9 @@ only in those cases where you can't follow the standard convention.
 ### Naming Conventions
 
 By default, Active Record uses some naming conventions to find out how the
-mapping between models and database tables should be created. Rails will
+mapping between models and database tables should be created. Quails will
 pluralize your class names to find the respective database table. So, for
-a class `Book`, you should have a database table called **books**. The Rails
+a class `Book`, you should have a database table called **books**. The Quails
 pluralization mechanisms are very powerful, being capable of pluralizing (and
 singularizing) both regular and irregular words. When using class names composed
 of two or more words, the model class name should follow the Ruby conventions,
@@ -115,10 +115,10 @@ to Active Record instances:
 * `updated_at` - Automatically gets set to the current date and time whenever
   the record is updated.
 * `lock_version` - Adds [optimistic
-  locking](http://api.rubyonrails.org/classes/ActiveRecord/Locking.html) to
+  locking](http://api.rubyonquails.org/classes/ActiveRecord/Locking.html) to
   a model.
 * `type` - Specifies that the model uses [Single Table
-  Inheritance](http://api.rubyonrails.org/classes/ActiveRecord/Base.html#class-ActiveRecord::Base-label-Single+table+inheritance).
+  Inheritance](http://api.rubyonquails.org/classes/ActiveRecord/Base.html#class-ActiveRecord::Base-label-Single+table+inheritance).
 * `(association_name)_type` - Stores the type for
   [polymorphic associations](association_basics.html#polymorphic-associations).
 * `(table_name)_count` - Used to cache the number of belonging objects on
@@ -165,7 +165,7 @@ Overriding the Naming Conventions
 ---------------------------------
 
 What if you need to follow a different naming convention or need to use your
-Rails application with a legacy database? No problem, you can easily override
+Quails application with a legacy database? No problem, you can easily override
 the default conventions.
 
 `ApplicationRecord` inherits from `ActiveRecord::Base`, which defines a
@@ -345,7 +345,7 @@ the [Active Record Callbacks guide](active_record_callbacks.html).
 Migrations
 ----------
 
-Rails provides a domain-specific language for managing a database schema called
+Quails provides a domain-specific language for managing a database schema called
 migrations. Migrations are stored in files which are executed against any
 database that Active Record supports using `rake`. Here's a migration that
 creates a table:
@@ -368,9 +368,9 @@ class CreatePublications < ActiveRecord::Migration[5.0]
 end
 ```
 
-Rails keeps track of which files have been committed to the database and
-provides rollback features. To actually create the table, you'd run `rails db:migrate`
-and to roll it back, `rails db:rollback`.
+Quails keeps track of which files have been committed to the database and
+provides rollback features. To actually create the table, you'd run `quails db:migrate`
+and to roll it back, `quails db:rollback`.
 
 Note that the above code is database-agnostic: it will run in MySQL,
 PostgreSQL, Oracle and others. You can learn more about migrations in the

@@ -13,7 +13,7 @@ class SchemaAuthorizationTest < ActiveRecord::PostgreSQLTestCase
     "id serial primary key",
     "name character varying(50)"
   ]
-  USERS = ["rails_pg_schema_user1", "rails_pg_schema_user2"]
+  USERS = ["quails_pg_schema_user1", "quails_pg_schema_user2"]
 
   def setup
     @connection = ActiveRecord::Base.connection

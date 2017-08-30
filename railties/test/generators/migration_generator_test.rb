@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/migration/migration_generator"
+require "quails/generators/quails/migration/migration_generator"
 
-class MigrationGeneratorTest < Rails::Generators::TestCase
+class MigrationGeneratorTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
 
   def test_migration
@@ -334,14 +334,14 @@ class MigrationGeneratorTest < Rails::Generators::TestCase
   end
 
   def test_add_migration_to_configured_path
-    old_paths = Rails.application.config.paths["db/migrate"]
-    Rails.application.config.paths.add "db/migrate", with: "db2/migrate"
+    old_paths = Quails.application.config.paths["db/migrate"]
+    Quails.application.config.paths.add "db/migrate", with: "db2/migrate"
 
     migration = "migration_in_custom_path"
     run_generator [migration]
     assert_migration "db2/migrate/#{migration}.rb", /.*/
   ensure
-    Rails.application.config.paths["db/migrate"] = old_paths
+    Quails.application.config.paths["db/migrate"] = old_paths
   end
 
   private

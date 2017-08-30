@@ -5,14 +5,14 @@ ActiveRecord::Migrator.migrations_paths = [File.expand_path("../<%= options[:dum
 ActiveRecord::Migrator.migrations_paths << File.expand_path('../db/migrate', __dir__)
 <% end -%>
 <% end -%>
-require "rails/test_help"
+require "quails/test_help"
 
 # Filter out Minitest backtrace while allowing backtrace from other libraries
 # to be shown.
 Minitest.backtrace_filter = Minitest::BacktraceFilter.new
 
 <% unless engine? -%>
-Rails::TestUnitReporter.executable = 'bin/test'
+Quails::TestUnitReporter.executable = 'bin/test'
 <% end -%>
 
 <% unless options[:skip_active_record] -%>

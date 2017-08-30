@@ -84,7 +84,7 @@ module ActionDispatch
   #   end
   #
   # Because <tt>ActionDispatch::SystemTestCase</tt> is a shim between Capybara
-  # and Rails, any driver that is supported by Capybara is supported by system
+  # and Quails, any driver that is supported by Capybara is supported by system
   # tests as long as you include the required gems and files.
   class SystemTestCase < IntegrationTest
     include Capybara::DSL
@@ -101,7 +101,7 @@ module ActionDispatch
     def self.start_application # :nodoc:
       Capybara.app = Rack::Builder.new do
         map "/" do
-          run Rails.application
+          run Quails.application
         end
       end
 

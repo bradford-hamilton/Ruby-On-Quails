@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require "action_view"
-require "rails"
+require "quails"
 
 module ActionView
   # = Action View Railtie
-  class Railtie < Rails::Engine # :nodoc:
+  class Railtie < Quails::Engine # :nodoc:
     config.action_view = ActiveSupport::OrderedOptions.new
     config.action_view.embed_authenticity_token_in_remote_forms = nil
     config.action_view.debug_missing_translation = true
@@ -29,7 +29,7 @@ module ActionView
     end
 
     initializer "action_view.logger" do
-      ActiveSupport.on_load(:action_view) { self.logger ||= Rails.logger }
+      ActiveSupport.on_load(:action_view) { self.logger ||= Quails.logger }
     end
 
     initializer "action_view.set_configs" do |app|

@@ -1,30 +1,30 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-Getting Started with Rails
+Getting Started with Quails
 ==========================
 
-This guide covers getting up and running with Ruby on Rails.
+This guide covers getting up and running with Ruby on Quails.
 
 After reading this guide, you will know:
 
-* How to install Rails, create a new Rails application, and connect your
+* How to install Quails, create a new Quails application, and connect your
   application to a database.
-* The general layout of a Rails application.
+* The general layout of a Quails application.
 * The basic principles of MVC (Model, View, Controller) and RESTful design.
-* How to quickly generate the starting pieces of a Rails application.
+* How to quickly generate the starting pieces of a Quails application.
 
 --------------------------------------------------------------------------------
 
 Guide Assumptions
 -----------------
 
-This guide is designed for beginners who want to get started with a Rails
+This guide is designed for beginners who want to get started with a Quails
 application from scratch. It does not assume that you have any prior experience
-with Rails.
+with Quails.
 
-Rails is a web application framework running on the Ruby programming language.
+Quails is a web application framework running on the Ruby programming language.
 If you have no prior experience with Ruby, you will find a very steep learning
-curve diving straight into Rails. There are several curated lists of online resources
+curve diving straight into Quails. There are several curated lists of online resources
 for learning Ruby:
 
 * [Official Ruby Programming Language website](https://www.ruby-lang.org/en/documentation/)
@@ -32,52 +32,52 @@ for learning Ruby:
 
 Be aware that some resources, while still excellent, cover versions of Ruby as old as
 1.6, and commonly 1.8, and will not include some syntax that you will see in day-to-day
-development with Rails.
+development with Quails.
 
-What is Rails?
+What is Quails?
 --------------
 
-Rails is a web application development framework written in the Ruby programming language.
+Quails is a web application development framework written in the Ruby programming language.
 It is designed to make programming web applications easier by making assumptions
 about what every developer needs to get started. It allows you to write less
 code while accomplishing more than many other languages and frameworks.
-Experienced Rails developers also report that it makes web application
+Experienced Quails developers also report that it makes web application
 development more fun.
 
-Rails is opinionated software. It makes the assumption that there is a "best"
+Quails is opinionated software. It makes the assumption that there is a "best"
 way to do things, and it's designed to encourage that way - and in some cases to
-discourage alternatives. If you learn "The Rails Way" you'll probably discover a
+discourage alternatives. If you learn "The Quails Way" you'll probably discover a
 tremendous increase in productivity. If you persist in bringing old habits from
-other languages to your Rails development, and trying to use patterns you
+other languages to your Quails development, and trying to use patterns you
 learned elsewhere, you may have a less happy experience.
 
-The Rails philosophy includes two major guiding principles:
+The Quails philosophy includes two major guiding principles:
 
 * **Don't Repeat Yourself:** DRY is a principle of software development which
   states that "Every piece of knowledge must have a single, unambiguous, authoritative
   representation within a system." By not writing the same information over and over
   again, our code is more maintainable, more extensible, and less buggy.
-* **Convention Over Configuration:** Rails has opinions about the best way to do many
+* **Convention Over Configuration:** Quails has opinions about the best way to do many
   things in a web application, and defaults to this set of conventions, rather than
   require that you specify minutiae through endless configuration files.
 
-Creating a New Rails Project
+Creating a New Quails Project
 ----------------------------
 The best way to read this guide is to follow it step by step. All steps are
 essential to run this example application and no additional code or steps are
 needed.
 
-By following along with this guide, you'll create a Rails project called
+By following along with this guide, you'll create a Quails project called
 `blog`, a (very) simple weblog. Before you can start building the application,
-you need to make sure that you have Rails itself installed.
+you need to make sure that you have Quails itself installed.
 
 TIP: The examples below use `$` to represent your terminal prompt in a UNIX-like OS,
 though it may have been customized to appear differently. If you are using Windows,
 your prompt will look something like `c:\source_code>`
 
-### Installing Rails
+### Installing Quails
 
-Before you install Rails, you should check to make sure that your system has the
+Before you install Quails, you should check to make sure that your system has the
 proper prerequisites installed. These include Ruby and SQLite3.
 
 Open up a command line prompt. On macOS open Terminal.app, on Windows choose
@@ -90,11 +90,11 @@ $ ruby -v
 ruby 2.3.1p112
 ```
 
-Rails requires Ruby version 2.2.2 or later. If the version number returned is
+Quails requires Ruby version 2.2.2 or later. If the version number returned is
 less than that number, you'll need to install a fresh copy of Ruby.
 
 TIP: A number of tools exist to help you quickly install Ruby and Ruby
-on Rails on your system. Windows users can use [Rails Installer](http://railsinstaller.org),
+on Quails on your system. Windows users can use [Quails Installer](http://quailsinstaller.org),
 while macOS users can use [Tokaido](https://github.com/tokaido/tokaidoapp).
 For more installation methods for most Operating Systems take a look at
 [ruby-lang.org](https://www.ruby-lang.org/en/documentation/installation/).
@@ -104,7 +104,7 @@ If you are working on Windows, you should also install the
 
 You will also need an installation of the SQLite3 database.
 Many popular UNIX-like OSes ship with an acceptable version of SQLite3.
-On Windows, if you installed Rails through Rails Installer, you
+On Windows, if you installed Quails through Quails Installer, you
 already have SQLite installed. Others can find installation instructions
 at the [SQLite3 website](https://www.sqlite.org).
 Verify that it is correctly installed and in your PATH:
@@ -115,46 +115,46 @@ $ sqlite3 --version
 
 The program should report its version.
 
-To install Rails, use the `gem install` command provided by RubyGems:
+To install Quails, use the `gem install` command provided by RubyGems:
 
 ```bash
-$ gem install rails
+$ gem install quails
 ```
 
 To verify that you have everything installed correctly, you should be able to
 run the following:
 
 ```bash
-$ rails --version
+$ quails --version
 ```
 
-If it says something like "Rails 5.1.1", you are ready to continue.
+If it says something like "Quails 5.1.1", you are ready to continue.
 
 ### Creating the Blog Application
 
-Rails comes with a number of scripts called generators that are designed to make
+Quails comes with a number of scripts called generators that are designed to make
 your development life easier by creating everything that's necessary to start
 working on a particular task. One of these is the new application generator,
-which will provide you with the foundation of a fresh Rails application so that
+which will provide you with the foundation of a fresh Quails application so that
 you don't have to write it yourself.
 
 To use this generator, open a terminal, navigate to a directory where you have
 rights to create files, and type:
 
 ```bash
-$ rails new blog
+$ quails new blog
 ```
 
-This will create a Rails application called Blog in a `blog` directory and
+This will create a Quails application called Blog in a `blog` directory and
 install the gem dependencies that are already mentioned in `Gemfile` using
 `bundle install`.
 
 NOTE: If you're using Windows Subsystem for Linux then there are currently some
 limitations on file system notifications that mean you should disable the `spring`
-and `listen` gems which you can do by running `rails new blog --skip-spring --skip-listen`.
+and `listen` gems which you can do by running `quails new blog --skip-spring --skip-listen`.
 
-TIP: You can see all of the command line options that the Rails application
-builder accepts by running `rails new -h`.
+TIP: You can see all of the command line options that the Quails application
+builder accepts by running `quails new -h`.
 
 After you create the blog application, switch to its folder:
 
@@ -163,77 +163,77 @@ $ cd blog
 ```
 
 The `blog` directory has a number of auto-generated files and folders that make
-up the structure of a Rails application. Most of the work in this tutorial will
+up the structure of a Quails application. Most of the work in this tutorial will
 happen in the `app` folder, but here's a basic rundown on the function of each
-of the files and folders that Rails created by default:
+of the files and folders that Quails created by default:
 
 | File/Folder | Purpose |
 | ----------- | ------- |
 |app/|Contains the controllers, models, views, helpers, mailers, channels, jobs and assets for your application. You'll focus on this folder for the remainder of this guide.|
-|bin/|Contains the rails script that starts your app and can contain other scripts you use to setup, update, deploy or run your application.|
-|config/|Configure your application's routes, database, and more. This is covered in more detail in [Configuring Rails Applications](configuring.html).|
+|bin/|Contains the quails script that starts your app and can contain other scripts you use to setup, update, deploy or run your application.|
+|config/|Configure your application's routes, database, and more. This is covered in more detail in [Configuring Quails Applications](configuring.html).|
 |config.ru|Rack configuration for Rack based servers used to start the application.|
 |db/|Contains your current database schema, as well as the database migrations.|
-|Gemfile<br>Gemfile.lock|These files allow you to specify what gem dependencies are needed for your Rails application. These files are used by the Bundler gem. For more information about Bundler, see the [Bundler website](https://bundler.io).|
+|Gemfile<br>Gemfile.lock|These files allow you to specify what gem dependencies are needed for your Quails application. These files are used by the Bundler gem. For more information about Bundler, see the [Bundler website](https://bundler.io).|
 |lib/|Extended modules for your application.|
 |log/|Application log files.|
 |public/|The only folder seen by the world as-is. Contains static files and compiled assets.|
-|Rakefile|This file locates and loads tasks that can be run from the command line. The task definitions are defined throughout the components of Rails. Rather than changing Rakefile, you should add your own tasks by adding files to the `lib/tasks` directory of your application.|
+|Rakefile|This file locates and loads tasks that can be run from the command line. The task definitions are defined throughout the components of Quails. Rather than changing Rakefile, you should add your own tasks by adding files to the `lib/tasks` directory of your application.|
 |README.md|This is a brief instruction manual for your application. You should edit this file to tell others what your application does, how to set it up, and so on.|
-|test/|Unit tests, fixtures, and other test apparatus. These are covered in [Testing Rails Applications](testing.html).|
+|test/|Unit tests, fixtures, and other test apparatus. These are covered in [Testing Quails Applications](testing.html).|
 |tmp/|Temporary files (like cache and pid files).|
-|vendor/|A place for all third-party code. In a typical Rails application this includes vendored gems.|
+|vendor/|A place for all third-party code. In a typical Quails application this includes vendored gems.|
 |.gitignore|This file tells git which files (or patterns) it should ignore. See [GitHub - Ignoring files](https://help.github.com/articles/ignoring-files) for more info about ignoring files.
 
-Hello, Rails!
+Hello, Quails!
 -------------
 
 To begin with, let's get some text up on screen quickly. To do this, you need to
-get your Rails application server running.
+get your Quails application server running.
 
 ### Starting up the Web Server
 
-You actually have a functional Rails application already. To see it, you need to
+You actually have a functional Quails application already. To see it, you need to
 start a web server on your development machine. You can do this by running the
 following in the `blog` directory:
 
 ```bash
-$ bin/rails server
+$ bin/quails server
 ```
 
 TIP: If you are using Windows, you have to pass the scripts under the `bin`
-folder directly to the Ruby interpreter e.g. `ruby bin\rails server`.
+folder directly to the Ruby interpreter e.g. `ruby bin\quails server`.
 
 TIP: Compiling CoffeeScript and JavaScript asset compression requires you
 have a JavaScript runtime available on your system, in the absence
 of a runtime you will see an `execjs` error during asset compilation.
 Usually macOS and Windows come with a JavaScript runtime installed.
-Rails adds the `mini_racer` gem to the generated `Gemfile` in a
+Quails adds the `mini_racer` gem to the generated `Gemfile` in a
 commented line for new apps and you can uncomment if you need it.
 `therubyrhino` is the recommended runtime for JRuby users and is added by
 default to the `Gemfile` in apps generated under JRuby. You can investigate
-all the supported runtimes at [ExecJS](https://github.com/rails/execjs#readme).
+all the supported runtimes at [ExecJS](https://github.com/quails/execjs#readme).
 
-This will fire up Puma, a web server distributed with Rails by default. To see
+This will fire up Puma, a web server distributed with Quails by default. To see
 your application in action, open a browser window and navigate to
-<http://localhost:3000>. You should see the Rails default information page:
+<http://localhost:3000>. You should see the Quails default information page:
 
-![Welcome aboard screenshot](images/getting_started/rails_welcome.png)
+![Welcome aboard screenshot](images/getting_started/quails_welcome.png)
 
 TIP: To stop the web server, hit Ctrl+C in the terminal window where it's
 running. To verify the server has stopped you should see your command prompt
 cursor again. For most UNIX-like systems including macOS this will be a
-dollar sign `$`. In development mode, Rails does not generally require you to
+dollar sign `$`. In development mode, Quails does not generally require you to
 restart the server; changes you make in files will be automatically picked up by
 the server.
 
-The "Welcome aboard" page is the _smoke test_ for a new Rails application: it
+The "Welcome aboard" page is the _smoke test_ for a new Quails application: it
 makes sure that you have your software configured correctly enough to serve a
 page.
 
-### Say "Hello", Rails
+### Say "Hello", Quails
 
-To get Rails saying "Hello", you need to create at minimum a _controller_ and a
+To get Quails saying "Hello", you need to create at minimum a _controller_ and a
 _view_.
 
 A controller's purpose is to receive specific requests for the application.
@@ -246,7 +246,7 @@ A view's purpose is to display this information in a human readable format. An
 important distinction to make is that it is the _controller_, not the view,
 where information is collected. The view should just display that information.
 By default, view templates are written in a language called eRuby (Embedded
-Ruby) which is processed by the request cycle in Rails before being sent to the
+Ruby) which is processed by the request cycle in Quails before being sent to the
 user.
 
 To create a new controller, you will need to run the "controller" generator and
@@ -254,10 +254,10 @@ tell it you want a controller called "Welcome" with an action called "index",
 just like this:
 
 ```bash
-$ bin/rails generate controller Welcome index
+$ bin/quails generate controller Welcome index
 ```
 
-Rails will create several files and a route for you.
+Quails will create several files and a route for you.
 
 ```bash
 create  app/controllers/welcome_controller.rb
@@ -286,56 +286,56 @@ of the existing code in the file, and replace it with the following single line
 of code:
 
 ```html
-<h1>Hello, Rails!</h1>
+<h1>Hello, Quails!</h1>
 ```
 
 ### Setting the Application Home Page
 
-Now that we have made the controller and view, we need to tell Rails when we
-want "Hello, Rails!" to show up. In our case, we want it to show up when we
+Now that we have made the controller and view, we need to tell Quails when we
+want "Hello, Quails!" to show up. In our case, we want it to show up when we
 navigate to the root URL of our site, <http://localhost:3000>. At the moment,
 "Welcome aboard" is occupying that spot.
 
-Next, you have to tell Rails where your actual home page is located.
+Next, you have to tell Quails where your actual home page is located.
 
 Open the file `config/routes.rb` in your editor.
 
 ```ruby
-Rails.application.routes.draw do
+Quails.application.routes.draw do
   get 'welcome/index'
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  # For details on the DSL available within this file, see http://guides.rubyonquails.org/routing.html
 end
 ```
 
 This is your application's _routing file_ which holds entries in a special
 [DSL (domain-specific language)](https://en.wikipedia.org/wiki/Domain-specific_language)
-that tells Rails how to connect incoming requests to
+that tells Quails how to connect incoming requests to
 controllers and actions.
 Edit this file by adding the line of code `root 'welcome#index'`.
 It should look something like the following:
 
 ```ruby
-Rails.application.routes.draw do
+Quails.application.routes.draw do
   get 'welcome/index'
 
   root 'welcome#index'
 end
 ```
 
-`root 'welcome#index'` tells Rails to map requests to the root of the
+`root 'welcome#index'` tells Quails to map requests to the root of the
 application to the welcome controller's index action and `get 'welcome/index'`
-tells Rails to map requests to <http://localhost:3000/welcome/index> to the
+tells Quails to map requests to <http://localhost:3000/welcome/index> to the
 welcome controller's index action. This was created earlier when you ran the
-controller generator (`bin/rails generate controller Welcome index`).
+controller generator (`bin/quails generate controller Welcome index`).
 
-Launch the web server again if you stopped it to generate the controller (`bin/rails
+Launch the web server again if you stopped it to generate the controller (`bin/quails
 server`) and navigate to <http://localhost:3000> in your browser. You'll see the
-"Hello, Rails!" message you put into `app/views/welcome/index.html.erb`,
+"Hello, Quails!" message you put into `app/views/welcome/index.html.erb`,
 indicating that this new route is indeed going to `WelcomeController`'s `index`
 action and is rendering the view correctly.
 
-TIP: For more information about routing, refer to [Rails Routing from the Outside In](routing.html).
+TIP: For more information about routing, refer to [Quails Routing from the Outside In](routing.html).
 
 Getting Up and Running
 ----------------------
@@ -349,12 +349,12 @@ animals.
 You can create, read, update and destroy items for a resource and these
 operations are referred to as _CRUD_ operations.
 
-Rails provides a `resources` method which can be used to declare a standard REST
+Quails provides a `resources` method which can be used to declare a standard REST
 resource. You need to add the _article resource_ to the
 `config/routes.rb` so the file will look as follows:
 
 ```ruby
-Rails.application.routes.draw do
+Quails.application.routes.draw do
   get 'welcome/index'
 
   resources :articles
@@ -363,13 +363,13 @@ Rails.application.routes.draw do
 end
 ```
 
-If you run `bin/rails routes`, you'll see that it has defined routes for all the
+If you run `bin/quails routes`, you'll see that it has defined routes for all the
 standard RESTful actions.  The meaning of the prefix column (and other columns)
-will be seen later, but for now notice that Rails has inferred the
+will be seen later, but for now notice that Quails has inferred the
 singular form `article` and makes meaningful use of the distinction.
 
 ```bash
-$ bin/rails routes
+$ bin/quails routes
       Prefix Verb   URI Pattern                  Controller#Action
     articles GET    /articles(.:format)          articles#index
              POST   /articles(.:format)          articles#create
@@ -407,7 +407,7 @@ a controller called `ArticlesController`. You can do this by running this
 command:
 
 ```bash
-$ bin/rails generate controller Articles
+$ bin/quails generate controller Articles
 ```
 
 If you open up the newly generated `app/controllers/articles_controller.rb`
@@ -432,9 +432,9 @@ If you refresh <http://localhost:3000/articles/new> now, you'll get a new error:
 
 ![Unknown action new for ArticlesController!](images/getting_started/unknown_action_new_for_articles.png)
 
-This error indicates that Rails cannot find the `new` action inside the
+This error indicates that Quails cannot find the `new` action inside the
 `ArticlesController` that you just generated. This is because when controllers
-are generated in Rails they are empty by default, unless you tell it
+are generated in Quails they are empty by default, unless you tell it
 your desired actions during the generation process.
 
 To manually define an action inside a controller, all you need to do is to
@@ -455,9 +455,9 @@ With the `new` method defined in `ArticlesController`, if you refresh
 ![Template is missing for articles/new]
 (images/getting_started/template_is_missing_articles_new.png)
 
-You're getting this error now because Rails expects plain actions like this one
+You're getting this error now because Quails expects plain actions like this one
 to have views associated with them to display their information. With no view
-available, Rails will raise an exception.
+available, Quails will raise an exception.
 
 In the above image, the bottom line has been truncated. Let's see what the full
 error message looks like:
@@ -468,24 +468,24 @@ That's quite a lot of text! Let's quickly go through and understand what each
 part of it means.
 
 The first part identifies which template is missing. In this case, it's the
-`articles/new` template. Rails will first look for this template. If not found,
+`articles/new` template. Quails will first look for this template. If not found,
 then it will attempt to load a template called `application/new`. It looks for
 one here because the `ArticlesController` inherits from `ApplicationController`.
 
 The next part of the message contains `request.formats` which specifies
 the format of template to be served in response. It is set to `text/html` as we
-requested this page via browser, so Rails is looking for an HTML template.
+requested this page via browser, so Quails is looking for an HTML template.
 `request.variant` specifies what kind of physical devices would be served by
-the response and helps Rails determine which template to use in the response.
+the response and helps Quails determine which template to use in the response.
 It is empty because no information has been provided.
 
 The simplest template that would work in this case would be one located at
 `app/views/articles/new.html.erb`. The extension of this file name is important:
 the first extension is the _format_ of the template, and the second extension
-is the _handler_ that will be used to render the template. Rails is attempting
+is the _handler_ that will be used to render the template. Quails is attempting
 to find a template called `articles/new` within `app/views` for the
 application. The format for this template can only be `html` and the default
-handler for HTML is `erb`. Rails uses other handlers for other formats.
+handler for HTML is `erb`. Quails uses other handlers for other formats.
 `builder` handler is used to build XML templates and `coffee` handler uses
 CoffeeScript to build JavaScript templates. Since you want to create a new
 HTML form, you will be using the `ERB` language which is designed to embed Ruby
@@ -508,7 +508,7 @@ harmoniously! It's time to create the form for a new article.
 ### The first form
 
 To create a form within this template, you will use a *form
-builder*. The primary form builder for Rails is provided by a helper
+builder*. The primary form builder for Quails is provided by a helper
 method called `form_with`. To use this method, add this code into
 `app/views/articles/new.html.erb`:
 
@@ -531,7 +531,7 @@ method called `form_with`. To use this method, add this code into
 ```
 
 If you refresh the page now, you'll see the exact same form from our example above.
-Building forms in Rails is really just that easy!
+Building forms in Quails is really just that easy!
 
 When you call `form_with`, you pass it an identifying scope for this
 form. In this case, it's the symbol `:article`. This tells the `form_with`
@@ -548,7 +548,7 @@ route should only be used to display the form for a new article.
 
 The form needs to use a different URL in order to go somewhere else.
 This can be done quite simply with the `:url` option of `form_with`.
-Typically in Rails, the action that is used for new form submissions
+Typically in Quails, the action that is used for new form submissions
 like this is called "create", and so the form should be pointed to that action.
 
 Edit the `form_with` line inside `app/views/articles/new.html.erb` to look like
@@ -559,11 +559,11 @@ this:
 ```
 
 In this example, the `articles_path` helper is passed to the `:url` option.
-To see what Rails will do with this, we look back at the output of
-`bin/rails routes`:
+To see what Quails will do with this, we look back at the output of
+`bin/quails routes`:
 
 ```bash
-$ bin/rails routes
+$ bin/quails routes
       Prefix Verb   URI Pattern                  Controller#Action
     articles GET    /articles(.:format)          articles#index
              POST   /articles(.:format)          articles#create
@@ -576,7 +576,7 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
         root GET    /                            welcome#index
 ```
 
-The `articles_path` helper tells Rails to point the form to the URI Pattern
+The `articles_path` helper tells Quails to point the form to the URI Pattern
 associated with the `articles` prefix; and the form will (by default) send a
 `POST` request to that route. This is associated with the `create` action of
 the current controller, the `ArticlesController`.
@@ -613,12 +613,12 @@ end
 ```
 
 If you re-submit the form now, you may not see any change on the page. Don't worry!
-This is because Rails by default returns `204 No Content` response for an action if
+This is because Quails by default returns `204 No Content` response for an action if
 we don't specify what the response should be. We just added the `create` action
 but didn't specify anything about how the response should be. In this case, the
 `create` action should save our new article to the database.
 
-When a form is submitted, the fields of the form are sent to Rails as
+When a form is submitted, the fields of the form are sent to Quails as
 _parameters_. These parameters can then be referenced inside the controller
 actions, typically to perform a particular task. To see what these parameters
 look like, change the `create` action to this:
@@ -650,34 +650,34 @@ parameters but nothing in particular is being done with them.
 
 ### Creating the Article model
 
-Models in Rails use a singular name, and their corresponding database tables
-use a plural name. Rails provides a generator for creating models, which most
-Rails developers tend to use when creating new models. To create the new model,
+Models in Quails use a singular name, and their corresponding database tables
+use a plural name. Quails provides a generator for creating models, which most
+Quails developers tend to use when creating new models. To create the new model,
 run this command in your terminal:
 
 ```bash
-$ bin/rails generate model Article title:string text:text
+$ bin/quails generate model Article title:string text:text
 ```
 
-With that command we told Rails that we want an `Article` model, together
+With that command we told Quails that we want an `Article` model, together
 with a _title_ attribute of type string, and a _text_ attribute
 of type text. Those attributes are automatically added to the `articles`
 table in the database and mapped to the `Article` model.
 
-Rails responded by creating a bunch of files. For now, we're only interested
+Quails responded by creating a bunch of files. For now, we're only interested
 in `app/models/article.rb` and `db/migrate/20140120191729_create_articles.rb`
 (your name could be a bit different). The latter is responsible for creating
 the database structure, which is what we'll look at next.
 
 TIP: Active Record is smart enough to automatically map column names to model
-attributes, which means you don't have to declare attributes inside Rails
+attributes, which means you don't have to declare attributes inside Quails
 models, as that will be done automatically by Active Record.
 
 ### Running a Migration
 
-As we've just seen, `bin/rails generate model` created a _database migration_ file
+As we've just seen, `bin/quails generate model` created a _database migration_ file
 inside the `db/migrate` directory. Migrations are Ruby classes that are
-designed to make it simple to create and modify database tables. Rails uses
+designed to make it simple to create and modify database tables. Quails uses
 rake commands to run migrations, and it's possible to undo a migration after
 it's been applied to your database. Migration filenames include a timestamp to
 ensure that they're processed in the order that they were created.
@@ -700,21 +700,21 @@ end
 
 The above migration creates a method named `change` which will be called when
 you run this migration. The action defined in this method is also reversible,
-which means Rails knows how to reverse the change made by this migration,
+which means Quails knows how to reverse the change made by this migration,
 in case you want to reverse it later. When you run this migration it will create
 an `articles` table with one string column and a text column. It also creates
-two timestamp fields to allow Rails to track article creation and update times.
+two timestamp fields to allow Quails to track article creation and update times.
 
 TIP: For more information about migrations, refer to [Active Record Migrations]
 (active_record_migrations.html).
 
-At this point, you can use a bin/rails command to run the migration:
+At this point, you can use a bin/quails command to run the migration:
 
 ```bash
-$ bin/rails db:migrate
+$ bin/quails db:migrate
 ```
 
-Rails will execute this migration command and tell you it created the Articles
+Quails will execute this migration command and tell you it created the Articles
 table.
 
 ```bash
@@ -728,7 +728,7 @@ NOTE. Because you're working in the development environment by default, this
 command will apply to the database defined in the `development` section of your
 `config/database.yml` file. If you would like to execute migrations in another
 environment, for instance in production, you must explicitly pass it when
-invoking the command: `bin/rails db:migrate RAILS_ENV=production`.
+invoking the command: `bin/quails db:migrate RAILS_ENV=production`.
 
 ### Saving data in the controller
 
@@ -746,7 +746,7 @@ def create
 end
 ```
 
-Here's what's going on: every Rails model can be initialized with its
+Here's what's going on: every Quails model can be initialized with its
 respective attributes, which are automatically mapped to the respective
 database columns. In the first line we do just that (remember that
 `params[:article]` contains the attributes we're interested in). Then,
@@ -764,9 +764,9 @@ to create an article. Try it! You should get an error that looks like this:
 ![Forbidden attributes for new article]
 (images/getting_started/forbidden_attributes_for_new_article.png)
 
-Rails has several security features that help you write secure applications,
+Quails has several security features that help you write secure applications,
 and you're running into one of them now. This one is called [strong parameters](action_controller_overview.html#strong-parameters),
-which requires us to tell Rails exactly which parameters are allowed into our
+which requires us to tell Quails exactly which parameters are allowed into our
 controller actions.
 
 Why do you have to bother? The ability to grab and automatically assign all
@@ -807,22 +807,22 @@ private
 
 TIP: For more information, refer to the reference above and
 [this blog article about Strong Parameters]
-(http://weblog.rubyonrails.org/2012/3/21/strong-parameters/).
+(http://weblog.rubyonquails.org/2012/3/21/strong-parameters/).
 
 ### Showing Articles
 
-If you submit the form again now, Rails will complain about not finding the
+If you submit the form again now, Quails will complain about not finding the
 `show` action. That's not very useful though, so let's add the `show` action
 before proceeding.
 
-As we have seen in the output of `bin/rails routes`, the route for `show` action is
+As we have seen in the output of `bin/quails routes`, the route for `show` action is
 as follows:
 
 ```
 article GET    /articles/:id(.:format)      articles#show
 ```
 
-The special syntax `:id` tells rails that this route expects an `:id`
+The special syntax `:id` tells quails that this route expects an `:id`
 parameter, which in our case will be the id of the article.
 
 As we did before, we need to add the `show` action in
@@ -851,7 +851,7 @@ class ArticlesController < ApplicationController
 A couple of things to note. We use `Article.find` to find the article we're
 interested in, passing in `params[:id]` to get the `:id` parameter from the
 request. We also use an instance variable (prefixed with `@`) to hold a
-reference to the article object. We do this because Rails will pass all instance
+reference to the article object. We do this because Quails will pass all instance
 variables to the view.
 
 Now, create a new file `app/views/articles/show.html.erb` with the following
@@ -877,7 +877,7 @@ Visit <http://localhost:3000/articles/new> and give it a try!
 ### Listing all articles
 
 We still need a way to list all our articles, so let's do that.
-The route for this as per output of `bin/rails routes` is:
+The route for this as per output of `bin/quails routes` is:
 
 ```
 articles GET    /articles(.:format)          articles#index
@@ -938,11 +938,11 @@ navigate through pages.
 Open `app/views/welcome/index.html.erb` and modify it as follows:
 
 ```html+erb
-<h1>Hello, Rails!</h1>
+<h1>Hello, Quails!</h1>
 <%= link_to 'My Blog', controller: 'articles' %>
 ```
 
-The `link_to` method is one of Rails' built-in view helpers. It creates a
+The `link_to` method is one of Quails' built-in view helpers. It creates a
 hyperlink based on text to display and where to go - in this case, to the path
 for articles.
 
@@ -986,10 +986,10 @@ article can go back and view the whole list again:
 ```
 
 TIP: If you want to link to an action in the same controller, you don't need to
-specify the `:controller` option, as Rails will use the current controller by
+specify the `:controller` option, as Quails will use the current controller by
 default.
 
-TIP: In development mode (which is what you're working in by default), Rails
+TIP: In development mode (which is what you're working in by default), Quails
 reloads your application with every browser request, so there's no need to stop
 and restart the web server when a change is made.
 
@@ -1004,12 +1004,12 @@ end
 
 There isn't much to this file - but note that the `Article` class inherits from
 `ApplicationRecord`. `ApplicationRecord` inherits from `ActiveRecord::Base`
-which supplies a great deal of functionality to your Rails models for free,
+which supplies a great deal of functionality to your Quails models for free,
 including basic database CRUD (Create, Read, Update, Destroy) operations, data
 validation, as well as sophisticated search support and the ability to relate
 multiple models to one another.
 
-Rails includes methods to help you validate the data that you send to models.
+Quails includes methods to help you validate the data that you send to models.
 Open the `app/models/article.rb` file and edit it:
 
 ```ruby
@@ -1020,7 +1020,7 @@ end
 ```
 
 These changes will ensure that all articles have a title that is at least five
-characters long. Rails can validate a variety of conditions in a model,
+characters long. Quails can validate a variety of conditions in a model,
 including the presence or uniqueness of columns, their format, and the
 existence of associated objects. Validations are covered in detail in [Active
 Record Validations](active_record_validations.html).
@@ -1065,7 +1065,7 @@ is done within the same request as the form submission, whereas the
 
 If you reload
 <http://localhost:3000/articles/new> and
-try to save an article without a title, Rails will send you back to the
+try to save an article without a title, Quails will send you back to the
 form, but that's not very useful. You need to tell the user that
 something went wrong. To do that, you'll modify
 `app/views/articles/new.html.erb` to check for error messages:
@@ -1110,7 +1110,7 @@ A few things are going on. We check if there are any errors with
 `@article.errors.any?`, and in that case we show a list of all
 errors with `@article.errors.full_messages`.
 
-`pluralize` is a rails helper that takes a number and a string as its
+`pluralize` is a quails helper that takes a number and a string as its
 arguments. If the number is greater than one, the string will be automatically
 pluralized.
 
@@ -1118,7 +1118,7 @@ The reason why we added `@article = Article.new` in the `ArticlesController` is
 that otherwise `@article` would be `nil` in our view, and calling
 `@article.errors.any?` would throw an error.
 
-TIP: Rails automatically wraps fields that contain an error with a div
+TIP: Quails automatically wraps fields that contain an error with a div
 with class `field_with_errors`. You can define a css rule to make them
 standout.
 
@@ -1202,7 +1202,7 @@ This time we point the form to the `update` action, which is not defined yet
 but will be very soon.
 
 Passing the article object to the method, will automagically create url for submitting the edited article form.
-This option tells Rails that we want this form to be submitted
+This option tells Quails that we want this form to be submitted
 via the `PATCH` HTTP method which is the HTTP method you're expected to use to
 **update** resources according to the REST protocol.
 
@@ -1210,7 +1210,7 @@ The arguments to `form_with` could be model objects, say, `model: @article` whic
 cause the helper to fill in the form with the fields of the object. Passing in a
 symbol scope (`scope: :article`) just creates the fields but without anything filled into them.
 More details can be found in [form_with documentation]
-(http://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with).
+(http://api.rubyonquails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with).
 
 Next, we need to create the `update` action in
 `app/controllers/articles_controller.rb`.
@@ -1252,7 +1252,7 @@ We reuse the `article_params` method that we defined earlier for the create
 action.
 
 TIP: It is not necessary to pass all the attributes to `update`. For example,
-if `@article.update(title: 'A new title')` was called, Rails would only update
+if `@article.update(title: 'A new title')` was called, Quails would only update
 the `title` attribute, leaving all other attributes untouched.
 
 Finally, we want to show a link to the `edit` action in the list of all the
@@ -1301,7 +1301,7 @@ duplication by using a view partial. By convention, partial files are
 prefixed with an underscore.
 
 TIP: You can read more about partials in the
-[Layouts and Rendering in Rails](layouts_and_rendering.html) guide.
+[Layouts and Rendering in Quails](layouts_and_rendering.html) guide.
 
 Create a new file `app/views/articles/_form.html.erb` with the following
 content:
@@ -1343,10 +1343,10 @@ content:
 Everything except for the `form_with` declaration remained the same.
 The reason we can use this shorter, simpler `form_with` declaration
 to stand in for either of the other forms is that `@article` is a *resource*
-corresponding to a full set of RESTful routes, and Rails is able to infer
+corresponding to a full set of RESTful routes, and Quails is able to infer
 which URI and method to use.
 For more information about this use of `form_with`, see [Resource-oriented style]
-(http://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with-label-Resource-oriented+style).
+(http://api.rubyonquails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with-label-Resource-oriented+style).
 
 Now, let's update the `app/views/articles/new.html.erb` view to use this new
 partial, rewriting it completely:
@@ -1373,7 +1373,7 @@ Then do the same for the `app/views/articles/edit.html.erb` view:
 
 We're now ready to cover the "D" part of CRUD, deleting articles from the
 database. Following the REST convention, the route for
-deleting articles as per output of `bin/rails routes` is:
+deleting articles as per output of `bin/quails routes` is:
 
 ```ruby
 DELETE /articles/:id(.:format)      articles#destroy
@@ -1491,9 +1491,9 @@ Finally, add a 'Destroy' link to your `index` action template
 Here we're using `link_to` in a different way. We pass the named route as the
 second argument, and then the options as another argument. The `method: :delete`
 and `data: { confirm: 'Are you sure?' }` options are used as HTML5 attributes so
-that when the link is clicked, Rails will first show a confirm dialog to the
+that when the link is clicked, Quails will first show a confirm dialog to the
 user, and then submit the link with method `delete`.  This is done via the
-JavaScript file `rails-ujs` which is automatically included in your
+JavaScript file `quails-ujs` which is automatically included in your
 application's layout (`app/views/layouts/application.html.erb`) when you
 generated the application. Without this file, the confirmation dialog box won't
 appear.
@@ -1501,14 +1501,14 @@ appear.
 ![Confirm Dialog](images/getting_started/confirm_dialog.png)
 
 TIP: Learn more about Unobtrusive JavaScript on
-[Working With JavaScript in Rails](working_with_javascript_in_rails.html) guide.
+[Working With JavaScript in Quails](working_with_javascript_in_quails.html) guide.
 
 Congratulations, you can now create, show, list, update and destroy
 articles.
 
-TIP: In general, Rails encourages using resources objects instead of
+TIP: In general, Quails encourages using resources objects instead of
 declaring routes manually. For more information about routing, see
-[Rails Routing from the Outside In](routing.html).
+[Quails Routing from the Outside In](routing.html).
 
 Adding a Second Model
 ---------------------
@@ -1523,7 +1523,7 @@ the `Article` model. This time we'll create a `Comment` model to hold
 reference to an article. Run this command in your terminal:
 
 ```bash
-$ bin/rails generate model Comment commenter:string body:text article:references
+$ bin/quails generate model Comment commenter:string body:text article:references
 ```
 
 This command will generate four files:
@@ -1552,7 +1552,7 @@ It creates a new column on your database table with the provided model name appe
 that can hold integer values. To get a better understanding, analyze the
 `db/schema.rb` file after running the migration.
 
-In addition to the model, Rails has also made a migration to create the
+In addition to the model, Quails has also made a migration to create the
 corresponding database table:
 
 ```ruby
@@ -1574,10 +1574,10 @@ for it, and a foreign key constraint that points to the `id` column of the `arti
 table. Go ahead and run the migration:
 
 ```bash
-$ bin/rails db:migrate
+$ bin/quails db:migrate
 ```
 
-Rails is smart enough to only execute the migrations that have not already been
+Quails is smart enough to only execute the migrations that have not already been
 run against the current database, so in this case you will just see:
 
 ```bash
@@ -1596,7 +1596,7 @@ relationships this way:
 * Each comment belongs to one article.
 * One article can have many comments.
 
-In fact, this is very close to the syntax that Rails uses to declare this
+In fact, this is very close to the syntax that Quails uses to declare this
 association. You've already seen the line of code inside the `Comment` model
 (app/models/comment.rb) that makes each comment belong to an Article:
 
@@ -1627,7 +1627,7 @@ Associations](association_basics.html) guide.
 
 ### Adding a Route for Comments
 
-As with the `welcome` controller, we will need to add a route so that Rails
+As with the `welcome` controller, we will need to add a route so that Quails
 knows where we would like to navigate to see `comments`. Open up the
 `config/routes.rb` file again, and edit it as follows:
 
@@ -1641,7 +1641,7 @@ This creates `comments` as a _nested resource_ within `articles`. This is
 another part of capturing the hierarchical relationship that exists between
 articles and comments.
 
-TIP: For more information on routing, see the [Rails Routing](routing.html)
+TIP: For more information on routing, see the [Quails Routing](routing.html)
 guide.
 
 ### Generating a Controller
@@ -1650,7 +1650,7 @@ With the model in hand, you can turn your attention to creating a matching
 controller. Again, we'll use the same generator we used before:
 
 ```bash
-$ bin/rails generate controller Comments
+$ bin/quails generate controller Comments
 ```
 
 This creates five files and one empty directory:
@@ -1901,7 +1901,7 @@ Then you make the `app/views/articles/show.html.erb` look like the following:
 ```
 
 The second render just defines the partial template we want to render,
-`comments/form`. Rails is smart enough to spot the forward slash in that
+`comments/form`. Quails is smart enough to spot the forward slash in that
 string and realize that you want to render the `_form.html.erb` file in
 the `app/views/comments` directory.
 
@@ -1971,7 +1971,7 @@ database and send us back to the show action for the article.
 ### Deleting Associated Objects
 
 If you delete an article, its associated comments will also need to be
-deleted, otherwise they would simply occupy space in the database. Rails allows
+deleted, otherwise they would simply occupy space in the database. Quails allows
 you to use the `dependent` option of an association to achieve this. Modify the
 Article model, `app/models/article.rb`, as follows:
 
@@ -1991,11 +1991,11 @@ Security
 If you were to publish your blog online, anyone would be able to add, edit and
 delete articles or delete comments.
 
-Rails provides a very simple HTTP authentication system that will work nicely in
+Quails provides a very simple HTTP authentication system that will work nicely in
 this situation.
 
 In the `ArticlesController` we need to have a way to block access to the
-various actions if the person is not authenticated. Here we can use the Rails
+various actions if the person is not authenticated. Here we can use the Quails
 `http_basic_authenticate_with` method, which allows access to the requested
 action if that method allows it.
 
@@ -2037,9 +2037,9 @@ Authentication challenge:
 
 ![Basic HTTP Authentication Challenge](images/getting_started/challenge.png)
 
-Other authentication methods are available for Rails applications. Two popular
-authentication add-ons for Rails are the
-[Devise](https://github.com/plataformatec/devise) rails engine and
+Other authentication methods are available for Quails applications. Two popular
+authentication add-ons for Quails are the
+[Devise](https://github.com/plataformatec/devise) quails engine and
 the [Authlogic](https://github.com/binarylogic/authlogic) gem,
 along with a number of others.
 
@@ -2047,41 +2047,41 @@ along with a number of others.
 ### Other Security Considerations
 
 Security, especially in web applications, is a broad and detailed area. Security
-in your Rails application is covered in more depth in
-the [Ruby on Rails Security Guide](security.html).
+in your Quails application is covered in more depth in
+the [Ruby on Quails Security Guide](security.html).
 
 
 What's Next?
 ------------
 
-Now that you've seen your first Rails application, you should feel free to
+Now that you've seen your first Quails application, you should feel free to
 update it and experiment on your own.
 
 Remember you don't have to do everything without help. As you need assistance
-getting up and running with Rails, feel free to consult these support
+getting up and running with Quails, feel free to consult these support
 resources:
 
-* The [Ruby on Rails Guides](index.html)
-* The [Ruby on Rails Tutorial](http://railstutorial.org/book)
-* The [Ruby on Rails mailing list](http://groups.google.com/group/rubyonrails-talk)
-* The [#rubyonrails](irc://irc.freenode.net/#rubyonrails) channel on irc.freenode.net
+* The [Ruby on Quails Guides](index.html)
+* The [Ruby on Quails Tutorial](http://quailstutorial.org/book)
+* The [Ruby on Quails mailing list](http://groups.google.com/group/rubyonquails-talk)
+* The [#rubyonquails](irc://irc.freenode.net/#rubyonquails) channel on irc.freenode.net
 
 
 Configuration Gotchas
 ---------------------
 
-The easiest way to work with Rails is to store all external data as UTF-8. If
-you don't, Ruby libraries and Rails will often be able to convert your native
+The easiest way to work with Quails is to store all external data as UTF-8. If
+you don't, Ruby libraries and Quails will often be able to convert your native
 data into UTF-8, but this doesn't always work reliably, so you're better off
 ensuring that all external data is UTF-8.
 
 If you have made a mistake in this area, the most common symptom is a black
 diamond with a question mark inside appearing in the browser. Another common
-symptom is characters like "Ã¼" appearing instead of "ü". Rails takes a number
+symptom is characters like "Ã¼" appearing instead of "ü". Quails takes a number
 of internal steps to mitigate common causes of these problems that can be
 automatically detected and corrected. However, if you have external data that is
 not stored as UTF-8, it can occasionally result in these kinds of issues that
-cannot be automatically detected by Rails and corrected.
+cannot be automatically detected by Quails and corrected.
 
 Two very common sources of data that are not UTF-8:
 
@@ -2092,7 +2092,7 @@ Two very common sources of data that are not UTF-8:
   translation files. Most editors that do not already default to UTF-8 (such as
   some versions of Dreamweaver) offer a way to change the default to UTF-8. Do
   so.
-* Your database: Rails defaults to converting data from your database into UTF-8
+* Your database: Quails defaults to converting data from your database into UTF-8
   at the boundary. However, if your database is not using UTF-8 internally, it
   may not be able to store all characters that your users enter. For instance,
   if your database is using Latin-1 internally, and your user enters a Russian,

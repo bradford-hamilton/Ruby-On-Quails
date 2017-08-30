@@ -2,7 +2,7 @@
 
 require_relative "../../resource_helpers"
 
-module Rails
+module Quails
   module Generators
     class ScaffoldControllerGenerator < NamedBase # :nodoc:
       include ResourceHelpers

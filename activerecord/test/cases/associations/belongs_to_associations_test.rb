@@ -607,7 +607,7 @@ class BelongsToAssociationsTest < ActiveRecord::TestCase
 
   def test_belongs_to_counter_after_update
     topic = Topic.create!(title: "37s")
-    topic.replies.create!(title: "re: 37s", content: "rails")
+    topic.replies.create!(title: "re: 37s", content: "quails")
     assert_equal 1, Topic.find(topic.id)[:replies_count]
 
     topic.update(title: "37signals")
@@ -616,10 +616,10 @@ class BelongsToAssociationsTest < ActiveRecord::TestCase
 
   def test_belongs_to_counter_when_update_columns
     topic = Topic.create!(title: "37s")
-    topic.replies.create!(title: "re: 37s", content: "rails")
+    topic.replies.create!(title: "re: 37s", content: "quails")
     assert_equal 1, Topic.find(topic.id)[:replies_count]
 
-    topic.update_columns(content: "rails is wonderful")
+    topic.update_columns(content: "quails is wonderful")
     assert_equal 1, Topic.find(topic.id)[:replies_count]
   end
 

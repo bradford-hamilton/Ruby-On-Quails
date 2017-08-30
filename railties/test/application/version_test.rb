@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/gem_version"
+require "quails/gem_version"
 
 class VersionTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation
@@ -15,12 +15,12 @@ class VersionTest < ActiveSupport::TestCase
   end
 
   test "command works" do
-    output = Dir.chdir(app_path) { `bin/rails version` }
-    assert_equal "Rails #{Rails.gem_version}\n", output
+    output = Dir.chdir(app_path) { `bin/quails version` }
+    assert_equal "Quails #{Quails.gem_version}\n", output
   end
 
   test "short-cut alias works" do
-    output = Dir.chdir(app_path) { `bin/rails -v` }
-    assert_equal "Rails #{Rails.gem_version}\n", output
+    output = Dir.chdir(app_path) { `bin/quails -v` }
+    assert_equal "Quails #{Quails.gem_version}\n", output
   end
 end

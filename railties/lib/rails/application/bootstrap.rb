@@ -6,7 +6,7 @@ require "active_support/dependencies"
 require "active_support/descendants_tracker"
 require_relative "../secrets"
 
-module Rails
+module Quails
   class Application
     module Bootstrap
       include Initializable
@@ -33,7 +33,7 @@ INFO
 
       # Initialize the logger early in the stack in case we need to log some deprecation.
       initializer :initialize_logger, group: :all do
-        Rails.logger ||= config.logger || begin
+        Quails.logger ||= config.logger || begin
           path = config.paths["log"].first
           unless File.exist? File.dirname path
             FileUtils.mkdir_p File.dirname path
@@ -51,23 +51,23 @@ INFO
           logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDERR))
           logger.level = ActiveSupport::Logger::WARN
           logger.warn(
-            "Rails Error: Unable to access log file. Please ensure that #{path} exists and is writable " \
+            "Quails Error: Unable to access log file. Please ensure that #{path} exists and is writable " \
             "(ie, make it writable for user and group: chmod 0664 #{path}). " \
             "The log level has been raised to WARN and the output directed to STDERR until the problem is fixed."
           )
           logger
         end
 
-        Rails.logger.level = ActiveSupport::Logger.const_get(config.log_level.to_s.upcase)
+        Quails.logger.level = ActiveSupport::Logger.const_get(config.log_level.to_s.upcase)
       end
 
       # Initialize cache early in the stack so railties can make use of it.
       initializer :initialize_cache, group: :all do
-        unless Rails.cache
-          Rails.cache = ActiveSupport::Cache.lookup_store(config.cache_store)
+        unless Quails.cache
+          Quails.cache = ActiveSupport::Cache.lookup_store(config.cache_store)
 
-          if Rails.cache.respond_to?(:middleware)
-            config.middleware.insert_before(::Rack::Runtime, Rails.cache.middleware)
+          if Quails.cache.respond_to?(:middleware)
+            config.middleware.insert_before(::Rack::Runtime, Quails.cache.middleware)
           end
         end
       end
@@ -82,7 +82,7 @@ INFO
       end
 
       initializer :set_secrets_root, group: :all do
-        Rails::Secrets.root = root
+        Quails::Secrets.root = root
       end
     end
   end

@@ -15,7 +15,7 @@ module ActiveJob
     #
     # To use Que set the queue_adapter config to +:que+.
     #
-    #   Rails.application.config.active_job.queue_adapter = :que
+    #   Quails.application.config.active_job.queue_adapter = :que
     class QueAdapter
       def enqueue(job) #:nodoc:
         que_job = JobWrapper.enqueue job.serialize, priority: job.priority

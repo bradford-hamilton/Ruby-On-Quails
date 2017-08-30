@@ -1,53 +1,53 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-Ruby on Rails 2.2 Release Notes
+Ruby on Quails 2.2 Release Notes
 ===============================
 
-Rails 2.2 delivers a number of new and improved features. This list covers the major upgrades, but doesn't include every little bug fix and change. If you want to see everything, check out the [list of commits](https://github.com/rails/rails/commits/2-2-stable) in the main Rails repository on GitHub.
+Quails 2.2 delivers a number of new and improved features. This list covers the major upgrades, but doesn't include every little bug fix and change. If you want to see everything, check out the [list of commits](https://github.com/quails/quails/commits/2-2-stable) in the main Quails repository on GitHub.
 
-Along with Rails, 2.2 marks the launch of the [Ruby on Rails Guides](http://guides.rubyonrails.org/), the first results of the ongoing [Rails Guides hackfest](http://hackfest.rubyonrails.org/guide). This site will deliver high-quality documentation of the major features of Rails.
+Along with Quails, 2.2 marks the launch of the [Ruby on Quails Guides](http://guides.rubyonquails.org/), the first results of the ongoing [Quails Guides hackfest](http://hackfest.rubyonquails.org/guide). This site will deliver high-quality documentation of the major features of Quails.
 
 --------------------------------------------------------------------------------
 
 Infrastructure
 --------------
 
-Rails 2.2 is a significant release for the infrastructure that keeps Rails humming along and connected to the rest of the world.
+Quails 2.2 is a significant release for the infrastructure that keeps Quails humming along and connected to the rest of the world.
 
 ### Internationalization
 
-Rails 2.2 supplies an easy system for internationalization (or i18n, for those of you tired of typing).
+Quails 2.2 supplies an easy system for internationalization (or i18n, for those of you tired of typing).
 
-* Lead Contributors: Rails i18 Team
+* Lead Contributors: Quails i18 Team
 * More information :
-    * [Official Rails i18 website](http://rails-i18n.org)
-    * [Finally. Ruby on Rails gets internationalized](https://web.archive.org/web/20140407075019/http://www.artweb-design.de/2008/7/18/finally-ruby-on-rails-gets-internationalized)
-    * [Localizing Rails : Demo application](https://github.com/clemens/i18n_demo_app)
+    * [Official Quails i18 website](http://quails-i18n.org)
+    * [Finally. Ruby on Quails gets internationalized](https://web.archive.org/web/20140407075019/http://www.artweb-design.de/2008/7/18/finally-ruby-on-quails-gets-internationalized)
+    * [Localizing Quails : Demo application](https://github.com/clemens/i18n_demo_app)
 
 ### Compatibility with Ruby 1.9 and JRuby
 
-Along with thread safety, a lot of work has been done to make Rails work well with JRuby and the upcoming Ruby 1.9. With Ruby 1.9 being a moving target, running edge Rails on edge Ruby is still a hit-or-miss proposition, but Rails is ready to make the transition to Ruby 1.9 when the latter is released.
+Along with thread safety, a lot of work has been done to make Quails work well with JRuby and the upcoming Ruby 1.9. With Ruby 1.9 being a moving target, running edge Quails on edge Ruby is still a hit-or-miss proposition, but Quails is ready to make the transition to Ruby 1.9 when the latter is released.
 
 Documentation
 -------------
 
-The internal documentation of Rails, in the form of code comments, has been improved in numerous places. In addition, the [Ruby on Rails Guides](http://guides.rubyonrails.org/) project is the definitive source for information on major Rails components. In its first official release, the Guides page includes:
+The internal documentation of Quails, in the form of code comments, has been improved in numerous places. In addition, the [Ruby on Quails Guides](http://guides.rubyonquails.org/) project is the definitive source for information on major Quails components. In its first official release, the Guides page includes:
 
-* [Getting Started with Rails](getting_started.html)
-* [Rails Database Migrations](active_record_migrations.html)
+* [Getting Started with Quails](getting_started.html)
+* [Quails Database Migrations](active_record_migrations.html)
 * [Active Record Associations](association_basics.html)
 * [Active Record Query Interface](active_record_querying.html)
-* [Layouts and Rendering in Rails](layouts_and_rendering.html)
+* [Layouts and Rendering in Quails](layouts_and_rendering.html)
 * [Action View Form Helpers](form_helpers.html)
-* [Rails Routing from the Outside In](routing.html)
+* [Quails Routing from the Outside In](routing.html)
 * [Action Controller Overview](action_controller_overview.html)
-* [Rails Caching](caching_with_rails.html)
-* [A Guide to Testing Rails Applications](testing.html)
-* [Securing Rails Applications](security.html)
-* [Debugging Rails Applications](debugging_rails_applications.html)
-* [The Basics of Creating Rails Plugins](plugins.html)
+* [Quails Caching](caching_with_quails.html)
+* [A Guide to Testing Quails Applications](testing.html)
+* [Securing Quails Applications](security.html)
+* [Debugging Quails Applications](debugging_quails_applications.html)
+* [The Basics of Creating Quails Plugins](plugins.html)
 
-All told, the Guides provide tens of thousands of words of guidance for beginning and intermediate Rails developers.
+All told, the Guides provide tens of thousands of words of guidance for beginning and intermediate Quails developers.
 
 If you want to generate these guides locally, inside your application:
 
@@ -55,18 +55,18 @@ If you want to generate these guides locally, inside your application:
 rake doc:guides
 ```
 
-This will put the guides inside `Rails.root/doc/guides` and you may start surfing straight away by opening `Rails.root/doc/guides/index.html` in your favourite browser.
+This will put the guides inside `Quails.root/doc/guides` and you may start surfing straight away by opening `Quails.root/doc/guides/index.html` in your favourite browser.
 
-* Lead Contributors: [Rails Documentation Team](credits.html)
+* Lead Contributors: [Quails Documentation Team](credits.html)
 * Major contributions from [Xavier Noria](http://advogato.org/person/fxn/diary.html) and [Hongli Lai](http://izumi.plan99.net/blog/).
 * More information:
-    * [Rails Guides hackfest](http://hackfest.rubyonrails.org/guide)
-    * [Help improve Rails documentation on Git branch](http://weblog.rubyonrails.org/2008/5/2/help-improve-rails-documentation-on-git-branch)
+    * [Quails Guides hackfest](http://hackfest.rubyonquails.org/guide)
+    * [Help improve Quails documentation on Git branch](http://weblog.rubyonquails.org/2008/5/2/help-improve-quails-documentation-on-git-branch)
 
 Better integration with HTTP : Out of the box ETag support
 ----------------------------------------------------------
 
-Supporting the etag and last modified timestamp in HTTP headers means that Rails can now send back an empty response if it gets a request for a resource that hasn't been modified lately. This allows you to check whether a response needs to be sent at all.
+Supporting the etag and last modified timestamp in HTTP headers means that Quails can now send back an empty response if it gets a request for a resource that hasn't been modified lately. This allows you to check whether a response needs to be sent at all.
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -103,7 +103,7 @@ end
 Thread Safety
 -------------
 
-The work done to make Rails thread-safe is rolling out in Rails 2.2. Depending on your web server infrastructure, this means you can handle more requests with fewer copies of Rails in memory, leading to better server performance and higher utilization of multiple cores.
+The work done to make Quails thread-safe is rolling out in Quails 2.2. Depending on your web server infrastructure, this means you can handle more requests with fewer copies of Quails in memory, leading to better server performance and higher utilization of multiple cores.
 
 To enable multithreaded dispatching in production mode of your application, add the following line in your `config/environments/production.rb`:
 
@@ -112,9 +112,9 @@ config.threadsafe!
 ```
 
 * More information :
-    * [Thread safety for your Rails](http://m.onkey.org/2008/10/23/thread-safety-for-your-rails)
-    * [Thread safety project announcement](http://weblog.rubyonrails.org/2008/8/16/josh-peek-officially-joins-the-rails-core)
-    * [Q/A: What Thread-safe Rails Means](http://blog.headius.com/2008/08/qa-what-thread-safe-rails-means.html)
+    * [Thread safety for your Quails](http://m.onkey.org/2008/10/23/thread-safety-for-your-quails)
+    * [Thread safety project announcement](http://weblog.rubyonquails.org/2008/8/16/josh-peek-officially-joins-the-quails-core)
+    * [Q/A: What Thread-safe Quails Means](http://blog.headius.com/2008/08/qa-what-thread-safe-quails-means.html)
 
 Active Record
 -------------
@@ -123,16 +123,16 @@ There are two big additions to talk about here: transactional migrations and poo
 
 ### Transactional Migrations
 
-Historically, multiple-step Rails migrations have been a source of trouble. If something went wrong during a migration, everything before the error changed the database and everything after the error wasn't applied. Also, the migration version was stored as having been executed, which means that it couldn't be simply rerun by `rake db:migrate:redo` after you fix the problem. Transactional migrations change this by wrapping migration steps in a DDL transaction, so that if any of them fail, the entire migration is undone. In Rails 2.2, transactional migrations are supported on PostgreSQL out of the box. The code is extensible to other database types in the future - and IBM has already extended it to support the DB2 adapter.
+Historically, multiple-step Quails migrations have been a source of trouble. If something went wrong during a migration, everything before the error changed the database and everything after the error wasn't applied. Also, the migration version was stored as having been executed, which means that it couldn't be simply rerun by `rake db:migrate:redo` after you fix the problem. Transactional migrations change this by wrapping migration steps in a DDL transaction, so that if any of them fail, the entire migration is undone. In Quails 2.2, transactional migrations are supported on PostgreSQL out of the box. The code is extensible to other database types in the future - and IBM has already extended it to support the DB2 adapter.
 
 * Lead Contributor: [Adam Wiggins](http://adam.heroku.com/)
 * More information:
     * [DDL Transactions](http://adam.heroku.com/past/2008/9/3/ddl_transactions/)
-    * [A major milestone for DB2 on Rails](http://db2onrails.com/2008/11/08/a-major-milestone-for-db2-on-rails/)
+    * [A major milestone for DB2 on Quails](http://db2onquails.com/2008/11/08/a-major-milestone-for-db2-on-quails/)
 
 ### Connection Pooling
 
-Connection pooling lets Rails distribute database requests across a pool of database connections that will grow to a maximum size (by default 5, but you can add a `pool` key to your `database.yml` to adjust this). This helps remove bottlenecks in applications that support many concurrent users. There's also a `wait_timeout` that defaults to 5 seconds before giving up. `ActiveRecord::Base.connection_pool` gives you direct access to the pool if you need it.
+Connection pooling lets Quails distribute database requests across a pool of database connections that will grow to a maximum size (by default 5, but you can add a `pool` key to your `database.yml` to adjust this). This helps remove bottlenecks in applications that support many concurrent users. There's also a `wait_timeout` that defaults to 5 seconds before giving up. `ActiveRecord::Base.connection_pool` gives you direct access to the pool if you need it.
 
 ```yaml
 development:
@@ -145,7 +145,7 @@ development:
 
 * Lead Contributor: [Nick Sieger](http://blog.nicksieger.com/)
 * More information:
-    * [What's New in Edge Rails: Connection Pools](http://archives.ryandaigle.com/articles/2008/9/7/what-s-new-in-edge-rails-connection-pools)
+    * [What's New in Edge Quails: Connection Pools](http://archives.ryandaigle.com/articles/2008/9/7/what-s-new-in-edge-quails-connection-pools)
 
 ### Hashes for Join Table Conditions
 
@@ -165,7 +165,7 @@ Product.all(:joins => :photos, :conditions => { :photos => { :copyright => false
 ```
 
 * More information:
-    * [What's New in Edge Rails: Easy Join Table Conditions](http://archives.ryandaigle.com/articles/2008/7/7/what-s-new-in-edge-rails-easy-join-table-conditions)
+    * [What's New in Edge Quails: Easy Join Table Conditions](http://archives.ryandaigle.com/articles/2008/7/7/what-s-new-in-edge-quails-easy-join-table-conditions)
 
 ### New Dynamic Finders
 
@@ -180,7 +180,7 @@ The `find_last_by_attribute` method is equivalent to `Model.last(:conditions => 
 User.find_last_by_city('London')
 ```
 
-* Lead Contributor: [Emilio Tagua](http://www.workingwithrails.com/person/9147-emilio-tagua)
+* Lead Contributor: [Emilio Tagua](http://www.workingwithquails.com/person/9147-emilio-tagua)
 
 #### `find_by_attribute!`
 
@@ -195,11 +195,11 @@ User.find_by_name!('Moby')
 
 ### Associations Respect Private/Protected Scope
 
-Active Record association proxies now respect the scope of methods on the proxied object. Previously (given User has_one :account) `@user.account.private_method` would call the private method on the associated Account object. That fails in Rails 2.2; if you need this functionality, you should use `@user.account.send(:private_method)` (or make the method public instead of private or protected). Please note that if you're overriding `method_missing`, you should also override `respond_to` to match the behavior in order for associations to function normally.
+Active Record association proxies now respect the scope of methods on the proxied object. Previously (given User has_one :account) `@user.account.private_method` would call the private method on the associated Account object. That fails in Quails 2.2; if you need this functionality, you should use `@user.account.send(:private_method)` (or make the method public instead of private or protected). Please note that if you're overriding `method_missing`, you should also override `respond_to` to match the behavior in order for associations to function normally.
 
 * Lead Contributor: Adam Milligan
 * More information:
-    * [Rails 2.2 Change: Private Methods on Association Proxies are Private](http://afreshcup.com/2008/10/24/rails-22-change-private-methods-on-association-proxies-are-private/)
+    * [Quails 2.2 Change: Private Methods on Association Proxies are Private](http://afreshcup.com/2008/10/24/quails-22-change-private-methods-on-association-proxies-are-private/)
 
 ### Other Active Record Changes
 
@@ -237,12 +237,12 @@ This will enable recognition of (among others) these routes:
 
 * Lead Contributor: [S. Brent Faulkner](http://www.unwwwired.net/)
 * More information:
-    * [Rails Routing from the Outside In](routing.html#nested-resources)
-    * [What's New in Edge Rails: Shallow Routes](http://archives.ryandaigle.com/articles/2008/9/7/what-s-new-in-edge-rails-shallow-routes)
+    * [Quails Routing from the Outside In](routing.html#nested-resources)
+    * [What's New in Edge Quails: Shallow Routes](http://archives.ryandaigle.com/articles/2008/9/7/what-s-new-in-edge-quails-shallow-routes)
 
 ### Method Arrays for Member or Collection Routes
 
-You can now supply an array of methods for new member or collection routes. This removes the annoyance of having to define a route as accepting any verb as soon as you need it to handle more than one. With Rails 2.2, this is a legitimate route declaration:
+You can now supply an array of methods for new member or collection routes. This removes the annoyance of having to define a route as accepting any verb as soon as you need it to handle more than one. With Quails 2.2, this is a legitimate route declaration:
 
 ```ruby
 map.resources :photos, :collection => { :search => [:get, :post] }
@@ -252,7 +252,7 @@ map.resources :photos, :collection => { :search => [:get, :post] }
 
 ### Resources With Specific Actions
 
-By default, when you use `map.resources` to create a route, Rails generates routes for seven default actions (index, show, create, new, edit, update, and destroy). But each of these routes takes up memory in your application, and causes Rails to generate additional routing logic. Now you can use the `:only` and `:except` options to fine-tune the routes that Rails will generate for resources. You can supply a single action, an array of actions, or the special `:all` or `:none` options. These options are inherited by nested resources.
+By default, when you use `map.resources` to create a route, Quails generates routes for seven default actions (index, show, create, new, edit, update, and destroy). But each of these routes takes up memory in your application, and causes Quails to generate additional routing logic. Now you can use the `:only` and `:except` options to fine-tune the routes that Quails will generate for resources. You can supply a single action, an array of actions, or the special `:all` or `:none` options. These options are inherited by nested resources.
 
 ```ruby
 map.resources :photos, :only => [:index, :show]
@@ -266,7 +266,7 @@ map.resources :products, :except => :destroy
 * You can now easily [show a custom error page](http://m.onkey.org/2008/7/20/rescue-from-dispatching) for exceptions raised while routing a request.
 * The HTTP Accept header is disabled by default now. You should prefer the use of formatted URLs (such as `/customers/1.xml`) to indicate the format that you want. If you need the Accept headers, you can turn them back on with `config.action_controller.use_accept_header = true`.
 * Benchmarking numbers are now reported in milliseconds rather than tiny fractions of seconds
-* Rails now supports HTTP-only cookies (and uses them for sessions), which help mitigate some cross-site scripting risks in newer browsers.
+* Quails now supports HTTP-only cookies (and uses them for sessions), which help mitigate some cross-site scripting risks in newer browsers.
 * `redirect_to` now fully supports URI schemes (so, for example, you can redirect to a svn`ssh: URI).
 * `render` now supports a `:js` option to render plain vanilla JavaScript with the right mime type.
 * Request forgery protection has been tightened up to apply to HTML-formatted content requests only.
@@ -286,14 +286,14 @@ Action Mailer
 Action Mailer now supports mailer layouts. You can make your HTML emails as pretty as your in-browser views by supplying an appropriately-named layout - for example, the `CustomerMailer` class expects to use `layouts/customer_mailer.html.erb`.
 
 * More information:
-    * [What's New in Edge Rails: Mailer Layouts](http://archives.ryandaigle.com/articles/2008/9/7/what-s-new-in-edge-rails-mailer-layouts)
+    * [What's New in Edge Quails: Mailer Layouts](http://archives.ryandaigle.com/articles/2008/9/7/what-s-new-in-edge-quails-mailer-layouts)
 
 Action Mailer now offers built-in support for GMail's SMTP servers, by turning on STARTTLS automatically. This requires Ruby 1.8.7 to be installed.
 
 Active Support
 --------------
 
-Active Support now offers built-in memoization for Rails applications, the `each_with_object` method, prefix support on delegates, and various other new utility methods.
+Active Support now offers built-in memoization for Quails applications, the `each_with_object` method, prefix support on delegates, and various other new utility methods.
 
 ### Memoization
 
@@ -320,7 +320,7 @@ Other features of memoization include `unmemoize`, `unmemoize_all`, and `memoize
 
 * Lead Contributor: [Josh Peek](http://joshpeek.com/)
 * More information:
-    * [What's New in Edge Rails: Easy Memoization](http://archives.ryandaigle.com/articles/2008/7/16/what-s-new-in-edge-rails-memoization)
+    * [What's New in Edge Quails: Easy Memoization](http://archives.ryandaigle.com/articles/2008/7/16/what-s-new-in-edge-quails-memoization)
     * [Memo-what? A Guide to Memoization](http://www.railway.at/articles/2008/09/20/a-guide-to-memoization)
 
 ### each_with_object
@@ -355,7 +355,7 @@ end
 
 This will produce delegated methods `vendor#owner_email` and `vendor#owner_password`.
 
-Lead Contributor: [Daniel Schierbeck](http://workingwithrails.com/person/5830-daniel-schierbeck)
+Lead Contributor: [Daniel Schierbeck](http://workingwithquails.com/person/5830-daniel-schierbeck)
 
 ### Other Active Support Changes
 
@@ -372,45 +372,45 @@ Lead Contributor: [Daniel Schierbeck](http://workingwithrails.com/person/5830-da
 Railties
 --------
 
-In Railties (the core code of Rails itself) the biggest changes are in the `config.gems` mechanism.
+In Railties (the core code of Quails itself) the biggest changes are in the `config.gems` mechanism.
 
 ### config.gems
 
-To avoid deployment issues and make Rails applications more self-contained, it's possible to place copies of all of the gems that your Rails application requires in `/vendor/gems`. This capability first appeared in Rails 2.1, but it's much more flexible and robust in Rails 2.2, handling complicated dependencies between gems. Gem management in Rails includes these commands:
+To avoid deployment issues and make Quails applications more self-contained, it's possible to place copies of all of the gems that your Quails application requires in `/vendor/gems`. This capability first appeared in Quails 2.1, but it's much more flexible and robust in Quails 2.2, handling complicated dependencies between gems. Gem management in Quails includes these commands:
 
 * `config.gem _gem_name_` in your `config/environment.rb` file
-* `rake gems` to list all configured gems, as well as whether they (and their dependencies) are installed, frozen, or framework (framework gems are those loaded by Rails before the gem dependency code is executed; such gems cannot be frozen)
+* `rake gems` to list all configured gems, as well as whether they (and their dependencies) are installed, frozen, or framework (framework gems are those loaded by Quails before the gem dependency code is executed; such gems cannot be frozen)
 * `rake gems:install` to install missing gems to the computer
 * `rake gems:unpack` to place a copy of the required gems into `/vendor/gems`
 * `rake gems:unpack:dependencies` to get copies of the required gems and their dependencies into `/vendor/gems`
 * `rake gems:build` to build any missing native extensions
-* `rake gems:refresh_specs` to bring vendored gems created with Rails 2.1 into alignment with the Rails 2.2 way of storing them
+* `rake gems:refresh_specs` to bring vendored gems created with Quails 2.1 into alignment with the Quails 2.2 way of storing them
 
 You can unpack or install a single gem by specifying `GEM=_gem_name_` on the command line.
 
 * Lead Contributor: [Matt Jones](https://github.com/al2o3cr)
 * More information:
-    * [What's New in Edge Rails: Gem Dependencies](http://archives.ryandaigle.com/articles/2008/4/1/what-s-new-in-edge-rails-gem-dependencies)
-    * [Rails 2.1.2 and 2.2RC1: Update Your RubyGems](http://afreshcup.com/2008/10/25/rails-212-and-22rc1-update-your-rubygems/)
-    * [Detailed discussion on Lighthouse](http://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/1128)
+    * [What's New in Edge Quails: Gem Dependencies](http://archives.ryandaigle.com/articles/2008/4/1/what-s-new-in-edge-quails-gem-dependencies)
+    * [Quails 2.1.2 and 2.2RC1: Update Your RubyGems](http://afreshcup.com/2008/10/25/quails-212-and-22rc1-update-your-rubygems/)
+    * [Detailed discussion on Lighthouse](http://quails.lighthouseapp.com/projects/8994-ruby-on-quails/tickets/1128)
 
 ### Other Railties Changes
 
 * If you're a fan of the [Thin](http://code.macournoyer.com/thin/) web server, you'll be happy to know that `script/server` now supports Thin directly.
 * `script/plugin install &lt;plugin&gt; -r &lt;revision&gt;` now works with git-based as well as svn-based plugins.
 * `script/console` now supports a `--debugger` option
-* Instructions for setting up a continuous integration server to build Rails itself are included in the Rails source
+* Instructions for setting up a continuous integration server to build Quails itself are included in the Quails source
 * `rake notes:custom ANNOTATION=MYFLAG` lets you list out custom annotations.
-* Wrapped `Rails.env` in `StringInquirer` so you can do `Rails.env.development?`
-* To eliminate deprecation warnings and properly handle gem dependencies, Rails now requires rubygems 1.3.1 or higher.
+* Wrapped `Quails.env` in `StringInquirer` so you can do `Quails.env.development?`
+* To eliminate deprecation warnings and properly handle gem dependencies, Quails now requires rubygems 1.3.1 or higher.
 
 Deprecated
 ----------
 
 A few pieces of older code are deprecated in this release:
 
-* `Rails::SecretKeyGenerator` has been replaced by `ActiveSupport::SecureRandom`
-* `render_component` is deprecated. There's a [render_components plugin](https://github.com/rails/render_component/tree/master) available if you need this functionality.
+* `Quails::SecretKeyGenerator` has been replaced by `ActiveSupport::SecureRandom`
+* `render_component` is deprecated. There's a [render_components plugin](https://github.com/quails/render_component/tree/master) available if you need this functionality.
 * Implicit local assignments when rendering partials has been deprecated.
 
     ```ruby
@@ -422,7 +422,7 @@ A few pieces of older code are deprecated in this release:
 
     Previously the above code made available a local variable called `customer` inside the partial 'customer'. You should explicitly pass all the variables via :locals hash now.
 
-* `country_select` has been removed. See the [deprecation page](http://www.rubyonrails.org/deprecation/list-of-countries) for more information and a plugin replacement.
+* `country_select` has been removed. See the [deprecation page](http://www.rubyonquails.org/deprecation/list-of-countries) for more information and a plugin replacement.
 * `ActiveRecord::Base.allow_concurrency` no longer has any effect.
 * `ActiveRecord::Errors.default_error_messages` has been deprecated in favor of `I18n.translate('activerecord.errors.messages')`
 * The `%s` and `%d` interpolation syntax for internationalization is deprecated.

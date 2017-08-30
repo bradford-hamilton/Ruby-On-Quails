@@ -17,8 +17,8 @@ module ActiveSupport
       # Parses a JSON string (JavaScript Object Notation) into a hash.
       # See http://www.json.org for more info.
       #
-      #   ActiveSupport::JSON.decode("{\"team\":\"rails\",\"players\":\"36\"}")
-      #   => {"team" => "rails", "players" => "36"}
+      #   ActiveSupport::JSON.decode("{\"team\":\"quails\",\"players\":\"36\"}")
+      #   => {"team" => "quails", "players" => "36"}
       def decode(json)
         data = ::JSON.parse(json, quirks_mode: true)
 
@@ -37,7 +37,7 @@ module ActiveSupport
       #   begin
       #     obj = ActiveSupport::JSON.decode(some_string)
       #   rescue ActiveSupport::JSON.parse_error
-      #     Rails.logger.warn("Attempted to decode invalid JSON: #{some_string}")
+      #     Quails.logger.warn("Attempted to decode invalid JSON: #{some_string}")
       #   end
       def parse_error
         ::JSON::ParserError

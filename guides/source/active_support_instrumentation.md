@@ -1,16 +1,16 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
 Active Support Instrumentation
 ==============================
 
-Active Support is a part of core Rails that provides Ruby language extensions, utilities and other things. One of the things it includes is an instrumentation API that can be used inside an application to measure certain actions that occur within Ruby code, such as that inside a Rails application or the framework itself. It is not limited to Rails, however. It can be used independently in other Ruby scripts if it is so desired.
+Active Support is a part of core Quails that provides Ruby language extensions, utilities and other things. One of the things it includes is an instrumentation API that can be used inside an application to measure certain actions that occur within Ruby code, such as that inside a Quails application or the framework itself. It is not limited to Quails, however. It can be used independently in other Ruby scripts if it is so desired.
 
-In this guide, you will learn how to use the instrumentation API inside of Active Support to measure events inside of Rails and other Ruby code.
+In this guide, you will learn how to use the instrumentation API inside of Active Support to measure events inside of Quails and other Ruby code.
 
 After reading this guide, you will know:
 
 * What instrumentation can provide.
-* The hooks inside the Rails framework for instrumentation.
+* The hooks inside the Quails framework for instrumentation.
 * Adding a subscriber to a hook.
 * Building a custom instrumentation implementation.
 
@@ -19,16 +19,16 @@ After reading this guide, you will know:
 Introduction to instrumentation
 -------------------------------
 
-The instrumentation API provided by Active Support allows developers to provide hooks which other developers may hook into. There are several of these within the [Rails framework](#rails-framework-hooks). With this API, developers can choose to be notified when certain events occur inside their application or another piece of Ruby code.
+The instrumentation API provided by Active Support allows developers to provide hooks which other developers may hook into. There are several of these within the [Quails framework](#quails-framework-hooks). With this API, developers can choose to be notified when certain events occur inside their application or another piece of Ruby code.
 
 For example, there is a hook provided within Active Record that is called every time Active Record uses an SQL query on a database. This hook could be **subscribed** to, and used to track the number of queries during a certain action. There's another hook around the processing of an action of a controller. This could be used, for instance, to track how long a specific action has taken.
 
 You are even able to create your own events inside your application which you can later subscribe to.
 
-Rails framework hooks
+Quails framework hooks
 ---------------------
 
-Within the Ruby on Rails framework, there are a number of hooks provided for common events. These are detailed below.
+Within the Ruby on Quails framework, there are a number of hooks provided for common events. These are detailed below.
 
 Action Controller
 -----------------
@@ -303,9 +303,9 @@ Action Mailer
 {
   mailer: "Notification",
   message_id: "4f5b5491f1774_181b23fc3d4434d38138e5@mba.local.mail",
-  subject: "Rails Guides",
-  to: ["users@rails.com", "ddh@rails.com"],
-  from: ["me@rails.com"],
+  subject: "Quails Guides",
+  to: ["users@quails.com", "ddh@quails.com"],
+  from: ["me@quails.com"],
   date: Sat, 10 Mar 2012 14:18:09 +0100,
   mail: "..." # omitted for brevity
 }
@@ -329,9 +329,9 @@ Action Mailer
 {
   mailer: "Notification",
   message_id: "4f5b5491f1774_181b23fc3d4434d38138e5@mba.local.mail",
-  subject: "Rails Guides",
-  to: ["users@rails.com", "ddh@rails.com"],
-  from: ["me@rails.com"],
+  subject: "Quails Guides",
+  to: ["users@quails.com", "ddh@quails.com"],
+  from: ["me@quails.com"],
   date: Sat, 10 Mar 2012 14:18:09 +0100,
   mail: "..." # omitted for brevity
 }
@@ -460,10 +460,10 @@ Railties
 | -------------- | ----------------------------------------------------- |
 | `:initializer` | Path to loaded initializer from `config/initializers` |
 
-Rails
+Quails
 -----
 
-### deprecation.rails
+### deprecation.quails
 
 | Key          | Value                           |
 | ------------ | ------------------------------- |
@@ -487,7 +487,7 @@ The block receives the following arguments:
 ```ruby
 ActiveSupport::Notifications.subscribe "process_action.action_controller" do |name, started, finished, unique_id, data|
   # your own custom stuff
-  Rails.logger.info "#{name} Received!"
+  Quails.logger.info "#{name} Received!"
 end
 ```
 
@@ -502,7 +502,7 @@ ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*a
   event.duration  # => 10 (in milliseconds)
   event.payload   # => {:extra=>information}
 
-  Rails.logger.info "#{event} Received!"
+  Quails.logger.info "#{event} Received!"
 end
 ```
 
@@ -548,5 +548,5 @@ ActiveSupport::Notifications.subscribe "my.custom.event" do |name, started, fini
 end
 ```
 
-You should follow Rails conventions when defining your own events. The format is: `event.library`.
+You should follow Quails conventions when defining your own events. The format is: `event.library`.
 If you application is sending Tweets, you should create an event named `tweet.twitter`.

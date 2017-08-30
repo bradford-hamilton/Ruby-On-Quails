@@ -3,7 +3,7 @@
 require "rdoc/task"
 require_relative "generator"
 
-module Rails
+module Quails
   module API
     class Task < RDoc::Task
       RDOC_FILES = {
@@ -80,9 +80,9 @@ module Rails
             lib/**/*.rb
           ),
           exclude: %w(
-            lib/rails/generators/**/templates/**/*.rb
-            lib/rails/test_unit/*
-            lib/rails/api/generator.rb
+            lib/quails/generators/**/templates/**/*.rb
+            lib/quails/test_unit/*
+            lib/quails/api/generator.rb
           )
         }
       }
@@ -106,14 +106,14 @@ module Rails
       end
 
       def configure_sdoc
-        self.title    = "Ruby on Rails API"
+        self.title    = "Ruby on Quails API"
         self.rdoc_dir = api_dir
 
         options << "-m"  << api_main
         options << "-e"  << "UTF-8"
 
         options << "-f"  << "api"
-        options << "-T"  << "rails"
+        options << "-T"  << "quails"
       end
 
       def configure_rdoc_files
@@ -146,8 +146,8 @@ module Rails
       end
 
       def setup_horo_variables
-        ENV["HORO_PROJECT_NAME"]    = "Ruby on Rails"
-        ENV["HORO_PROJECT_VERSION"] = rails_version
+        ENV["HORO_PROJECT_NAME"]    = "Ruby on Quails"
+        ENV["HORO_PROJECT_VERSION"] = quails_version
       end
 
       def api_main
@@ -171,13 +171,13 @@ module Rails
     end
 
     class EdgeTask < RepoTask
-      def rails_version
+      def quails_version
         "master@#{`git rev-parse HEAD`[0, 7]}"
       end
     end
 
     class StableTask < RepoTask
-      def rails_version
+      def quails_version
         File.read("RAILS_VERSION").strip
       end
     end

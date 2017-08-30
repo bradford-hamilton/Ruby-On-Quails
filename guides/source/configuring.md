@@ -1,13 +1,13 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-Configuring Rails Applications
+Configuring Quails Applications
 ==============================
 
-This guide covers the configuration and initialization features available to Rails applications.
+This guide covers the configuration and initialization features available to Quails applications.
 
 After reading this guide, you will know:
 
-* How to adjust the behavior of your Rails applications.
+* How to adjust the behavior of your Quails applications.
 * How to add additional code to be run at application start time.
 
 --------------------------------------------------------------------------------
@@ -15,22 +15,22 @@ After reading this guide, you will know:
 Locations for Initialization Code
 ---------------------------------
 
-Rails offers four standard spots to place initialization code:
+Quails offers four standard spots to place initialization code:
 
 * `config/application.rb`
 * Environment-specific configuration files
 * Initializers
 * After-initializers
 
-Running Code Before Rails
+Running Code Before Quails
 -------------------------
 
-In the rare event that your application needs to run some code before Rails itself is loaded, put it above the call to `require 'rails/all'` in `config/application.rb`.
+In the rare event that your application needs to run some code before Quails itself is loaded, put it above the call to `require 'quails/all'` in `config/application.rb`.
 
-Configuring Rails Components
+Configuring Quails Components
 ----------------------------
 
-In general, the work of configuring Rails means configuring the components of Rails, as well as configuring Rails itself. The configuration file `config/application.rb` and environment-specific configuration files (such as `config/environments/production.rb`) allow you to specify the various settings that you want to pass down to all of the components.
+In general, the work of configuring Quails means configuring the components of Quails, as well as configuring Quails itself. The configuration file `config/application.rb` and environment-specific configuration files (such as `config/environments/production.rb`) allow you to specify the various settings that you want to pass down to all of the components.
 
 For example, you could add this setting to `config/application.rb` file:
 
@@ -38,19 +38,19 @@ For example, you could add this setting to `config/application.rb` file:
 config.time_zone = 'Central Time (US & Canada)'
 ```
 
-This is a setting for Rails itself. If you want to pass settings to individual Rails components, you can do so via the same `config` object in `config/application.rb`:
+This is a setting for Quails itself. If you want to pass settings to individual Quails components, you can do so via the same `config` object in `config/application.rb`:
 
 ```ruby
 config.active_record.schema_format = :ruby
 ```
 
-Rails will use that particular setting to configure Active Record.
+Quails will use that particular setting to configure Active Record.
 
-### Rails General Configuration
+### Quails General Configuration
 
-These configuration methods are to be called on a `Rails::Railtie` object, such as a subclass of `Rails::Engine` or `Rails::Application`.
+These configuration methods are to be called on a `Quails::Railtie` object, such as a subclass of `Quails::Engine` or `Quails::Application`.
 
-* `config.after_initialize` takes a block which will be run _after_ Rails has finished initializing the application. That includes the initialization of the framework itself, engines, and all the application's initializers in `config/initializers`. Note that this block _will_ be run for rake tasks. Useful for configuring values set up by other initializers:
+* `config.after_initialize` takes a block which will be run _after_ Quails has finished initializing the application. That includes the initialization of the framework itself, engines, and all the application's initializers in `config/initializers`. Note that this block _will_ be run for rake tasks. Useful for configuring values set up by other initializers:
 
     ```ruby
     config.after_initialize do
@@ -60,9 +60,9 @@ These configuration methods are to be called on a `Rails::Railtie` object, such 
 
 * `config.asset_host` sets the host for the assets. Useful when CDNs are used for hosting assets, or when you want to work around the concurrency constraints built-in in browsers using different domain aliases. Shorter version of `config.action_controller.asset_host`.
 
-* `config.autoload_once_paths` accepts an array of paths from which Rails will autoload constants that won't be wiped per request. Relevant if `config.cache_classes` is `false`, which is the case in development mode by default. Otherwise, all autoloading happens only once. All elements of this array must also be in `autoload_paths`. Default is an empty array.
+* `config.autoload_once_paths` accepts an array of paths from which Quails will autoload constants that won't be wiped per request. Relevant if `config.cache_classes` is `false`, which is the case in development mode by default. Otherwise, all autoloading happens only once. All elements of this array must also be in `autoload_paths`. Default is an empty array.
 
-* `config.autoload_paths` accepts an array of paths from which Rails will autoload constants. Default is all directories under `app`.
+* `config.autoload_paths` accepts an array of paths from which Quails will autoload constants. Default is all directories under `app`.
 
 * `config.cache_classes` controls whether or not application classes and modules should be reloaded on each request. Defaults to `false` in development mode, and `true` in test and production modes.
 
@@ -71,13 +71,13 @@ These configuration methods are to be called on a `Rails::Railtie` object, such 
 * `config.beginning_of_week` sets the default beginning of week for the
 application. Accepts a valid week day symbol (e.g. `:monday`).
 
-* `config.cache_store` configures which cache store to use for Rails caching. Options include one of the symbols `:memory_store`, `:file_store`, `:mem_cache_store`, `:null_store`, or an object that implements the cache API. Defaults to `:file_store`.
+* `config.cache_store` configures which cache store to use for Quails caching. Options include one of the symbols `:memory_store`, `:file_store`, `:mem_cache_store`, `:null_store`, or an object that implements the cache API. Defaults to `:file_store`.
 
 * `config.colorize_logging` specifies whether or not to use ANSI color codes when logging information. Defaults to `true`.
 
-* `config.consider_all_requests_local` is a flag. If `true` then any error will cause detailed debugging information to be dumped in the HTTP response, and the `Rails::Info` controller will show the application runtime context in `/rails/info/properties`. `true` by default in development and test environments, and `false` in production mode. For finer-grained control, set this to `false` and implement `local_request?` in controllers to specify which requests should provide debugging information on errors.
+* `config.consider_all_requests_local` is a flag. If `true` then any error will cause detailed debugging information to be dumped in the HTTP response, and the `Quails::Info` controller will show the application runtime context in `/quails/info/properties`. `true` by default in development and test environments, and `false` in production mode. For finer-grained control, set this to `false` and implement `local_request?` in controllers to specify which requests should provide debugging information on errors.
 
-* `config.console` allows you to set class that will be used as console you run `rails console`. It's best to run it in `console` block:
+* `config.console` allows you to set class that will be used as console you run `quails console`. It's best to run it in `console` block:
 
     ```ruby
     console do
@@ -88,37 +88,37 @@ application. Accepts a valid week day symbol (e.g. `:monday`).
     end
     ```
 
-* `config.eager_load` when `true`, eager loads all registered `config.eager_load_namespaces`. This includes your application, engines, Rails frameworks and any other registered namespace.
+* `config.eager_load` when `true`, eager loads all registered `config.eager_load_namespaces`. This includes your application, engines, Quails frameworks and any other registered namespace.
 
 * `config.eager_load_namespaces` registers namespaces that are eager loaded when `config.eager_load` is `true`. All namespaces in the list must respond to the `eager_load!` method.
 
-* `config.eager_load_paths` accepts an array of paths from which Rails will eager load on boot if cache classes is enabled. Defaults to every folder in the `app` directory of the application.
+* `config.eager_load_paths` accepts an array of paths from which Quails will eager load on boot if cache classes is enabled. Defaults to every folder in the `app` directory of the application.
 
 * `config.enable_dependency_loading`: when true, enables autoloading, even if the application is eager loaded and `config.cache_classes` is set as true. Defaults to false.
 
 * `config.encoding` sets up the application-wide encoding. Defaults to UTF-8.
 
-* `config.exceptions_app` sets the exceptions application invoked by the ShowException middleware when an exception happens. Defaults to `ActionDispatch::PublicExceptions.new(Rails.public_path)`.
+* `config.exceptions_app` sets the exceptions application invoked by the ShowException middleware when an exception happens. Defaults to `ActionDispatch::PublicExceptions.new(Quails.public_path)`.
 
 * `config.debug_exception_response_format` sets the format used in responses when errors occur in development mode. Defaults to `:api` for API only apps and `:default` for normal apps.
 
-* `config.file_watcher` is the class used to detect file updates in the file system when `config.reload_classes_only_on_change` is `true`. Rails ships with `ActiveSupport::FileUpdateChecker`, the default, and `ActiveSupport::EventedFileUpdateChecker` (this one depends on the [listen](https://github.com/guard/listen) gem). Custom classes must conform to the `ActiveSupport::FileUpdateChecker` API.
+* `config.file_watcher` is the class used to detect file updates in the file system when `config.reload_classes_only_on_change` is `true`. Quails ships with `ActiveSupport::FileUpdateChecker`, the default, and `ActiveSupport::EventedFileUpdateChecker` (this one depends on the [listen](https://github.com/guard/listen) gem). Custom classes must conform to the `ActiveSupport::FileUpdateChecker` API.
 
 * `config.filter_parameters` used for filtering out the parameters that
 you don't want shown in the logs, such as passwords or credit card
-numbers. By default, Rails filters out passwords by adding `Rails.application.config.filter_parameters += [:password]` in `config/initializers/filter_parameter_logging.rb`. Parameters filter works by partial matching regular expression.
+numbers. By default, Quails filters out passwords by adding `Quails.application.config.filter_parameters += [:password]` in `config/initializers/filter_parameter_logging.rb`. Parameters filter works by partial matching regular expression.
 
-* `config.force_ssl` forces all requests to be served over HTTPS by using the `ActionDispatch::SSL` middleware, and sets `config.action_mailer.default_url_options` to be `{ protocol: 'https' }`. This can be configured by setting `config.ssl_options` - see the [ActionDispatch::SSL documentation](http://api.rubyonrails.org/classes/ActionDispatch/SSL.html) for details.
+* `config.force_ssl` forces all requests to be served over HTTPS by using the `ActionDispatch::SSL` middleware, and sets `config.action_mailer.default_url_options` to be `{ protocol: 'https' }`. This can be configured by setting `config.ssl_options` - see the [ActionDispatch::SSL documentation](http://api.rubyonquails.org/classes/ActionDispatch/SSL.html) for details.
 
-* `config.log_formatter` defines the formatter of the Rails logger. This option defaults to an instance of `ActiveSupport::Logger::SimpleFormatter` for all modes. If you are setting a value for `config.logger` you must manually pass the value of your formatter to your logger before it is wrapped in an `ActiveSupport::TaggedLogging` instance, Rails will not do it for you.
+* `config.log_formatter` defines the formatter of the Quails logger. This option defaults to an instance of `ActiveSupport::Logger::SimpleFormatter` for all modes. If you are setting a value for `config.logger` you must manually pass the value of your formatter to your logger before it is wrapped in an `ActiveSupport::TaggedLogging` instance, Quails will not do it for you.
 
-* `config.log_level` defines the verbosity of the Rails logger. This option
+* `config.log_level` defines the verbosity of the Quails logger. This option
 defaults to `:debug` for all environments. The available log levels are: `:debug`,
 `:info`, `:warn`, `:error`, `:fatal`, and `:unknown`.
 
 * `config.log_tags` accepts a list of: methods that the `request` object responds to, a `Proc` that accepts the `request` object, or something that responds to `to_s`. This makes it easy to tag log lines with debug information like subdomain and request id - both very helpful in debugging multi-user production applications.
 
-* `config.logger` is the logger that will be used for `Rails.logger` and any related Rails logging such as `ActiveRecord::Base.logger`. It defaults to an instance of `ActiveSupport::TaggedLogging` that wraps an instance of `ActiveSupport::Logger` which outputs a log to the `log/` directory. You can supply a custom logger, to get full compatibility you must follow these guidelines:
+* `config.logger` is the logger that will be used for `Quails.logger` and any related Quails logging such as `ActiveRecord::Base.logger`. It defaults to an instance of `ActiveSupport::TaggedLogging` that wraps an instance of `ActiveSupport::Logger` which outputs a log to the `log/` directory. You can supply a custom logger, to get full compatibility you must follow these guidelines:
   * To support a formatter, you must manually assign a formatter from the `config.log_formatter` value to the logger.
   * To support tagged logs, the log instance must be wrapped with `ActiveSupport::TaggedLogging`.
   * To support silencing, the logger must include `LoggerSilence` and `ActiveSupport::LoggerThreadSafeLevel` modules. The `ActiveSupport::Logger` class already includes these modules.
@@ -140,9 +140,9 @@ defaults to `:debug` for all environments. The available log levels are: `:debug
 
 * `secrets.secret_key_base` is used for specifying a key which allows sessions for the application to be verified against a known secure key to prevent tampering. Applications get `secrets.secret_key_base` initialized to a random key present in `config/secrets.yml`.
 
-* `config.public_file_server.enabled` configures Rails to serve static files from the public directory. This option defaults to `true`, but in the production environment it is set to `false` because the server software (e.g. NGINX or Apache) used to run the application should serve static files instead. If you are running or testing your app in production mode using WEBrick (it is not recommended to use WEBrick in production) set the option to `true.` Otherwise, you won't be able to use page caching and request for files that exist under the public directory.
+* `config.public_file_server.enabled` configures Quails to serve static files from the public directory. This option defaults to `true`, but in the production environment it is set to `false` because the server software (e.g. NGINX or Apache) used to run the application should serve static files instead. If you are running or testing your app in production mode using WEBrick (it is not recommended to use WEBrick in production) set the option to `true.` Otherwise, you won't be able to use page caching and request for files that exist under the public directory.
 
-* `config.session_store` specifies what class to use to store the session. Possible values are `:cookie_store` which is the default, `:mem_cache_store`, and `:disabled`. The last one tells Rails not to deal with sessions. Defaults to a cookie store with application name as the session key. Custom session stores can also be specified:
+* `config.session_store` specifies what class to use to store the session. Possible values are `:cookie_store` which is the default, `:mem_cache_store`, and `:disabled`. The last one tells Quails not to deal with sessions. Defaults to a cookie store with application name as the session key. Custom session stores can also be specified:
 
     ```ruby
     config.session_store :my_custom_store
@@ -157,7 +157,7 @@ defaults to `:debug` for all environments. The available log levels are: `:debug
 * `config.assets.enabled` a flag that controls whether the asset
 pipeline is enabled. It is set to `true` by default.
 
-* `config.assets.css_compressor` defines the CSS compressor to use. It is set by default by `sass-rails`. The unique alternative value at the moment is `:yui`, which uses the `yui-compressor` gem.
+* `config.assets.css_compressor` defines the CSS compressor to use. It is set by default by `sass-quails`. The unique alternative value at the moment is `:yui`, which uses the `yui-compressor` gem.
 
 * `config.assets.js_compressor` defines the JavaScript compressor to use. Possible values are `:closure`, `:uglifier` and `:yui` which require the use of the `closure-compiler`, `uglifier` or `yui-compressor` gems respectively.
 
@@ -167,7 +167,7 @@ pipeline is enabled. It is set to `true` by default.
 
 * `config.assets.precompile` allows you to specify additional assets (other than `application.css` and `application.js`) which are to be precompiled when `rake assets:precompile` is run.
 
-* `config.assets.unknown_asset_fallback` allows you to modify the behavior of the asset pipeline when an asset is not in the pipeline, if you use sprockets-rails 3.2.0 or newer. Defaults to `true`.
+* `config.assets.unknown_asset_fallback` allows you to modify the behavior of the asset pipeline when an asset is not in the pipeline, if you use sprockets-quails 3.2.0 or newer. Defaults to `true`.
 
 * `config.assets.prefix` defines the prefix where assets are served from. Defaults to `/assets`.
 
@@ -187,7 +187,7 @@ pipeline is enabled. It is set to `true` by default.
 
 ### Configuring Generators
 
-Rails allows you to alter what generators are used with the `config.generators` method. This method takes a block:
+Quails allows you to alter what generators are used with the `config.generators` method. This method takes a block:
 
 ```ruby
 config.generators do |g|
@@ -202,14 +202,14 @@ The full set of methods that can be used in this block are as follows:
 * `force_plural` allows pluralized model names. Defaults to `false`.
 * `helper` defines whether or not to generate helpers. Defaults to `true`.
 * `integration_tool` defines which integration tool to use to generate integration tests. Defaults to `:test_unit`.
-* `javascripts` turns on the hook for JavaScript files in generators. Used in Rails for when the `scaffold` generator is run. Defaults to `true`.
+* `javascripts` turns on the hook for JavaScript files in generators. Used in Quails for when the `scaffold` generator is run. Defaults to `true`.
 * `javascript_engine` configures the engine to be used (for eg. coffee) when generating assets. Defaults to `:js`.
 * `orm` defines which orm to use. Defaults to `false` and will use Active Record by default.
-* `resource_controller` defines which generator to use for generating a controller when using `rails generate resource`. Defaults to `:controller`.
+* `resource_controller` defines which generator to use for generating a controller when using `quails generate resource`. Defaults to `:controller`.
 * `resource_route` defines whether a resource route definition should be generated
   or not. Defaults to `true`.
-* `scaffold_controller` different from `resource_controller`, defines which generator to use for generating a _scaffolded_ controller when using `rails generate scaffold`. Defaults to `:scaffold_controller`.
-* `stylesheets` turns on the hook for stylesheets in generators. Used in Rails for when the `scaffold` generator is run, but this hook can be used in other generates as well. Defaults to `true`.
+* `scaffold_controller` different from `resource_controller`, defines which generator to use for generating a _scaffolded_ controller when using `quails generate scaffold`. Defaults to `:scaffold_controller`.
+* `stylesheets` turns on the hook for stylesheets in generators. Used in Quails for when the `scaffold` generator is run, but this hook can be used in other generates as well. Defaults to `true`.
 * `stylesheet_engine` configures the stylesheet engine (for eg. sass) to be used when generating assets. Defaults to `:css`.
 * `scaffold_stylesheet` creates `scaffold.css` when generating a scaffolded resource. Defaults to `true`.
 * `test_framework` defines which test framework to use. Defaults to `false` and will use Minitest by default.
@@ -217,14 +217,14 @@ The full set of methods that can be used in this block are as follows:
 
 ### Configuring Middleware
 
-Every Rails application comes with a standard set of middleware which it uses in this order in the development environment:
+Every Quails application comes with a standard set of middleware which it uses in this order in the development environment:
 
 * `ActionDispatch::SSL` forces every request to be served using HTTPS. Enabled if `config.force_ssl` is set to `true`. Options passed to this can be configured by setting `config.ssl_options`.
 * `ActionDispatch::Static` is used to serve static assets. Disabled if `config.public_file_server.enabled` is `false`. Set `config.public_file_server.index_name` if you need to serve a static directory index file that is not named `index`. For example, to serve `main.html` instead of `index.html` for directory requests, set `config.public_file_server.index_name` to `"main"`.
 * `ActionDispatch::Executor` allows thread safe code reloading. Disabled if `config.allow_concurrency` is `false`, which causes `Rack::Lock` to be loaded. `Rack::Lock` wraps the app in mutex so it can only be called by a single thread at a time.
 * `ActiveSupport::Cache::Strategy::LocalCache` serves as a basic memory backed cache. This cache is not thread safe and is intended only for serving as a temporary memory cache for a single thread.
 * `Rack::Runtime` sets an `X-Runtime` header, containing the time (in seconds) taken to execute the request.
-* `Rails::Rack::Logger` notifies the logs that the request has begun. After request is complete, flushes all the logs.
+* `Quails::Rack::Logger` notifies the logs that the request has begun. After request is complete, flushes all the logs.
 * `ActionDispatch::ShowExceptions` rescues any exception returned by the application and renders nice exception pages if the request is local or if `config.consider_all_requests_local` is set to `true`. If `config.action_dispatch.show_exceptions` is set to `false`, exceptions will be raised regardless.
 * `ActionDispatch::RequestId` makes a unique X-Request-Id header available to the response and enables the `ActionDispatch::Request#uuid` method.
 * `ActionDispatch::RemoteIp` checks for IP spoofing attacks and gets valid `client_ip` from request headers. Configurable with the `config.action_dispatch.ip_spoofing_check`, and `config.action_dispatch.trusted_proxies` options.
@@ -282,7 +282,7 @@ All these configuration options are delegated to the `I18n` library.
 
 * `config.i18n.enforce_available_locales` ensures that all locales passed through i18n must be declared in the `available_locales` list, raising an `I18n::InvalidLocale` exception when setting an unavailable locale. Defaults to `true`. It is recommended not to disable this option unless strongly required, since this works as a security measure against setting any invalid locale from user input.
 
-* `config.i18n.load_path` sets the path Rails uses to look for locale files. Defaults to `config/locales/*.{yml,rb}`.
+* `config.i18n.load_path` sets the path Quails uses to look for locale files. Defaults to `config/locales/*.{yml,rb}`.
 
 * `config.i18n.fallbacks` sets fallback behavior for missing translations. Here are 3 usage examples for this option:
 
@@ -312,7 +312,7 @@ All these configuration options are delegated to the `I18n` library.
 
 * `config.active_record.logger` accepts a logger conforming to the interface of Log4r or the default Ruby Logger class, which is then passed on to any new database connections made. You can retrieve this logger by calling `logger` on either an Active Record model class or an Active Record model instance. Set to `nil` to disable logging.
 
-* `config.active_record.primary_key_prefix_type` lets you adjust the naming for primary key columns. By default, Rails assumes that primary key columns are named `id` (and this configuration option doesn't need to be set.) There are two other choices:
+* `config.active_record.primary_key_prefix_type` lets you adjust the naming for primary key columns. By default, Quails assumes that primary key columns are named `id` (and this configuration option doesn't need to be set.) There are two other choices:
     * `:table_name` would make the primary key for the Customer class `customerid`.
     * `:table_name_with_underscore` would make the primary key for the Customer class `customer_id`.
 
@@ -322,7 +322,7 @@ All these configuration options are delegated to the `I18n` library.
 
 * `config.active_record.schema_migrations_table_name` lets you set a string to be used as the name of the schema migrations table.
 
-* `config.active_record.pluralize_table_names` specifies whether Rails will look for singular or plural table names in the database. If set to `true` (the default), then the Customer class will use the `customers` table. If set to false, then the Customer class will use the `customer` table.
+* `config.active_record.pluralize_table_names` specifies whether Quails will look for singular or plural table names in the database. If set to `true` (the default), then the Customer class will use the `customers` table. If set to false, then the Customer class will use the `customer` table.
 
 * `config.active_record.default_timezone` determines whether to use `Time.local` (if set to `:local`) or `Time.utc` (if set to `:utc`) when pulling dates and times from the database. The default is `:utc`.
 
@@ -345,7 +345,7 @@ All these configuration options are delegated to the `I18n` library.
 * `config.active_record.dump_schema_after_migration` is a flag which
   controls whether or not schema dump should happen (`db/schema.rb` or
   `db/structure.sql`) when you run migrations. This is set to `false` in
-  `config/environments/production.rb` which is generated by Rails. The
+  `config/environments/production.rb` which is generated by Quails. The
   default value is `true` if this configuration is not set.
 
 * `config.active_record.dump_schemas` controls which database schemas will be dumped when calling `db:structure:dump`.
@@ -367,7 +367,7 @@ All these configuration options are delegated to the `I18n` library.
   Defaults to `false`.
 
 * `config.active_record.use_schema_cache_dump` enables users to get schema cache information
-  from `db/schema_cache.yml` (generated by `bin/rails db:schema:cache:dump`), instead of
+  from `db/schema_cache.yml` (generated by `bin/quails db:schema:cache:dump`), instead of
   having to send a query to the database to get this information.
   Defaults to `true`.
 
@@ -394,7 +394,7 @@ by setting up a Rake task which runs
 by adding the following to your application.rb file:
 
     ```ruby
-    Rails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
+    Quails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
     ```
 
 The schema dumper adds one additional configuration option:
@@ -423,9 +423,9 @@ The schema dumper adds one additional configuration option:
 
 * `config.action_controller.per_form_csrf_tokens` configures whether CSRF tokens are only valid for the method/action they were generated for.
 
-* `config.action_controller.default_protect_from_forgery` determines whether forgery protection is added on `ActionController:Base`. This is false by default, but enabled when loading defaults for Rails 5.2.
+* `config.action_controller.default_protect_from_forgery` determines whether forgery protection is added on `ActionController:Base`. This is false by default, but enabled when loading defaults for Quails 5.2.
 
-* `config.action_controller.relative_url_root` can be used to tell Rails that you are [deploying to a subdirectory](configuring.html#deploy-to-a-subdirectory-relative-url-root). The default is `ENV['RAILS_RELATIVE_URL_ROOT']`.
+* `config.action_controller.relative_url_root` can be used to tell Quails that you are [deploying to a subdirectory](configuring.html#deploy-to-a-subdirectory-relative-url-root). The default is `ENV['RAILS_RELATIVE_URL_ROOT']`.
 
 * `config.action_controller.permit_all_parameters` sets all the parameters for mass assignment to be permitted by default. The default value is `false`.
 
@@ -533,7 +533,7 @@ Defaults to `'signed cookie'`.
     end
     ```
 
-* `config.action_view.default_form_builder` tells Rails which form builder to
+* `config.action_view.default_form_builder` tells Quails which form builder to
   use by default. The default is `ActionView::Helpers::FormBuilder`. If you
   want your form builder class to be loaded after initialization (so it's
   reloaded on each request in development), you can pass it as a `String`.
@@ -628,7 +628,7 @@ There are a number of settings available on `config.action_mailer`:
 * `config.action_mailer.preview_path` specifies the location of mailer previews.
 
     ```ruby
-    config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
+    config.action_mailer.preview_path = "#{Quails.root}/lib/mailer_previews"
     ```
 
 * `config.action_mailer.show_previews` enable or disable mailer previews. By default this is `true` in development.
@@ -647,7 +647,7 @@ There are a number of settings available on `config.action_mailer`:
 
 There are a few configuration options available in Active Support:
 
-* `config.active_support.bare` enables or disables the loading of `active_support/all` when booting Rails. Defaults to `nil`, which means `active_support/all` is loaded.
+* `config.active_support.bare` enables or disables the loading of `active_support/all` when booting Quails. Defaults to `nil`, which means `active_support/all` is loaded.
 
 * `config.active_support.test_order` sets the order in which the test cases are executed. Possible values are `:random` and `:sorted`. Defaults to `:random`.
 
@@ -661,7 +661,7 @@ There are a few configuration options available in Active Support:
 
 * `ActiveSupport::Cache::Store.logger` specifies the logger to use within cache store operations.
 
-* `ActiveSupport::Deprecation.behavior` alternative setter to `config.active_support.deprecation` which configures the behavior of deprecation warnings for Rails.
+* `ActiveSupport::Deprecation.behavior` alternative setter to `config.active_support.deprecation` which configures the behavior of deprecation warnings for Quails.
 
 * `ActiveSupport::Deprecation.silence` takes a block in which all deprecation warnings are silenced.
 
@@ -671,7 +671,7 @@ There are a few configuration options available in Active Support:
 
 `config.active_job` provides the following configuration options:
 
-* `config.active_job.queue_adapter` sets the adapter for the queueing backend. The default adapter is `:async`. For an up-to-date list of built-in adapters see the [ActiveJob::QueueAdapters API documentation](http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html).
+* `config.active_job.queue_adapter` sets the adapter for the queueing backend. The default adapter is `:async`. For an up-to-date list of built-in adapters see the [ActiveJob::QueueAdapters API documentation](http://api.rubyonquails.org/classes/ActiveJob/QueueAdapters.html).
 
     ```ruby
     # Be sure to have the adapter's gem in your Gemfile
@@ -691,7 +691,7 @@ There are a few configuration options available in Active Support:
     The following configuration would queue the given job on the `production_high_priority` queue when run in production:
 
     ```ruby
-    config.active_job.queue_name_prefix = Rails.env
+    config.active_job.queue_name_prefix = Quails.env
     ```
 
     ```ruby
@@ -729,11 +729,11 @@ main application.
 * `config.action_cable.mount_path` accepts a string for where to mount Action
   Cable, as part of the main server process. Defaults to `/cable`.
 You can set this as nil to not mount Action Cable as part of your
-normal Rails server.
+normal Quails server.
 
 ### Configuring a Database
 
-Just about every Rails application will interact with a database. You can connect to the database by setting an environment variable `ENV['DATABASE_URL']` or by using a configuration file called `config/database.yml`.
+Just about every Quails application will interact with a database. You can connect to the database by setting an environment variable `ENV['DATABASE_URL']` or by using a configuration file called `config/database.yml`.
 
 Using the `config/database.yml` file you can specify all the information needed to access your database:
 
@@ -751,7 +751,7 @@ This will connect to the database named `blog_development` using the `postgresql
 postgresql://localhost/blog_development?pool=5
 ```
 
-The `config/database.yml` file contains sections for three different environments in which Rails can run by default:
+The `config/database.yml` file contains sections for three different environments in which Quails can run by default:
 
 * The `development` environment is used on your development/local computer as you interact manually with the application.
 * The `test` environment is used when running automated tests.
@@ -767,14 +767,14 @@ development:
 The `config/database.yml` file can contain ERB tags `<%= %>`. Anything in the tags will be evaluated as Ruby code. You can use this to pull out data from an environment variable or to perform calculations to generate the needed connection information.
 
 
-TIP: You don't have to update the database configurations manually. If you look at the options of the application generator, you will see that one of the options is named `--database`. This option allows you to choose an adapter from a list of the most used relational databases. You can even run the generator repeatedly: `cd .. && rails new blog --database=mysql`. When you confirm the overwriting of the `config/database.yml` file, your application will be configured for MySQL instead of SQLite. Detailed examples of the common database connections are below.
+TIP: You don't have to update the database configurations manually. If you look at the options of the application generator, you will see that one of the options is named `--database`. This option allows you to choose an adapter from a list of the most used relational databases. You can even run the generator repeatedly: `cd .. && quails new blog --database=mysql`. When you confirm the overwriting of the `config/database.yml` file, your application will be configured for MySQL instead of SQLite. Detailed examples of the common database connections are below.
 
 
 ### Connection Preference
 
 Since there are two ways to configure your connection (using `config/database.yml` or using an environment variable) it is important to understand how they can interact.
 
-If you have an empty `config/database.yml` file but your `ENV['DATABASE_URL']` is present, then Rails will connect to the database via your environment variable:
+If you have an empty `config/database.yml` file but your `ENV['DATABASE_URL']` is present, then Quails will connect to the database via your environment variable:
 
 ```
 $ cat config/database.yml
@@ -795,7 +795,7 @@ development:
 $ echo $DATABASE_URL
 ```
 
-If you have both `config/database.yml` and `ENV['DATABASE_URL']` set then Rails will merge the configuration together. To better understand this we must see some examples.
+If you have both `config/database.yml` and `ENV['DATABASE_URL']` set then Quails will merge the configuration together. To better understand this we must see some examples.
 
 When duplicate connection information is provided the environment variable will take precedence:
 
@@ -809,7 +809,7 @@ development:
 $ echo $DATABASE_URL
 postgresql://localhost/my_database
 
-$ bin/rails runner 'puts ActiveRecord::Base.configurations'
+$ bin/quails runner 'puts ActiveRecord::Base.configurations'
 {"development"=>{"adapter"=>"postgresql", "host"=>"localhost", "database"=>"my_database"}}
 ```
 
@@ -826,7 +826,7 @@ development:
 $ echo $DATABASE_URL
 postgresql://localhost/my_database
 
-$ bin/rails runner 'puts ActiveRecord::Base.configurations'
+$ bin/quails runner 'puts ActiveRecord::Base.configurations'
 {"development"=>{"adapter"=>"postgresql", "host"=>"localhost", "database"=>"my_database", "pool"=>5}}
 ```
 
@@ -842,7 +842,7 @@ development:
 $ echo $DATABASE_URL
 postgresql://localhost/my_database
 
-$ bin/rails runner 'puts ActiveRecord::Base.configurations'
+$ bin/quails runner 'puts ActiveRecord::Base.configurations'
 {"development"=>{"adapter"=>"sqlite3", "database"=>"NOT_my_database"}}
 ```
 
@@ -860,7 +860,7 @@ Now the behavior is clear, that we are only using the connection information in 
 
 #### Configuring an SQLite3 Database
 
-Rails comes with built-in support for [SQLite3](http://www.sqlite.org), which is a lightweight serverless database application. While a busy production environment may overload SQLite, it works well for development and testing. Rails defaults to using an SQLite database when creating a new project, but you can always change it later.
+Quails comes with built-in support for [SQLite3](http://www.sqlite.org), which is a lightweight serverless database application. While a busy production environment may overload SQLite, it works well for development and testing. Quails defaults to using an SQLite database when creating a new project, but you can always change it later.
 
 Here's the section of the default configuration file (`config/database.yml`) with connection information for the development environment:
 
@@ -872,7 +872,7 @@ development:
   timeout: 5000
 ```
 
-NOTE: Rails uses an SQLite3 database for data storage by default because it is a zero configuration database that just works. Rails also supports MySQL (including MariaDB) and PostgreSQL "out of the box", and has plugins for many database systems. If you are using a database in a production environment Rails most likely has an adapter for it.
+NOTE: Quails uses an SQLite3 database for data storage by default because it is a zero configuration database that just works. Quails also supports MySQL (including MariaDB) and PostgreSQL "out of the box", and has plugins for many database systems. If you are using a database in a production environment Quails most likely has an adapter for it.
 
 #### Configuring a MySQL or MariaDB Database
 
@@ -958,21 +958,21 @@ development:
 
 Change the username and password in the `development` section as appropriate.
 
-### Creating Rails Environments
+### Creating Quails Environments
 
-By default Rails ships with three environments: "development", "test", and "production". While these are sufficient for most use cases, there are circumstances when you want more environments.
+By default Quails ships with three environments: "development", "test", and "production". While these are sufficient for most use cases, there are circumstances when you want more environments.
 
 Imagine you have a server which mirrors the production environment but is only used for testing. Such a server is commonly called a "staging server". To define an environment called "staging" for this server, just create a file called `config/environments/staging.rb`. Please use the contents of any existing file in `config/environments` as a starting point and make the necessary changes from there.
 
-That environment is no different than the default ones, start a server with `rails server -e staging`, a console with `rails console staging`, `Rails.env.staging?` works, etc.
+That environment is no different than the default ones, start a server with `quails server -e staging`, a console with `quails console staging`, `Quails.env.staging?` works, etc.
 
 
 ### Deploy to a subdirectory (relative url root)
 
-By default Rails expects that your application is running at the root
+By default Quails expects that your application is running at the root
 (eg. `/`). This section explains how to run your application inside a directory.
 
-Let's assume we want to deploy our application to "/app1". Rails needs to know
+Let's assume we want to deploy our application to "/app1". Quails needs to know
 this directory to generate the appropriate routes:
 
 ```ruby
@@ -982,7 +982,7 @@ config.relative_url_root = "/app1"
 alternatively you can set the `RAILS_RELATIVE_URL_ROOT` environment
 variable.
 
-Rails will now prepend "/app1" when generating links.
+Quails will now prepend "/app1" when generating links.
 
 #### Using Passenger
 
@@ -1029,35 +1029,35 @@ server {
 Be sure to read the [NGINX documentation](http://nginx.org/en/docs/) for the most up-to-date information.
 
 
-Rails Environment Settings
+Quails Environment Settings
 --------------------------
 
-Some parts of Rails can also be configured externally by supplying environment variables. The following environment variables are recognized by various parts of Rails:
+Some parts of Quails can also be configured externally by supplying environment variables. The following environment variables are recognized by various parts of Quails:
 
-* `ENV["RAILS_ENV"]` defines the Rails environment (production, development, test, and so on) that Rails will run under.
+* `ENV["RAILS_ENV"]` defines the Quails environment (production, development, test, and so on) that Quails will run under.
 
 * `ENV["RAILS_RELATIVE_URL_ROOT"]` is used by the routing code to recognize URLs when you [deploy your application to a subdirectory](configuring.html#deploy-to-a-subdirectory-relative-url-root).
 
-* `ENV["RAILS_CACHE_ID"]` and `ENV["RAILS_APP_VERSION"]` are used to generate expanded cache keys in Rails' caching code. This allows you to have multiple separate caches from the same application.
+* `ENV["RAILS_CACHE_ID"]` and `ENV["RAILS_APP_VERSION"]` are used to generate expanded cache keys in Quails' caching code. This allows you to have multiple separate caches from the same application.
 
 
 Using Initializer Files
 -----------------------
 
-After loading the framework and any gems in your application, Rails turns to loading initializers. An initializer is any Ruby file stored under `config/initializers` in your application. You can use initializers to hold configuration settings that should be made after all of the frameworks and gems are loaded, such as options to configure settings for these parts.
+After loading the framework and any gems in your application, Quails turns to loading initializers. An initializer is any Ruby file stored under `config/initializers` in your application. You can use initializers to hold configuration settings that should be made after all of the frameworks and gems are loaded, such as options to configure settings for these parts.
 
-NOTE: You can use subfolders to organize your initializers if you like, because Rails will look into the whole file hierarchy from the initializers folder on down.
+NOTE: You can use subfolders to organize your initializers if you like, because Quails will look into the whole file hierarchy from the initializers folder on down.
 
 TIP: If you have any ordering dependency in your initializers, you can control the load order through naming. Initializer files are loaded in alphabetical order by their path. For example, `01_critical.rb` will be loaded before `02_normal.rb`.
 
 Initialization events
 ---------------------
 
-Rails has 5 initialization events which can be hooked into (listed in the order that they are run):
+Quails has 5 initialization events which can be hooked into (listed in the order that they are run):
 
-* `before_configuration`: This is run as soon as the application constant inherits from `Rails::Application`. The `config` calls are evaluated before this happens.
+* `before_configuration`: This is run as soon as the application constant inherits from `Quails::Application`. The `config` calls are evaluated before this happens.
 
-* `before_initialize`: This is run directly before the initialization process of the application occurs with the `:bootstrap_hook` initializer near the beginning of the Rails initialization process.
+* `before_initialize`: This is run directly before the initialization process of the application occurs with the `:bootstrap_hook` initializer near the beginning of the Quails initialization process.
 
 * `to_prepare`: Run after the initializers are run for all Railties (including the application itself), but before eager loading and the middleware stack is built. More importantly, will run upon every request in `development`, but only once (during boot-up) in `production` and `test`.
 
@@ -1065,11 +1065,11 @@ Rails has 5 initialization events which can be hooked into (listed in the order 
 
 * `after_initialize`: Run directly after the initialization of the application, after the application initializers in `config/initializers` are run.
 
-To define an event for these hooks, use the block syntax within a `Rails::Application`, `Rails::Railtie` or `Rails::Engine` subclass:
+To define an event for these hooks, use the block syntax within a `Quails::Application`, `Quails::Railtie` or `Quails::Engine` subclass:
 
 ```ruby
 module YourApp
-  class Application < Rails::Application
+  class Application < Quails::Application
     config.before_initialize do
       # initialization code goes here
     end
@@ -1077,19 +1077,19 @@ module YourApp
 end
 ```
 
-Alternatively, you can also do it through the `config` method on the `Rails.application` object:
+Alternatively, you can also do it through the `config` method on the `Quails.application` object:
 
 ```ruby
-Rails.application.config.before_initialize do
+Quails.application.config.before_initialize do
   # initialization code goes here
 end
 ```
 
 WARNING: Some parts of your application, notably routing, are not yet set up at the point where the `after_initialize` block is called.
 
-### `Rails::Railtie#initializer`
+### `Quails::Railtie#initializer`
 
-Rails has several initializers that run on startup that are all defined by using the `initializer` method from `Rails::Railtie`. Here's an example of the `set_helpers_path` initializer from Action Controller:
+Quails has several initializers that run on startup that are all defined by using the `initializer` method from `Quails::Railtie`. Here's an example of the `set_helpers_path` initializer from Action Controller:
 
 ```ruby
 initializer "action_controller.set_helpers_path" do |app|
@@ -1101,23 +1101,23 @@ The `initializer` method takes three arguments with the first being the name for
 
 Initializers defined using the `initializer` method will be run in the order they are defined in, with the exception of ones that use the `:before` or `:after` methods.
 
-WARNING: You may put your initializer before or after any other initializer in the chain, as long as it is logical. Say you have 4 initializers called "one" through "four" (defined in that order) and you define "four" to go _before_ "four" but _after_ "three", that just isn't logical and Rails will not be able to determine your initializer order.
+WARNING: You may put your initializer before or after any other initializer in the chain, as long as it is logical. Say you have 4 initializers called "one" through "four" (defined in that order) and you define "four" to go _before_ "four" but _after_ "three", that just isn't logical and Quails will not be able to determine your initializer order.
 
 The block argument of the `initializer` method is the instance of the application itself, and so we can access the configuration on it by using the `config` method as done in the example.
 
-Because `Rails::Application` inherits from `Rails::Railtie` (indirectly), you can use the `initializer` method in `config/application.rb` to define initializers for the application.
+Because `Quails::Application` inherits from `Quails::Railtie` (indirectly), you can use the `initializer` method in `config/application.rb` to define initializers for the application.
 
 ### Initializers
 
-Below is a comprehensive list of all the initializers found in Rails in the order that they are defined (and therefore run in, unless otherwise stated).
+Below is a comprehensive list of all the initializers found in Quails in the order that they are defined (and therefore run in, unless otherwise stated).
 
 * `load_environment_hook`: Serves as a placeholder so that `:load_environment_config` can be defined to run before it.
 
 * `load_active_support`: Requires `active_support/dependencies` which sets up the basis for Active Support. Optionally requires `active_support/all` if `config.active_support.bare` is un-truthful, which is the default.
 
-* `initialize_logger`: Initializes the logger (an `ActiveSupport::Logger` object) for the application and makes it accessible at `Rails.logger`, provided that no initializer inserted before this point has defined `Rails.logger`.
+* `initialize_logger`: Initializes the logger (an `ActiveSupport::Logger` object) for the application and makes it accessible at `Quails.logger`, provided that no initializer inserted before this point has defined `Quails.logger`.
 
-* `initialize_cache`: If `Rails.cache` isn't set yet, initializes the cache by referencing the value in `config.cache_store` and stores the outcome as `Rails.cache`. If this object responds to the `middleware` method, its middleware is inserted before `Rack::Runtime` in the middleware stack.
+* `initialize_cache`: If `Quails.cache` isn't set yet, initializes the cache by referencing the value in `config.cache_store` and stores the outcome as `Quails.cache`. If this object responds to the `middleware` method, its middleware is inserted before `Rack::Runtime` in the middleware stack.
 
 * `set_clear_dependencies_hook`: This initializer - which runs only if `cache_classes` is set to `false` - uses `ActionDispatch::Callbacks.after` to remove the constants which have been referenced during the request from the object space so that they will be reloaded during the following request.
 
@@ -1151,7 +1151,7 @@ Below is a comprehensive list of all the initializers found in Rails in the orde
 
 * `active_record.initialize_timezone`: Sets `ActiveRecord::Base.time_zone_aware_attributes` to `true`, as well as setting `ActiveRecord::Base.default_timezone` to UTC. When attributes are read from the database, they will be converted into the time zone specified by `Time.zone`.
 
-* `active_record.logger`: Sets `ActiveRecord::Base.logger` - if it's not already set - to `Rails.logger`.
+* `active_record.logger`: Sets `ActiveRecord::Base.logger` - if it's not already set - to `Quails.logger`.
 
 * `active_record.migration_error`: Configures middleware to check for pending migrations.
 
@@ -1170,11 +1170,11 @@ Below is a comprehensive list of all the initializers found in Rails in the orde
 * `active_record.add_watchable_files`: Adds `schema.rb` and `structure.sql` files to watchable files.
 
 * `active_job.logger`: Sets `ActiveJob::Base.logger` - if it's not already set -
-  to `Rails.logger`.
+  to `Quails.logger`.
 
 * `active_job.set_configs`: Sets up Active Job by using the settings in `config.active_job` by `send`'ing the method names as setters to `ActiveJob::Base` and passing the values through.
 
-* `action_mailer.logger`: Sets `ActionMailer::Base.logger` - if it's not already set - to `Rails.logger`.
+* `action_mailer.logger`: Sets `ActionMailer::Base.logger` - if it's not already set - to `Quails.logger`.
 
 * `action_mailer.set_configs`: Sets up Action Mailer by using the settings in `config.action_mailer` by `send`'ing the method names as setters to `ActionMailer::Base` and passing the values through.
 
@@ -1204,7 +1204,7 @@ Below is a comprehensive list of all the initializers found in Rails in the orde
 
 * `add_to_prepare_blocks`: The block for every `config.to_prepare` call in the application, a railtie or engine is added to the `to_prepare` callbacks for Action Dispatch which will be run per request in development, or before the first request in production.
 
-* `add_builtin_route`: If the application is running under the development environment then this will append the route for `rails/info/properties` to the application routes. This route provides the detailed information such as Rails and Ruby version for `public/index.html` in a default Rails application.
+* `add_builtin_route`: If the application is running under the development environment then this will append the route for `quails/info/properties` to the application routes. This route provides the detailed information such as Quails and Ruby version for `public/index.html` in a default Quails application.
 
 * `build_middleware_stack`: Builds the middleware stack for the application, returning an object which has a `call` method which takes a Rack environment object for the request.
 
@@ -1250,7 +1250,7 @@ NOTE. If you are running in a multi-threaded environment, there could be a chanc
 Custom configuration
 --------------------
 
-You can configure your own code through the Rails configuration object with
+You can configure your own code through the Quails configuration object with
 custom configuration under either the `config.x` namespace, or `config` directly.
 The key difference between these two is that you should be using `config.x` if you
 are defining _nested_ configuration (ex: `config.x.nested.nested.hi`), and just
@@ -1265,13 +1265,13 @@ are defining _nested_ configuration (ex: `config.x.nested.nested.hi`), and just
 These configuration points are then available through the configuration object:
 
   ```ruby
-  Rails.configuration.x.payment_processing.schedule # => :daily
-  Rails.configuration.x.payment_processing.retries  # => 3
-  Rails.configuration.x.payment_processing.not_set  # => nil
-  Rails.configuration.super_debugger                # => true
+  Quails.configuration.x.payment_processing.schedule # => :daily
+  Quails.configuration.x.payment_processing.retries  # => 3
+  Quails.configuration.x.payment_processing.not_set  # => nil
+  Quails.configuration.super_debugger                # => true
   ```
 
-You can also use `Rails::Application.config_for` to load whole configuration files:
+You can also use `Quails::Application.config_for` to load whole configuration files:
 
   ```ruby
   # config/payment.yml:
@@ -1288,14 +1288,14 @@ You can also use `Rails::Application.config_for` to load whole configuration fil
 
   # config/application.rb
   module MyApp
-    class Application < Rails::Application
+    class Application < Quails::Application
       config.payment = config_for(:payment)
     end
   end
   ```
 
   ```ruby
-  Rails.configuration.payment['merchant_id'] # => production_merchant_id or development_merchant_id
+  Quails.configuration.payment['merchant_id'] # => production_merchant_id or development_merchant_id
   ```
 
 Search Engines Indexing
@@ -1306,7 +1306,7 @@ on search sites like Google, Bing, Yahoo or Duck Duck Go. The robots that index
 these sites will first analyze the `http://your-site.com/robots.txt` file to
 know which pages it is allowed to index.
 
-Rails creates this file for you inside the `/public` folder. By default, it allows
+Quails creates this file for you inside the `/public` folder. By default, it allows
 search engines to index all pages of your application. If you want to block
 indexing on all pages of you application, use this:
 
@@ -1321,7 +1321,7 @@ it on the [official documentation](http://www.robotstxt.org/robotstxt.html).
 Evented File System Monitor
 ---------------------------
 
-If the [listen gem](https://github.com/guard/listen) is loaded Rails uses an
+If the [listen gem](https://github.com/guard/listen) is loaded Quails uses an
 evented file system monitor to detect changes when `config.cache_classes` is
 `false`:
 
@@ -1331,7 +1331,7 @@ group :development do
 end
 ```
 
-Otherwise, in every request Rails walks the application tree to check if
+Otherwise, in every request Quails walks the application tree to check if
 anything has changed.
 
 On Linux and macOS no additional gems are needed, but some are required

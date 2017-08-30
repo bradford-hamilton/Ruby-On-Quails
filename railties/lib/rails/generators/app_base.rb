@@ -3,20 +3,20 @@
 require "fileutils"
 require "digest/md5"
 require "active_support/core_ext/string/strip"
-require_relative "../version" unless defined?(Rails::VERSION)
+require_relative "../version" unless defined?(Quails::VERSION)
 require "open-uri"
 require "uri"
 require_relative "../generators"
 require "active_support/core_ext/array/extract_options"
 
-module Rails
+module Quails
   module Generators
     class AppBase < Base # :nodoc:
       DATABASES = %w( mysql postgresql sqlite3 oracle frontbase ibm_db sqlserver )
       JDBC_DATABASES = %w( jdbcmysql jdbcsqlite3 jdbcpostgresql jdbc )
       DATABASES.concat(JDBC_DATABASES)
 
-      attr_accessor :rails_template
+      attr_accessor :quails_template
       add_shebang_option!
 
       argument :app_path, type: :string
@@ -82,18 +82,18 @@ module Rails
                                           desc: "Skip system test files"
 
         class_option :dev,                type: :boolean, default: false,
-                                          desc: "Setup the #{name} with Gemfile pointing to your Rails checkout"
+                                          desc: "Setup the #{name} with Gemfile pointing to your Quails checkout"
 
         class_option :edge,               type: :boolean, default: false,
-                                          desc: "Setup the #{name} with Gemfile pointing to Rails repository"
+                                          desc: "Setup the #{name} with Gemfile pointing to Quails repository"
 
         class_option :rc,                 type: :string, default: nil,
-                                          desc: "Path to file containing extra configuration options for rails command"
+                                          desc: "Path to file containing extra configuration options for quails command"
 
         class_option :no_rc,              type: :boolean, default: false,
-                                          desc: "Skip loading of extra configuration options from .railsrc file"
+                                          desc: "Skip loading of extra configuration options from .quailsrc file"
 
-        class_option :help,               type: :boolean, aliases: "-h", group: :rails,
+        class_option :help,               type: :boolean, aliases: "-h", group: :quails,
                                           desc: "Show this help message and quit"
       end
 
@@ -123,7 +123,7 @@ module Rails
       end
 
       def gemfile_entries # :doc:
-        [rails_gemfile_entry,
+        [quails_gemfile_entry,
          database_gemfile_entry,
          webserver_gemfile_entry,
          assets_gemfile_entry,
@@ -160,15 +160,15 @@ module Rails
         FileUtils.cd(destination_root) unless options[:pretend]
       end
 
-      def apply_rails_template # :doc:
-        apply rails_template if rails_template
+      def apply_quails_template # :doc:
+        apply quails_template if quails_template
       rescue Thor::Error, LoadError, Errno::ENOENT => e
-        raise Error, "The template [#{rails_template}] could not be loaded. Error: #{e}"
+        raise Error, "The template [#{quails_template}] could not be loaded. Error: #{e}"
       end
 
       def set_default_accessors! # :doc:
         self.destination_root = File.expand_path(app_path, destination_root)
-        self.rails_template = \
+        self.quails_template = \
           case options[:template]
           when /^https?:\/\//
             options[:template]
@@ -240,26 +240,26 @@ module Rails
         end
       end
 
-      def rails_gemfile_entry
+      def quails_gemfile_entry
         dev_edge_common = [
-          GemfileEntry.github("arel", "rails/arel"),
+          GemfileEntry.github("arel", "quails/arel"),
         ]
         if options.dev?
           [
-            GemfileEntry.path("rails", Rails::Generators::RAILS_DEV_PATH)
+            GemfileEntry.path("quails", Quails::Generators::RAILS_DEV_PATH)
           ] + dev_edge_common
         elsif options.edge?
           [
-            GemfileEntry.github("rails", "rails/rails")
+            GemfileEntry.github("quails", "quails/quails")
           ] + dev_edge_common
         else
-          [GemfileEntry.version("rails",
-                            rails_version_specifier,
-                            "Bundle edge Rails instead: gem 'rails', github: 'rails/rails'")]
+          [GemfileEntry.version("quails",
+                            quails_version_specifier,
+                            "Bundle edge Quails instead: gem 'quails', github: 'quails/quails'")]
         end
       end
 
-      def rails_version_specifier(gem_version = Rails.gem_version)
+      def quails_version_specifier(gem_version = Quails.gem_version)
         if gem_version.segments.size == 3 || gem_version.release.segments.size == 3
           # ~> 1.2.3
           # ~> 1.2.3.pre4
@@ -302,7 +302,7 @@ module Rails
         return [] if options[:skip_sprockets]
 
         gems = []
-        gems << GemfileEntry.version("sass-rails", "~> 5.0",
+        gems << GemfileEntry.version("sass-quails", "~> 5.0",
                                      "Use SCSS for stylesheets")
 
         if !options[:skip_javascript]
@@ -317,17 +317,17 @@ module Rails
       def webpacker_gemfile_entry
         return [] unless options[:webpack]
 
-        comment = "Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker"
+        comment = "Transpile app-like JavaScript. Read more: https://github.com/quails/webpacker"
         GemfileEntry.new "webpacker", nil, comment
       end
 
       def jbuilder_gemfile_entry
-        comment = "Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder"
+        comment = "Build JSON APIs with ease. Read more: https://github.com/quails/jbuilder"
         GemfileEntry.new "jbuilder", "~> 2.5", comment, {}, options[:api]
       end
 
       def coffee_gemfile_entry
-        GemfileEntry.version "coffee-rails", "~> 4.2", "Use CoffeeScript for .coffee assets and views"
+        GemfileEntry.version "coffee-quails", "~> 4.2", "Use CoffeeScript for .coffee assets and views"
       end
 
       def javascript_gemfile_entry
@@ -347,7 +347,7 @@ module Rails
       end
 
       def javascript_runtime_gemfile_entry
-        comment = "See https://github.com/rails/execjs#readme for more supported runtimes"
+        comment = "See https://github.com/quails/execjs#readme for more supported runtimes"
         if defined?(JRUBY_VERSION)
           GemfileEntry.version "therubyrhino", nil, comment
         elsif RUBY_PLATFORM =~ /mingw|mswin/
@@ -377,7 +377,7 @@ module Rails
         say_status :run, "bundle #{command}"
 
         # We are going to shell out rather than invoking Bundler::CLI.new(command)
-        # because `rails new` loads the Thor gem and on the other hand bundler uses
+        # because `quails new` loads the Thor gem and on the other hand bundler uses
         # its own vendored Thor, which could be a different version. Running both
         # things in the same process is a recipe for a night with paracetamol.
         #
@@ -423,8 +423,8 @@ module Rails
 
       def run_webpack
         if !(webpack = options[:webpack]).nil?
-          rails_command "webpacker:install"
-          rails_command "webpacker:install:#{webpack}" unless webpack == "webpack"
+          quails_command "webpacker:install"
+          quails_command "webpacker:install:#{webpack}" unless webpack == "webpack"
         end
       end
 

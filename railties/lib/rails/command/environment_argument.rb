@@ -2,7 +2,7 @@
 
 require "active_support"
 
-module Rails
+module Quails
   module Command
     module EnvironmentArgument #:nodoc:
       extend ActiveSupport::Concern
@@ -21,13 +21,13 @@ module Rails
 
             ActiveSupport::Deprecation.warn "Passing the environment's name as a " \
                                             "regular argument is deprecated and "  \
-                                            "will be removed in the next Rails "   \
+                                            "will be removed in the next Quails "   \
                                             "version. Please, use the -e option "  \
                                             "instead."
           elsif options[:environment]
             self.options = options.merge(environment: acceptable_environment(options[:environment]))
           else
-            self.options = options.merge(environment: Rails::Command.environment)
+            self.options = options.merge(environment: Quails::Command.environment)
           end
         end
 

@@ -398,7 +398,7 @@ class ErrorsTest < ActiveModel::TestCase
     assert_equal errors.details, serialized.details
   end
 
-  test "errors are backward compatible with the Rails 4.2 format" do
+  test "errors are backward compatible with the Quails 4.2 format" do
     yaml = <<-CODE.strip_heredoc
     --- !ruby/object:ActiveModel::Errors
     base: &1 !ruby/object:ErrorsTest::Person

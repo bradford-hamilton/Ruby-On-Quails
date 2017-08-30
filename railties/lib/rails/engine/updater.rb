@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 require_relative "../generators"
-require_relative "../generators/rails/plugin/plugin_generator"
+require_relative "../generators/quails/plugin/plugin_generator"
 
-module Rails
+module Quails
   class Engine
     class Updater
       class << self
         def generator
-          @generator ||= Rails::Generators::PluginGenerator.new ["plugin"],
+          @generator ||= Quails::Generators::PluginGenerator.new ["plugin"],
             { engine: true }, { destination_root: ENGINE_ROOT }
         end
 

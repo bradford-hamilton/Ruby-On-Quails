@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   module Generators
     class AssetsGenerator < NamedBase # :nodoc:
       class_option :javascripts, type: :boolean, desc: "Generate JavaScripts"

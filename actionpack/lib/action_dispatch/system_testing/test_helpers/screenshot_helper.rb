@@ -48,7 +48,7 @@ module ActionDispatch
           end
 
           def absolute_image_path
-            Rails.root.join("tmp/screenshots/#{image_name}.png")
+            Quails.root.join("tmp/screenshots/#{image_name}.png")
           end
 
           def save_image

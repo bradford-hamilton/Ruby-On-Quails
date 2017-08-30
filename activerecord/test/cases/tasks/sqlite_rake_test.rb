@@ -30,11 +30,11 @@ if current_adapter?(:SQLite3Adapter)
       def test_db_checks_database_exists
         File.expects(:exist?).with(@database).returns(false)
 
-        ActiveRecord::Tasks::DatabaseTasks.create @configuration, "/rails/root"
+        ActiveRecord::Tasks::DatabaseTasks.create @configuration, "/quails/root"
       end
 
       def test_when_db_created_successfully_outputs_info_to_stdout
-        ActiveRecord::Tasks::DatabaseTasks.create @configuration, "/rails/root"
+        ActiveRecord::Tasks::DatabaseTasks.create @configuration, "/quails/root"
 
         assert_equal "Created database '#{@database}'\n", $stdout.string
       end
@@ -42,7 +42,7 @@ if current_adapter?(:SQLite3Adapter)
       def test_db_create_when_file_exists
         File.stubs(:exist?).returns(true)
 
-        ActiveRecord::Tasks::DatabaseTasks.create @configuration, "/rails/root"
+        ActiveRecord::Tasks::DatabaseTasks.create @configuration, "/quails/root"
 
         assert_equal "Database '#{@database}' already exists\n", $stderr.string
       end
@@ -53,13 +53,13 @@ if current_adapter?(:SQLite3Adapter)
 
         ActiveRecord::Base.expects(:establish_connection).never
 
-        ActiveRecord::Tasks::DatabaseTasks.create @configuration, "/rails/root"
+        ActiveRecord::Tasks::DatabaseTasks.create @configuration, "/quails/root"
       end
 
       def test_db_create_establishes_a_connection
         ActiveRecord::Base.expects(:establish_connection).with(@configuration)
 
-        ActiveRecord::Tasks::DatabaseTasks.create @configuration, "/rails/root"
+        ActiveRecord::Tasks::DatabaseTasks.create @configuration, "/quails/root"
       end
 
       def test_db_create_with_error_prints_message
@@ -69,7 +69,7 @@ if current_adapter?(:SQLite3Adapter)
         $stderr.expects(:puts).
           with("Couldn't create database for #{@configuration.inspect}")
 
-        assert_raises(Exception) { ActiveRecord::Tasks::DatabaseTasks.create @configuration, "/rails/root" }
+        assert_raises(Exception) { ActiveRecord::Tasks::DatabaseTasks.create @configuration, "/quails/root" }
       end
     end
 
@@ -97,7 +97,7 @@ if current_adapter?(:SQLite3Adapter)
       def test_creates_path_from_database
         Pathname.expects(:new).with(@database).returns(@path)
 
-        ActiveRecord::Tasks::DatabaseTasks.drop @configuration, "/rails/root"
+        ActiveRecord::Tasks::DatabaseTasks.drop @configuration, "/quails/root"
       end
 
       def test_removes_file_with_absolute_path
@@ -106,16 +106,16 @@ if current_adapter?(:SQLite3Adapter)
 
         FileUtils.expects(:rm).with("/absolute/path")
 
-        ActiveRecord::Tasks::DatabaseTasks.drop @configuration, "/rails/root"
+        ActiveRecord::Tasks::DatabaseTasks.drop @configuration, "/quails/root"
       end
 
       def test_generates_absolute_path_with_given_root
         @path.stubs(:absolute?).returns(false)
 
-        File.expects(:join).with("/rails/root", @path).
+        File.expects(:join).with("/quails/root", @path).
           returns("/former/relative/path")
 
-        ActiveRecord::Tasks::DatabaseTasks.drop @configuration, "/rails/root"
+        ActiveRecord::Tasks::DatabaseTasks.drop @configuration, "/quails/root"
       end
 
       def test_removes_file_with_relative_path
@@ -124,11 +124,11 @@ if current_adapter?(:SQLite3Adapter)
 
         FileUtils.expects(:rm).with("/former/relative/path")
 
-        ActiveRecord::Tasks::DatabaseTasks.drop @configuration, "/rails/root"
+        ActiveRecord::Tasks::DatabaseTasks.drop @configuration, "/quails/root"
       end
 
       def test_when_db_dropped_successfully_outputs_info_to_stdout
-        ActiveRecord::Tasks::DatabaseTasks.drop @configuration, "/rails/root"
+        ActiveRecord::Tasks::DatabaseTasks.drop @configuration, "/quails/root"
 
         assert_equal "Dropped database '#{@database}'\n", $stdout.string
       end
@@ -150,7 +150,7 @@ if current_adapter?(:SQLite3Adapter)
 
       def test_db_retrieves_charset
         @connection.expects(:encoding)
-        ActiveRecord::Tasks::DatabaseTasks.charset @configuration, "/rails/root"
+        ActiveRecord::Tasks::DatabaseTasks.charset @configuration, "/quails/root"
       end
     end
 
@@ -170,7 +170,7 @@ if current_adapter?(:SQLite3Adapter)
 
       def test_db_retrieves_collation
         assert_raise NoMethodError do
-          ActiveRecord::Tasks::DatabaseTasks.collation @configuration, "/rails/root"
+          ActiveRecord::Tasks::DatabaseTasks.collation @configuration, "/quails/root"
         end
       end
     end
@@ -191,7 +191,7 @@ if current_adapter?(:SQLite3Adapter)
         dbfile   = @database
         filename = "awesome-file.sql"
 
-        ActiveRecord::Tasks::DatabaseTasks.structure_dump @configuration, filename, "/rails/root"
+        ActiveRecord::Tasks::DatabaseTasks.structure_dump @configuration, filename, "/quails/root"
         assert File.exist?(dbfile)
         assert File.exist?(filename)
         assert_match(/CREATE TABLE foo/, File.read(filename))
@@ -206,7 +206,7 @@ if current_adapter?(:SQLite3Adapter)
         filename = "awesome-file.sql"
         ActiveRecord::SchemaDumper.expects(:ignore_tables).returns(["foo"])
 
-        ActiveRecord::Tasks::DatabaseTasks.structure_dump(@configuration, filename, "/rails/root")
+        ActiveRecord::Tasks::DatabaseTasks.structure_dump(@configuration, filename, "/quails/root")
         assert File.exist?(dbfile)
         assert File.exist?(filename)
         assert_match(/bar/, File.read(filename))
@@ -223,7 +223,7 @@ if current_adapter?(:SQLite3Adapter)
 
         e = assert_raise(RuntimeError) do
           with_structure_dump_flags(["--noop"]) do
-            quietly { ActiveRecord::Tasks::DatabaseTasks.structure_dump(@configuration, filename, "/rails/root") }
+            quietly { ActiveRecord::Tasks::DatabaseTasks.structure_dump(@configuration, filename, "/quails/root") }
           end
         end
         assert_match("failed to execute:", e.message)
@@ -256,7 +256,7 @@ if current_adapter?(:SQLite3Adapter)
         filename = "awesome-file.sql"
 
         open(filename, "w") { |f| f.puts("select datetime('now', 'localtime');") }
-        ActiveRecord::Tasks::DatabaseTasks.structure_load @configuration, filename, "/rails/root"
+        ActiveRecord::Tasks::DatabaseTasks.structure_load @configuration, filename, "/quails/root"
         assert File.exist?(dbfile)
       ensure
         FileUtils.rm_f(filename)

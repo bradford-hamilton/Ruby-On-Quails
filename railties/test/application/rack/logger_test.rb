@@ -27,7 +27,7 @@ module ApplicationTests
       end
 
       def logs
-        @logs ||= Rails.logger.logged(:info).join("\n")
+        @logs ||= Quails.logger.logged(:info).join("\n")
       end
 
       test "logger logs proper HTTP GET verb and path" do

@@ -1,9 +1,9 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-Ruby on Rails 4.1 Release Notes
+Ruby on Quails 4.1 Release Notes
 ===============================
 
-Highlights in Rails 4.1:
+Highlights in Quails 4.1:
 
 * Spring application preloader
 * `config/secrets.yml`
@@ -12,20 +12,20 @@ Highlights in Rails 4.1:
 
 These release notes cover only the major changes. To learn about various bug
 fixes and changes, please refer to the change logs or check out the [list of
-commits](https://github.com/rails/rails/commits/4-1-stable) in the main Rails
+commits](https://github.com/quails/quails/commits/4-1-stable) in the main Quails
 repository on GitHub.
 
 --------------------------------------------------------------------------------
 
-Upgrading to Rails 4.1
+Upgrading to Quails 4.1
 ----------------------
 
 If you're upgrading an existing application, it's a great idea to have good test
-coverage before going in. You should also first upgrade to Rails 4.0 in case you
+coverage before going in. You should also first upgrade to Quails 4.0 in case you
 haven't and make sure your application still runs as expected before attempting
-an update to Rails 4.1. A list of things to watch out for when upgrading is
+an update to Quails 4.1. A list of things to watch out for when upgrading is
 available in the
-[Upgrading Ruby on Rails](upgrading_ruby_on_rails.html#upgrading-from-rails-4-0-to-rails-4-1)
+[Upgrading Ruby on Quails](upgrading_ruby_on_quails.html#upgrading-from-quails-4-0-to-quails-4-1)
 guide.
 
 
@@ -34,12 +34,12 @@ Major Features
 
 ### Spring Application Preloader
 
-Spring is a Rails application preloader. It speeds up development by keeping
+Spring is a Quails application preloader. It speeds up development by keeping
 your application running in the background so you don't need to boot it every
 time you run a test, rake task or migration.
 
-New Rails 4.1 applications will ship with "springified" binstubs. This means
-that `bin/rails` and `bin/rake` will automatically take advantage of preloaded
+New Quails 4.1 applications will ship with "springified" binstubs. This means
+that `bin/quails` and `bin/rake` will automatically take advantage of preloaded
 spring environments.
 
 **Running rake tasks:**
@@ -48,10 +48,10 @@ spring environments.
 bin/rake test:models
 ```
 
-**Running a Rails command:**
+**Running a Quails command:**
 
 ```
-bin/rails console
+bin/quails console
 ```
 
 **Spring introspection:**
@@ -66,19 +66,19 @@ Spring is running:
 ```
 
 Have a look at the
-[Spring README](https://github.com/rails/spring/blob/master/README.md) to
+[Spring README](https://github.com/quails/spring/blob/master/README.md) to
 see all available features.
 
-See the [Upgrading Ruby on Rails](upgrading_ruby_on_rails.html#spring)
+See the [Upgrading Ruby on Quails](upgrading_ruby_on_quails.html#spring)
 guide on how to migrate existing applications to use this feature.
 
 ### `config/secrets.yml`
 
-Rails 4.1 generates a new `secrets.yml` file in the `config` folder. By default,
+Quails 4.1 generates a new `secrets.yml` file in the `config` folder. By default,
 this file contains the application's `secret_key_base`, but it could also be
 used to store other secrets such as access keys for external APIs.
 
-The secrets added to this file are accessible via `Rails.application.secrets`.
+The secrets added to this file are accessible via `Quails.application.secrets`.
 For example, with the following `config/secrets.yml`:
 
 ```yaml
@@ -87,10 +87,10 @@ development:
   some_api_key: SOMEKEY
 ```
 
-`Rails.application.secrets.some_api_key` returns `SOMEKEY` in the development
+`Quails.application.secrets.some_api_key` returns `SOMEKEY` in the development
 environment.
 
-See the [Upgrading Ruby on Rails](upgrading_ruby_on_rails.html#config-secrets-yml)
+See the [Upgrading Ruby on Quails](upgrading_ruby_on_quails.html#config-secrets-yml)
 guide on how to migrate existing applications to use this feature.
 
 ### Action Pack Variants
@@ -152,14 +152,14 @@ class NotifierPreview < ActionMailer::Preview
 end
 ```
 
-The preview is available in http://localhost:3000/rails/mailers/notifier/welcome,
-and a list of them in http://localhost:3000/rails/mailers.
+The preview is available in http://localhost:3000/quails/mailers/notifier/welcome,
+and a list of them in http://localhost:3000/quails/mailers.
 
 By default, these preview classes live in `test/mailers/previews`.
 This can be configured using the `preview_path` option.
 
 See its
-[documentation](http://api.rubyonrails.org/v4.1.0/classes/ActionMailer/Base.html#class-ActionMailer::Base-label-Previewing+emails)
+[documentation](http://api.rubyonquails.org/v4.1.0/classes/ActionMailer/Base.html#class-ActionMailer::Base-label-Previewing+emails)
 for a detailed write up.
 
 ### Active Record enums
@@ -182,7 +182,7 @@ Conversation.statuses # => { "active" => 0, "archived" => 1 }
 ```
 
 See its
-[documentation](http://api.rubyonrails.org/v4.1.0/classes/ActiveRecord/Enum.html)
+[documentation](http://api.rubyonquails.org/v4.1.0/classes/ActiveRecord/Enum.html)
 for a detailed write up.
 
 ### Message Verifiers
@@ -191,15 +191,15 @@ Message verifiers can be used to generate and verify signed messages. This can
 be useful to safely transport sensitive data like remember-me tokens and
 friends.
 
-The method `Rails.application.message_verifier` returns a new message verifier
+The method `Quails.application.message_verifier` returns a new message verifier
 that signs messages with a key derived from secret_key_base and the given
 message verifier name:
 
 ```ruby
-signed_token = Rails.application.message_verifier(:remember_me).generate(token)
-Rails.application.message_verifier(:remember_me).verify(signed_token) # => token
+signed_token = Quails.application.message_verifier(:remember_me).generate(token)
+Quails.application.message_verifier(:remember_me).verify(signed_token) # => token
 
-Rails.application.message_verifier(:remember_me).verify(tampered_token)
+Quails.application.message_verifier(:remember_me).verify(tampered_token)
 # raises ActiveSupport::MessageVerifier::InvalidSignature
 ```
 
@@ -231,7 +231,7 @@ extending it with `ActiveSupport::Concern`, then mixing it in to the
 `Todo` class.
 
 See its
-[documentation](http://api.rubyonrails.org/v4.1.0/classes/Module/Concerning.html)
+[documentation](http://api.rubyonquails.org/v4.1.0/classes/Module/Concerning.html)
 for a detailed write up and the intended use cases.
 
 ### CSRF protection from remote `<script>` tags
@@ -250,16 +250,16 @@ Railties
 --------
 
 Please refer to the
-[Changelog](https://github.com/rails/rails/blob/4-1-stable/railties/CHANGELOG.md)
+[Changelog](https://github.com/quails/quails/blob/4-1-stable/railties/CHANGELOG.md)
 for detailed changes.
 
 ### Removals
 
 * Removed `update:application_controller` rake task.
 
-* Removed deprecated `Rails.application.railties.engines`.
+* Removed deprecated `Quails.application.railties.engines`.
 
-* Removed deprecated `threadsafe!` from Rails Config.
+* Removed deprecated `threadsafe!` from Quails Config.
 
 * Removed deprecated `ActiveRecord::Generators::ActiveModel#update_attributes` in
   favor of `ActiveRecord::Generators::ActiveModel#update`.
@@ -272,42 +272,42 @@ for detailed changes.
 ### Notable changes
 
 * The [Spring application
-  preloader](https://github.com/rails/spring) is now installed
+  preloader](https://github.com/quails/spring) is now installed
   by default for new applications. It uses the development group of
   the Gemfile, so will not be installed in
-  production. ([Pull Request](https://github.com/rails/rails/pull/12958))
+  production. ([Pull Request](https://github.com/quails/quails/pull/12958))
 
 * `BACKTRACE` environment variable to show unfiltered backtraces for test
-  failures. ([Commit](https://github.com/rails/rails/commit/84eac5dab8b0fe9ee20b51250e52ad7bfea36553))
+  failures. ([Commit](https://github.com/quails/quails/commit/84eac5dab8b0fe9ee20b51250e52ad7bfea36553))
 
 * Exposed `MiddlewareStack#unshift` to environment
-  configuration. ([Pull Request](https://github.com/rails/rails/pull/12479))
+  configuration. ([Pull Request](https://github.com/quails/quails/pull/12479))
 
 * Added `Application#message_verifier` method to return a message
-  verifier. ([Pull Request](https://github.com/rails/rails/pull/12995))
+  verifier. ([Pull Request](https://github.com/quails/quails/pull/12995))
 
 * The `test_help.rb` file which is required by the default generated test
   helper will automatically keep your test database up-to-date with
   `db/schema.rb` (or `db/structure.sql`). It raises an error if
   reloading the schema does not resolve all pending migrations. Opt out
   with `config.active_record.maintain_test_schema = false`. ([Pull
-  Request](https://github.com/rails/rails/pull/13528))
+  Request](https://github.com/quails/quails/pull/13528))
 
-* Introduce `Rails.gem_version` as a convenience method to return
-  `Gem::Version.new(Rails.version)`, suggesting a more reliable way to perform
-  version comparison. ([Pull Request](https://github.com/rails/rails/pull/14103))
+* Introduce `Quails.gem_version` as a convenience method to return
+  `Gem::Version.new(Quails.version)`, suggesting a more reliable way to perform
+  version comparison. ([Pull Request](https://github.com/quails/quails/pull/14103))
 
 
 Action Pack
 -----------
 
 Please refer to the
-[Changelog](https://github.com/rails/rails/blob/4-1-stable/actionpack/CHANGELOG.md)
+[Changelog](https://github.com/quails/quails/blob/4-1-stable/actionpack/CHANGELOG.md)
 for detailed changes.
 
 ### Removals
 
-* Removed deprecated Rails application fallback for integration testing, set
+* Removed deprecated Quails application fallback for integration testing, set
   `ActionDispatch.test_app` instead.
 
 * Removed deprecated `page_cache_extension` config.
@@ -332,58 +332,58 @@ for detailed changes.
 * `protect_from_forgery` also prevents cross-origin `<script>` tags.
   Update your tests to use `xhr :get, :foo, format: :js` instead of
   `get :foo, format: :js`.
-  ([Pull Request](https://github.com/rails/rails/pull/13345))
+  ([Pull Request](https://github.com/quails/quails/pull/13345))
 
 * `#url_for` takes a hash with options inside an
-  array. ([Pull Request](https://github.com/rails/rails/pull/9599))
+  array. ([Pull Request](https://github.com/quails/quails/pull/9599))
 
 * Added `session#fetch` method fetch behaves similarly to
   [Hash#fetch](http://www.ruby-doc.org/core-1.9.3/Hash.html#method-i-fetch),
   with the exception that the returned value is always saved into the
-  session. ([Pull Request](https://github.com/rails/rails/pull/12692))
+  session. ([Pull Request](https://github.com/quails/quails/pull/12692))
 
 * Separated Action View completely from Action
-  Pack. ([Pull Request](https://github.com/rails/rails/pull/11032))
+  Pack. ([Pull Request](https://github.com/quails/quails/pull/11032))
 
 * Log which keys were affected by deep
-  munge. ([Pull Request](https://github.com/rails/rails/pull/13813))
+  munge. ([Pull Request](https://github.com/quails/quails/pull/13813))
 
 * New config option `config.action_dispatch.perform_deep_munge` to opt out of
   params "deep munging" that was used to address security vulnerability
-  CVE-2013-0155. ([Pull Request](https://github.com/rails/rails/pull/13188))
+  CVE-2013-0155. ([Pull Request](https://github.com/quails/quails/pull/13188))
 
 * New config option `config.action_dispatch.cookies_serializer` for specifying a
   serializer for the signed and encrypted cookie jars. (Pull Requests
-  [1](https://github.com/rails/rails/pull/13692),
-  [2](https://github.com/rails/rails/pull/13945) /
-  [More Details](upgrading_ruby_on_rails.html#cookies-serializer))
+  [1](https://github.com/quails/quails/pull/13692),
+  [2](https://github.com/quails/quails/pull/13945) /
+  [More Details](upgrading_ruby_on_quails.html#cookies-serializer))
 
 * Added `render :plain`, `render :html` and `render
-  :body`. ([Pull Request](https://github.com/rails/rails/pull/14062) /
-  [More Details](upgrading_ruby_on_rails.html#rendering-content-from-string))
+  :body`. ([Pull Request](https://github.com/quails/quails/pull/14062) /
+  [More Details](upgrading_ruby_on_quails.html#rendering-content-from-string))
 
 
 Action Mailer
 -------------
 
 Please refer to the
-[Changelog](https://github.com/rails/rails/blob/4-1-stable/actionmailer/CHANGELOG.md)
+[Changelog](https://github.com/quails/quails/blob/4-1-stable/actionmailer/CHANGELOG.md)
 for detailed changes.
 
 ### Notable changes
 
 * Added mailer previews feature based on 37 Signals mail_view
-  gem. ([Commit](https://github.com/rails/rails/commit/d6dec7fcb6b8fddf8c170182d4fe64ecfc7b2261))
+  gem. ([Commit](https://github.com/quails/quails/commit/d6dec7fcb6b8fddf8c170182d4fe64ecfc7b2261))
 
 * Instrument the generation of Action Mailer messages. The time it takes to
-  generate a message is written to the log. ([Pull Request](https://github.com/rails/rails/pull/12556))
+  generate a message is written to the log. ([Pull Request](https://github.com/quails/quails/pull/12556))
 
 
 Active Record
 -------------
 
 Please refer to the
-[Changelog](https://github.com/rails/rails/blob/4-1-stable/activerecord/CHANGELOG.md)
+[Changelog](https://github.com/quails/quails/blob/4-1-stable/activerecord/CHANGELOG.md)
 for detailed changes.
 
 ### Removals
@@ -414,9 +414,9 @@ for detailed changes.
 
 * Removed deprecated `SchemaStatements#distinct`.
 
-* Moved deprecated `ActiveRecord::TestCase` into the Rails test
+* Moved deprecated `ActiveRecord::TestCase` into the Quails test
   suite. The class is no longer public and is only used for internal
-  Rails tests.
+  Quails tests.
 
 * Removed support for deprecated option `:restrict` for `:dependent`
   in associations.
@@ -443,27 +443,27 @@ for detailed changes.
 * Remove implicit join references that were deprecated in 4.0.
 
 * Removed `activerecord-deprecated_finders` as a dependency.
-  Please see [the gem README](https://github.com/rails/activerecord-deprecated_finders#active-record-deprecated-finders)
+  Please see [the gem README](https://github.com/quails/activerecord-deprecated_finders#active-record-deprecated-finders)
   for more info.
 
 * Removed usage of `implicit_readonly`. Please use `readonly` method
   explicitly to mark records as
-  `readonly`. ([Pull Request](https://github.com/rails/rails/pull/10769))
+  `readonly`. ([Pull Request](https://github.com/quails/quails/pull/10769))
 
 ### Deprecations
 
 * Deprecated `quoted_locking_column` method, which isn't used anywhere.
 
 * Deprecated `ConnectionAdapters::SchemaStatements#distinct`,
-  as it is no longer used by internals. ([Pull Request](https://github.com/rails/rails/pull/10556))
+  as it is no longer used by internals. ([Pull Request](https://github.com/quails/quails/pull/10556))
 
 * Deprecated `rake db:test:*` tasks as the test database is now
   automatically maintained. See railties release notes. ([Pull
-  Request](https://github.com/rails/rails/pull/13528))
+  Request](https://github.com/quails/quails/pull/13528))
 
 * Deprecate unused `ActiveRecord::Base.symbolized_base_class`
   and `ActiveRecord::Base.symbolized_sti_name` without
-  replacement. [Commit](https://github.com/rails/rails/commit/97e7ca48c139ea5cce2fa9b4be631946252a1ebd)
+  replacement. [Commit](https://github.com/quails/quails/commit/97e7ca48c139ea5cce2fa9b4be631946252a1ebd)
 
 ### Notable changes
 
@@ -471,109 +471,109 @@ for detailed changes.
 
   Before this change when you defined a `default_scope` in a model
   it was overridden by chained conditions in the same field. Now it
-  is merged like any other scope. [More Details](upgrading_ruby_on_rails.html#changes-on-default-scopes).
+  is merged like any other scope. [More Details](upgrading_ruby_on_quails.html#changes-on-default-scopes).
 
 * Added `ActiveRecord::Base.to_param` for convenient "pretty" URLs derived from
   a model's attribute or
-  method. ([Pull Request](https://github.com/rails/rails/pull/12891))
+  method. ([Pull Request](https://github.com/quails/quails/pull/12891))
 
 * Added `ActiveRecord::Base.no_touching`, which allows ignoring touch on
-  models. ([Pull Request](https://github.com/rails/rails/pull/12772))
+  models. ([Pull Request](https://github.com/quails/quails/pull/12772))
 
 * Unify boolean type casting for `MysqlAdapter` and `Mysql2Adapter`.
-  `type_cast` will return `1` for `true` and `0` for `false`. ([Pull Request](https://github.com/rails/rails/pull/12425))
+  `type_cast` will return `1` for `true` and `0` for `false`. ([Pull Request](https://github.com/quails/quails/pull/12425))
 
 * `.unscope` now removes conditions specified in
-  `default_scope`. ([Commit](https://github.com/rails/rails/commit/94924dc32baf78f13e289172534c2e71c9c8cade))
+  `default_scope`. ([Commit](https://github.com/quails/quails/commit/94924dc32baf78f13e289172534c2e71c9c8cade))
 
 * Added `ActiveRecord::QueryMethods#rewhere` which will overwrite an existing,
-  named where condition. ([Commit](https://github.com/rails/rails/commit/f950b2699f97749ef706c6939a84dfc85f0b05f2))
+  named where condition. ([Commit](https://github.com/quails/quails/commit/f950b2699f97749ef706c6939a84dfc85f0b05f2))
 
 * Extended `ActiveRecord::Base#cache_key` to take an optional list of timestamp
-  attributes of which the highest will be used. ([Commit](https://github.com/rails/rails/commit/e94e97ca796c0759d8fcb8f946a3bbc60252d329))
+  attributes of which the highest will be used. ([Commit](https://github.com/quails/quails/commit/e94e97ca796c0759d8fcb8f946a3bbc60252d329))
 
 * Added `ActiveRecord::Base#enum` for declaring enum attributes where the values
   map to integers in the database, but can be queried by
-  name. ([Commit](https://github.com/rails/rails/commit/db41eb8a6ea88b854bf5cd11070ea4245e1639c5))
+  name. ([Commit](https://github.com/quails/quails/commit/db41eb8a6ea88b854bf5cd11070ea4245e1639c5))
 
 * Type cast json values on write, so that the value is consistent with reading
-  from the database. ([Pull Request](https://github.com/rails/rails/pull/12643))
+  from the database. ([Pull Request](https://github.com/quails/quails/pull/12643))
 
 * Type cast hstore values on write, so that the value is consistent
-  with reading from the database. ([Commit](https://github.com/rails/rails/commit/5ac2341fab689344991b2a4817bd2bc8b3edac9d))
+  with reading from the database. ([Commit](https://github.com/quails/quails/commit/5ac2341fab689344991b2a4817bd2bc8b3edac9d))
 
 * Make `next_migration_number` accessible for third party
-  generators. ([Pull Request](https://github.com/rails/rails/pull/12407))
+  generators. ([Pull Request](https://github.com/quails/quails/pull/12407))
 
 * Calling `update_attributes` will now throw an `ArgumentError` whenever it
   gets a `nil` argument. More specifically, it will throw an error if the
   argument that it gets passed does not respond to to
-  `stringify_keys`. ([Pull Request](https://github.com/rails/rails/pull/9860))
+  `stringify_keys`. ([Pull Request](https://github.com/quails/quails/pull/9860))
 
 * `CollectionAssociation#first`/`#last` (e.g. `has_many`) use a `LIMIT`ed
   query to fetch results rather than loading the entire
-  collection. ([Pull Request](https://github.com/rails/rails/pull/12137))
+  collection. ([Pull Request](https://github.com/quails/quails/pull/12137))
 
 * `inspect` on Active Record model classes does not initiate a new
   connection. This means that calling `inspect`, when the database is missing,
-  will no longer raise an exception. ([Pull Request](https://github.com/rails/rails/pull/11014))
+  will no longer raise an exception. ([Pull Request](https://github.com/quails/quails/pull/11014))
 
 * Removed column restrictions for `count`, let the database raise if the SQL is
-  invalid. ([Pull Request](https://github.com/rails/rails/pull/10710))
+  invalid. ([Pull Request](https://github.com/quails/quails/pull/10710))
 
-* Rails now automatically detects inverse associations. If you do not set the
+* Quails now automatically detects inverse associations. If you do not set the
   `:inverse_of` option on the association, then Active Record will guess the
-  inverse association based on heuristics. ([Pull Request](https://github.com/rails/rails/pull/10886))
+  inverse association based on heuristics. ([Pull Request](https://github.com/quails/quails/pull/10886))
 
 * Handle aliased attributes in ActiveRecord::Relation. When using symbol keys,
   ActiveRecord will now translate aliased attribute names to the actual column
-  name used in the database. ([Pull Request](https://github.com/rails/rails/pull/7839))
+  name used in the database. ([Pull Request](https://github.com/quails/quails/pull/7839))
 
 * The ERB in fixture files is no longer evaluated in the context of the main
   object. Helper methods used by multiple fixtures should be defined on modules
-  included in `ActiveRecord::FixtureSet.context_class`. ([Pull Request](https://github.com/rails/rails/pull/13022))
+  included in `ActiveRecord::FixtureSet.context_class`. ([Pull Request](https://github.com/quails/quails/pull/13022))
 
 * Don't create or drop the test database if RAILS_ENV is specified
-  explicitly. ([Pull Request](https://github.com/rails/rails/pull/13629))
+  explicitly. ([Pull Request](https://github.com/quails/quails/pull/13629))
 
 * `Relation` no longer has mutator methods like `#map!` and `#delete_if`. Convert
-  to an `Array` by calling `#to_a` before using these methods. ([Pull Request](https://github.com/rails/rails/pull/13314))
+  to an `Array` by calling `#to_a` before using these methods. ([Pull Request](https://github.com/quails/quails/pull/13314))
 
 * `find_in_batches`, `find_each`, `Result#each` and `Enumerable#index_by` now
   return an `Enumerator` that can calculate its
-  size. ([Pull Request](https://github.com/rails/rails/pull/13938))
+  size. ([Pull Request](https://github.com/quails/quails/pull/13938))
 
 * `scope`, `enum` and Associations now raise on "dangerous" name
-  conflicts. ([Pull Request](https://github.com/rails/rails/pull/13450),
-  [Pull Request](https://github.com/rails/rails/pull/13896))
+  conflicts. ([Pull Request](https://github.com/quails/quails/pull/13450),
+  [Pull Request](https://github.com/quails/quails/pull/13896))
 
 * `second` through `fifth` methods act like the `first`
-  finder. ([Pull Request](https://github.com/rails/rails/pull/13757))
+  finder. ([Pull Request](https://github.com/quails/quails/pull/13757))
 
 * Make `touch` fire the `after_commit` and `after_rollback`
-  callbacks. ([Pull Request](https://github.com/rails/rails/pull/12031))
+  callbacks. ([Pull Request](https://github.com/quails/quails/pull/12031))
 
 * Enable partial indexes for `sqlite >= 3.8.0`.
-  ([Pull Request](https://github.com/rails/rails/pull/13350))
+  ([Pull Request](https://github.com/quails/quails/pull/13350))
 
 * Make `change_column_null`
-  revertible. ([Commit](https://github.com/rails/rails/commit/724509a9d5322ff502aefa90dd282ba33a281a96))
+  revertible. ([Commit](https://github.com/quails/quails/commit/724509a9d5322ff502aefa90dd282ba33a281a96))
 
 * Added a flag to disable schema dump after migration. This is set to `false`
   by default in the production environment for new applications.
-  ([Pull Request](https://github.com/rails/rails/pull/13948))
+  ([Pull Request](https://github.com/quails/quails/pull/13948))
 
 Active Model
 ------------
 
 Please refer to the
-[Changelog](https://github.com/rails/rails/blob/4-1-stable/activemodel/CHANGELOG.md)
+[Changelog](https://github.com/quails/quails/blob/4-1-stable/activemodel/CHANGELOG.md)
 for detailed changes.
 
 ### Deprecations
 
 * Deprecate `Validator#setup`. This should be done manually now in the
-  validator's constructor. ([Commit](https://github.com/rails/rails/commit/7d84c3a2f7ede0e8d04540e9c0640de7378e9b3a))
+  validator's constructor. ([Commit](https://github.com/quails/quails/commit/7d84c3a2f7ede0e8d04540e9c0640de7378e9b3a))
 
 ### Notable changes
 
@@ -581,31 +581,31 @@ for detailed changes.
   `ActiveModel::Dirty` that control changes state.
 
 * Ability to specify multiple contexts when defining a
-  validation. ([Pull Request](https://github.com/rails/rails/pull/13754))
+  validation. ([Pull Request](https://github.com/quails/quails/pull/13754))
 
 * `attribute_changed?` now accepts a hash to check if the attribute was changed
   `:from` and/or `:to` a given
-  value. ([Pull Request](https://github.com/rails/rails/pull/13131))
+  value. ([Pull Request](https://github.com/quails/quails/pull/13131))
 
 
 Active Support
 --------------
 
 Please refer to the
-[Changelog](https://github.com/rails/rails/blob/4-1-stable/activesupport/CHANGELOG.md)
+[Changelog](https://github.com/quails/quails/blob/4-1-stable/activesupport/CHANGELOG.md)
 for detailed changes.
 
 
 ### Removals
 
 * Removed `MultiJSON` dependency. As a result, `ActiveSupport::JSON.decode`
-  no longer accepts an options hash for `MultiJSON`. ([Pull Request](https://github.com/rails/rails/pull/10576) / [More Details](upgrading_ruby_on_rails.html#changes-in-json-handling))
+  no longer accepts an options hash for `MultiJSON`. ([Pull Request](https://github.com/quails/quails/pull/10576) / [More Details](upgrading_ruby_on_quails.html#changes-in-json-handling))
 
 * Removed support for the `encode_json` hook used for encoding custom objects into
-  JSON. This feature has been extracted into the [activesupport-json_encoder](https://github.com/rails/activesupport-json_encoder)
+  JSON. This feature has been extracted into the [activesupport-json_encoder](https://github.com/quails/activesupport-json_encoder)
   gem.
-  ([Related Pull Request](https://github.com/rails/rails/pull/12183) /
-  [More Details](upgrading_ruby_on_rails.html#changes-in-json-handling))
+  ([Related Pull Request](https://github.com/quails/quails/pull/12183) /
+  [More Details](upgrading_ruby_on_quails.html#changes-in-json-handling))
 
 * Removed deprecated `ActiveSupport::JSON::Variable` with no replacement.
 
@@ -641,42 +641,42 @@ for detailed changes.
   method instead (e.g. `#before` for a before filter).
 
 * Removed 'cow' => 'kine' irregular inflection from default
-  inflections. ([Commit](https://github.com/rails/rails/commit/c300dca9963bda78b8f358dbcb59cabcdc5e1dc9))
+  inflections. ([Commit](https://github.com/quails/quails/commit/c300dca9963bda78b8f358dbcb59cabcdc5e1dc9))
 
 ### Deprecations
 
 * Deprecated `Numeric#{ago,until,since,from_now}`, the user is expected to
   explicitly convert the value into an AS::Duration, i.e. `5.ago` => `5.seconds.ago`
-  ([Pull Request](https://github.com/rails/rails/pull/12389))
+  ([Pull Request](https://github.com/quails/quails/pull/12389))
 
 * Deprecated the require path `active_support/core_ext/object/to_json`. Require
-  `active_support/core_ext/object/json` instead. ([Pull Request](https://github.com/rails/rails/pull/12203))
+  `active_support/core_ext/object/json` instead. ([Pull Request](https://github.com/quails/quails/pull/12203))
 
 * Deprecated `ActiveSupport::JSON::Encoding::CircularReferenceError`. This feature
-  has been extracted into the [activesupport-json_encoder](https://github.com/rails/activesupport-json_encoder)
+  has been extracted into the [activesupport-json_encoder](https://github.com/quails/activesupport-json_encoder)
   gem.
-  ([Pull Request](https://github.com/rails/rails/pull/12785) /
-  [More Details](upgrading_ruby_on_rails.html#changes-in-json-handling))
+  ([Pull Request](https://github.com/quails/quails/pull/12785) /
+  [More Details](upgrading_ruby_on_quails.html#changes-in-json-handling))
 
 * Deprecated `ActiveSupport.encode_big_decimal_as_string` option. This feature has
-  been extracted into the [activesupport-json_encoder](https://github.com/rails/activesupport-json_encoder)
+  been extracted into the [activesupport-json_encoder](https://github.com/quails/activesupport-json_encoder)
   gem.
-  ([Pull Request](https://github.com/rails/rails/pull/13060) /
-  [More Details](upgrading_ruby_on_rails.html#changes-in-json-handling))
+  ([Pull Request](https://github.com/quails/quails/pull/13060) /
+  [More Details](upgrading_ruby_on_quails.html#changes-in-json-handling))
 
 * Deprecate custom `BigDecimal`
-  serialization. ([Pull Request](https://github.com/rails/rails/pull/13911))
+  serialization. ([Pull Request](https://github.com/quails/quails/pull/13911))
 
 ### Notable changes
 
 * `ActiveSupport`'s JSON encoder has been rewritten to take advantage of the
   JSON gem rather than doing custom encoding in pure-Ruby.
-  ([Pull Request](https://github.com/rails/rails/pull/12183) /
-  [More Details](upgrading_ruby_on_rails.html#changes-in-json-handling))
+  ([Pull Request](https://github.com/quails/quails/pull/12183) /
+  [More Details](upgrading_ruby_on_quails.html#changes-in-json-handling))
 
 * Improved compatibility with the JSON gem.
-  ([Pull Request](https://github.com/rails/rails/pull/12862) /
-  [More Details](upgrading_ruby_on_rails.html#changes-in-json-handling))
+  ([Pull Request](https://github.com/quails/quails/pull/12862) /
+  [More Details](upgrading_ruby_on_quails.html#changes-in-json-handling))
 
 * Added `ActiveSupport::Testing::TimeHelpers#travel` and `#travel_to`. These
   methods change current time to the given time or duration by stubbing
@@ -684,49 +684,49 @@ for detailed changes.
 
 * Added `ActiveSupport::Testing::TimeHelpers#travel_back`. This method returns
   the current time to the original state, by removing the stubs added by `travel`
-  and `travel_to`. ([Pull Request](https://github.com/rails/rails/pull/13884))
+  and `travel_to`. ([Pull Request](https://github.com/quails/quails/pull/13884))
 
 * Added `Numeric#in_milliseconds`, like `1.hour.in_milliseconds`, so we can feed
   them to JavaScript functions like
-  `getTime()`. ([Commit](https://github.com/rails/rails/commit/423249504a2b468d7a273cbe6accf4f21cb0e643))
+  `getTime()`. ([Commit](https://github.com/quails/quails/commit/423249504a2b468d7a273cbe6accf4f21cb0e643))
 
 * Added `Date#middle_of_day`, `DateTime#middle_of_day` and `Time#middle_of_day`
   methods. Also added `midday`, `noon`, `at_midday`, `at_noon` and
   `at_middle_of_day` as
-  aliases. ([Pull Request](https://github.com/rails/rails/pull/10879))
+  aliases. ([Pull Request](https://github.com/quails/quails/pull/10879))
 
 * Added `Date#all_week/month/quarter/year` for generating date
-  ranges. ([Pull Request](https://github.com/rails/rails/pull/9685))
+  ranges. ([Pull Request](https://github.com/quails/quails/pull/9685))
 
 * Added `Time.zone.yesterday` and
-  `Time.zone.tomorrow`. ([Pull Request](https://github.com/rails/rails/pull/12822))
+  `Time.zone.tomorrow`. ([Pull Request](https://github.com/quails/quails/pull/12822))
 
 * Added `String#remove(pattern)` as a short-hand for the common pattern of
-  `String#gsub(pattern,'')`. ([Commit](https://github.com/rails/rails/commit/5da23a3f921f0a4a3139495d2779ab0d3bd4cb5f))
+  `String#gsub(pattern,'')`. ([Commit](https://github.com/quails/quails/commit/5da23a3f921f0a4a3139495d2779ab0d3bd4cb5f))
 
 * Added `Hash#compact` and `Hash#compact!` for removing items with nil value
-  from hash. ([Pull Request](https://github.com/rails/rails/pull/13632))
+  from hash. ([Pull Request](https://github.com/quails/quails/pull/13632))
 
 * `blank?` and `present?` commit to return
-  singletons. ([Commit](https://github.com/rails/rails/commit/126dc47665c65cd129967cbd8a5926dddd0aa514))
+  singletons. ([Commit](https://github.com/quails/quails/commit/126dc47665c65cd129967cbd8a5926dddd0aa514))
 
 * Default the new `I18n.enforce_available_locales` config to `true`, meaning
   `I18n` will make sure that all locales passed to it must be declared in the
   `available_locales`
-  list. ([Pull Request](https://github.com/rails/rails/pull/13341))
+  list. ([Pull Request](https://github.com/quails/quails/pull/13341))
 
 * Introduce `Module#concerning`: a natural, low-ceremony way to separate
   responsibilities within a
-  class. ([Commit](https://github.com/rails/rails/commit/1eee0ca6de975b42524105a59e0521d18b38ab81))
+  class. ([Commit](https://github.com/quails/quails/commit/1eee0ca6de975b42524105a59e0521d18b38ab81))
 
 * Added `Object#presence_in` to simplify value whitelisting.
-  ([Commit](https://github.com/rails/rails/commit/4edca106daacc5a159289eae255207d160f22396))
+  ([Commit](https://github.com/quails/quails/commit/4edca106daacc5a159289eae255207d160f22396))
 
 
 Credits
 -------
 
 See the
-[full list of contributors to Rails](http://contributors.rubyonrails.org/) for
-the many people who spent many hours making Rails, the stable and robust
+[full list of contributors to Quails](http://contributors.rubyonquails.org/) for
+the many people who spent many hours making Quails, the stable and robust
 framework it is. Kudos to all of them.

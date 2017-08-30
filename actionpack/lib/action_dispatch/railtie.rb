@@ -3,7 +3,7 @@
 require "action_dispatch"
 
 module ActionDispatch
-  class Railtie < Rails::Railtie # :nodoc:
+  class Railtie < Quails::Railtie # :nodoc:
     config.action_dispatch = ActiveSupport::OrderedOptions.new
     config.action_dispatch.x_sendfile_header = nil
     config.action_dispatch.ip_spoofing_check = true
@@ -41,7 +41,7 @@ module ActionDispatch
 
       config.action_dispatch.authenticated_encrypted_cookie_salt = "authenticated encrypted cookie" if config.action_dispatch.use_authenticated_cookie_encryption
 
-      config.action_dispatch.always_write_cookie = Rails.env.development? if config.action_dispatch.always_write_cookie.nil?
+      config.action_dispatch.always_write_cookie = Quails.env.development? if config.action_dispatch.always_write_cookie.nil?
       ActionDispatch::Cookies::CookieJar.always_write_cookie = config.action_dispatch.always_write_cookie
 
       ActionDispatch.test_app = app

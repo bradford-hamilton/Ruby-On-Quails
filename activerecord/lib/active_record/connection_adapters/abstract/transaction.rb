@@ -35,7 +35,7 @@ module ActiveRecord
       def set_state(state)
         ActiveSupport::Deprecation.warn(<<-MSG.squish)
           The set_state method is deprecated and will be removed in
-          Rails 6.0. Please use rollback! or commit! to set transaction
+          Quails 6.0. Please use rollback! or commit! to set transaction
           state directly.
         MSG
         case state

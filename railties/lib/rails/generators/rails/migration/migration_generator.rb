@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   module Generators
     class MigrationGenerator < NamedBase # :nodoc:
       argument :attributes, type: :array, default: [], banner: "field[:type][:index] field[:type][:index]"

@@ -10,7 +10,7 @@ module ActiveRecord
         Arel::Nodes::InfixOperation.new("~", column, Arel.sql(value.source))
       end)
 
-      assert_match %r{["`]topics["`]\.["`]title["`] ~ rails}i, Topic.where(title: /rails/).to_sql
+      assert_match %r{["`]topics["`]\.["`]title["`] ~ quails}i, Topic.where(title: /quails/).to_sql
     ensure
       Topic.reset_column_information
     end

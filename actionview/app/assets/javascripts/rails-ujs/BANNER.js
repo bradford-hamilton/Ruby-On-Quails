@@ -1,5 +1,5 @@
 /*
 Unobtrusive JavaScript
-https://github.com/rails/rails/blob/master/actionview/app/assets/javascripts
+https://github.com/quails/quails/blob/master/actionview/app/assets/javascripts
 Released under the MIT license
  */

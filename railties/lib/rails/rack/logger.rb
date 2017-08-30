@@ -6,7 +6,7 @@ require "active_support/log_subscriber"
 require "action_dispatch/http/request"
 require "rack/body_proxy"
 
-module Rails
+module Quails
   module Rack
     # Sets log tags, logs the request, calls the app, and flushes the logs.
     #
@@ -73,7 +73,7 @@ module Rails
         end
 
         def logger
-          Rails.logger
+          Quails.logger
         end
     end
   end

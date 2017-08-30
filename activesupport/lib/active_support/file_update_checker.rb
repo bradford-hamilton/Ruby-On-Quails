@@ -3,7 +3,7 @@
 require_relative "core_ext/time/calculations"
 
 module ActiveSupport
-  # FileUpdateChecker specifies the API used by Rails to watch files
+  # FileUpdateChecker specifies the API used by Quails to watch files
   # and control reloading. The API depends on four methods:
   #
   # * +initialize+ which expects two parameters and one block as
@@ -20,7 +20,7 @@ module ActiveSupport
   # After initialization, a call to +execute_if_updated+ must execute
   # the block only if there was really a change in the filesystem.
   #
-  # This class is used by Rails to reload the I18n framework whenever
+  # This class is used by Quails to reload the I18n framework whenever
   # they are changed upon a new request.
   #
   #   i18n_reloader = ActiveSupport::FileUpdateChecker.new(paths) do

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require "rails"
+require "quails"
 require "active_storage"
 
 module ActiveStorage
-  class Engine < Rails::Engine # :nodoc:
+  class Engine < Quails::Engine # :nodoc:
     isolate_namespace ActiveStorage
 
     config.active_storage = ActiveSupport::OrderedOptions.new
@@ -15,7 +15,7 @@ module ActiveStorage
       require "active_storage/service"
 
       config.after_initialize do |app|
-        ActiveStorage::Service.logger = app.config.active_storage.logger || Rails.logger
+        ActiveStorage::Service.logger = app.config.active_storage.logger || Quails.logger
       end
     end
 
@@ -37,9 +37,9 @@ module ActiveStorage
 
     initializer "active_storage.services" do
       config.to_prepare do
-        if config_choice = Rails.configuration.active_storage.service
-          configs = Rails.configuration.active_storage.service_configurations ||= begin
-            config_file = Pathname.new(Rails.root.join("config/storage.yml"))
+        if config_choice = Quails.configuration.active_storage.service
+          configs = Quails.configuration.active_storage.service_configurations ||= begin
+            config_file = Pathname.new(Quails.root.join("config/storage.yml"))
             raise("Couldn't find Active Storage configuration in #{config_file}") unless config_file.exist?
 
             require "yaml"
@@ -56,7 +56,7 @@ module ActiveStorage
             begin
               ActiveStorage::Service.configure config_choice, configs
             rescue => e
-              raise e, "Cannot load `Rails.config.active_storage.service`:\n#{e.message}", e.backtrace
+              raise e, "Cannot load `Quails.config.active_storage.service`:\n#{e.message}", e.backtrace
             end
         end
       end

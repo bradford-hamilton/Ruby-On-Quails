@@ -1,14 +1,14 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-Ruby on Rails Security Guide
+Ruby on Quails Security Guide
 ============================
 
-This manual describes common security problems in web applications and how to avoid them with Rails.
+This manual describes common security problems in web applications and how to avoid them with Quails.
 
 After reading this guide, you will know:
 
 * All countermeasures _that are highlighted_.
-* The concept of sessions in Rails, what to put in there and popular attack methods.
+* The concept of sessions in Quails, what to put in there and popular attack methods.
 * How just visiting a site can be a security problem (with CSRF).
 * What you have to pay attention to when working with files or providing an administration interface.
 * How to manage users: Logging in and out and attack methods on all layers.
@@ -19,7 +19,7 @@ After reading this guide, you will know:
 Introduction
 ------------
 
-Web application frameworks are made to help developers build web applications. Some of them also help you with securing the web application. In fact one framework is not more secure than another: If you use it correctly, you will be able to build secure apps with many frameworks. Ruby on Rails has some clever helper methods, for example against SQL injection, so that this is hardly a problem.
+Web application frameworks are made to help developers build web applications. Some of them also help you with securing the web application. In fact one framework is not more secure than another: If you use it correctly, you will be able to build secure apps with many frameworks. Ruby on Quails has some clever helper methods, for example against SQL injection, so that this is hardly a problem.
 
 In general there is no such thing as plug-n-play security. Security depends on the people using the framework, and sometimes on the development method. And it depends on all layers of a web application environment: The back-end storage, the web server and the web application itself (and possibly other layers or applications).
 
@@ -39,9 +39,9 @@ A good place to start looking at security is with sessions, which can be vulnera
 NOTE: _HTTP is a stateless protocol. Sessions make it stateful._
 
 Most applications need to keep track of certain state of a particular user. This could be the contents of a shopping basket or the user id of the currently logged in user. Without the idea of sessions, the user would have to identify, and probably authenticate, on every request.
-Rails will create a new session automatically if a new user accesses the application. It will load an existing session if the user has already used the application.
+Quails will create a new session automatically if a new user accesses the application. It will load an existing session if the user has already used the application.
 
-A session usually consists of a hash of values and a session ID, usually a 32-character string, to identify the hash. Every cookie sent to the client's browser includes the session ID. And the other way round: the browser will send it to the server on every request from the client. In Rails you can save and retrieve values using the session method:
+A session usually consists of a hash of values and a session ID, usually a 32-character string, to identify the hash. Every cookie sent to the client's browser includes the session ID. And the other way round: the browser will send it to the server on every request from the client. In Quails you can save and retrieve values using the session method:
 
 ```ruby
 session[:user_id] = @current_user.id
@@ -52,7 +52,7 @@ User.find(session[:user_id])
 
 NOTE: _The session ID is a 32-character random hex string._
 
-The session ID is generated using `SecureRandom.hex` which generates a random hex string using platform specific methods (such as OpenSSL, /dev/urandom or Win32) for generating cryptographically secure random numbers. Currently it is not feasible to brute-force Rails' session IDs.
+The session ID is generated using `SecureRandom.hex` which generates a random hex string using platform specific methods (such as OpenSSL, /dev/urandom or Win32) for generating cryptographically secure random numbers. Currently it is not feasible to brute-force Quails' session IDs.
 
 ### Session Hijacking
 
@@ -62,7 +62,7 @@ Many web applications have an authentication system: a user provides a user name
 
 Hence, the cookie serves as temporary authentication for the web application. Anyone who seizes a cookie from someone else, may use the web application as this user - with possibly severe consequences. Here are some ways to hijack a session, and their countermeasures:
 
-* Sniff the cookie in an insecure network. A wireless LAN can be an example of such a network. In an unencrypted wireless LAN, it is especially easy to listen to the traffic of all connected clients. For the web application builder this means to _provide a secure connection over SSL_. In Rails 3.1 and later, this could be accomplished by always forcing SSL connection in your application config file:
+* Sniff the cookie in an insecure network. A wireless LAN can be an example of such a network. In an unencrypted wireless LAN, it is especially easy to listen to the traffic of all connected clients. For the web application builder this means to _provide a secure connection over SSL_. In Quails 3.1 and later, this could be accomplished by always forcing SSL connection in your application config file:
 
     ```ruby
     config.force_ssl = true
@@ -87,15 +87,15 @@ This will also be a good idea, if you modify the structure of an object and old 
 
 ### Session Storage
 
-NOTE: _Rails provides several storage mechanisms for the session hashes. The most important is `ActionDispatch::Session::CookieStore`._
+NOTE: _Quails provides several storage mechanisms for the session hashes. The most important is `ActionDispatch::Session::CookieStore`._
 
-Rails 2 introduced a new default session storage, CookieStore. CookieStore saves the session hash directly in a cookie on the client-side. The server retrieves the session hash from the cookie and eliminates the need for a session ID. That will greatly increase the speed of the application, but it is a controversial storage option and you have to think about the security implications of it:
+Quails 2 introduced a new default session storage, CookieStore. CookieStore saves the session hash directly in a cookie on the client-side. The server retrieves the session hash from the cookie and eliminates the need for a session ID. That will greatly increase the speed of the application, but it is a controversial storage option and you have to think about the security implications of it:
 
 * Cookies imply a strict size limit of 4kB. This is fine as you should not store large amounts of data in a session anyway, as described before. _Storing the current user's database id in a session is usually ok_.
 
 * The client can see everything you store in a session, because it is stored in clear-text (actually Base64-encoded, so not encrypted). So, of course, _you don't want to store any secrets here_. To prevent session hash tampering, a digest is calculated from the session with a server-side secret (`secrets.secret_token`) and inserted into the end of the cookie.
 
-In Rails 4, encrypted cookies through AES in CBC mode with HMAC using SHA1 for
+In Quails 4, encrypted cookies through AES in CBC mode with HMAC using SHA1 for
 verification was introduced. This prevents the user from accessing and tampering
 the content of the cookie. Thus the session becomes a more secure place to store
 data. The encryption is performed using a server-side `secrets.secret_key_base`.
@@ -103,13 +103,13 @@ Two salts are used when deriving keys for encryption and verification. These
 salts are set via the `config.action_dispatch.encrypted_cookie_salt` and
 `config.action_dispatch.encrypted_signed_cookie_salt` configuration values.
 
-Rails 5.2 uses AES-GCM for the encryption which couples authentication
+Quails 5.2 uses AES-GCM for the encryption which couples authentication
 and encryption in one faster step and produces shorter ciphertexts.
 
 Encrypted cookies are automatically upgraded if the
 `config.action_dispatch.use_authenticated_cookie_encryption` is enabled.
 
-_Do not use a trivial secret, i.e. a word from a dictionary, or one which is shorter than 30 characters! Instead use `rails secret` to generate secret keys!_
+_Do not use a trivial secret, i.e. a word from a dictionary, or one which is shorter than 30 characters! Instead use `quails secret` to generate secret keys!_
 
 Applications get `secrets.secret_key_base` initialized to a random key present in `config/secrets.yml`, e.g.:
 
@@ -122,7 +122,7 @@ Applications get `secrets.secret_key_base` initialized to a random key present i
     production:
       secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
 
-Older versions of Rails use CookieStore, which uses `secret_token` instead of `secret_key_base` that is used by EncryptedCookieStore. Read the upgrade documentation for more information.
+Older versions of Quails use CookieStore, which uses `secret_token` instead of `secret_key_base` that is used by EncryptedCookieStore. Read the upgrade documentation for more information.
 
 If you have received an application where the secret was exposed (e.g. an application whose source was shared), strongly consider changing the secret.
 
@@ -161,7 +161,7 @@ This attack focuses on fixing a user's session ID known to the attacker, and for
 
 TIP: _One line of code will protect you from session fixation._
 
-The most effective countermeasure is to _issue a new session identifier_ and declare the old one invalid after a successful login. That way, an attacker cannot use the fixed session identifier. This is a good countermeasure against session hijacking, as well. Here is how to create a new session in Rails:
+The most effective countermeasure is to _issue a new session identifier_ and declare the old one invalid after a successful login. That way, an attacker cannot use the fixed session identifier. This is a good countermeasure against session hijacking, as well. Here is how to create a new session in Quails:
 
 ```ruby
 reset_session
@@ -203,7 +203,7 @@ This attack method works by including malicious code or a link in a page that ac
 
 ![](images/csrf.png)
 
-In the [session chapter](#sessions) you have learned that most Rails applications use cookie-based sessions. Either they store the session ID in the cookie and have a server-side session hash, or the entire session hash is on the client-side. In either case the browser will automatically send along the cookie on every request to a domain, if it can find a cookie for that domain. The controversial point is that if the request comes from a site of a different domain, it will also send the cookie. Let's start with an example:
+In the [session chapter](#sessions) you have learned that most Quails applications use cookie-based sessions. Either they store the session ID in the cookie and have a server-side session hash, or the entire session hash is on the client-side. In either case the browser will automatically send along the cookie on every request to a domain, if it can find a cookie for that domain. The controversial point is that if the request comes from a site of a different domain, it will also send the cookie. Let's start with an example:
 
 * Bob browses a message board and views a post from a hacker where there is a crafted HTML image element. The element references a command in Bob's project management application, rather than an image file: `<img src="http://www.webapp.com/project/1/destroy">`
 * Bob's session at `www.webapp.com` is still alive, because he didn't log out a few minutes ago.
@@ -231,7 +231,7 @@ The HTTP protocol basically provides two main types of requests - GET and POST (
 * The interaction _changes the state_ of the resource in a way that the user would perceive (e.g., a subscription to a service), or
 * The user is _held accountable for the results_ of the interaction.
 
-If your web application is RESTful, you might be used to additional HTTP verbs, such as PATCH, PUT or DELETE. Some legacy web browsers, however, do not support them - only GET and POST. Rails uses a hidden `_method` field to handle these cases.
+If your web application is RESTful, you might be used to additional HTTP verbs, such as PATCH, PUT or DELETE. Some legacy web browsers, however, do not support them - only GET and POST. Quails uses a hidden `_method` field to handle these cases.
 
 _POST requests can be sent automatically, too_. In this example, the link www.harmless.com is shown as the destination in the browser's status bar. But it has actually dynamically created a new form that sends a POST request.
 
@@ -256,17 +256,17 @@ There are many other possibilities, like using a `<script>` tag to make a cross-
 
 Note: We can't distinguish a `<script>` tag's origin—whether it's a tag on your own site or on some other malicious site—so we must block all `<script>` across the board, even if it's actually a safe same-origin script served from your own site. In these cases, explicitly skip CSRF protection on actions that serve JavaScript meant for a `<script>` tag.
 
-To protect against all other forged requests, we introduce a _required security token_ that our site knows but other sites don't know. We include the security token in requests and verify it on the server. This is a one-liner in your application controller, and is the default for newly created Rails applications:
+To protect against all other forged requests, we introduce a _required security token_ that our site knows but other sites don't know. We include the security token in requests and verify it on the server. This is a one-liner in your application controller, and is the default for newly created Quails applications:
 
 ```ruby
 protect_from_forgery with: :exception
 ```
 
-This will automatically include a security token in all forms and Ajax requests generated by Rails. If the security token doesn't match what was expected, an exception will be thrown.
+This will automatically include a security token in all forms and Ajax requests generated by Quails. If the security token doesn't match what was expected, an exception will be thrown.
 
-NOTE: By default, Rails includes an [unobtrusive scripting adapter](https://github.com/rails/rails/blob/master/actionview/app/assets/javascripts),
+NOTE: By default, Quails includes an [unobtrusive scripting adapter](https://github.com/quails/quails/blob/master/actionview/app/assets/javascripts),
 which adds a header called `X-CSRF-Token` with the security token on every non-GET
-Ajax call. Without this header, non-GET Ajax requests won't be accepted by Rails.
+Ajax call. Without this header, non-GET Ajax requests won't be accepted by Quails.
 When using another library to make Ajax calls, it is necessary to add the security
 token as a default header for Ajax calls in your library. To get the token, have
 a look at `<meta name='csrf-token' content='THE-TOKEN'>` tag printed by
@@ -344,11 +344,11 @@ The solution to this is best to _process media files asynchronously_: Save the m
 
 ### Executable Code in File Uploads
 
-WARNING: _Source code in uploaded files may be executed when placed in specific directories. Do not place file uploads in Rails' /public directory if it is Apache's home directory._
+WARNING: _Source code in uploaded files may be executed when placed in specific directories. Do not place file uploads in Quails' /public directory if it is Apache's home directory._
 
 The popular Apache web server has an option called DocumentRoot. This is the home directory of the web site, everything in this directory tree will be served by the web server. If there are files with a certain file name extension, the code in it will be executed when requested (might require some options to be set). Examples for this are PHP and CGI files. Now think of a situation where an attacker uploads a file "file.cgi" with code in it, which will be executed when someone downloads the file.
 
-_If your Apache DocumentRoot points to Rails' /public directory, do not put file uploads in it_, store files at least one level downwards.
+_If your Apache DocumentRoot points to Quails' /public directory, do not put file uploads in it_, store files at least one level downwards.
 
 ### File Downloads
 
@@ -391,7 +391,7 @@ A real-world example is a [router reconfiguration by CSRF](http://www.h-online.c
 
 Another example changed Google Adsense's e-mail address and password. If the victim was logged into Google Adsense, the administration interface for Google advertisement campaigns, an attacker could change the credentials of the victim. 
 
-Another popular attack is to spam your web application, your blog or forum to propagate malicious XSS. Of course, the attacker has to know the URL structure, but most Rails URLs are quite straightforward or they will be easy to find out, if it is an open-source application's admin interface. The attacker may even do 1,000 lucky guesses by just including malicious IMG-tags which try every possible combination.
+Another popular attack is to spam your web application, your blog or forum to propagate malicious XSS. Of course, the attacker has to know the URL structure, but most Quails URLs are quite straightforward or they will be easy to find out, if it is an open-source application's admin interface. The attacker may even do 1,000 lucky guesses by just including malicious IMG-tags which try every possible combination.
 
 For _countermeasures against CSRF in administration interfaces and Intranet applications, refer to the countermeasures in the CSRF section_.
 
@@ -410,7 +410,7 @@ User Management
 
 NOTE: _Almost every web application has to deal with authorization and authentication. Instead of rolling your own, it is advisable to use common plug-ins. But keep them up-to-date, too. A few additional precautions can make your application even more secure._
 
-There are a number of authentication plug-ins for Rails available. Good ones, such as the popular [devise](https://github.com/plataformatec/devise) and [authlogic](https://github.com/binarylogic/authlogic), store only encrypted passwords, not plain-text passwords. In Rails 3.1 you can use the built-in `has_secure_password` method which has similar features.
+There are a number of authentication plug-ins for Quails available. Good ones, such as the popular [devise](https://github.com/plataformatec/devise) and [authlogic](https://github.com/binarylogic/authlogic), store only encrypted passwords, not plain-text passwords. In Quails 3.1 you can use the built-in `has_secure_password` method which has similar features.
 
 Every new user gets an activation code to activate their account when they get an e-mail with a link in it. After activating the account, the activation_code columns will be set to NULL in the database. If someone requested a URL like these, they would be logged in as the first activated user found in the database (and chances are that this is the administrator):
 
@@ -465,9 +465,9 @@ Depending on your web application, there may be more ways to hijack the user's a
 
 INFO: _A CAPTCHA is a challenge-response test to determine that the response is not generated by a computer. It is often used to protect registration forms from attackers and comment forms from automatic spam bots by asking the user to type the letters of a distorted image. This is the positive CAPTCHA, but there is also the negative CAPTCHA. The idea of a negative CAPTCHA is not for a user to prove that they are human, but reveal that a robot is a robot._
 
-A popular positive CAPTCHA API is [reCAPTCHA](http://recaptcha.net/) which displays two distorted images of words from old books. It also adds an angled line, rather than a distorted background and high levels of warping on the text as earlier CAPTCHAs did, because the latter were broken. As a bonus, using reCAPTCHA helps to digitize old books. [ReCAPTCHA](https://github.com/ambethia/recaptcha/) is also a Rails plug-in with the same name as the API.
+A popular positive CAPTCHA API is [reCAPTCHA](http://recaptcha.net/) which displays two distorted images of words from old books. It also adds an angled line, rather than a distorted background and high levels of warping on the text as earlier CAPTCHAs did, because the latter were broken. As a bonus, using reCAPTCHA helps to digitize old books. [ReCAPTCHA](https://github.com/ambethia/recaptcha/) is also a Quails plug-in with the same name as the API.
 
-You will get two keys from the API, a public and a private key, which you have to put into your Rails environment. After that you can use the recaptcha_tags method in the view, and the verify_recaptcha method in the controller. Verify_recaptcha will return false if the validation fails.
+You will get two keys from the API, a public and a private key, which you have to put into your Quails environment. After that you can use the recaptcha_tags method in the view, and the verify_recaptcha method in the controller. Verify_recaptcha will return false if the validation fails.
 The problem with CAPTCHAs is that they have a negative impact on the user experience. Additionally, some visually impaired users have found certain kinds of distorted CAPTCHAs difficult to read. Still, positive CAPTCHAs are one of the best methods to prevent all kinds of bots from submitting forms.
 
 Most bots are really dumb. They crawl the web and put their spam into every form's field they can find. Negative CAPTCHAs take advantage of that and include a "honeypot" field in the form which will be hidden from the human user by CSS or JavaScript.
@@ -492,15 +492,15 @@ Note that this protects you only from automatic bots, targeted tailor-made bots 
 
 ### Logging
 
-WARNING: _Tell Rails not to put passwords in the log files._
+WARNING: _Tell Quails not to put passwords in the log files._
 
-By default, Rails logs all requests being made to the web application. But log files can be a huge security issue, as they may contain login credentials, credit card numbers et cetera. When designing a web application security concept, you should also think about what will happen if an attacker got (full) access to the web server. Encrypting secrets and passwords in the database will be quite useless, if the log files list them in clear text. You can _filter certain request parameters from your log files_ by appending them to `config.filter_parameters` in the application configuration. These parameters will be marked [FILTERED] in the log.
+By default, Quails logs all requests being made to the web application. But log files can be a huge security issue, as they may contain login credentials, credit card numbers et cetera. When designing a web application security concept, you should also think about what will happen if an attacker got (full) access to the web server. Encrypting secrets and passwords in the database will be quite useless, if the log files list them in clear text. You can _filter certain request parameters from your log files_ by appending them to `config.filter_parameters` in the application configuration. These parameters will be marked [FILTERED] in the log.
 
 ```ruby
 config.filter_parameters << :password
 ```
 
-NOTE: Provided parameters will be filtered out by partial matching regular expression. Rails adds default `:password` in the appropriate initializer (`initializers/filter_parameter_logging.rb`) and cares about typical application parameters `password` and `password_confirmation`.
+NOTE: Provided parameters will be filtered out by partial matching regular expression. Quails adds default `:password` in the appropriate initializer (`initializers/filter_parameter_logging.rb`) and cares about typical application parameters `password` and `password_confirmation`.
 
 ### Good Passwords
 
@@ -518,7 +518,7 @@ A good password is a long alphanumeric combination of mixed cases. As this is qu
 
 INFO: _A common pitfall in Ruby's regular expressions is to match the string's beginning and end by ^ and $, instead of \A and \z._
 
-Ruby uses a slightly different approach than many other languages to match the end and the beginning of a string. That is why even many Ruby and Rails books get this wrong. So how is this a security threat? Say you wanted to loosely validate a URL field and you used a simple regular expression like this:
+Ruby uses a slightly different approach than many other languages to match the end and the beginning of a string. That is why even many Ruby and Quails books get this wrong. So how is this a security threat? Say you wanted to loosely validate a URL field and you used a simple regular expression like this:
 
 ```ruby
   /^https?:\/\/[^\n]+$/i
@@ -580,7 +580,7 @@ Injection
 
 INFO: _Injection is a class of attacks that introduce malicious code or parameters into a web application in order to run it within its security context. Prominent examples of injection are cross-site scripting (XSS) and SQL injection._
 
-Injection is very tricky, because the same code or parameter can be malicious in one context, but totally harmless in another. A context can be a scripting, query or programming language, the shell or a Ruby/Rails method. The following sections will cover all important contexts where injection attacks may happen. The first section, however, covers an architectural decision in connection with Injection.
+Injection is very tricky, because the same code or parameter can be malicious in one context, but totally harmless in another. A context can be a scripting, query or programming language, the shell or a Ruby/Quails method. The following sections will cover all important contexts where injection attacks may happen. The first section, however, covers an architectural decision in connection with Injection.
 
 ### Whitelists versus Blacklists
 
@@ -598,7 +598,7 @@ Whitelists are also a good approach against the human factor of forgetting somet
 
 ### SQL Injection
 
-INFO: _Thanks to clever methods, this is hardly a problem in most Rails applications. However, this is a very devastating and common attack in web applications, so it is important to understand the problem._
+INFO: _Thanks to clever methods, this is hardly a problem in most Quails applications. However, this is a very devastating and common attack in web applications, so it is important to understand the problem._
 
 #### Introduction
 
@@ -618,7 +618,7 @@ The two dashes start a comment ignoring everything after it. So the query return
 
 #### Bypassing Authorization
 
-Usually a web application includes access control. The user enters their login credentials and the web application tries to find the matching record in the users table. The application grants access when it finds a record. However, an attacker may possibly bypass this check with SQL injection. The following shows a typical database query in Rails to find the first record in the users table which matches the login credentials parameters supplied by the user.
+Usually a web application includes access control. The user enters their login credentials and the web application tries to find the matching record in the users table. The application grants access when it finds a record. However, an attacker may possibly bypass this check with SQL injection. The following shows a typical database query in Quails to find the first record in the users table which matches the login credentials parameters supplied by the user.
 
 ```ruby
 User.find_by("login = '#{params[:name]}' AND password = '#{params[:password]}'")
@@ -655,11 +655,11 @@ SELECT * FROM projects WHERE (name = '') UNION
 
 The result won't be a list of projects (because there is no project with an empty name), but a list of user names and their password. So hopefully you encrypted the passwords in the database! The only problem for the attacker is, that the number of columns has to be the same in both queries. That's why the second query includes a list of ones (1), which will be always the value 1, in order to match the number of columns in the first query.
 
-Also, the second query renames some columns with the AS statement so that the web application displays the values from the user table. Be sure to update your Rails [to at least 2.1.1](http://www.rorsecurity.info/2008/09/08/sql-injection-issue-in-limit-and-offset-parameter/).
+Also, the second query renames some columns with the AS statement so that the web application displays the values from the user table. Be sure to update your Quails [to at least 2.1.1](http://www.rorsecurity.info/2008/09/08/sql-injection-issue-in-limit-and-offset-parameter/).
 
 #### Countermeasures
 
-Ruby on Rails has a built-in filter for special SQL characters, which will escape ' , " , NULL character and line breaks. *Using `Model.find(id)` or `Model.find_by_some thing(something)` automatically applies this countermeasure*. But in SQL fragments, especially *in conditions fragments (`where("...")`), the `connection.execute()` or `Model.find_by_sql()` methods, it has to be applied manually*.
+Ruby on Quails has a built-in filter for special SQL characters, which will escape ' , " , NULL character and line breaks. *Using `Model.find(id)` or `Model.find_by_some thing(something)` automatically applies this countermeasure*. But in SQL fragments, especially *in conditions fragments (`where("...")`), the `connection.execute()` or `Model.find_by_sql()` methods, it has to be applied manually*.
 
 Instead of passing a string to the conditions option, you can pass an array to sanitize tainted strings like this:
 
@@ -677,7 +677,7 @@ The array or hash form is only available in model instances. You can try `saniti
 
 ### Cross-Site Scripting (XSS)
 
-INFO: _The most widespread, and one of the most devastating security vulnerabilities in web applications is XSS. This malicious attack injects client-side executable code. Rails provides helper methods to fend these attacks off._
+INFO: _The most widespread, and one of the most devastating security vulnerabilities in web applications is XSS. This malicious attack injects client-side executable code. Quails provides helper methods to fend these attacks off._
 
 #### Entry Points
 
@@ -753,13 +753,13 @@ _It is very important to filter malicious input, but it is also important to esc
 
 Especially for XSS, it is important to do _whitelist input filtering instead of blacklist_. Whitelist filtering states the values allowed as opposed to the values not allowed. Blacklists are never complete.
 
-Imagine a blacklist deletes "script" from the user input. Now the attacker injects "&lt;scrscriptipt&gt;", and after the filter, "&lt;script&gt;" remains. Earlier versions of Rails used a blacklist approach for the strip_tags(), strip_links() and sanitize() method. So this kind of injection was possible:
+Imagine a blacklist deletes "script" from the user input. Now the attacker injects "&lt;scrscriptipt&gt;", and after the filter, "&lt;script&gt;" remains. Earlier versions of Quails used a blacklist approach for the strip_tags(), strip_links() and sanitize() method. So this kind of injection was possible:
 
 ```ruby
 strip_tags("some<<b>script>alert('hello')<</b>/script>")
 ```
 
-This returned "some&lt;script&gt;alert('hello')&lt;/script&gt;", which makes an attack work. That's why a whitelist approach is better, using the updated Rails 2 method sanitize():
+This returned "some&lt;script&gt;alert('hello')&lt;/script&gt;", which makes an attack work. That's why a whitelist approach is better, using the updated Quails 2 method sanitize():
 
 ```ruby
 tags = %w(a acronym b strong i em li ul ol h1 h2 h3 h4 h5 h6 blockquote br cite sub sup ins p)
@@ -779,7 +779,7 @@ Network traffic is mostly based on the limited Western alphabet, so new characte
   &#108;&#101;&#114;&#116;&#40;&#39;&#88;&#83;&#83;&#39;&#41;>
 ```
 
-This example pops up a message box. It will be recognized by the above sanitize() filter, though. A great tool to obfuscate and encode strings, and thus "get to know your enemy", is the [Hackvertor](https://hackvertor.co.uk/public). Rails' sanitize() method does a good job to fend off encoding attacks.
+This example pops up a message box. It will be recognized by the above sanitize() filter, though. A great tool to obfuscate and encode strings, and thus "get to know your enemy", is the [Hackvertor](https://hackvertor.co.uk/public). Quails' sanitize() method does a good job to fend off encoding attacks.
 
 #### Examples from the Underground
 
@@ -837,7 +837,7 @@ The [moz-binding](http://www.securiteam.com/securitynews/5LP051FHPE.html) CSS pr
 
 #### Countermeasures
 
-This example, again, showed that a blacklist filter is never complete. However, as custom CSS in web applications is a quite rare feature, it may be hard to find a good whitelist CSS filter. _If you want to allow custom colors or images, you can allow the user to choose them and build the CSS in the web application_. Use Rails' `sanitize()` method as a model for a whitelist CSS filter, if you really need one.
+This example, again, showed that a blacklist filter is never complete. However, as custom CSS in web applications is a quite rare feature, it may be hard to find a good whitelist CSS filter. _If you want to allow custom colors or images, you can allow the user to choose them and build the CSS in the web application_. Use Quails' `sanitize()` method as a model for a whitelist CSS filter, if you really need one.
 
 ### Textile Injection
 
@@ -900,13 +900,13 @@ Besides that, it is _important to know what you are doing when building response
 redirect_to params[:referer]
 ```
 
-What happens is that Rails puts the string into the Location header field and sends a 302 (redirect) status to the browser. The first thing a malicious user would do, is this:
+What happens is that Quails puts the string into the Location header field and sends a 302 (redirect) status to the browser. The first thing a malicious user would do, is this:
 
 ```
 http://www.yourapplication.com/controller/action?referer=http://www.malicious.tld
 ```
 
-And due to a bug in (Ruby and) Rails up to version 2.1.2 (excluding it), a hacker may inject arbitrary header fields; for example like this:
+And due to a bug in (Ruby and) Quails up to version 2.1.2 (excluding it), a hacker may inject arbitrary header fields; for example like this:
 
 ```
 http://www.yourapplication.com/controller/action?referer=http://www.malicious.tld%0d%0aX-Header:+Hi!
@@ -921,7 +921,7 @@ HTTP/1.1 302 Moved Temporarily
 Location: http://www.malicious.tld
 ```
 
-So _attack vectors for Header Injection are based on the injection of CRLF characters in a header field._ And what could an attacker do with a false redirection? They could redirect to a phishing site that looks the same as yours, but ask to login again (and sends the login credentials to the attacker). Or they could install malicious software through browser security holes on that site. Rails 2.1.2 escapes these characters for the Location field in the `redirect_to` method. _Make sure you do it yourself when you build other header fields with user input._
+So _attack vectors for Header Injection are based on the injection of CRLF characters in a header field._ And what could an attacker do with a false redirection? They could redirect to a phishing site that looks the same as yours, but ask to login again (and sends the login credentials to the attacker). Or they could install malicious software through browser security holes on that site. Quails 2.1.2 escapes these characters for the Location field in the `redirect_to` method. _Make sure you do it yourself when you build other header fields with user input._
 
 #### Response Splitting
 
@@ -944,7 +944,7 @@ Transfer-Encoding: chunked
 Content-Type: text/html
 ```
 
-Under certain circumstances this would present the malicious HTML to the victim. However, this only seems to work with Keep-Alive connections (and many browsers are using one-time connections). But you can't rely on this. _In any case this is a serious bug, and you should update your Rails to version 2.0.5 or 2.1.2 to eliminate Header Injection (and thus response splitting) risks._
+Under certain circumstances this would present the malicious HTML to the victim. However, this only seems to work with Keep-Alive connections (and many browsers are using one-time connections). But you can't rely on this. _In any case this is a serious bug, and you should update your Quails to version 2.0.5 or 2.1.2 to eliminate Header Injection (and thus response splitting) risks._
 
 Unsafe Query Generation
 -----------------------
@@ -952,10 +952,10 @@ Unsafe Query Generation
 Due to the way Active Record interprets parameters in combination with the way
 that Rack parses query parameters it was possible to issue unexpected database
 queries with `IS NULL` where clauses. As a response to that security issue
-([CVE-2012-2660](https://groups.google.com/forum/#!searchin/rubyonrails-security/deep_munge/rubyonrails-security/8SA-M3as7A8/Mr9fi9X4kNgJ),
-[CVE-2012-2694](https://groups.google.com/forum/#!searchin/rubyonrails-security/deep_munge/rubyonrails-security/jILZ34tAHF4/7x0hLH-o0-IJ)
-and [CVE-2013-0155](https://groups.google.com/forum/#!searchin/rubyonrails-security/CVE-2012-2660/rubyonrails-security/c7jT-EeN9eI/L0u4e87zYGMJ))
-`deep_munge` method was introduced as a solution to keep Rails secure by default.
+([CVE-2012-2660](https://groups.google.com/forum/#!searchin/rubyonquails-security/deep_munge/rubyonquails-security/8SA-M3as7A8/Mr9fi9X4kNgJ),
+[CVE-2012-2694](https://groups.google.com/forum/#!searchin/rubyonquails-security/deep_munge/rubyonquails-security/jILZ34tAHF4/7x0hLH-o0-IJ)
+and [CVE-2013-0155](https://groups.google.com/forum/#!searchin/rubyonquails-security/CVE-2012-2660/rubyonquails-security/c7jT-EeN9eI/L0u4e87zYGMJ))
+`deep_munge` method was introduced as a solution to keep Quails secure by default.
 
 Example of vulnerable code that could be used by attacker, if `deep_munge`
 wasn't performed is:
@@ -971,7 +971,7 @@ When `params[:token]` is one of: `[nil]`, `[nil, nil, ...]` or
 `['foo', nil]` it will bypass the test for `nil`, but `IS NULL` or
 `IN ('foo', NULL)` where clauses still will be added to the SQL query.
 
-To keep Rails secure by default, `deep_munge` replaces some of the values with
+To keep Quails secure by default, `deep_munge` replaces some of the values with
 `nil`. Below table shows what the parameters look like based on `JSON` sent in
 request:
 
@@ -993,7 +993,7 @@ config.action_dispatch.perform_deep_munge = false
 Default Headers
 ---------------
 
-Every HTTP response from your Rails application receives the following default security headers.
+Every HTTP response from your Quails application receives the following default security headers.
 
 ```ruby
 config.action_dispatch.default_headers = {
@@ -1020,9 +1020,9 @@ config.action_dispatch.default_headers.clear
 
 Here is a list of common headers:
 
-* **X-Frame-Options:** _'SAMEORIGIN' in Rails by default_ - allow framing on same domain. Set it to 'DENY' to deny framing at all or 'ALLOWALL' if you want to allow framing for all website.
-* **X-XSS-Protection:** _'1; mode=block' in Rails by default_ - use XSS Auditor and block page if XSS attack is detected. Set it to '0;' if you want to switch XSS Auditor off(useful if response contents scripts from request parameters)
-* **X-Content-Type-Options:** _'nosniff' in Rails by default_ - stops the browser from guessing the MIME type of a file.
+* **X-Frame-Options:** _'SAMEORIGIN' in Quails by default_ - allow framing on same domain. Set it to 'DENY' to deny framing at all or 'ALLOWALL' if you want to allow framing for all website.
+* **X-XSS-Protection:** _'1; mode=block' in Quails by default_ - use XSS Auditor and block page if XSS attack is detected. Set it to '0;' if you want to switch XSS Auditor off(useful if response contents scripts from request parameters)
+* **X-Content-Type-Options:** _'nosniff' in Quails by default_ - stops the browser from guessing the MIME type of a file.
 * **X-Content-Security-Policy:** [A powerful mechanism for controlling which sites certain content types can be loaded from](http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html)
 * **Access-Control-Allow-Origin:** Used to control which sites are allowed to bypass same origin policies and send cross-origin requests.
 * **Strict-Transport-Security:** [Used to control if the browser is allowed to only access a site over a secure connection](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security)
@@ -1034,33 +1034,33 @@ It is beyond the scope of this guide to inform you on how to secure your applica
 
 ### Custom secrets
 
-Rails generates a `config/secrets.yml`. By default, this file contains the
+Quails generates a `config/secrets.yml`. By default, this file contains the
 application's `secret_key_base`, but it could also be used to store other
 secrets such as access keys for external APIs.
 
-The secrets added to this file are accessible via `Rails.application.secrets`.
+The secrets added to this file are accessible via `Quails.application.secrets`.
 For example, with the following `config/secrets.yml`:
 
     development:
       secret_key_base: 3b7cd727ee24e8444053437c36cc66c3
       some_api_key: SOMEKEY
 
-`Rails.application.secrets.some_api_key` returns `SOMEKEY` in the development
+`Quails.application.secrets.some_api_key` returns `SOMEKEY` in the development
 environment.
 
 If you want an exception to be raised when some key is blank, use the bang
 version:
 
 ```ruby
-Rails.application.secrets.some_api_key! # => raises KeyError: key not found: :some_api_key
+Quails.application.secrets.some_api_key! # => raises KeyError: key not found: :some_api_key
 ```
 
 Additional Resources
 --------------------
 
-The security landscape shifts and it is important to keep up to date, because missing a new vulnerability can be catastrophic. You can find additional resources about (Rails) security here:
+The security landscape shifts and it is important to keep up to date, because missing a new vulnerability can be catastrophic. You can find additional resources about (Quails) security here:
 
-* Subscribe to the Rails security [mailing list](https://groups.google.com/forum/#!forum/rubyonrails-security).
-* [Brakeman - Rails Security Scanner](https://brakemanscanner.org/) - To perform static security analysis for Rails applications.
+* Subscribe to the Quails security [mailing list](https://groups.google.com/forum/#!forum/rubyonquails-security).
+* [Brakeman - Quails Security Scanner](https://brakemanscanner.org/) - To perform static security analysis for Quails applications.
 * [Keep up to date on the other application layers](http://secunia.com/) (they have a weekly newsletter, too).
 * A [good security blog](https://www.owasp.org) including the [Cross-Site scripting Cheat Sheet](https://www.owasp.org/index.php/DOM_based_XSS_Prevention_Cheat_Sheet).

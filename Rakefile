@@ -4,12 +4,12 @@ require "net/http"
 
 $:.unshift __dir__
 require "tasks/release"
-require "railties/lib/rails/api/task"
+require "railties/lib/quails/api/task"
 
 desc "Build gem files for all projects"
 task build: "all:build"
 
-desc "Build, install and verify the gem files in a generated Rails app."
+desc "Build, install and verify the gem files in a generated Quails app."
 task verify: "all:verify"
 
 desc "Prepare the release"
@@ -43,11 +43,11 @@ end
 desc "Install gems for all projects."
 task install: "all:install"
 
-desc "Generate documentation for the Rails framework"
+desc "Generate documentation for the Quails framework"
 if ENV["EDGE"]
-  Rails::API::EdgeTask.new("rdoc")
+  Quails::API::EdgeTask.new("rdoc")
 else
-  Rails::API::StableTask.new("rdoc")
+  Quails::API::StableTask.new("rdoc")
 end
 
 desc "Bump all versions to match RAILS_VERSION"
@@ -57,15 +57,15 @@ task update_versions: "all:update_versions"
 # This hook triggers the following tasks:
 #
 #   * updates the local checkout
-#   * updates Rails Contributors
+#   * updates Quails Contributors
 #   * generates and publishes edge docs
 #   * if there's a new stable tag, generates and publishes stable docs
 #
 # Everything is automated and you do NOT need to run this task normally.
 desc "Publishes docs, run this AFTER a new stable tag has been pushed"
 task :publish_docs do
-  Net::HTTP.new("api.rubyonrails.org", 8080).start do |http|
-    request  = Net::HTTP::Post.new("/rails-master-hook")
+  Net::HTTP.new("api.rubyonquails.org", 8080).start do |http|
+    request  = Net::HTTP::Post.new("/quails-master-hook")
     response = http.request(request)
     puts response.body
   end

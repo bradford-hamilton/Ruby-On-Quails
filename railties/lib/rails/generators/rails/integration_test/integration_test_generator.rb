@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   module Generators
     class IntegrationTestGenerator < NamedBase # :nodoc:
       hook_for :integration_tool, as: :integration

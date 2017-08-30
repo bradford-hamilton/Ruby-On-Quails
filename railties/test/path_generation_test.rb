@@ -54,10 +54,10 @@ class PathGenerationTest < ActiveSupport::TestCase
   end
 
   def test_original_script_name
-    original_logger = Rails.logger
-    Rails.logger    = Logger.new nil
+    original_logger = Quails.logger
+    Quails.logger    = Logger.new nil
 
-    app = Class.new(Rails::Application) {
+    app = Class.new(Quails::Application) {
       attr_accessor :controller
       def initialize
         super
@@ -80,6 +80,6 @@ class PathGenerationTest < ActiveSupport::TestCase
     send_request(url, "GET", nil)
     assert_equal "/blogs", app.instance.controller.blogs_path
   ensure
-    Rails.logger = original_logger
+    Quails.logger = original_logger
   end
 end

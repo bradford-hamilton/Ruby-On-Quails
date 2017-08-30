@@ -1,21 +1,21 @@
 #= require_tree ../utils
 
-{ stopEverything } = Rails
+{ stopEverything } = Quails
 
 # Handles "data-method" on links such as:
 # <a href="/users/5" data-method="delete" rel="nofollow" data-confirm="Are you sure?">Delete</a>
-Rails.handleMethod = (e) ->
+Quails.handleMethod = (e) ->
   link = this
   method = link.getAttribute('data-method')
   return unless method
 
-  href = Rails.href(link)
-  csrfToken = Rails.csrfToken()
-  csrfParam = Rails.csrfParam()
+  href = Quails.href(link)
+  csrfToken = Quails.csrfToken()
+  csrfParam = Quails.csrfParam()
   form = document.createElement('form')
   formContent = "<input name='_method' value='#{method}' type='hidden' />"
 
-  if csrfParam? and csrfToken? and not Rails.isCrossDomain(href)
+  if csrfParam? and csrfToken? and not Quails.isCrossDomain(href)
     formContent += "<input name='#{csrfParam}' value='#{csrfToken}' type='hidden' />"
 
   # Must trigger submit by click on a button, else "submit" event handler won't work!

@@ -15,13 +15,13 @@ class ConsoleTest < ActiveSupport::TestCase
   end
 
   def load_environment(sandbox = false)
-    require "#{rails_root}/config/environment"
-    Rails.application.sandbox = sandbox
-    Rails.application.load_console
+    require "#{quails_root}/config/environment"
+    Quails.application.sandbox = sandbox
+    Quails.application.load_console
   end
 
   def irb_context
-    Object.new.extend(Rails::ConsoleMethods)
+    Object.new.extend(Quails::ConsoleMethods)
   end
 
   def test_app_method_should_return_integration_session
@@ -33,7 +33,7 @@ class ConsoleTest < ActiveSupport::TestCase
 
   def test_app_can_access_path_helper_method
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Quails.application.routes.draw do
         get 'foo', to: 'foo#index'
       end
     RUBY
@@ -107,7 +107,7 @@ class FullStackConsoleTest < ActiveSupport::TestCase
       class Post < ActiveRecord::Base
       end
     CODE
-    system "#{app_path}/bin/rails runner 'Post.connection.create_table :posts'"
+    system "#{app_path}/bin/quails runner 'Post.connection.create_table :posts'"
 
     @master, @slave = PTY.open
   end
@@ -125,7 +125,7 @@ class FullStackConsoleTest < ActiveSupport::TestCase
 
   def spawn_console(options)
     Process.spawn(
-      "#{app_path}/bin/rails console #{options}",
+      "#{app_path}/bin/quails console #{options}",
       in: @slave, out: @slave, err: @slave
     )
 
@@ -152,7 +152,7 @@ class FullStackConsoleTest < ActiveSupport::TestCase
     spawn_console("test -- --verbose")
 
     write_prompt "a = 1", "a = 1"
-    write_prompt "puts Rails.env", "puts Rails.env\r\ntest"
+    write_prompt "puts Quails.env", "puts Quails.env\r\ntest"
     @master.puts "quit"
   end
 end

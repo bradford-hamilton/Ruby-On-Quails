@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/controller/controller_generator"
+require "quails/generators/quails/controller/controller_generator"
 
-class ControllerGeneratorTest < Rails::Generators::TestCase
+class ControllerGeneratorTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
   arguments %w(Account foo bar)
 

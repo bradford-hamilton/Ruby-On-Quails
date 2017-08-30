@@ -8,7 +8,7 @@ require "active_support/core_ext/string/inflections"
 
 require_relative "actions"
 
-module Rails
+module Quails
   module Command
     class Base < Thor
       class Error < Thor::Error # :nodoc:
@@ -17,7 +17,7 @@ module Rails
       include Actions
 
       class << self
-        # Returns true when the app is a Rails engine.
+        # Returns true when the app is a Quails engine.
         def engine?
           defined?(ENGINE_ROOT)
         end
@@ -44,21 +44,21 @@ module Rails
         end
 
         # Convenience method to hide this command from the available ones when
-        # running rails command.
+        # running quails command.
         def hide_command!
-          Rails::Command.hidden_commands << self
+          Quails::Command.hidden_commands << self
         end
 
         def inherited(base) #:nodoc:
           super
 
           if base.name && base.name !~ /Base$/
-            Rails::Command.subclasses << base
+            Quails::Command.subclasses << base
           end
         end
 
         def perform(command, args, config) # :nodoc:
-          if Rails::Command::HELP_MAPPINGS.include?(args.first)
+          if Quails::Command::HELP_MAPPINGS.include?(args.first)
             command, args = "help", []
           end
 
@@ -70,17 +70,17 @@ module Rails
         end
 
         def executable
-          "bin/rails #{command_name}"
+          "bin/quails #{command_name}"
         end
 
-        # Use Rails' default banner.
+        # Use Quails' default banner.
         def banner(*)
           "#{executable} #{arguments.map(&:usage).join(' ')} [options]".squish
         end
 
         # Sets the base_name taking into account the current class namespace.
         #
-        #   Rails::Command::TestCommand.base_name # => 'rails'
+        #   Quails::Command::TestCommand.base_name # => 'quails'
         def base_name
           @base_name ||= begin
             if base = name.to_s.split("::").first
@@ -91,7 +91,7 @@ module Rails
 
         # Return command name without namespaces.
         #
-        #   Rails::Command::TestCommand.command_name # => 'test'
+        #   Quails::Command::TestCommand.command_name # => 'test'
         def command_name
           @command_name ||= begin
             if command = name.to_s.split("::").last
@@ -112,8 +112,8 @@ module Rails
         # Default file root to place extra files a command might need, placed
         # one folder above the command file.
         #
-        # For a Rails::Command::TestCommand placed in <tt>rails/command/test_command.rb</tt>
-        # would return <tt>rails/test</tt>.
+        # For a Quails::Command::TestCommand placed in <tt>quails/command/test_command.rb</tt>
+        # would return <tt>quails/test</tt>.
         def default_command_root
           path = File.expand_path(File.join("../commands", command_root_namespace), __dir__)
           path if File.exist?(path)
@@ -135,7 +135,7 @@ module Rails
           end
 
           def command_root_namespace
-            (namespace.split(":") - %w( rails )).first
+            (namespace.split(":") - %w( quails )).first
           end
 
           def namespaced_commands

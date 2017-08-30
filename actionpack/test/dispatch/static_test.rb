@@ -186,7 +186,7 @@ module StaticTests
 
   def test_serves_files_with_headers
     headers = {
-      "Access-Control-Allow-Origin" => "http://rubyonrails.org",
+      "Access-Control-Allow-Origin" => "http://rubyonquails.org",
       "Cache-Control"               => "public, max-age=60",
       "X-Custom-Header"             => "I'm a teapot"
     }
@@ -194,7 +194,7 @@ module StaticTests
     app      = ActionDispatch::Static.new(DummyApp, @root, headers: headers)
     response = Rack::MockRequest.new(app).request("GET", "/foo/bar.html")
 
-    assert_equal "http://rubyonrails.org", response.headers["Access-Control-Allow-Origin"]
+    assert_equal "http://rubyonquails.org", response.headers["Access-Control-Allow-Origin"]
     assert_equal "public, max-age=60",     response.headers["Cache-Control"]
     assert_equal "I'm a teapot",           response.headers["X-Custom-Header"]
   end

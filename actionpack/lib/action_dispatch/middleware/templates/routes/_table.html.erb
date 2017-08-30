@@ -145,7 +145,7 @@
       if (!path)
         return searchElem.onblur();
 
-      getJSON('/rails/info/routes?path=' + path, function(matches){
+      getJSON('/quails/info/routes?path=' + path, function(matches){
         // Clear out results section
         exactSection.innerHTML = defaultExactMatch;
         fuzzySection.innerHTML = defaultFuzzyMatch;

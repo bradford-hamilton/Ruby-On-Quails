@@ -1,7 +1,7 @@
 awdr:
   author_id: 1
   id: 1
-  name: "Agile Web Development with Rails"
+  name: "Agile Web Development with Quails"
   format: "paperback"
   status: :published
   read_status: :read
@@ -14,7 +14,7 @@ awdr:
 rfr:
   author_id: 1
   id: 2
-  name: "Ruby for Rails"
+  name: "Ruby for Quails"
   format: "ebook"
   status: "proposed"
   read_status: "reading"

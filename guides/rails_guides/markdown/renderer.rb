@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module RailsGuides
+module QuailsGuides
   class Markdown
     class Renderer < Redcarpet::Render::HTML
       cattr_accessor :edge, :version
@@ -16,7 +16,7 @@ HTML
       end
 
       def link(url, title, content)
-        if url.start_with?("http://api.rubyonrails.org")
+        if url.start_with?("http://api.rubyonquails.org")
           %(<a href="#{api_link(url)}">#{content}</a>)
         elsif title
           %(<a href="#{url}" title="#{title}">#{content}</a>)
@@ -106,11 +106,11 @@ HTML
               file_path
             end
 
-          "https://github.com/rails/rails/tree/#{tree}/#{path}"
+          "https://github.com/quails/quails/tree/#{tree}/#{path}"
         end
 
         def api_link(url)
-          if url =~ %r{http://api\.rubyonrails\.org/v\d+\.}
+          if url =~ %r{http://api\.rubyonquails\.org/v\d+\.}
             url
           elsif edge
             url.sub("api", "edgeapi")

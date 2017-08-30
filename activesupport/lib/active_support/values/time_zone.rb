@@ -16,11 +16,11 @@ module ActiveSupport
   # * Create ActiveSupport::TimeWithZone instances via TimeZone's +local+,
   #   +parse+, +at+ and +now+ methods.
   #
-  # If you set <tt>config.time_zone</tt> in the Rails Application, you can
+  # If you set <tt>config.time_zone</tt> in the Quails Application, you can
   # access this TimeZone object via <tt>Time.zone</tt>:
   #
   #   # application.rb:
-  #   class Application < Rails::Application
+  #   class Application < Quails::Application
   #     config.time_zone = 'Eastern Time (US & Canada)'
   #   end
   #
@@ -28,7 +28,7 @@ module ActiveSupport
   #   Time.zone.name # => "Eastern Time (US & Canada)"
   #   Time.zone.now  # => Sun, 18 May 2008 14:30:44 EDT -04:00
   class TimeZone
-    # Keys are Rails TimeZone names, values are TZInfo identifiers.
+    # Keys are Quails TimeZone names, values are TZInfo identifiers.
     MAPPING = {
       "International Date Line West" => "Pacific/Midway",
       "Midway Island"                => "Pacific/Midway",

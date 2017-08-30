@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gemspec
 
-gem "arel", github: "rails/arel"
+gem "arel", github: "quails/arel"
 
 # We need a newish Rake since Active Job sets its test tasks' descriptions.
 gem "rake", ">= 11.1"
@@ -18,9 +18,9 @@ gem "mocha", "~> 0.14", require: false
 gem "capybara", "~> 2.13"
 
 gem "rack-cache", "~> 1.2"
-gem "jquery-rails"
-gem "coffee-rails"
-gem "sass-rails", github: "rails/sass-rails", branch: "5-0-stable"
+gem "jquery-quails"
+gem "coffee-quails"
+gem "sass-quails", github: "quails/sass-quails", branch: "5-0-stable"
 gem "turbolinks", "~> 5"
 
 # require: false so bcrypt is loaded only when has_secure_password is used.
@@ -72,8 +72,8 @@ group :job do
   gem "sneakers", require: false
   gem "que", require: false
   gem "backburner", require: false
-  #TODO: add qu after it support Rails 5.1
-  # gem 'qu-rails', github: "bkeepers/qu", branch: "master", require: false
+  #TODO: add qu after it support Quails 5.1
+  # gem 'qu-quails', github: "bkeepers/qu", branch: "master", require: false
   gem "qu-redis", require: false
   gem "delayed_job_active_record", require: false
   gem "sequel", require: false

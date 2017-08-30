@@ -109,26 +109,26 @@ module ActionView
       # is sanitized to prevent possible XSS attacks. If the input is trustworthy, passing false
       # for <tt>:sanitize</tt> will turn sanitizing off.
       #
-      #   highlight('You searched for: rails', 'rails')
-      #   # => You searched for: <mark>rails</mark>
+      #   highlight('You searched for: quails', 'quails')
+      #   # => You searched for: <mark>quails</mark>
       #
-      #   highlight('You searched for: rails', /for|rails/)
-      #   # => You searched <mark>for</mark>: <mark>rails</mark>
+      #   highlight('You searched for: quails', /for|quails/)
+      #   # => You searched <mark>for</mark>: <mark>quails</mark>
       #
-      #   highlight('You searched for: ruby, rails, dhh', 'actionpack')
-      #   # => You searched for: ruby, rails, dhh
+      #   highlight('You searched for: ruby, quails, dhh', 'actionpack')
+      #   # => You searched for: ruby, quails, dhh
       #
-      #   highlight('You searched for: rails', ['for', 'rails'], highlighter: '<em>\1</em>')
-      #   # => You searched <em>for</em>: <em>rails</em>
+      #   highlight('You searched for: quails', ['for', 'quails'], highlighter: '<em>\1</em>')
+      #   # => You searched <em>for</em>: <em>quails</em>
       #
-      #   highlight('You searched for: rails', 'rails', highlighter: '<a href="search?q=\1">\1</a>')
-      #   # => You searched for: <a href="search?q=rails">rails</a>
+      #   highlight('You searched for: quails', 'quails', highlighter: '<a href="search?q=\1">\1</a>')
+      #   # => You searched for: <a href="search?q=quails">quails</a>
       #
-      #   highlight('You searched for: rails', 'rails') { |match| link_to(search_path(q: match, match)) }
-      #   # => You searched for: <a href="search?q=rails">rails</a>
+      #   highlight('You searched for: quails', 'quails') { |match| link_to(search_path(q: match, match)) }
+      #   # => You searched for: <a href="search?q=quails">quails</a>
       #
-      #   highlight('<a href="javascript:alert(\'no!\')">ruby</a> on rails', 'rails', sanitize: false)
-      #   # => "<a>ruby</a> on <mark>rails</mark>"
+      #   highlight('<a href="javascript:alert(\'no!\')">ruby</a> on quails', 'quails', sanitize: false)
+      #   # => "<a>ruby</a> on <mark>quails</mark>"
       def highlight(text, phrases, options = {})
         text = sanitize(text) if options.fetch(:sanitize, true)
 

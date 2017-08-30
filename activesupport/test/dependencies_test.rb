@@ -174,7 +174,7 @@ class DependenciesTest < ActiveSupport::TestCase
     end
   end
 
-  # Regression, see https://github.com/rails/rails/issues/16468.
+  # Regression, see https://github.com/quails/quails/issues/16468.
   def test_require_dependency_interaction_with_autoloading
     with_autoloading_fixtures do
       require_dependency "typo"

@@ -1,9 +1,9 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-Rails Routing from the Outside In
+Quails Routing from the Outside In
 =================================
 
-This guide covers the user-facing features of Rails routing.
+This guide covers the user-facing features of Quails routing.
 
 After reading this guide, you will know:
 
@@ -15,14 +15,14 @@ After reading this guide, you will know:
 
 --------------------------------------------------------------------------------
 
-The Purpose of the Rails Router
+The Purpose of the Quails Router
 -------------------------------
 
-The Rails router recognizes URLs and dispatches them to a controller's action, or to a Rack application. It can also generate paths and URLs, avoiding the need to hardcode strings in your views.
+The Quails router recognizes URLs and dispatches them to a controller's action, or to a Rack application. It can also generate paths and URLs, avoiding the need to hardcode strings in your views.
 
 ### Connecting URLs to Code
 
-When your Rails application receives an incoming request for:
+When your Quails application receives an incoming request for:
 
 ```
 GET /patients/17
@@ -58,16 +58,16 @@ and this in the corresponding view:
 
 then the router will generate the path `/patients/17`. This reduces the brittleness of your view and makes your code easier to understand. Note that the id does not need to be specified in the route helper.
 
-Resource Routing: the Rails Default
+Resource Routing: the Quails Default
 -----------------------------------
 
 Resource routing allows you to quickly declare all of the common routes for a given resourceful controller. Instead of declaring separate routes for your `index`, `show`, `new`, `edit`, `create`, `update` and `destroy` actions, a resourceful route declares them in a single line of code.
 
 ### Resources on the Web
 
-Browsers request pages from Rails by making a request for a URL using a specific HTTP method, such as `GET`, `POST`, `PATCH`, `PUT` and `DELETE`. Each method is a request to perform an operation on the resource. A resource route maps a number of related requests to actions in a single controller.
+Browsers request pages from Quails by making a request for a URL using a specific HTTP method, such as `GET`, `POST`, `PATCH`, `PUT` and `DELETE`. Each method is a request to perform an operation on the resource. A resource route maps a number of related requests to actions in a single controller.
 
-When your Rails application receives an incoming request for:
+When your Quails application receives an incoming request for:
 
 ```
 DELETE /photos/17
@@ -79,11 +79,11 @@ it asks the router to map it to a controller action. If the first matching route
 resources :photos
 ```
 
-Rails would dispatch that request to the `destroy` action on the `photos` controller with `{ id: '17' }` in `params`.
+Quails would dispatch that request to the `destroy` action on the `photos` controller with `{ id: '17' }` in `params`.
 
 ### CRUD, Verbs, and Actions
 
-In Rails, a resourceful route provides a mapping between HTTP verbs and URLs to
+In Quails, a resourceful route provides a mapping between HTTP verbs and URLs to
 controller actions. By convention, each action also maps to a specific CRUD
 operation in a database. A single entry in the routing file, such as:
 
@@ -105,7 +105,7 @@ creates seven different routes in your application, all mapping to the `Photos` 
 
 NOTE: Because the router uses the HTTP verb and URL to match inbound requests, four URLs map to seven different actions.
 
-NOTE: Rails routes are matched in the order they are specified, so if you have a `resources :photos` above a `get 'photos/poll'` the `show` action's route for the `resources` line will be matched before the `get` line. To fix this, move the `get` line **above** the `resources` line so that it is matched first.
+NOTE: Quails routes are matched in the order they are specified, so if you have a `resources :photos` above a `get 'photos/poll'` the `show` action's route for the `resources` line will be matched before the `get` line. To fix this, move the `get` line **above** the `resources` line so that it is matched first.
 
 ### Path and URL Helpers
 
@@ -186,7 +186,7 @@ namespace :admin do
 end
 ```
 
-This will create a number of routes for each of the `articles` and `comments` controller. For `Admin::ArticlesController`, Rails will create:
+This will create a number of routes for each of the `articles` and `comments` controller. For `Admin::ArticlesController`, Quails will create:
 
 | HTTP Verb | Path                     | Controller#Action      | Named Helper              |
 | --------- | ------------------------ | ---------------------- | ---------------------------- |
@@ -294,7 +294,7 @@ Deeply-nested resources quickly become cumbersome. In this case, for example, th
 /publishers/1/magazines/2/photos/3
 ```
 
-The corresponding route helper would be `publisher_magazine_photo_url`, requiring you to specify objects at all three levels. Indeed, this situation is confusing enough that a popular [article](http://weblog.jamisbuck.org/2007/2/5/nesting-resources) by Jamis Buck proposes a rule of thumb for good Rails design:
+The corresponding route helper would be `publisher_magazine_photo_url`, requiring you to specify objects at all three levels. Indeed, this situation is confusing enough that a popular [article](http://weblog.jamisbuck.org/2007/2/5/nesting-resources) by Jamis Buck proposes a rule of thumb for good Quails design:
 
 TIP: _Resources should never be nested more than 1 level deep._
 
@@ -428,7 +428,7 @@ end
 
 ### Creating Paths and URLs From Objects
 
-In addition to using the routing helpers, Rails can also create paths and URLs from an array of parameters. For example, suppose you have this set of routes:
+In addition to using the routing helpers, Quails can also create paths and URLs from an array of parameters. For example, suppose you have this set of routes:
 
 ```ruby
 resources :magazines do
@@ -442,13 +442,13 @@ When using `magazine_ad_path`, you can pass in instances of `Magazine` and `Ad` 
 <%= link_to 'Ad details', magazine_ad_path(@magazine, @ad) %>
 ```
 
-You can also use `url_for` with a set of objects, and Rails will automatically determine which route you want:
+You can also use `url_for` with a set of objects, and Quails will automatically determine which route you want:
 
 ```erb
 <%= link_to 'Ad details', url_for([@magazine, @ad]) %>
 ```
 
-In this case, Rails will see that `@magazine` is a `Magazine` and `@ad` is an `Ad` and will therefore use the `magazine_ad_path` helper. In helpers like `link_to`, you can specify just the object in place of the full `url_for` call:
+In this case, Quails will see that `@magazine` is a `Magazine` and `@ad` is an `Ad` and will therefore use the `magazine_ad_path` helper. In helpers like `link_to`, you can specify just the object in place of the full `url_for` call:
 
 ```erb
 <%= link_to 'Ad details', [@magazine, @ad] %>
@@ -511,7 +511,7 @@ resources :photos do
 end
 ```
 
-This will enable Rails to recognize paths such as `/photos/search` with GET, and route to the `search` action of `PhotosController`. It will also create the `search_photos_url` and `search_photos_path` route helpers.
+This will enable Quails to recognize paths such as `/photos/search` with GET, and route to the `search` action of `PhotosController`. It will also create the `search_photos_url` and `search_photos_path` route helpers.
 
 Just as with member routes, you can pass `:on` to a route:
 
@@ -531,22 +531,22 @@ resources :comments do
 end
 ```
 
-This will enable Rails to recognize paths such as `/comments/new/preview` with GET, and route to the `preview` action of `CommentsController`. It will also create the `preview_new_comment_url` and `preview_new_comment_path` route helpers.
+This will enable Quails to recognize paths such as `/comments/new/preview` with GET, and route to the `preview` action of `CommentsController`. It will also create the `preview_new_comment_url` and `preview_new_comment_path` route helpers.
 
 TIP: If you find yourself adding many extra actions to a resourceful route, it's time to stop and ask yourself whether you're disguising the presence of another resource.
 
 Non-Resourceful Routes
 ----------------------
 
-In addition to resource routing, Rails has powerful support for routing arbitrary URLs to actions. Here, you don't get groups of routes automatically generated by resourceful routing. Instead, you set up each route separately within your application.
+In addition to resource routing, Quails has powerful support for routing arbitrary URLs to actions. Here, you don't get groups of routes automatically generated by resourceful routing. Instead, you set up each route separately within your application.
 
 While you should usually use resourceful routing, there are still many places where the simpler routing is more appropriate. There's no need to try to shoehorn every last piece of your application into a resourceful framework if that's not a good fit.
 
-In particular, simple routing makes it very easy to map legacy URLs to new Rails actions.
+In particular, simple routing makes it very easy to map legacy URLs to new Quails actions.
 
 ### Bound Parameters
 
-When you set up a regular route, you supply a series of symbols that Rails maps to parts of an incoming HTTP request. For example, consider this route:
+When you set up a regular route, you supply a series of symbols that Quails maps to parts of an incoming HTTP request. For example, consider this route:
 
 ```ruby
 get 'photos(/:id)', to: :display
@@ -594,7 +594,7 @@ You can define defaults in a route by supplying a hash for the `:defaults` optio
 get 'photos/:id', to: 'photos#show', defaults: { format: 'jpg' }
 ```
 
-Rails would match `photos/12` to the `show` action of `PhotosController`, and set `params[:format]` to `"jpg"`.
+Quails would match `photos/12` to the `show` action of `PhotosController`, and set `params[:format]` to `"jpg"`.
 
 You can also use `defaults` in a block format to define the defaults for multiple items:
 
@@ -640,7 +640,7 @@ match 'photos', to: 'photos#show', via: :all
 
 NOTE: Routing both `GET` and `POST` requests to a single action has security implications. In general, you should avoid routing all verbs to an action unless you have a good reason to.
 
-NOTE: `GET` in Rails won't check for CSRF token. You should never write to the database from `GET` requests, for more information see the [security guide](security.html#csrf-countermeasures) on CSRF countermeasures.
+NOTE: `GET` in Quails won't check for CSRF token. You should never write to the database from `GET` requests, for more information see the [security guide](security.html#csrf-countermeasures) on CSRF countermeasures.
 
 ### Segment Constraints
 
@@ -697,7 +697,7 @@ NOTE: There is an exception for the `format` constraint: while it's a method on 
 
 ### Advanced Constraints
 
-If you have a more advanced constraint, you can provide an object that responds to `matches?` that Rails should use. Let's say you wanted to route all users on a blacklist to the `BlacklistController`. You could do:
+If you have a more advanced constraint, you can provide an object that responds to `matches?` that Quails should use. Let's say you wanted to route all users on a blacklist to the `BlacklistController`. You could do:
 
 ```ruby
 class BlacklistConstraint
@@ -710,7 +710,7 @@ class BlacklistConstraint
   end
 end
 
-Rails.application.routes.draw do
+Quails.application.routes.draw do
   get '*path', to: 'blacklist#index',
     constraints: BlacklistConstraint.new
 end
@@ -719,7 +719,7 @@ end
 You can also specify constraints as a lambda:
 
 ```ruby
-Rails.application.routes.draw do
+Quails.application.routes.draw do
   get '*path', to: 'blacklist#index',
     constraints: lambda { |request| Blacklist.retrieve_ips.include?(request.remote_ip) }
 end
@@ -792,11 +792,11 @@ Please note that default redirection is a 301 "Moved Permanently" redirect. Keep
 get '/stories/:name', to: redirect('/articles/%{name}', status: 302)
 ```
 
-In all of these cases, if you don't provide the leading host (`http://www.example.com`), Rails will take those details from the current request.
+In all of these cases, if you don't provide the leading host (`http://www.example.com`), Quails will take those details from the current request.
 
 ### Routing to Rack Applications
 
-Instead of a String like `'articles#index'`, which corresponds to the `index` action in the `ArticlesController`, you can specify any [Rack application](rails_on_rack.html) as the endpoint for a matcher:
+Instead of a String like `'articles#index'`, which corresponds to the `index` action in the `ArticlesController`, you can specify any [Rack application](quails_on_rack.html) as the endpoint for a matcher:
 
 ```ruby
 match '/application.js', to: MyRackApp, via: :all
@@ -823,7 +823,7 @@ mount AdminApp, at: '/admin'
 
 ### Using `root`
 
-You can specify what Rails should route `'/'` to with the `root` method:
+You can specify what Quails should route `'/'` to with the `root` method:
 
 ```ruby
 root to: 'pages#main'
@@ -855,7 +855,7 @@ get 'こんにちは', to: 'welcome#index'
 Customizing Resourceful Routes
 ------------------------------
 
-While the default routes and helpers generated by `resources :articles` will usually serve you well, you may want to customize them in some way. Rails allows you to customize virtually any generic part of the resourceful helpers.
+While the default routes and helpers generated by `resources :articles` will usually serve you well, you may want to customize them in some way. Quails allows you to customize virtually any generic part of the resourceful helpers.
 
 ### Specifying a Controller to Use
 
@@ -962,7 +962,7 @@ end
 
 ### Prefixing the Named Route Helpers
 
-You can use the `:as` option to prefix the named route helpers that Rails generates for a route. Use this option to prevent name collisions between routes using a path scope. For example:
+You can use the `:as` option to prefix the named route helpers that Quails generates for a route. Use this option to prevent name collisions between routes using a path scope. For example:
 
 ```ruby
 scope 'admin' do
@@ -1000,7 +1000,7 @@ This will provide you with URLs such as `/bob/articles/1` and will allow you to 
 
 ### Restricting the Routes Created
 
-By default, Rails creates routes for the seven default actions (`index`, `show`, `new`, `create`, `edit`, `update`, and `destroy`) for every RESTful route in your application. You can use the `:only` and `:except` options to fine-tune this behavior. The `:only` option tells Rails to create only the specified routes:
+By default, Quails creates routes for the seven default actions (`index`, `show`, `new`, `create`, `edit`, `update`, and `destroy`) for every RESTful route in your application. You can use the `:only` and `:except` options to fine-tune this behavior. The `:only` option tells Quails to create only the specified routes:
 
 ```ruby
 resources :photos, only: [:index, :show]
@@ -1008,13 +1008,13 @@ resources :photos, only: [:index, :show]
 
 Now, a `GET` request to `/photos` would succeed, but a `POST` request to `/photos` (which would ordinarily be routed to the `create` action) will fail.
 
-The `:except` option specifies a route or list of routes that Rails should _not_ create:
+The `:except` option specifies a route or list of routes that Quails should _not_ create:
 
 ```ruby
 resources :photos, except: :destroy
 ```
 
-In this case, Rails will create all of the normal routes except the route for `destroy` (a `DELETE` request to `/photos/:id`).
+In this case, Quails will create all of the normal routes except the route for `destroy` (a `DELETE` request to `/photos/:id`).
 
 TIP: If your application has many RESTful routes, using `:only` and `:except` to generate only the routes that you actually need can cut down on memory use and speed up the routing process.
 
@@ -1028,7 +1028,7 @@ scope(path_names: { new: 'neu', edit: 'bearbeiten' }) do
 end
 ```
 
-Rails now creates routes to the `CategoriesController`.
+Quails now creates routes to the `CategoriesController`.
 
 | HTTP Verb | Path                       | Controller#Action  | Named Helper            |
 | --------- | -------------------------- | ------------------ | ----------------------- |
@@ -1101,11 +1101,11 @@ edit_videos_path(video) # => "/videos/Roman-Holiday"
 Inspecting and Testing Routes
 -----------------------------
 
-Rails offers facilities for inspecting and testing your routes.
+Quails offers facilities for inspecting and testing your routes.
 
 ### Listing Existing Routes
 
-To get a complete list of the available routes in your application, visit `http://localhost:3000/rails/info/routes` in your browser while your server is running in the **development** environment. You can also execute the `rails routes` command in your terminal to produce the same output.
+To get a complete list of the available routes in your application, visit `http://localhost:3000/quails/info/routes` in your browser while your server is running in the **development** environment. You can also execute the `quails routes` command in your terminal to produce the same output.
 
 Both methods will list all of your routes, in the same order that they appear in `config/routes.rb`. For each route, you'll see:
 
@@ -1114,7 +1114,7 @@ Both methods will list all of your routes, in the same order that they appear in
 * The URL pattern to match
 * The routing parameters for the route
 
-For example, here's a small section of the `rails routes` output for a RESTful route:
+For example, here's a small section of the `quails routes` output for a RESTful route:
 
 ```
     users GET    /users(.:format)          users#index
@@ -1126,25 +1126,25 @@ edit_user GET    /users/:id/edit(.:format) users#edit
 You can search through your routes with the grep option: -g. This outputs any routes that partially match the URL helper method name, the HTTP verb, or the URL path.
 
 ```
-$ bin/rails routes -g new_comment
-$ bin/rails routes -g POST
-$ bin/rails routes -g admin
+$ bin/quails routes -g new_comment
+$ bin/quails routes -g POST
+$ bin/quails routes -g admin
 ```
 
 If you only want to see the routes that map to a specific controller, there's the -c option.
 
 ```
-$ bin/rails routes -c users
-$ bin/rails routes -c admin/users
-$ bin/rails routes -c Comments
-$ bin/rails routes -c Articles::CommentsController
+$ bin/quails routes -c users
+$ bin/quails routes -c admin/users
+$ bin/quails routes -c Comments
+$ bin/quails routes -c Articles::CommentsController
 ```
 
-TIP: You'll find that the output from `rails routes` is much more readable if you widen your terminal window until the output lines don't wrap.
+TIP: You'll find that the output from `quails routes` is much more readable if you widen your terminal window until the output lines don't wrap.
 
 ### Testing Routes
 
-Routes should be included in your testing strategy (just like the rest of your application). Rails offers three [built-in assertions](http://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html) designed to make testing routes simpler:
+Routes should be included in your testing strategy (just like the rest of your application). Quails offers three [built-in assertions](http://api.rubyonquails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html) designed to make testing routes simpler:
 
 * `assert_generates`
 * `assert_recognizes`

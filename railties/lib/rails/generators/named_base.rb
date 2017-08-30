@@ -4,7 +4,7 @@ require "active_support/core_ext/module/introspection"
 require_relative "base"
 require_relative "generated_attribute"
 
-module Rails
+module Quails
   module Generators
     class NamedBase < Base
       argument :name, type: :string
@@ -145,8 +145,8 @@ module Rails
 
         # Tries to retrieve the application name or simply return application.
         def application_name # :doc:
-          if defined?(Rails) && Rails.application
-            Rails.application.class.name.split("::").first.underscore
+          if defined?(Quails) && Quails.application
+            Quails.application.class.name.split("::").first.underscore
           else
             "application"
           end
@@ -161,7 +161,7 @@ module Rails
         # Convert attributes array into GeneratedAttribute objects.
         def parse_attributes!
           self.attributes = (attributes || []).map do |attr|
-            Rails::Generators::GeneratedAttribute.parse(attr)
+            Quails::Generators::GeneratedAttribute.parse(attr)
           end
         end
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   module Generators
     class ControllerGenerator < NamedBase # :nodoc:
       argument :actions, type: :array, default: [], banner: "action action"
@@ -24,7 +24,7 @@ module Rails
       private
 
         # This method creates nested route entry for namespaced resources.
-        # For eg. rails g controller foo/bar/baz index show
+        # For eg. quails g controller foo/bar/baz index show
         # Will generate -
         # namespace :foo do
         #   namespace :bar do

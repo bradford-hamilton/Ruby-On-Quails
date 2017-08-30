@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
 Active Record Migrations
 ========================
@@ -12,7 +12,7 @@ After reading this guide, you will know:
 
 * The generators you can use to create them.
 * The methods Active Record provides to manipulate your database.
-* The bin/rails tasks that manipulate migrations and your schema.
+* The bin/quails tasks that manipulate migrations and your schema.
 * How migrations relate to `schema.rb`.
 
 --------------------------------------------------------------------------------
@@ -115,7 +115,7 @@ of the migration. The name of the migration class (CamelCased version)
 should match the latter part of the file name. For example
 `20080906120000_create_products.rb` should define class `CreateProducts` and
 `20080906120001_add_details_to_products.rb` should define
-`AddDetailsToProducts`. Rails uses this timestamp to determine which migration
+`AddDetailsToProducts`. Quails uses this timestamp to determine which migration
 should be run and in what order, so if you're copying a migration from another
 application or generate a file yourself, be aware of its position in the order.
 
@@ -123,7 +123,7 @@ Of course, calculating timestamps is no fun, so Active Record provides a
 generator to handle making it for you:
 
 ```bash
-$ bin/rails generate migration AddPartNumberToProducts
+$ bin/quails generate migration AddPartNumberToProducts
 ```
 
 This will create an empty but appropriately named migration:
@@ -140,7 +140,7 @@ followed by a list of column names and types then a migration containing the
 appropriate `add_column` and `remove_column` statements will be created.
 
 ```bash
-$ bin/rails generate migration AddPartNumberToProducts part_number:string
+$ bin/quails generate migration AddPartNumberToProducts part_number:string
 ```
 
 will generate
@@ -156,7 +156,7 @@ end
 If you'd like to add an index on the new column, you can do that as well:
 
 ```bash
-$ bin/rails generate migration AddPartNumberToProducts part_number:string:index
+$ bin/quails generate migration AddPartNumberToProducts part_number:string:index
 ```
 
 will generate
@@ -174,7 +174,7 @@ end
 Similarly, you can generate a migration to remove a column from the command line:
 
 ```bash
-$ bin/rails generate migration RemovePartNumberFromProducts part_number:string
+$ bin/quails generate migration RemovePartNumberFromProducts part_number:string
 ```
 
 generates
@@ -190,7 +190,7 @@ end
 You are not limited to one magically generated column. For example:
 
 ```bash
-$ bin/rails generate migration AddDetailsToProducts part_number:string price:decimal
+$ bin/quails generate migration AddDetailsToProducts part_number:string price:decimal
 ```
 
 generates
@@ -209,7 +209,7 @@ followed by a list of column names and types then a migration creating the table
 XXX with the columns listed will be generated. For example:
 
 ```bash
-$ bin/rails generate migration CreateProducts name:string part_number:string
+$ bin/quails generate migration CreateProducts name:string part_number:string
 ```
 
 generates
@@ -233,7 +233,7 @@ Also, the generator accepts column type as `references` (also available as
 `belongs_to`). For instance:
 
 ```bash
-$ bin/rails generate migration AddUserRefToProducts user:references
+$ bin/quails generate migration AddUserRefToProducts user:references
 ```
 
 generates
@@ -247,12 +247,12 @@ end
 ```
 
 This migration will create a `user_id` column and appropriate index.
-For more `add_reference` options, visit the [API documentation](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference).
+For more `add_reference` options, visit the [API documentation](http://api.rubyonquails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference).
 
 There is also a generator which will produce join tables if `JoinTable` is part of the name:
 
 ```bash
-$ bin/rails g migration CreateJoinTableCustomerProduct customer product
+$ bin/quails g migration CreateJoinTableCustomerProduct customer product
 ```
 
 will produce the following migration:
@@ -272,11 +272,11 @@ end
 
 The model and scaffold generators will create migrations appropriate for adding
 a new model. This migration will already contain instructions for creating the
-relevant table. If you tell Rails what columns you want, then statements for
+relevant table. If you tell Quails what columns you want, then statements for
 adding these columns will also be created. For example, running:
 
 ```bash
-$ bin/rails generate model Product name:string description:text
+$ bin/quails generate model Product name:string description:text
 ```
 
 will create a migration that looks like this
@@ -304,7 +304,7 @@ the command line. They are enclosed by curly braces and follow the field type:
 For instance, running:
 
 ```bash
-$ bin/rails generate migration AddDetailsToProducts 'price:decimal{5,2}' supplier:references{polymorphic}
+$ bin/quails generate migration AddDetailsToProducts 'price:decimal{5,2}' supplier:references{polymorphic}
 ```
 
 will produce a migration that looks like this
@@ -421,7 +421,7 @@ column and adds an index on it. Finally it renames the `upccode` column.
 
 ### Changing Columns
 
-Like the `remove_column` and `add_column` Rails provides the `change_column`
+Like the `remove_column` and `add_column` Quails provides the `change_column`
 migration method.
 
 ```ruby
@@ -483,8 +483,8 @@ table. The key references the `id` column of the `authors` table. If the
 column names can not be derived from the table names, you can use the
 `:column` and `:primary_key` options.
 
-Rails will generate a name for every foreign key starting with
-`fk_rails_` followed by 10 characters which are deterministically
+Quails will generate a name for every foreign key starting with
+`fk_quails_` followed by 10 characters which are deterministically
 generated from the `from_table` and `column`.
 There is a `:name` option to specify a different name if needed.
 
@@ -516,12 +516,12 @@ Product.connection.execute("UPDATE products SET price = 'free' WHERE 1=1")
 
 For more details and examples of individual methods, check the API documentation.
 In particular the documentation for
-[`ActiveRecord::ConnectionAdapters::SchemaStatements`](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html)
+[`ActiveRecord::ConnectionAdapters::SchemaStatements`](http://api.rubyonquails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html)
 (which provides the methods available in the `change`, `up` and `down` methods),
-[`ActiveRecord::ConnectionAdapters::TableDefinition`](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html)
+[`ActiveRecord::ConnectionAdapters::TableDefinition`](http://api.rubyonquails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html)
 (which provides the methods available on the object yielded by `create_table`)
 and
-[`ActiveRecord::ConnectionAdapters::Table`](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/Table.html)
+[`ActiveRecord::ConnectionAdapters::Table`](http://api.rubyonquails.org/classes/ActiveRecord/ConnectionAdapters/Table.html)
 (which provides the methods available on the object yielded by `change_table`).
 
 ### Using the `change` Method
@@ -557,7 +557,7 @@ definitions:
 `change_default` or `remove`.
 
 `remove_column` is reversible if you supply the column type as the third
-argument. Provide the original column options too, otherwise Rails can't
+argument. Provide the original column options too, otherwise Quails can't
 recreate the column exactly when rolling back:
 
 ```ruby
@@ -728,10 +728,10 @@ you will have to use `structure.sql` as dump method. See
 Running Migrations
 ------------------
 
-Rails provides a set of bin/rails tasks to run certain sets of migrations.
+Quails provides a set of bin/quails tasks to run certain sets of migrations.
 
-The very first migration related bin/rails task you will use will probably be
-`rails db:migrate`. In its most basic form it just runs the `change` or `up`
+The very first migration related bin/quails task you will use will probably be
+`quails db:migrate`. In its most basic form it just runs the `change` or `up`
 method for all the migrations that have not yet been run. If there are
 no such migrations, it exits. It will run these migrations in order based
 on the date of the migration.
@@ -745,7 +745,7 @@ is the numerical prefix on the migration's filename. For example, to migrate
 to version 20080906120000 run:
 
 ```bash
-$ bin/rails db:migrate VERSION=20080906120000
+$ bin/quails db:migrate VERSION=20080906120000
 ```
 
 If version 20080906120000 is greater than the current version (i.e., it is
@@ -762,7 +762,7 @@ mistake in it and wish to correct it. Rather than tracking down the version
 number associated with the previous migration you can run:
 
 ```bash
-$ bin/rails db:rollback
+$ bin/quails db:rollback
 ```
 
 This will rollback the latest migration, either by reverting the `change`
@@ -770,7 +770,7 @@ method or by running the `down` method. If you need to undo
 several migrations you can provide a `STEP` parameter:
 
 ```bash
-$ bin/rails db:rollback STEP=3
+$ bin/quails db:rollback STEP=3
 ```
 
 will revert the last 3 migrations.
@@ -780,26 +780,26 @@ back up again. As with the `db:rollback` task, you can use the `STEP` parameter
 if you need to go more than one version back, for example:
 
 ```bash
-$ bin/rails db:migrate:redo STEP=3
+$ bin/quails db:migrate:redo STEP=3
 ```
 
-Neither of these bin/rails tasks do anything you could not do with `db:migrate`. They
+Neither of these bin/quails tasks do anything you could not do with `db:migrate`. They
 are simply more convenient, since you do not need to explicitly specify the
 version to migrate to.
 
 ### Setup the Database
 
-The `rails db:setup` task will create the database, load the schema and initialize
+The `quails db:setup` task will create the database, load the schema and initialize
 it with the seed data.
 
 ### Resetting the Database
 
-The `rails db:reset` task will drop the database and set it up again. This is
-functionally equivalent to `rails db:drop db:setup`.
+The `quails db:reset` task will drop the database and set it up again. This is
+functionally equivalent to `quails db:drop db:setup`.
 
 NOTE: This is not the same as running all the migrations. It will only use the
 contents of the current `db/schema.rb` or `db/structure.sql` file. If a migration can't be rolled back,
-`rails db:reset` may not help you. To find out more about dumping the schema see
+`quails db:reset` may not help you. To find out more about dumping the schema see
 [Schema Dumping and You](#schema-dumping-and-you) section.
 
 ### Running Specific Migrations
@@ -810,7 +810,7 @@ the corresponding migration will have its `change`, `up` or `down` method
 invoked, for example:
 
 ```bash
-$ bin/rails db:migrate:up VERSION=20080906120000
+$ bin/quails db:migrate:up VERSION=20080906120000
 ```
 
 will run the 20080906120000 migration by running the `change` method (or the
@@ -820,13 +820,13 @@ Active Record believes that it has already been run.
 
 ### Running Migrations in Different Environments
 
-By default running `bin/rails db:migrate` will run in the `development` environment.
+By default running `bin/quails db:migrate` will run in the `development` environment.
 To run migrations against another environment you can specify it using the
 `RAILS_ENV` environment variable while running the command. For example to run
 migrations against the `test` environment you could run:
 
 ```bash
-$ bin/rails db:migrate RAILS_ENV=test
+$ bin/quails db:migrate RAILS_ENV=test
 ```
 
 ### Changing the Output of Running Migrations
@@ -887,7 +887,7 @@ generates the following output
 ==  CreateProducts: migrated (10.0054s) =======================================
 ```
 
-If you want Active Record to not output anything, then running `rails db:migrate
+If you want Active Record to not output anything, then running `quails db:migrate
 VERBOSE=false` will suppress all output.
 
 Changing Existing Migrations
@@ -895,10 +895,10 @@ Changing Existing Migrations
 
 Occasionally you will make a mistake when writing a migration. If you have
 already run the migration, then you cannot just edit the migration and run the
-migration again: Rails thinks it has already run the migration and so will do
-nothing when you run `rails db:migrate`. You must rollback the migration (for
-example with `bin/rails db:rollback`), edit your migration and then run
-`rails db:migrate` to run the corrected version.
+migration again: Quails thinks it has already run the migration and so will do
+nothing when you run `quails db:migrate`. You must rollback the migration (for
+example with `bin/quails db:rollback`), edit your migration and then run
+`quails db:migrate` to run the corrected version.
 
 In general, editing existing migrations is not a good idea. You will be
 creating extra work for yourself and your co-workers and cause major headaches
@@ -980,7 +980,7 @@ should set the schema format to `:sql`.
 
 Instead of using Active Record's schema dumper, the database's structure will
 be dumped using a tool specific to the database (via the `db:structure:dump`
-rails task) into `db/structure.sql`. For example, for PostgreSQL, the `pg_dump`
+quails task) into `db/structure.sql`. For example, for PostgreSQL, the `pg_dump`
 utility is used. For MySQL and MariaDB, this file will contain the output of
 `SHOW CREATE TABLE` for the various tables.
 
@@ -1020,7 +1020,7 @@ such features, the `execute` method can be used to execute arbitrary SQL.
 Migrations and Seed Data
 ------------------------
 
-The main purpose of Rails' migration feature is to issue commands that modify the
+The main purpose of Quails' migration feature is to issue commands that modify the
 schema using a consistent process. Migrations can also be used
 to add or modify data. This is useful in an existing database that can't be destroyed
 and recreated, such as a production database.
@@ -1039,11 +1039,11 @@ class AddInitialProducts < ActiveRecord::Migration[5.0]
 end
 ```
 
-To add initial data after a database is created, Rails has a built-in
+To add initial data after a database is created, Quails has a built-in
 'seeds' feature that makes the process quick and easy. This is especially
 useful when reloading the database frequently in development and test environments.
 It's easy to get started with this feature: just fill up `db/seeds.rb` with some
-Ruby code, and run `rails db:seed`:
+Ruby code, and run `quails db:seed`:
 
 ```ruby
 5.times do |i|

@@ -119,8 +119,8 @@ module ActionDispatch
       end
 
       def source_fragment(path, line)
-        return unless Rails.respond_to?(:root) && Rails.root
-        full_path = Rails.root.join(path)
+        return unless Quails.respond_to?(:root) && Quails.root
+        full_path = Quails.root.join(path)
         if File.exist?(full_path)
           File.open(full_path, "r") do |file|
             start = [line - 3, 0].max

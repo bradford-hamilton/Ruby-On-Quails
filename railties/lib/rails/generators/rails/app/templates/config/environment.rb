@@ -1,5 +1,5 @@
-# Load the Rails application.
+# Load the Quails application.
 require_relative 'application'
 
-# Initialize the Rails application.
-Rails.application.initialize!
+# Initialize the Quails application.
+Quails.application.initialize!

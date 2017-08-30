@@ -2,14 +2,14 @@
 
 module ActiveSupport
   # Wrapping a string in this class gives you a prettier way to test
-  # for equality. The value returned by <tt>Rails.env</tt> is wrapped
+  # for equality. The value returned by <tt>Quails.env</tt> is wrapped
   # in a StringInquirer object, so instead of calling this:
   #
-  #   Rails.env == 'production'
+  #   Quails.env == 'production'
   #
   # you can call this:
   #
-  #   Rails.env.production?
+  #   Quails.env.production?
   #
   # == Instantiating a new StringInquirer
   #

@@ -2,11 +2,11 @@
 
 require "abstract_unit"
 require "isolation/abstract_unit"
-require "rails/generators"
-require "rails/generators/rails/encrypted_secrets/encrypted_secrets_generator"
-require "rails/secrets"
+require "quails/generators"
+require "quails/generators/quails/encrypted_secrets/encrypted_secrets_generator"
+require "quails/secrets"
 
-class Rails::SecretsTest < ActiveSupport::TestCase
+class Quails::SecretsTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation
 
   def setup
@@ -19,14 +19,14 @@ class Rails::SecretsTest < ActiveSupport::TestCase
 
   test "setting read to false skips parsing" do
     run_secrets_generator do
-      Rails::Secrets.write(<<-end_of_secrets)
+      Quails::Secrets.write(<<-end_of_secrets)
         test:
           yeah_yeah: lets-walk-in-the-cool-evening-light
       end_of_secrets
 
-      Rails.application.config.read_encrypted_secrets = false
-      Rails.application.instance_variable_set(:@secrets, nil) # Dance around caching 💃🕺
-      assert_not Rails.application.secrets.yeah_yeah
+      Quails.application.config.read_encrypted_secrets = false
+      Quails.application.instance_variable_set(:@secrets, nil) # Dance around caching 💃🕺
+      assert_not Quails.application.secrets.yeah_yeah
     end
   end
 
@@ -34,8 +34,8 @@ class Rails::SecretsTest < ActiveSupport::TestCase
     run_secrets_generator do
       FileUtils.rm("config/secrets.yml.key")
 
-      assert_raises Rails::Secrets::MissingKeyError do
-        Rails::Secrets.key
+      assert_raises Quails::Secrets::MissingKeyError do
+        Quails::Secrets.key
       end
     end
   end
@@ -47,7 +47,7 @@ class Rails::SecretsTest < ActiveSupport::TestCase
         ENV["RAILS_MASTER_KEY"] = IO.binread("config/secrets.yml.key").strip
         FileUtils.rm("config/secrets.yml.key")
 
-        assert_match "# production:\n#   external_api_key:", Rails::Secrets.read
+        assert_match "# production:\n#   external_api_key:", Quails::Secrets.read
       ensure
         ENV["RAILS_MASTER_KEY"] = old_key
       end
@@ -58,7 +58,7 @@ class Rails::SecretsTest < ActiveSupport::TestCase
     run_secrets_generator do
       File.binwrite("config/secrets.yml.key", "00112233445566778899aabbccddeeff")
 
-      assert_equal "00112233445566778899aabbccddeeff", Rails::Secrets.key
+      assert_equal "00112233445566778899aabbccddeeff", Quails::Secrets.key
     end
   end
 
@@ -66,7 +66,7 @@ class Rails::SecretsTest < ActiveSupport::TestCase
     run_secrets_generator do
       decrypted_path = nil
 
-      Rails::Secrets.read_for_editing do |tmp_path|
+      Quails::Secrets.read_for_editing do |tmp_path|
         decrypted_path = tmp_path
 
         assert_match(/# production:\n#   external_api_key/, File.read(tmp_path))
@@ -75,7 +75,7 @@ class Rails::SecretsTest < ActiveSupport::TestCase
       end
 
       assert_not File.exist?(decrypted_path)
-      assert_equal "Empty streets, empty nights. The Downtown Lights.", Rails::Secrets.read
+      assert_equal "Empty streets, empty nights. The Downtown Lights.", Quails::Secrets.read
     end
   end
 
@@ -86,41 +86,41 @@ class Rails::SecretsTest < ActiveSupport::TestCase
           yeah_yeah: lets-go-walking-down-this-empty-street
       end_of_secrets
 
-      Rails::Secrets.write(<<-end_of_secrets)
+      Quails::Secrets.write(<<-end_of_secrets)
         test:
           yeah_yeah: lets-walk-in-the-cool-evening-light
       end_of_secrets
 
-      Rails.application.config.read_encrypted_secrets = true
-      Rails.application.instance_variable_set(:@secrets, nil) # Dance around caching 💃🕺
-      assert_equal "lets-walk-in-the-cool-evening-light", Rails.application.secrets.yeah_yeah
+      Quails.application.config.read_encrypted_secrets = true
+      Quails.application.instance_variable_set(:@secrets, nil) # Dance around caching 💃🕺
+      assert_equal "lets-walk-in-the-cool-evening-light", Quails.application.secrets.yeah_yeah
     end
   end
 
   test "refer secrets inside env config" do
     run_secrets_generator do
-      Rails::Secrets.write(<<-end_of_yaml)
+      Quails::Secrets.write(<<-end_of_yaml)
         production:
           some_secret: yeah yeah
       end_of_yaml
 
       add_to_env_config "production", <<-end_of_config
-        config.dereferenced_secret = Rails.application.secrets.some_secret
+        config.dereferenced_secret = Quails.application.secrets.some_secret
       end_of_config
 
-      assert_equal "yeah yeah\n", `bin/rails runner -e production "puts Rails.application.config.dereferenced_secret"`
+      assert_equal "yeah yeah\n", `bin/quails runner -e production "puts Quails.application.config.dereferenced_secret"`
     end
   end
 
   test "do not update secrets.yml.enc when secretes do not change" do
     run_secrets_generator do
-      Rails::Secrets.read_for_editing do |tmp_path|
+      Quails::Secrets.read_for_editing do |tmp_path|
         File.write(tmp_path, "Empty streets, empty nights. The Downtown Lights.")
       end
 
       FileUtils.cp("config/secrets.yml.enc", "config/secrets.yml.enc.bk")
 
-      Rails::Secrets.read_for_editing do |tmp_path|
+      Quails::Secrets.read_for_editing do |tmp_path|
         File.write(tmp_path, "Empty streets, empty nights. The Downtown Lights.")
       end
 
@@ -135,13 +135,13 @@ class Rails::SecretsTest < ActiveSupport::TestCase
           api_key: 00112233445566778899aabbccddeeff…
       end_of_secrets
 
-      Rails::Secrets.write(secrets.dup.force_encoding(Encoding::ASCII_8BIT))
+      Quails::Secrets.write(secrets.dup.force_encoding(Encoding::ASCII_8BIT))
 
-      Rails::Secrets.read_for_editing do |tmp_path|
+      Quails::Secrets.read_for_editing do |tmp_path|
         assert_match(/production:\n\s*api_key: 00112233445566778899aabbccddeeff…\n/, File.read(tmp_path))
       end
 
-      assert_equal "00112233445566778899aabbccddeeff…\n", `bin/rails runner -e production "puts Rails.application.secrets.api_key"`
+      assert_equal "00112233445566778899aabbccddeeff…\n", `bin/quails runner -e production "puts Quails.application.secrets.api_key"`
     end
   end
 
@@ -152,13 +152,13 @@ class Rails::SecretsTest < ActiveSupport::TestCase
           api_key: 00112233445566778899aabbccddeeff…
       end_of_secrets
 
-      Rails::Secrets.write(secrets)
+      Quails::Secrets.write(secrets)
 
-      Rails::Secrets.read_for_editing do |tmp_path|
+      Quails::Secrets.read_for_editing do |tmp_path|
         assert_equal(secrets.dup.force_encoding(Encoding::ASCII_8BIT), IO.binread(tmp_path))
       end
 
-      assert_equal "00112233445566778899aabbccddeeff…\n", `bin/rails runner -e production "puts Rails.application.secrets.api_key"`
+      assert_equal "00112233445566778899aabbccddeeff…\n", `bin/quails runner -e production "puts Quails.application.secrets.api_key"`
     end
   end
 
@@ -166,11 +166,11 @@ class Rails::SecretsTest < ActiveSupport::TestCase
     def run_secrets_generator
       Dir.chdir(app_path) do
         capture(:stdout) do
-          Rails::Generators::EncryptedSecretsGenerator.start
+          Quails::Generators::EncryptedSecretsGenerator.start
         end
 
         # Make config.paths["config/secrets"] to be relative to app_path
-        Rails.application.config.root = app_path
+        Quails.application.config.root = app_path
 
         yield
       end

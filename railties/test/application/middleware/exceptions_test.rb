@@ -28,7 +28,7 @@ module ApplicationTests
       get "/foo"
       assert_equal 500, last_response.status
 
-      log = File.read(Rails.application.config.paths["log"].first)
+      log = File.read(Quails.application.config.paths["log"].first)
       assert_no_match(/action_dispatch/, log, log)
       assert_match(/oops/, log, log)
     end
@@ -104,7 +104,7 @@ module ApplicationTests
 
     test "routing to an nonexistent controller when action_dispatch.show_exceptions and consider_all_requests_local are set shows diagnostics" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Quails.application.routes.draw do
           resources :articles
         end
       RUBY

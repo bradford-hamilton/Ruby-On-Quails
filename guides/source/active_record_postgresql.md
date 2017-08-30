@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
 Active Record and PostgreSQL
 ============================
@@ -18,7 +18,7 @@ In order to use the PostgreSQL adapter you need to have at least version 9.1
 installed. Older versions are not supported.
 
 To get started with PostgreSQL have a look at the
-[configuring Rails guide](configuring.html#configuring-a-postgresql-database).
+[configuring Quails guide](configuring.html#configuring-a-postgresql-database).
 It describes how to properly setup Active Record for PostgreSQL.
 
 Datatypes
@@ -43,7 +43,7 @@ class Document < ApplicationRecord
 end
 
 # Usage
-data = File.read(Rails.root + "tmp/output.pdf")
+data = File.read(Quails.root + "tmp/output.pdf")
 Document.create payload: data
 ```
 
@@ -276,7 +276,7 @@ end
 
 NOTE: ENUM values can't be dropped currently. You can read why [here](https://www.postgresql.org/message-id/29F36C7C98AB09499B1A209D48EAA615B7653DBC8A@mail2a.alliedtesting.com).
 
-Hint: to show all the values of the all enums you have, you should call this query in `bin/rails db` or `psql` console:
+Hint: to show all the values of the all enums you have, you should call this query in `bin/quails db` or `psql` console:
 
 ```sql
 SELECT n.nspname AS enum_schema,
@@ -462,7 +462,7 @@ Database Views
 Imagine you need to work with a legacy database containing the following table:
 
 ```
-rails_pg_guide=# \d "TBL_ART"
+quails_pg_guide=# \d "TBL_ART"
                                         Table "public.TBL_ART"
    Column   |            Type             |                         Modifiers
 ------------+-----------------------------+------------------------------------------------------------
@@ -475,7 +475,7 @@ Indexes:
     "TBL_ART_pkey" PRIMARY KEY, btree ("INT_ID")
 ```
 
-This table does not follow the Rails conventions at all.
+This table does not follow the Quails conventions at all.
 Because simple PostgreSQL views are updateable by default,
 we can wrap it as follows:
 

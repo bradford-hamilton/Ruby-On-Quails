@@ -2,11 +2,11 @@
 
 require "active_support"
 require "active_support/testing/autorun"
-require "rails/configuration"
+require "quails/configuration"
 require "active_support/test_case"
 require "minitest/mock"
 
-module Rails
+module Quails
   module Configuration
     class MiddlewareStackProxyTest < ActiveSupport::TestCase
       def setup

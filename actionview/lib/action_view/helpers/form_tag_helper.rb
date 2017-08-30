@@ -719,14 +719,14 @@ module ActionView
       #   url_field_tag 'name'
       #   # => <input id="name" name="name" type="url" />
       #
-      #   url_field_tag 'url', 'http://rubyonrails.org'
-      #   # => <input id="url" name="url" type="url" value="http://rubyonrails.org" />
+      #   url_field_tag 'url', 'http://rubyonquails.org'
+      #   # => <input id="url" name="url" type="url" value="http://rubyonquails.org" />
       #
       #   url_field_tag 'url', nil, class: 'special_input'
       #   # => <input class="special_input" id="url" name="url" type="url" />
       #
-      #   url_field_tag 'url', 'http://rubyonrails.org', class: 'special_input', disabled: true
-      #   # => <input disabled="disabled" class="special_input" id="url" name="url" type="url" value="http://rubyonrails.org" />
+      #   url_field_tag 'url', 'http://rubyonquails.org', class: 'special_input', disabled: true
+      #   # => <input disabled="disabled" class="special_input" id="url" name="url" type="url" value="http://rubyonquails.org" />
       def url_field_tag(name, value = nil, options = {})
         text_field_tag(name, value, options.merge(type: :url))
       end
@@ -906,8 +906,8 @@ module ActionView
         end
 
         def convert_direct_upload_option_to_url(options)
-          if options.delete(:direct_upload) && respond_to?(:rails_direct_uploads_url)
-            options["data-direct-upload-url"] = rails_direct_uploads_url
+          if options.delete(:direct_upload) && respond_to?(:quails_direct_uploads_url)
+            options["data-direct-upload-url"] = quails_direct_uploads_url
           end
           options
         end

@@ -13,7 +13,7 @@ module AbstractController
 
     def _routes
       raise "In order to use #url_for, you must include routing helpers explicitly. " \
-            "For instance, `include Rails.application.routes.url_helpers`."
+            "For instance, `include Quails.application.routes.url_helpers`."
     end
 
     module ClassMethods

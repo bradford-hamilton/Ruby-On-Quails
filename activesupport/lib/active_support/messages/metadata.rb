@@ -10,7 +10,7 @@ module ActiveSupport
       end
 
       def as_json(options = {})
-        { _rails: { message: @message, exp: @expires_at, pur: @purpose } }
+        { _quails: { message: @message, exp: @expires_at, pur: @purpose } }
       end
 
       class << self
@@ -38,8 +38,8 @@ module ActiveSupport
           def extract_metadata(message)
             data = JSON.decode(message) rescue nil
 
-            if data.is_a?(Hash) && data.key?("_rails")
-              new(decode(data["_rails"]["message"]), data["_rails"]["exp"], data["_rails"]["pur"])
+            if data.is_a?(Hash) && data.key?("_quails")
+              new(decode(data["_quails"]["message"]), data["_quails"]["exp"], data["_quails"]["pur"])
             else
               new(message)
             end

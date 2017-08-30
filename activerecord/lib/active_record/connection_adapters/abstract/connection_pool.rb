@@ -612,7 +612,7 @@ module ActiveRecord
 
         #--
         # From the discussion on GitHub:
-        #  https://github.com/rails/rails/pull/14938#commitcomment-6601951
+        #  https://github.com/quails/quails/pull/14938#commitcomment-6601951
         # This hook-in method allows for easier monkey-patching fixes needed by
         # JRuby users that use Fibers.
         def connection_cache_key(thread)

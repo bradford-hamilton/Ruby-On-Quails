@@ -5,12 +5,12 @@ require "irb/completion"
 
 require_relative "../../command/environment_argument"
 
-module Rails
+module Quails
   class Console
     module BacktraceCleaner
       def filter_backtrace(bt)
         if result = super
-          Rails.backtrace_cleaner.filter([result]).first
+          Quails.backtrace_cleaner.filter([result]).first
         end
       end
     end
@@ -45,21 +45,21 @@ module Rails
     alias_method :environment?, :environment
 
     def set_environment!
-      Rails.env = environment
+      Quails.env = environment
     end
 
     def start
       set_environment! if environment?
 
       if sandbox?
-        puts "Loading #{Rails.env} environment in sandbox (Rails #{Rails.version})"
+        puts "Loading #{Quails.env} environment in sandbox (Quails #{Quails.version})"
         puts "Any modifications you make will be rolled back on exit"
       else
-        puts "Loading #{Rails.env} environment (Rails #{Rails.version})"
+        puts "Loading #{Quails.env} environment (Quails #{Quails.version})"
       end
 
       if defined?(console::ExtendCommandBundle)
-        console::ExtendCommandBundle.include(Rails::ConsoleMethods)
+        console::ExtendCommandBundle.include(Quails::ConsoleMethods)
       end
       console.start
     end
@@ -93,7 +93,7 @@ module Rails
         ENV["RAILS_ENV"] = options[:environment]
 
         require_application_and_environment!
-        Rails::Console.start(Rails.application, options)
+        Quails::Console.start(Quails.application, options)
       end
     end
   end

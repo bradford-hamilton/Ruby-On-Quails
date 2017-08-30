@@ -15,11 +15,11 @@ module ActiveSupport
   # can focus on the rest.
   #
   #   bc = ActiveSupport::BacktraceCleaner.new
-  #   bc.add_filter   { |line| line.gsub(Rails.root.to_s, '') } # strip the Rails.root prefix
+  #   bc.add_filter   { |line| line.gsub(Quails.root.to_s, '') } # strip the Quails.root prefix
   #   bc.add_silencer { |line| line =~ /puma|rubygems/ } # skip any lines from puma or rubygems
   #   bc.clean(exception.backtrace) # perform the cleanup
   #
-  # To reconfigure an existing BacktraceCleaner (like the default one in Rails)
+  # To reconfigure an existing BacktraceCleaner (like the default one in Quails)
   # and show as much data as possible, you can always call
   # <tt>BacktraceCleaner#remove_silencers!</tt>, which will restore the
   # backtrace to a pristine state. If you need to reconfigure an existing
@@ -52,8 +52,8 @@ module ActiveSupport
     # Adds a filter from the block provided. Each line in the backtrace will be
     # mapped against this filter.
     #
-    #   # Will turn "/my/rails/root/app/models/person.rb" into "/app/models/person.rb"
-    #   backtrace_cleaner.add_filter { |line| line.gsub(Rails.root, '') }
+    #   # Will turn "/my/quails/root/app/models/person.rb" into "/app/models/person.rb"
+    #   backtrace_cleaner.add_filter { |line| line.gsub(Quails.root, '') }
     def add_filter(&block)
       @filters << block
     end

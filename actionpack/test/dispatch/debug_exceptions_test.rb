@@ -167,7 +167,7 @@ class DebugExceptionsTest < ActionDispatch::IntegrationTest
     assert_equal "text/plain", response.content_type
     assert_match(/RuntimeError\npuke/, body)
 
-    Rails.stub :root, Pathname.new(".") do
+    Quails.stub :root, Pathname.new(".") do
       get "/", headers: xhr_request_env
 
       assert_response 500
@@ -466,7 +466,7 @@ class DebugExceptionsTest < ActionDispatch::IntegrationTest
 
   test "debug exceptions app shows user code that caused the error in source view" do
     @app = DevelopmentApp
-    Rails.stub :root, Pathname.new(".") do
+    Quails.stub :root, Pathname.new(".") do
       cleaner = ActiveSupport::BacktraceCleaner.new.tap do |bc|
         bc.add_silencer { |line| line =~ /method_that_raises/ }
         bc.add_silencer { |line| line !~ %r{test/dispatch/debug_exceptions_test.rb} }

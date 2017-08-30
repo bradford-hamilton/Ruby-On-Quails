@@ -12,21 +12,21 @@ class RailtieTest < ActiveModel::TestCase
     # Set a fake logger to avoid creating the log directory automatically
     fake_logger = Logger.new(nil)
 
-    @app ||= Class.new(::Rails::Application) do
+    @app ||= Class.new(::Quails::Application) do
       config.eager_load = false
       config.logger = fake_logger
     end
   end
 
   test "secure password min_cost is false in the development environment" do
-    Rails.env = "development"
+    Quails.env = "development"
     @app.initialize!
 
     assert_equal false, ActiveModel::SecurePassword.min_cost
   end
 
   test "secure password min_cost is true in the test environment" do
-    Rails.env = "test"
+    Quails.env = "test"
     @app.initialize!
 
     assert_equal true, ActiveModel::SecurePassword.min_cost

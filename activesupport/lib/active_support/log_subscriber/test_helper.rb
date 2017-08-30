@@ -26,7 +26,7 @@ module ActiveSupport
     #   end
     #
     # All you need to do is to ensure that your log subscriber is added to
-    # Rails::Subscriber, as in the second line of the code above. The test
+    # Quails::Subscriber, as in the second line of the code above. The test
     # helpers are responsible for setting up the queue, subscriptions and
     # turning colors in logs off.
     #

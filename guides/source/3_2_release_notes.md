@@ -1,9 +1,9 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-Ruby on Rails 3.2 Release Notes
+Ruby on Quails 3.2 Release Notes
 ===============================
 
-Highlights in Rails 3.2:
+Highlights in Quails 3.2:
 
 * Faster Development Mode
 * New Routing Engine
@@ -12,31 +12,31 @@ Highlights in Rails 3.2:
 
 These release notes cover only the major changes. To learn about various bug
 fixes and changes, please refer to the change logs or check out the [list of
-commits](https://github.com/rails/rails/commits/3-2-stable) in the main Rails
+commits](https://github.com/quails/quails/commits/3-2-stable) in the main Quails
 repository on GitHub.
 
 --------------------------------------------------------------------------------
 
-Upgrading to Rails 3.2
+Upgrading to Quails 3.2
 ----------------------
 
-If you're upgrading an existing application, it's a great idea to have good test coverage before going in. You should also first upgrade to Rails 3.1 in case you haven't and make sure your application still runs as expected before attempting an update to Rails 3.2. Then take heed of the following changes:
+If you're upgrading an existing application, it's a great idea to have good test coverage before going in. You should also first upgrade to Quails 3.1 in case you haven't and make sure your application still runs as expected before attempting an update to Quails 3.2. Then take heed of the following changes:
 
-### Rails 3.2 requires at least Ruby 1.8.7
+### Quails 3.2 requires at least Ruby 1.8.7
 
-Rails 3.2 requires Ruby 1.8.7 or higher. Support for all of the previous Ruby versions has been dropped officially and you should upgrade as early as possible. Rails 3.2 is also compatible with Ruby 1.9.2.
+Quails 3.2 requires Ruby 1.8.7 or higher. Support for all of the previous Ruby versions has been dropped officially and you should upgrade as early as possible. Quails 3.2 is also compatible with Ruby 1.9.2.
 
-TIP: Note that Ruby 1.8.7 p248 and p249 have marshalling bugs that crash Rails. Ruby Enterprise Edition has these fixed since the release of 1.8.7-2010.02. On the 1.9 front, Ruby 1.9.1 is not usable because it outright segfaults, so if you want to use 1.9.x, jump on to 1.9.2 or 1.9.3 for smooth sailing.
+TIP: Note that Ruby 1.8.7 p248 and p249 have marshalling bugs that crash Quails. Ruby Enterprise Edition has these fixed since the release of 1.8.7-2010.02. On the 1.9 front, Ruby 1.9.1 is not usable because it outright segfaults, so if you want to use 1.9.x, jump on to 1.9.2 or 1.9.3 for smooth sailing.
 
 ### What to update in your apps
 
 * Update your Gemfile to depend on
-    * `rails = 3.2.0`
-    * `sass-rails ~> 3.2.3`
-    * `coffee-rails ~> 3.2.1`
+    * `quails = 3.2.0`
+    * `sass-quails ~> 3.2.3`
+    * `coffee-quails ~> 3.2.1`
     * `uglifier >= 1.0.3`
 
-* Rails 3.2 deprecates `vendor/plugins` and Rails 4.0 will remove them completely. You can start replacing these plugins by extracting them as gems and adding them in your Gemfile. If you choose not to make them gems, you can move them into, say, `lib/my_plugin/*` and add an appropriate initializer in `config/initializers/my_plugin.rb`.
+* Quails 3.2 deprecates `vendor/plugins` and Quails 4.0 will remove them completely. You can start replacing these plugins by extracting them as gems and adding them in your Gemfile. If you choose not to make them gems, you can move them into, say, `lib/my_plugin/*` and add an appropriate initializer in `config/initializers/my_plugin.rb`.
 
 * There are a couple of new configuration changes you'd want to add in `config/environments/development.rb`:
 
@@ -58,43 +58,43 @@ TIP: Note that Ruby 1.8.7 p248 and p249 have marshalling bugs that crash Rails. 
 
 ### What to update in your engines
 
-Replace the code beneath the comment in `script/rails` with the following content:
+Replace the code beneath the comment in `script/quails` with the following content:
 
 ```ruby
 ENGINE_ROOT = File.expand_path('../..', __FILE__)
 ENGINE_PATH = File.expand_path('../../lib/your_engine_name/engine', __FILE__)
 
-require 'rails/all'
-require 'rails/engine/commands'
+require 'quails/all'
+require 'quails/engine/commands'
 ```
 
-Creating a Rails 3.2 application
+Creating a Quails 3.2 application
 --------------------------------
 
 ```bash
-# You should have the 'rails' RubyGem installed
-$ rails new myapp
+# You should have the 'quails' RubyGem installed
+$ quails new myapp
 $ cd myapp
 ```
 
 ### Vendoring Gems
 
-Rails now uses a `Gemfile` in the application root to determine the gems you require for your application to start. This `Gemfile` is processed by the [Bundler](https://github.com/carlhuda/bundler) gem, which then installs all your dependencies. It can even install all the dependencies locally to your application so that it doesn't depend on the system gems.
+Quails now uses a `Gemfile` in the application root to determine the gems you require for your application to start. This `Gemfile` is processed by the [Bundler](https://github.com/carlhuda/bundler) gem, which then installs all your dependencies. It can even install all the dependencies locally to your application so that it doesn't depend on the system gems.
 
 More information: [Bundler homepage](https://bundler.io/)
 
 ### Living on the Edge
 
-`Bundler` and `Gemfile` makes freezing your Rails application easy as pie with the new dedicated `bundle` command. If you want to bundle straight from the Git repository, you can pass the `--edge` flag:
+`Bundler` and `Gemfile` makes freezing your Quails application easy as pie with the new dedicated `bundle` command. If you want to bundle straight from the Git repository, you can pass the `--edge` flag:
 
 ```bash
-$ rails new myapp --edge
+$ quails new myapp --edge
 ```
 
-If you have a local checkout of the Rails repository and want to generate an application using that, you can pass the `--dev` flag:
+If you have a local checkout of the Quails repository and want to generate an application using that, you can pass the `--dev` flag:
 
 ```bash
-$ ruby /path/to/rails/railties/bin/rails new myapp --dev
+$ ruby /path/to/quails/railties/bin/quails new myapp --dev
 ```
 
 Major Features
@@ -102,11 +102,11 @@ Major Features
 
 ### Faster Development Mode & Routing
 
-Rails 3.2 comes with a development mode that's noticeably faster. Inspired by [Active Reload](https://github.com/paneq/active_reload), Rails reloads classes only when files actually change. The performance gains are dramatic on a larger application. Route recognition also got a bunch faster thanks to the new [Journey](https://github.com/rails/journey) engine.
+Quails 3.2 comes with a development mode that's noticeably faster. Inspired by [Active Reload](https://github.com/paneq/active_reload), Quails reloads classes only when files actually change. The performance gains are dramatic on a larger application. Route recognition also got a bunch faster thanks to the new [Journey](https://github.com/quails/journey) engine.
 
 ### Automatic Query Explains
 
-Rails 3.2 comes with a nice feature that explains queries generated by Arel by defining an `explain` method in `ActiveRecord::Relation`. For example, you can run something like `puts Person.active.limit(5).explain` and the query Arel produces is explained. This allows to check for the proper indexes and further optimizations.
+Quails 3.2 comes with a nice feature that explains queries generated by Arel by defining an `explain` method in `ActiveRecord::Relation`. For example, you can run something like `puts Person.active.limit(5).explain` and the query Arel produces is explained. This allows to check for the proper indexes and further optimizations.
 
 Queries that take more than half a second to run are *automatically* explained in the development mode. This threshold, of course, can be changed.
 
@@ -117,7 +117,7 @@ When running a multi-user, multi-account application, it's a great help to be ab
 Documentation
 -------------
 
-From Rails 3.2, the Rails guides are available for the Kindle and free Kindle Reading Apps for the iPad, iPhone, Mac, Android, etc.
+From Quails 3.2, the Quails guides are available for the Kindle and free Kindle Reading Apps for the iPad, iPhone, Mac, Android, etc.
 
 Railties
 --------
@@ -126,7 +126,7 @@ Railties
 
 * New applications get a flag `config.active_record.auto_explain_threshold_in_seconds` in the environments configuration files. With a value of `0.5` in `development.rb` and commented out in `production.rb`. No mention in `test.rb`.
 
-* Added `config.exceptions_app` to set the exceptions application invoked by the `ShowException` middleware when an exception happens. Defaults to `ActionDispatch::PublicExceptions.new(Rails.public_path)`.
+* Added `config.exceptions_app` to set the exceptions application invoked by the `ShowException` middleware when an exception happens. Defaults to `ActionDispatch::PublicExceptions.new(Quails.public_path)`.
 
 * Added a `DebugExceptions` middleware which contains features extracted from `ShowExceptions` middleware.
 
@@ -140,38 +140,38 @@ Railties
 
 * Scaffold returns 204 No Content for API requests without content. This makes scaffold work with jQuery out of the box.
 
-* Update `Rails::Rack::Logger` middleware to apply any tags set in `config.log_tags` to `ActiveSupport::TaggedLogging`. This makes it easy to tag log lines with debug information like subdomain and request id -- both very helpful in debugging multi-user production applications.
+* Update `Quails::Rack::Logger` middleware to apply any tags set in `config.log_tags` to `ActiveSupport::TaggedLogging`. This makes it easy to tag log lines with debug information like subdomain and request id -- both very helpful in debugging multi-user production applications.
 
-* Default options to `rails new` can be set in `~/.railsrc`. You can specify extra command-line arguments to be used every time `rails new` runs in the `.railsrc` configuration file in your home directory.
+* Default options to `quails new` can be set in `~/.quailsrc`. You can specify extra command-line arguments to be used every time `quails new` runs in the `.quailsrc` configuration file in your home directory.
 
 * Add an alias `d` for `destroy`. This works for engines too.
 
-* Attributes on scaffold and model generators default to string. This allows the following: `rails g scaffold Post title body:text author`
+* Attributes on scaffold and model generators default to string. This allows the following: `quails g scaffold Post title body:text author`
 
 * Allow scaffold/model/migration generators to accept "index" and "uniq" modifiers. For example,
 
     ```ruby
-    rails g scaffold Post title:string:index author:uniq price:decimal{7,2}
+    quails g scaffold Post title:string:index author:uniq price:decimal{7,2}
     ```
 
     will create indexes for `title` and `author` with the latter being a unique index. Some types such as decimal accept custom options. In the example, `price` will be a decimal column with precision and scale set to 7 and 2 respectively.
 
 * Turn gem has been removed from default Gemfile.
 
-* Remove old plugin generator `rails generate plugin` in favor of `rails plugin new` command.
+* Remove old plugin generator `quails generate plugin` in favor of `quails plugin new` command.
 
 * Remove old `config.paths.app.controller` API in favor of `config.paths["app/controller"]`.
 
 #### Deprecations
 
-* `Rails::Plugin` is deprecated and will be removed in Rails 4.0. Instead of adding plugins to `vendor/plugins` use gems or bundler with path or git dependencies.
+* `Quails::Plugin` is deprecated and will be removed in Quails 4.0. Instead of adding plugins to `vendor/plugins` use gems or bundler with path or git dependencies.
 
 Action Mailer
 -------------
 
 * Upgraded `mail` version to 2.4.0.
 
-* Removed the old Action Mailer API which was deprecated since Rails 3.0.
+* Removed the old Action Mailer API which was deprecated since Quails 3.0.
 
 Action Pack
 -----------
@@ -182,7 +182,7 @@ Action Pack
 
 * Added `:gzip` option to `caches_page`. The default option can be configured globally using `page_cache_compression`.
 
-* Rails will now use your default layout (such as "layouts/application") when you specify a layout with `:only` and `:except` condition, and those conditions fail.
+* Quails will now use your default layout (such as "layouts/application") when you specify a layout with `:only` and `:except` condition, and those conditions fail.
 
     ```ruby
     class CarsController
@@ -190,7 +190,7 @@ Action Pack
     end
     ```
 
-    Rails will use `layouts/single_car` when a request comes in `:show` action, and use `layouts/application` (or `layouts/cars`, if exists) when a request comes in for any other actions.
+    Quails will use `layouts/single_car` when a request comes in `:show` action, and use `layouts/application` (or `layouts/cars`, if exists) when a request comes in for any other actions.
 
 * `form_for` is changed to use `#{action}_#{as}` as the css class and id if `:as` option is provided. Earlier versions used `#{as}_#{action}`.
 
@@ -316,7 +316,7 @@ Action Pack
 
 ### Sprockets
 
-* Adds a configuration option `config.assets.logger` to control Sprockets logging. Set it to `false` to turn off logging and to `nil` to default to `Rails.logger`.
+* Adds a configuration option `config.assets.logger` to control Sprockets logging. Set it to `false` to turn off logging and to `nil` to default to `Quails.logger`.
 
 Active Record
 -------------
@@ -329,7 +329,7 @@ Active Record
 
 * Implements `ActiveRecord::Base.silence_auto_explain` which allows the user to selectively disable automatic EXPLAINs within a block.
 
-* Implements automatic EXPLAIN logging for slow queries. A new configuration parameter `config.active_record.auto_explain_threshold_in_seconds` determines what's to be considered a slow query. Setting that to nil disables this feature. Defaults are 0.5 in development mode, and nil in test and production modes. Rails 3.2 supports this feature in SQLite, MySQL (mysql2 adapter), and PostgreSQL.
+* Implements automatic EXPLAIN logging for slow queries. A new configuration parameter `config.active_record.auto_explain_threshold_in_seconds` determines what's to be considered a slow query. Setting that to nil disables this feature. Defaults are 0.5 in development mode, and nil in test and production modes. Quails 3.2 supports this feature in SQLite, MySQL (mysql2 adapter), and PostgreSQL.
 
 * Added `ActiveRecord::Base.store` for declaring simple single-column key/value stores.
 
@@ -565,6 +565,6 @@ Active Support
 Credits
 -------
 
-See the [full list of contributors to Rails](http://contributors.rubyonrails.org/) for the many people who spent many hours making Rails, the stable and robust framework it is. Kudos to all of them.
+See the [full list of contributors to Quails](http://contributors.rubyonquails.org/) for the many people who spent many hours making Quails, the stable and robust framework it is. Kudos to all of them.
 
-Rails 3.2 Release Notes were compiled by [Vijay Dev](https://github.com/vijaydev).
+Quails 3.2 Release Notes were compiled by [Vijay Dev](https://github.com/vijaydev).

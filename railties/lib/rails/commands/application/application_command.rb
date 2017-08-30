@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require_relative "../../generators"
-require_relative "../../generators/rails/app/app_generator"
+require_relative "../../generators/quails/app/app_generator"
 
-module Rails
+module Quails
   module Generators
     class AppGenerator # :nodoc:
       # We want to exit on failure to be kind to other libraries
@@ -23,8 +23,8 @@ module Rails
       end
 
       def perform(*args)
-        Rails::Generators::AppGenerator.start \
-          Rails::Generators::ARGVScrubber.new(args).prepare!
+        Quails::Generators::AppGenerator.start \
+          Quails::Generators::ARGVScrubber.new(args).prepare!
       end
     end
   end

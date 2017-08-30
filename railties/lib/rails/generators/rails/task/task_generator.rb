@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   module Generators
     class TaskGenerator < NamedBase # :nodoc:
       argument :actions, type: :array, default: [], banner: "action action"

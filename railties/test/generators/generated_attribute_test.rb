@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/generated_attribute"
+require "quails/generators/generated_attribute"
 
-class GeneratedAttributeTest < Rails::Generators::TestCase
+class GeneratedAttributeTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
 
   def test_field_type_returns_number_field
@@ -71,7 +71,7 @@ class GeneratedAttributeTest < Rails::Generators::TestCase
   end
 
   def test_default_value_for_type
-    att = Rails::Generators::GeneratedAttribute.parse("type:string")
+    att = Quails::Generators::GeneratedAttribute.parse("type:string")
     assert_equal("", att.default)
   end
 
@@ -145,7 +145,7 @@ class GeneratedAttributeTest < Rails::Generators::TestCase
   end
 
   def test_parse_required_attribute_with_index
-    att = Rails::Generators::GeneratedAttribute.parse("supplier:references{required}:index")
+    att = Quails::Generators::GeneratedAttribute.parse("supplier:references{required}:index")
     assert_equal "supplier", att.name
     assert_equal :references, att.type
     assert att.has_index?

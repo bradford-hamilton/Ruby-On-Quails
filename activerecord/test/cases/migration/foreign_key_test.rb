@@ -76,7 +76,7 @@ if ActiveRecord::Base.connection.supports_foreign_keys?
           assert_equal "rockets", fk.to_table
           assert_equal "rocket_id", fk.column
           assert_equal "id", fk.primary_key
-          assert_equal("fk_rails_78146ddd2e", fk.name)
+          assert_equal("fk_quails_78146ddd2e", fk.name)
         end
 
         def test_add_foreign_key_with_column
@@ -90,7 +90,7 @@ if ActiveRecord::Base.connection.supports_foreign_keys?
           assert_equal "rockets", fk.to_table
           assert_equal "rocket_id", fk.column
           assert_equal "id", fk.primary_key
-          assert_equal("fk_rails_78146ddd2e", fk.name)
+          assert_equal("fk_quails_78146ddd2e", fk.name)
         end
 
         def test_add_foreign_key_with_non_standard_primary_key

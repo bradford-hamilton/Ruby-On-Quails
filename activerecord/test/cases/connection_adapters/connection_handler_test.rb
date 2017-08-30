@@ -11,14 +11,14 @@ module ActiveRecord
         @pool = @handler.establish_connection(ActiveRecord::Base.configurations["arunit"])
       end
 
-      def test_default_env_fall_back_to_default_env_when_rails_env_or_rack_env_is_empty_string
-        original_rails_env = ENV["RAILS_ENV"]
+      def test_default_env_fall_back_to_default_env_when_quails_env_or_rack_env_is_empty_string
+        original_quails_env = ENV["RAILS_ENV"]
         original_rack_env  = ENV["RACK_ENV"]
         ENV["RAILS_ENV"]   = ENV["RACK_ENV"] = ""
 
         assert_equal "default_env", ActiveRecord::ConnectionHandling::DEFAULT_ENV.call
       ensure
-        ENV["RAILS_ENV"] = original_rails_env
+        ENV["RAILS_ENV"] = original_quails_env
         ENV["RACK_ENV"]  = original_rack_env
       end
 

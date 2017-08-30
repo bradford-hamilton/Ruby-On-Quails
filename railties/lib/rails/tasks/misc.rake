@@ -6,13 +6,13 @@ task :secret do
   puts SecureRandom.hex(64)
 end
 
-desc "List versions of all Rails frameworks and the environment"
+desc "List versions of all Quails frameworks and the environment"
 task about: :environment do
-  puts Rails::Info
+  puts Quails::Info
 end
 
 namespace :time do
-  desc "List all time zones, list by two-letter country code (`rails time:zones[US]`), or list by UTC offset (`rails time:zones[-8]`)"
+  desc "List all time zones, list by two-letter country code (`quails time:zones[US]`), or list by UTC offset (`quails time:zones[-8]`)"
   task :zones, :country_or_offset do |t, args|
     zones, offset = ActiveSupport::TimeZone.all, nil
 
@@ -33,12 +33,12 @@ namespace :time do
       build_time_zone_list ActiveSupport::TimeZone.all
     end
 
-    # desc 'Displays names of US time zones recognized by the Rails TimeZone class, grouped by offset. Results can be filtered with optional OFFSET parameter, e.g., OFFSET=-6'
+    # desc 'Displays names of US time zones recognized by the Quails TimeZone class, grouped by offset. Results can be filtered with optional OFFSET parameter, e.g., OFFSET=-6'
     task :us do
       build_time_zone_list ActiveSupport::TimeZone.us_zones
     end
 
-    # desc 'Displays names of time zones recognized by the Rails TimeZone class with the same offset as the system local time'
+    # desc 'Displays names of time zones recognized by the Quails TimeZone class with the same offset as the system local time'
     task :local do
       require "active_support"
       require "active_support/time"

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails"
+require "quails"
 require "action_controller"
 require "action_dispatch/railtie"
 require "abstract_controller/railties/routes_helpers"
@@ -8,7 +8,7 @@ require_relative "railties/helpers"
 require "action_view/railtie"
 
 module ActionController
-  class Railtie < Rails::Railtie #:nodoc:
+  class Railtie < Quails::Railtie #:nodoc:
     config.action_controller = ActiveSupport::OrderedOptions.new
 
     config.eager_load_namespaces << ActionController
@@ -31,7 +31,7 @@ module ActionController
             app.config.action_controller.delete(:always_permitted_parameters)
         end
         ActionController::Parameters.action_on_unpermitted_parameters = options.delete(:action_on_unpermitted_parameters) do
-          (Rails.env.test? || Rails.env.development?) ? :log : false
+          (Quails.env.test? || Quails.env.development?) ? :log : false
         end
       end
     end
@@ -40,8 +40,8 @@ module ActionController
       paths   = app.config.paths
       options = app.config.action_controller
 
-      options.logger      ||= Rails.logger
-      options.cache_store ||= Rails.cache
+      options.logger      ||= Quails.logger
+      options.cache_store ||= Quails.cache
 
       options.javascripts_dir ||= paths["public/javascripts"].first
       options.stylesheets_dir ||= paths["public/stylesheets"].first

@@ -93,8 +93,8 @@ class YamlSerializationTest < ActiveRecord::TestCase
     assert coder["active_record_yaml_version"]
   end
 
-  def test_deserializing_rails_41_yaml
-    topic = YAML.load(yaml_fixture("rails_4_1"))
+  def test_deserializing_quails_41_yaml
+    topic = YAML.load(yaml_fixture("quails_4_1"))
 
     assert topic.new_record?
     assert_nil topic.id
@@ -102,8 +102,8 @@ class YamlSerializationTest < ActiveRecord::TestCase
     assert_equal({ omg: :lol }, topic.content)
   end
 
-  def test_deserializing_rails_4_2_0_yaml
-    topic = YAML.load(yaml_fixture("rails_4_2_0"))
+  def test_deserializing_quails_4_2_0_yaml
+    topic = YAML.load(yaml_fixture("quails_4_2_0"))
 
     assert_not topic.new_record?
     assert_equal 1, topic.id

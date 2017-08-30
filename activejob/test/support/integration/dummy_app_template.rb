@@ -4,7 +4,7 @@ if ENV["AJ_ADAPTER"] == "delayed_job"
   generate "delayed_job:active_record", "--quiet"
 end
 
-rails_command("db:migrate")
+quails_command("db:migrate")
 
 initializer "activejob.rb", <<-CODE
 require "#{File.expand_path("jobs_manager.rb",  __dir__)}"
@@ -20,13 +20,13 @@ class TestJob < ActiveJob::Base
   queue_as :integration_tests
 
   def perform(x)
-    File.open(Rails.root.join("tmp/\#{x}.new"), "wb+") do |f|
+    File.open(Quails.root.join("tmp/\#{x}.new"), "wb+") do |f|
       f.write Marshal.dump({
         "locale" => I18n.locale.to_s || "en",
         "executed_at" => Time.now.to_r
       })
     end
-    File.rename(Rails.root.join("tmp/\#{x}.new"), Rails.root.join("tmp/\#{x}"))
+    File.rename(Quails.root.join("tmp/\#{x}.new"), Quails.root.join("tmp/\#{x}"))
   end
 end
 CODE

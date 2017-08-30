@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   module Rack
-    autoload :Logger, "rails/rack/logger"
+    autoload :Logger, "quails/rack/logger"
   end
 end

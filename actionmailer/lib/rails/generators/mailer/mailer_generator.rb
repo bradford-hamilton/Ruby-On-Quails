@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   module Generators
     class MailerGenerator < NamedBase
       source_root File.expand_path("templates", __dir__)

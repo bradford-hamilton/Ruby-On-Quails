@@ -8,12 +8,12 @@ module ActionDispatch
     DEFAULT_ENV = Rack::MockRequest.env_for("/",
       "HTTP_HOST"                => "test.host",
       "REMOTE_ADDR"              => "0.0.0.0",
-      "HTTP_USER_AGENT"          => "Rails Testing",
+      "HTTP_USER_AGENT"          => "Quails Testing",
     )
 
     # Create a new test request with default +env+ values.
     def self.create(env = {})
-      env = Rails.application.env_config.merge(env) if defined?(Rails.application) && Rails.application
+      env = Quails.application.env_config.merge(env) if defined?(Quails.application) && Quails.application
       env["rack.request.cookie_hash"] ||= {}.with_indifferent_access
       new(default_env.merge(env))
     end

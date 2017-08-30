@@ -5,10 +5,10 @@ require "fileutils"
 include FileUtils
 
 commands = [
-  'mysql -e "create user rails@localhost;"',
-  'mysql -e "grant all privileges on activerecord_unittest.* to rails@localhost;"',
-  'mysql -e "grant all privileges on activerecord_unittest2.* to rails@localhost;"',
-  'mysql -e "grant all privileges on inexistent_activerecord_unittest.* to rails@localhost;"',
+  'mysql -e "create user quails@localhost;"',
+  'mysql -e "grant all privileges on activerecord_unittest.* to quails@localhost;"',
+  'mysql -e "grant all privileges on activerecord_unittest2.* to quails@localhost;"',
+  'mysql -e "grant all privileges on inexistent_activerecord_unittest.* to quails@localhost;"',
   'mysql -e "create database activerecord_unittest;"',
   'mysql -e "create database activerecord_unittest2;"',
   'psql  -c "create database activerecord_unittest;" -U postgres',
@@ -177,11 +177,11 @@ failures = results.select { |key, value| !value  }
 
 if failures.empty?
   puts
-  puts "Rails build finished successfully"
+  puts "Quails build finished successfully"
   exit(true)
 else
   puts
-  puts "Rails build FAILED"
+  puts "Quails build FAILED"
   puts "Failed components: #{failures.map(&:first).join(', ')}"
   exit(false)
 end

@@ -4,7 +4,7 @@
 require "bundler"
 Bundler.setup
 
-require "rails/all"
+require "quails/all"
 require "active_support/all"
 require "irb"
 require "irb/completion"

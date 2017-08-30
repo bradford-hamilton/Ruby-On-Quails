@@ -2,16 +2,16 @@
 
 require "abstract_unit"
 require "minitest/mock"
-require "rails/command"
-require "rails/commands/dbconsole/dbconsole_command"
+require "quails/command"
+require "quails/commands/dbconsole/dbconsole_command"
 
-class Rails::DBConsoleTest < ActiveSupport::TestCase
+class Quails::DBConsoleTest < ActiveSupport::TestCase
   def setup
-    Rails::DBConsole.const_set("APP_PATH", "rails/all")
+    Quails::DBConsole.const_set("APP_PATH", "quails/all")
   end
 
   def teardown
-    Rails::DBConsole.send(:remove_const, "APP_PATH")
+    Quails::DBConsole.send(:remove_const, "APP_PATH")
     %w[PGUSER PGHOST PGPORT PGPASSWORD DATABASE_URL].each { |key| ENV.delete(key) }
   end
 
@@ -29,14 +29,14 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
       }
     }
     app_db_config(config_sample) do
-      assert_equal config_sample["test"], Rails::DBConsole.new.config
+      assert_equal config_sample["test"], Quails::DBConsole.new.config
     end
   end
 
   def test_config_with_no_db_config
     app_db_config(nil) do
       assert_raise(ActiveRecord::AdapterNotSpecified) {
-        Rails::DBConsole.new.config
+        Quails::DBConsole.new.config
       }
     end
   end
@@ -55,7 +55,7 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
     }.sort
 
     app_db_config(nil) do
-      assert_equal expected, Rails::DBConsole.new.config.sort
+      assert_equal expected, Quails::DBConsole.new.config.sort
     end
   end
 
@@ -75,31 +75,31 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
       }
     }
     app_db_config(sample_config) do
-      assert_equal host, Rails::DBConsole.new.config["host"]
+      assert_equal host, Quails::DBConsole.new.config["host"]
     end
   end
 
   def test_env
-    assert_equal "test", Rails::DBConsole.new.environment
+    assert_equal "test", Quails::DBConsole.new.environment
 
     ENV["RAILS_ENV"] = nil
     ENV["RACK_ENV"] = nil
 
-    Rails.stub(:respond_to?, false) do
-      assert_equal "development", Rails::DBConsole.new.environment
+    Quails.stub(:respond_to?, false) do
+      assert_equal "development", Quails::DBConsole.new.environment
 
       ENV["RACK_ENV"] = "rack_env"
-      assert_equal "rack_env", Rails::DBConsole.new.environment
+      assert_equal "rack_env", Quails::DBConsole.new.environment
 
-      ENV["RAILS_ENV"] = "rails_env"
-      assert_equal "rails_env", Rails::DBConsole.new.environment
+      ENV["RAILS_ENV"] = "quails_env"
+      assert_equal "quails_env", Quails::DBConsole.new.environment
     end
   ensure
     ENV["RAILS_ENV"] = "test"
     ENV["RACK_ENV"] = nil
   end
 
-  def test_rails_env_is_development_when_argument_is_dev
+  def test_quails_env_is_development_when_argument_is_dev
     assert_deprecated do
       stub_available_environments([ "development", "test" ]) do
         assert_match("development", parse_arguments([ "dev" ])[:environment])
@@ -107,13 +107,13 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
     end
   end
 
-  def test_rails_env_is_development_when_environment_option_is_dev
+  def test_quails_env_is_development_when_environment_option_is_dev
     stub_available_environments([ "development", "test" ]) do
       assert_match("development", parse_arguments([ "-e", "dev" ])[:environment])
     end
   end
 
-  def test_rails_env_is_dev_when_argument_is_dev_and_dev_env_is_present
+  def test_quails_env_is_dev_when_argument_is_dev_and_dev_env_is_present
     assert_deprecated do
       stub_available_environments([ "dev" ]) do
         assert_match("dev", parse_arguments([ "dev" ])[:environment])
@@ -166,18 +166,18 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
   def test_sqlite3
     start(adapter: "sqlite3", database: "db.sqlite3")
     assert !aborted
-    assert_equal ["sqlite3", Rails.root.join("db.sqlite3").to_s], dbconsole.find_cmd_and_exec_args
+    assert_equal ["sqlite3", Quails.root.join("db.sqlite3").to_s], dbconsole.find_cmd_and_exec_args
   end
 
   def test_sqlite3_mode
     start({ adapter: "sqlite3", database: "db.sqlite3" }, ["--mode", "html"])
     assert !aborted
-    assert_equal ["sqlite3", "-html", Rails.root.join("db.sqlite3").to_s], dbconsole.find_cmd_and_exec_args
+    assert_equal ["sqlite3", "-html", Quails.root.join("db.sqlite3").to_s], dbconsole.find_cmd_and_exec_args
   end
 
   def test_sqlite3_header
     start({ adapter: "sqlite3", database: "db.sqlite3" }, ["--header"])
-    assert_equal ["sqlite3", "-header", Rails.root.join("db.sqlite3").to_s], dbconsole.find_cmd_and_exec_args
+    assert_equal ["sqlite3", "-header", Quails.root.join("db.sqlite3").to_s], dbconsole.find_cmd_and_exec_args
   end
 
   def test_sqlite3_db_absolute_path
@@ -186,11 +186,11 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
     assert_equal ["sqlite3", "/tmp/db.sqlite3"], dbconsole.find_cmd_and_exec_args
   end
 
-  def test_sqlite3_db_without_defined_rails_root
-    Rails.stub(:respond_to?, false) do
+  def test_sqlite3_db_without_defined_quails_root
+    Quails.stub(:respond_to?, false) do
       start(adapter: "sqlite3", database: "config/db.sqlite3")
       assert !aborted
-      assert_equal ["sqlite3", Rails.root.join("../config/db.sqlite3").to_s], dbconsole.find_cmd_and_exec_args
+      assert_equal ["sqlite3", Quails.root.join("../config/db.sqlite3").to_s], dbconsole.find_cmd_and_exec_args
     end
   end
 
@@ -228,7 +228,7 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
     }
 
     app_db_config(sample_config) do
-      assert_equal "postgresql", Rails::DBConsole.new.config["adapter"]
+      assert_equal "postgresql", Quails::DBConsole.new.config["adapter"]
     end
   end
 
@@ -244,7 +244,7 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
   def test_specifying_a_missing_connection
     app_db_config({}) do
       e = assert_raises(ActiveRecord::AdapterNotSpecified) do
-        Rails::Command.invoke(:dbconsole, ["-c", "i_do_not_exist"])
+        Quails::Command.invoke(:dbconsole, ["-c", "i_do_not_exist"])
       end
 
       assert_includes e.message, "'i_do_not_exist' connection is not configured."
@@ -254,7 +254,7 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
   def test_specifying_a_missing_environment
     app_db_config({}) do
       e = assert_raises(ActiveRecord::AdapterNotSpecified) do
-        Rails::Command.invoke(:dbconsole)
+        Quails::Command.invoke(:dbconsole)
       end
 
       assert_includes e.message, "'test' database is not configured."
@@ -263,16 +263,16 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
 
   def test_print_help_short
     stdout = capture(:stdout) do
-      Rails::Command.invoke(:dbconsole, ["-h"])
+      Quails::Command.invoke(:dbconsole, ["-h"])
     end
-    assert_match(/bin\/rails dbconsole \[environment\]/, stdout)
+    assert_match(/bin\/quails dbconsole \[environment\]/, stdout)
   end
 
   def test_print_help_long
     stdout = capture(:stdout) do
-      Rails::Command.invoke(:dbconsole, ["--help"])
+      Quails::Command.invoke(:dbconsole, ["--help"])
     end
-    assert_match(/bin\/rails dbconsole \[environment\]/, stdout)
+    assert_match(/bin\/quails dbconsole \[environment\]/, stdout)
   end
 
   attr_reader :aborted, :output
@@ -281,13 +281,13 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
   private
 
     def app_db_config(results)
-      Rails.application.config.stub(:database_configuration, results || {}) do
+      Quails.application.config.stub(:database_configuration, results || {}) do
         yield
       end
     end
 
     def make_dbconsole
-      Class.new(Rails::DBConsole) do
+      Class.new(Quails::DBConsole) do
         attr_reader :find_cmd_and_exec_args
 
         def find_cmd_and_exec(*args)
@@ -317,7 +317,7 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
     end
 
     def stub_available_environments(environments)
-      Rails::Command::DbconsoleCommand.class_eval do
+      Quails::Command::DbconsoleCommand.class_eval do
         alias_method :old_environments, :available_environments
 
         define_method :available_environments do
@@ -327,7 +327,7 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
 
       yield
     ensure
-      Rails::Command::DbconsoleCommand.class_eval do
+      Quails::Command::DbconsoleCommand.class_eval do
         undef_method :available_environments
         alias_method :available_environments, :old_environments
         undef_method :old_environments
@@ -335,7 +335,7 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
     end
 
     def parse_arguments(args)
-      Rails::Command::DbconsoleCommand.class_eval do
+      Quails::Command::DbconsoleCommand.class_eval do
         alias_method :old_perform, :perform
         define_method(:perform) do
           extract_environment_option_from_argument
@@ -344,9 +344,9 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
         end
       end
 
-      Rails::Command.invoke(:dbconsole, args)
+      Quails::Command.invoke(:dbconsole, args)
     ensure
-      Rails::Command::DbconsoleCommand.class_eval do
+      Quails::Command::DbconsoleCommand.class_eval do
         undef_method :perform
         alias_method :perform, :old_perform
         undef_method :old_perform

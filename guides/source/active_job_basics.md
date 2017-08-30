@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
 Active Job Basics
 =================
@@ -27,14 +27,14 @@ into small units of work and run in parallel, really.
 
 The Purpose of Active Job
 -----------------------------
-The main point is to ensure that all Rails apps will have a job infrastructure
+The main point is to ensure that all Quails apps will have a job infrastructure
 in place. We can then have framework features and other gems build on top of that,
 without having to worry about API differences between various job runners such as
 Delayed Job and Resque. Picking your queuing backend becomes more of an operational
 concern, then. And you'll be able to switch between them without having to rewrite
 your jobs.
 
-NOTE: Rails by default comes with an asynchronous queuing implementation that
+NOTE: Quails by default comes with an asynchronous queuing implementation that
 runs jobs with an in-process thread pool. Jobs will run asynchronously, but any
 jobs in the queue will be dropped upon restart.
 
@@ -46,11 +46,11 @@ This section will provide a step-by-step guide to creating a job and enqueuing i
 
 ### Create the Job
 
-Active Job provides a Rails generator to create jobs. The following will create a
+Active Job provides a Quails generator to create jobs. The following will create a
 job in `app/jobs` (with an attached test case under `test/jobs`):
 
 ```bash
-$ bin/rails generate job guests_cleanup
+$ bin/quails generate job guests_cleanup
 invoke  test_unit
 create    test/jobs/guests_cleanup_job_test.rb
 create  app/jobs/guests_cleanup_job.rb
@@ -59,7 +59,7 @@ create  app/jobs/guests_cleanup_job.rb
 You can also create a job that will run on a specific queue:
 
 ```bash
-$ bin/rails generate job guests_cleanup --queue urgent
+$ bin/quails generate job guests_cleanup --queue urgent
 ```
 
 If you don't want to use a generator, you could create your own file inside of
@@ -111,8 +111,8 @@ Job Execution
 -------------
 
 For enqueuing and executing jobs in production you need to set up a queuing backend,
-that is to say you need to decide for a 3rd-party queuing library that Rails should use.
-Rails itself only provides an in-process queuing system, which only keeps the jobs in RAM.
+that is to say you need to decide for a 3rd-party queuing library that Quails should use.
+Quails itself only provides an in-process queuing system, which only keeps the jobs in RAM.
 If the process crashes or the machine is reset, then all outstanding jobs are lost with the
 default async backend. This may be fine for smaller apps or non-critical jobs, but most
 production apps will need to pick a persistent backend.
@@ -121,7 +121,7 @@ production apps will need to pick a persistent backend.
 
 Active Job has built-in adapters for multiple queuing backends (Sidekiq,
 Resque, Delayed Job and others). To get an up-to-date list of the adapters
-see the API Documentation for [ActiveJob::QueueAdapters](http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html).
+see the API Documentation for [ActiveJob::QueueAdapters](http://api.rubyonquails.org/classes/ActiveJob/QueueAdapters.html).
 
 ### Setting the Backend
 
@@ -130,7 +130,7 @@ You can easily set your queuing backend:
 ```ruby
 # config/application.rb
 module YourApp
-  class Application < Rails::Application
+  class Application < Quails::Application
     # Be sure to have the adapter's gem in your Gemfile
     # and follow the adapter's specific installation
     # and deployment instructions.
@@ -153,9 +153,9 @@ end
 
 ### Starting the Backend
 
-Since jobs run in parallel to your Rails application, most queuing libraries
+Since jobs run in parallel to your Quails application, most queuing libraries
 require that you start a library-specific queuing service (in addition to
-starting your Rails app) for the job processing to work. Refer to library
+starting your Quails app) for the job processing to work. Refer to library
 documentation for instructions on starting your queue backend.
 
 Here is a noncomprehensive list of documentation:
@@ -184,8 +184,8 @@ You can prefix the queue name for all your jobs using
 ```ruby
 # config/application.rb
 module YourApp
-  class Application < Rails::Application
-    config.active_job.queue_name_prefix = Rails.env
+  class Application < Quails::Application
+    config.active_job.queue_name_prefix = Quails.env
   end
 end
 
@@ -206,8 +206,8 @@ The default queue name prefix delimiter is '\_'.  This can be changed by setting
 ```ruby
 # config/application.rb
 module YourApp
-  class Application < Rails::Application
-    config.active_job.queue_name_prefix = Rails.env
+  class Application < Quails::Application
+    config.active_job.queue_name_prefix = Quails.env
     config.active_job.queue_name_delimiter = '.'
   end
 end
@@ -261,7 +261,7 @@ Callbacks
 ---------
 
 Active Job provides hooks to trigger logic during the life cycle of a job. Like
-other callbacks in Rails, you can implement the callbacks as ordinary methods
+other callbacks in Quails, you can implement the callbacks as ordinary methods
 and use a macro-style class method to register them as callbacks:
 
 ```ruby

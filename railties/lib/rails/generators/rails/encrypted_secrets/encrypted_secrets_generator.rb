@@ -3,12 +3,12 @@
 require_relative "../../base"
 require_relative "../../../secrets"
 
-module Rails
+module Quails
   module Generators
     class EncryptedSecretsGenerator < Base
       def add_secrets_key_file
         unless File.exist?("config/secrets.yml.key") || File.exist?("config/secrets.yml.enc")
-          key = Rails::Secrets.generate_key
+          key = Quails::Secrets.generate_key
 
           say "Adding config/secrets.yml.key to store the encryption key: #{key}"
           say ""
@@ -48,7 +48,7 @@ module Rails
 
           Secrets.write(Secrets.template)
 
-          say "You can edit encrypted secrets with `bin/rails secrets:edit`."
+          say "You can edit encrypted secrets with `bin/quails secrets:edit`."
           say ""
         end
 

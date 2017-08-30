@@ -387,7 +387,7 @@ class MigrationTest < ActiveRecord::TestCase
     ActiveRecord::Migrator.up(migrations_path)
     assert_equal current_env, ActiveRecord::InternalMetadata[:environment]
 
-    original_rails_env  = ENV["RAILS_ENV"]
+    original_quails_env  = ENV["RAILS_ENV"]
     original_rack_env   = ENV["RACK_ENV"]
     ENV["RAILS_ENV"]    = ENV["RACK_ENV"] = "foofoo"
     new_env = ActiveRecord::ConnectionHandling::DEFAULT_ENV.call
@@ -399,7 +399,7 @@ class MigrationTest < ActiveRecord::TestCase
     assert_equal new_env, ActiveRecord::InternalMetadata[:environment]
   ensure
     ActiveRecord::Migrator.migrations_paths = old_path
-    ENV["RAILS_ENV"] = original_rails_env
+    ENV["RAILS_ENV"] = original_quails_env
     ENV["RACK_ENV"]  = original_rack_env
     ActiveRecord::Migrator.up(migrations_path)
   end

@@ -3,7 +3,7 @@
 require "fileutils"
 require "thor/actions"
 
-module Rails
+module Quails
   module Generators
     module Actions
       class CreateMigration < Thor::Actions::CreateFile #:nodoc:

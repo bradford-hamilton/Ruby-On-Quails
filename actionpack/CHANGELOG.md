@@ -18,7 +18,7 @@
     add it to `ActionController::Base` depending on
     `config.action_controller.default_protect_from_forgery`. This configuration
     defaults to false to support older versions which have removed it from their
-    `ApplicationController`, but is set to true for Rails 5.2.
+    `ApplicationController`, but is set to true for Quails 5.2.
 
     *Lisa Ugray*
 
@@ -72,4 +72,4 @@
     *Julian Nadeau*
 
 
-Please check [5-1-stable](https://github.com/rails/rails/blob/5-1-stable/actionpack/CHANGELOG.md) for previous changes.
+Please check [5-1-stable](https://github.com/quails/quails/blob/5-1-stable/actionpack/CHANGELOG.md) for previous changes.

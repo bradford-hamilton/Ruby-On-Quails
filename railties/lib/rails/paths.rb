@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   module Paths
-    # This object is an extended hash that behaves as root of the <tt>Rails::Paths</tt> system.
+    # This object is an extended hash that behaves as root of the <tt>Quails::Paths</tt> system.
     # It allows you to collect information about how you want to structure your application
     # paths through a Hash-like API. It requires you to give a physical path on initialization.
     #
-    #   root = Root.new "/rails"
+    #   root = Root.new "/quails"
     #   root.add "app/controllers", eager_load: true
     #
     # The above command creates a new root object and adds "app/controllers" as a path.
-    # This means we can get a <tt>Rails::Paths::Path</tt> object back like below:
+    # This means we can get a <tt>Quails::Paths::Path</tt> object back like below:
     #
     #   path = root["app/controllers"]
     #   path.eager_load?               # => true
-    #   path.is_a?(Rails::Paths::Path) # => true
+    #   path.is_a?(Quails::Paths::Path) # => true
     #
     # The +Path+ object is simply an enumerable and allows you to easily add extra paths:
     #
@@ -36,13 +36,13 @@ module Rails
     #
     # Finally, the +Path+ object also provides a few helpers:
     #
-    #   root = Root.new "/rails"
+    #   root = Root.new "/quails"
     #   root.add "app/controllers"
     #
-    #   root["app/controllers"].expanded # => ["/rails/app/controllers"]
-    #   root["app/controllers"].existent # => ["/rails/app/controllers"]
+    #   root["app/controllers"].expanded # => ["/quails/app/controllers"]
+    #   root["app/controllers"].existent # => ["/quails/app/controllers"]
     #
-    # Check the <tt>Rails::Paths::Path</tt> documentation for more information.
+    # Check the <tt>Quails::Paths::Path</tt> documentation for more information.
     class Root
       attr_accessor :path
 

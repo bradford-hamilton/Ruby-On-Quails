@@ -4,7 +4,7 @@ require_relative "named_base"
 
 module Erb # :nodoc:
   module Generators # :nodoc:
-    class Base < Rails::Generators::NamedBase #:nodoc:
+    class Base < Quails::Generators::NamedBase #:nodoc:
       private
 
         def formats

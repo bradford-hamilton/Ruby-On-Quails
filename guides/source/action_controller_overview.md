@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
 Action Controller Overview
 ==========================
@@ -27,12 +27,12 @@ For most conventional [RESTful](https://en.wikipedia.org/wiki/Representational_s
 
 A controller can thus be thought of as a middleman between models and views. It makes the model data available to the view so it can display that data to the user, and it saves or updates user data to the model.
 
-NOTE: For more details on the routing process, see [Rails Routing from the Outside In](routing.html).
+NOTE: For more details on the routing process, see [Quails Routing from the Outside In](routing.html).
 
 Controller Naming Convention
 ----------------------------
 
-The naming convention of controllers in Rails favors pluralization of the last word in the controller's name, although it is not strictly required (e.g. `ApplicationController`). For example, `ClientsController` is preferable to `ClientController`, `SiteAdminsController` is preferable to `SiteAdminController` or `SitesAdminsController`, and so on.
+The naming convention of controllers in Quails favors pluralization of the last word in the controller's name, although it is not strictly required (e.g. `ApplicationController`). For example, `ClientsController` is preferable to `ClientController`, `SiteAdminsController` is preferable to `SiteAdminController` or `SitesAdminsController`, and so on.
 
 Following this convention will allow you to use the default route generators (e.g. `resources`, etc) without needing to qualify each `:path` or `:controller`, and will keep URL and path helpers' usage consistent throughout your application. See [Layouts & Rendering Guide](layouts_and_rendering.html) for more details.
 
@@ -42,7 +42,7 @@ NOTE: The controller naming convention differs from the naming convention of mod
 Methods and Actions
 -------------------
 
-A controller is a Ruby class which inherits from `ApplicationController` and has methods just like any other class. When your application receives a request, the routing will determine which controller and action to run, then Rails creates an instance of that controller and runs the method with the same name as the action.
+A controller is a Ruby class which inherits from `ApplicationController` and has methods just like any other class. When your application receives a request, the routing will determine which controller and action to run, then Quails creates an instance of that controller and runs the method with the same name as the action.
 
 ```ruby
 class ClientsController < ApplicationController
@@ -51,7 +51,7 @@ class ClientsController < ApplicationController
 end
 ```
 
-As an example, if a user goes to `/clients/new` in your application to add a new client, Rails will create an instance of `ClientsController` and call its `new` method. Note that the empty method from the example above would work just fine because Rails will by default render the `new.html.erb` view unless the action says otherwise. The `new` method could make available to the view a `@client` instance variable by creating a new `Client`:
+As an example, if a user goes to `/clients/new` in your application to add a new client, Quails will create an instance of `ClientsController` and call its `new` method. Note that the empty method from the example above would work just fine because Quails will by default render the `new.html.erb` view unless the action says otherwise. The `new` method could make available to the view a `@client` instance variable by creating a new `Client`:
 
 ```ruby
 def new
@@ -61,14 +61,14 @@ end
 
 The [Layouts & Rendering Guide](layouts_and_rendering.html) explains this in more detail.
 
-`ApplicationController` inherits from `ActionController::Base`, which defines a number of helpful methods. This guide will cover some of these, but if you're curious to see what's in there, you can see all of them in the [API documentation](http://api.rubyonrails.org/classes/ActionController.html) or in the source itself.
+`ApplicationController` inherits from `ActionController::Base`, which defines a number of helpful methods. This guide will cover some of these, but if you're curious to see what's in there, you can see all of them in the [API documentation](http://api.rubyonquails.org/classes/ActionController.html) or in the source itself.
 
 Only public methods are callable as actions. It is a best practice to lower the visibility of methods (with `private` or `protected`) which are not intended to be actions, like auxiliary methods or filters.
 
 Parameters
 ----------
 
-You will probably want to access data sent in by the user or other parameters in your controller actions. There are two kinds of parameters possible in a web application. The first are parameters that are sent as part of the URL, called query string parameters. The query string is everything after "?" in the URL. The second type of parameter is usually referred to as POST data. This information usually comes from an HTML form which has been filled in by the user. It's called POST data because it can only be sent as part of an HTTP POST request. Rails does not make any distinction between query string parameters and POST parameters, and both are available in the `params` hash in your controller:
+You will probably want to access data sent in by the user or other parameters in your controller actions. There are two kinds of parameters possible in a web application. The first are parameters that are sent as part of the URL, called query string parameters. The query string is everything after "?" in the URL. The second type of parameter is usually referred to as POST data. This information usually comes from an HTML form which has been filled in by the user. It's called POST data because it can only be sent as part of an HTTP POST request. Quails does not make any distinction between query string parameters and POST parameters, and both are available in the `params` hash in your controller:
 
 ```ruby
 class ClientsController < ApplicationController
@@ -110,9 +110,9 @@ The `params` hash is not limited to one-dimensional keys and values. It can cont
 GET /clients?ids[]=1&ids[]=2&ids[]=3
 ```
 
-NOTE: The actual URL in this example will be encoded as "/clients?ids%5b%5d=1&ids%5b%5d=2&ids%5b%5d=3" as the "[" and "]" characters are not allowed in URLs. Most of the time you don't have to worry about this because the browser will encode it for you, and Rails will decode it automatically, but if you ever find yourself having to send those requests to the server manually you should keep this in mind.
+NOTE: The actual URL in this example will be encoded as "/clients?ids%5b%5d=1&ids%5b%5d=2&ids%5b%5d=3" as the "[" and "]" characters are not allowed in URLs. Most of the time you don't have to worry about this because the browser will encode it for you, and Quails will decode it automatically, but if you ever find yourself having to send those requests to the server manually you should keep this in mind.
 
-The value of `params[:ids]` will now be `["1", "2", "3"]`. Note that parameter values are always strings; Rails makes no attempt to guess or cast the type.
+The value of `params[:ids]` will now be `["1", "2", "3"]`. Note that parameter values are always strings; Quails makes no attempt to guess or cast the type.
 
 NOTE: Values such as `[nil]` or `[nil, nil, ...]` in `params` are replaced
 with `[]` for security reasons by default. See [Security Guide](security.html#unsafe-query-generation)
@@ -135,7 +135,7 @@ The `params` object acts like a Hash, but lets you use symbols and strings inter
 
 ### JSON parameters
 
-If you're writing a web service application, you might find yourself more comfortable accepting parameters in JSON format. If the "Content-Type" header of your request is set to "application/json", Rails will automatically load your parameters into the `params` hash, which you can access as you would normally.
+If you're writing a web service application, you might find yourself more comfortable accepting parameters in JSON format. If the "Content-Type" header of your request is set to "application/json", Quails will automatically load your parameters into the `params` hash, which you can access as you would normally.
 
 So for example, if you are sending this JSON content:
 
@@ -157,7 +157,7 @@ And, assuming that you're sending the data to `CompaniesController`, it would th
 { name: "acme", address: "123 Carrot Street", company: { name: "acme", address: "123 Carrot Street" } }
 ```
 
-You can customize the name of the key or specific parameters you want to wrap by consulting the [API documentation](http://api.rubyonrails.org/classes/ActionController/ParamsWrapper.html)
+You can customize the name of the key or specific parameters you want to wrap by consulting the [API documentation](http://api.rubyonquails.org/classes/ActionController/ParamsWrapper.html)
 
 NOTE: Support for parsing XML parameters has been extracted into a gem named `actionpack-xml_parser`.
 
@@ -360,13 +360,13 @@ Session
 Your application has a session for each user in which you can store small amounts of data that will be persisted between requests. The session is only available in the controller and the view and can use one of a number of different storage mechanisms:
 
 * `ActionDispatch::Session::CookieStore` - Stores everything on the client.
-* `ActionDispatch::Session::CacheStore` - Stores the data in the Rails cache.
+* `ActionDispatch::Session::CacheStore` - Stores the data in the Quails cache.
 * `ActionDispatch::Session::ActiveRecordStore` - Stores the data in a database using Active Record. (require `activerecord-session_store` gem).
 * `ActionDispatch::Session::MemCacheStore` - Stores the data in a memcached cluster (this is a legacy implementation; consider using CacheStore instead).
 
-All session stores use a cookie to store a unique ID for each session (you must use a cookie, Rails will not allow you to pass the session ID in the URL as this is less secure).
+All session stores use a cookie to store a unique ID for each session (you must use a cookie, Quails will not allow you to pass the session ID in the URL as this is less secure).
 
-For most stores, this ID is used to look up the session data on the server, e.g. in a database table. There is one exception, and that is the default and recommended session store - the CookieStore - which stores all session data in the cookie itself (the ID is still available to you if you need it). This has the advantage of being very lightweight and it requires zero setup in a new application in order to use the session. The cookie data is cryptographically signed to make it tamper-proof. And it is also encrypted so anyone with access to it can't read its contents. (Rails will not accept it if it has been edited).
+For most stores, this ID is used to look up the session data on the server, e.g. in a database table. There is one exception, and that is the default and recommended session store - the CookieStore - which stores all session data in the cookie itself (the ID is still available to you if you need it). This has the advantage of being very lightweight and it requires zero setup in a new application in order to use the session. The cookie data is cryptographically signed to make it tamper-proof. And it is also encrypted so anyone with access to it can't read its contents. (Quails will not accept it if it has been edited).
 
 The CookieStore can store around 4kB of data - much less than the others - but this is usually enough. Storing large amounts of data in the session is discouraged no matter which session store your application uses. You should especially avoid storing complex objects (anything other than basic Ruby objects, the most common example being model instances) in the session, as the server might not be able to reassemble them between requests, which will result in an error.
 
@@ -379,25 +379,25 @@ If you need a different session storage mechanism, you can change it in an initi
 ```ruby
 # Use the database for sessions instead of the cookie-based default,
 # which shouldn't be used to store highly confidential information
-# (create the session table with "rails g active_record:session_migration")
-# Rails.application.config.session_store :active_record_store
+# (create the session table with "quails g active_record:session_migration")
+# Quails.application.config.session_store :active_record_store
 ```
 
-Rails sets up a session key (the name of the cookie) when signing the session data. These can also be changed in an initializer:
+Quails sets up a session key (the name of the cookie) when signing the session data. These can also be changed in an initializer:
 
 ```ruby
 # Be sure to restart your server when you modify this file.
-Rails.application.config.session_store :cookie_store, key: '_your_app_session'
+Quails.application.config.session_store :cookie_store, key: '_your_app_session'
 ```
 
 You can also pass a `:domain` key and specify the domain name for the cookie:
 
 ```ruby
 # Be sure to restart your server when you modify this file.
-Rails.application.config.session_store :cookie_store, key: '_your_app_session', domain: ".example.com"
+Quails.application.config.session_store :cookie_store, key: '_your_app_session', domain: ".example.com"
 ```
 
-Rails sets up (for the CookieStore) a secret key used for signing the session data. This can be changed in `config/secrets.yml`
+Quails sets up (for the CookieStore) a secret key used for signing the session data. This can be changed in `config/secrets.yml`
 
 ```ruby
 # Be sure to restart your server when you modify this file.
@@ -407,7 +407,7 @@ Rails sets up (for the CookieStore) a secret key used for signing the session da
 
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-# You can use `rails secret` to generate a secure secret key.
+# You can use `quails secret` to generate a secure secret key.
 
 # Make sure the secrets in this file are kept private
 # if you're sharing your code publicly.
@@ -441,7 +441,7 @@ class ApplicationController < ActionController::Base
 
   # Finds the User with the ID stored in the session with the key
   # :current_user_id This is a common way to handle user login in
-  # a Rails application; logging in sets the session value and
+  # a Quails application; logging in sets the session value and
   # logging out removes it.
   def current_user
     @_current_user ||= session[:current_user_id] &&
@@ -485,7 +485,7 @@ To reset the entire session, use `reset_session`.
 
 The flash is a special part of the session which is cleared with each request. This means that values stored there will only be available in the next request, which is useful for passing error messages etc.
 
-It is accessed in much the same way as the session, as a hash (it's a [FlashHash](http://api.rubyonrails.org/classes/ActionDispatch/Flash/FlashHash.html) instance).
+It is accessed in much the same way as the session, as a hash (it's a [FlashHash](http://api.rubyonquails.org/classes/ActionDispatch/Flash/FlashHash.html) instance).
 
 Let's use the act of logging out as an example. The controller can send a message which will be displayed to the user on the next request:
 
@@ -573,7 +573,7 @@ end
 Cookies
 -------
 
-Your application can store small amounts of data on the client - called cookies - that will be persisted across requests and even sessions. Rails provides easy access to cookies via the `cookies` method, which - much like the `session` - works like a hash:
+Your application can store small amounts of data on the client - called cookies - that will be persisted across requests and even sessions. Quails provides easy access to cookies via the `cookies` method, which - much like the `session` - works like a hash:
 
 ```ruby
 class CommentsController < ApplicationController
@@ -603,11 +603,11 @@ end
 
 Note that while for session values you set the key to `nil`, to delete a cookie value you should use `cookies.delete(:key)`.
 
-Rails also provides a signed cookie jar and an encrypted cookie jar for storing
+Quails also provides a signed cookie jar and an encrypted cookie jar for storing
 sensitive data. The signed cookie jar appends a cryptographic signature on the
 cookie values to protect their integrity. The encrypted cookie jar encrypts the
 values in addition to signing them, so that they cannot be read by the end user.
-Refer to the [API documentation](http://api.rubyonrails.org/classes/ActionDispatch/Cookies.html)
+Refer to the [API documentation](http://api.rubyonquails.org/classes/ActionDispatch/Cookies.html)
 for more details.
 
 These special cookie jars use a serializer to serialize the assigned values into
@@ -616,14 +616,14 @@ strings and deserializes them into Ruby objects on read.
 You can specify what serializer to use:
 
 ```ruby
-Rails.application.config.action_dispatch.cookies_serializer = :json
+Quails.application.config.action_dispatch.cookies_serializer = :json
 ```
 
 The default serializer for new applications is `:json`. For compatibility with
 old applications with existing cookies, `:marshal` is used when `serializer`
 option is not specified.
 
-You may also set this option to `:hybrid`, in which case Rails would transparently
+You may also set this option to `:hybrid`, in which case Quails would transparently
 deserialize existing (`Marshal`-serialized) cookies on read and re-write them in
 the `JSON` format. This is useful for migrating existing applications to the
 `:json` serializer.
@@ -632,7 +632,7 @@ It is also possible to pass a custom serializer that responds to `load` and
 `dump`:
 
 ```ruby
-Rails.application.config.action_dispatch.cookies_serializer = MyCustomSerializer
+Quails.application.config.action_dispatch.cookies_serializer = MyCustomSerializer
 ```
 
 When using the `:json` or `:hybrid` serializer, you should beware that not all
@@ -677,7 +677,7 @@ class UsersController < ApplicationController
 end
 ```
 
-You may notice in the above code that we're using `render xml: @users`, not `render xml: @users.to_xml`. If the object is not a String, then Rails will automatically invoke `to_xml` for us.
+You may notice in the above code that we're using `render xml: @users`, not `render xml: @users.to_xml`. If the object is not a String, then Quails will automatically invoke `to_xml` for us.
 
 Filters
 -------
@@ -817,9 +817,9 @@ You will see how the token gets added as a hidden field:
 </form>
 ```
 
-Rails adds this token to every form that's generated using the [form helpers](form_helpers.html), so most of the time you don't have to worry about it. If you're writing a form manually or need to add the token for another reason, it's available through the method `form_authenticity_token`:
+Quails adds this token to every form that's generated using the [form helpers](form_helpers.html), so most of the time you don't have to worry about it. If you're writing a form manually or need to add the token for another reason, it's available through the method `form_authenticity_token`:
 
-The `form_authenticity_token` generates a valid authentication token. That's useful in places where Rails does not add it automatically, like in custom Ajax calls.
+The `form_authenticity_token` generates a valid authentication token. That's useful in places where Quails does not add it automatically, like in custom Ajax calls.
 
 The [Security Guide](security.html) has more about this and a lot of other security-related issues that you should be aware of when developing a web application.
 
@@ -830,7 +830,7 @@ In every controller there are two accessor methods pointing to the request and t
 
 ### The `request` Object
 
-The request object contains a lot of useful information about the request coming in from the client. To get a full list of the available methods, refer to the [Rails API documentation](http://api.rubyonrails.org/classes/ActionDispatch/Request.html) and [Rack Documentation](http://www.rubydoc.info/github/rack/rack/Rack/Request). Among the properties that you can access on this object are:
+The request object contains a lot of useful information about the request coming in from the client. To get a full list of the available methods, refer to the [Quails API documentation](http://api.rubyonquails.org/classes/ActionDispatch/Request.html) and [Rack Documentation](http://www.rubydoc.info/github/rack/rack/Rack/Request). Among the properties that you can access on this object are:
 
 | Property of `request`                     | Purpose                                                                          |
 | ----------------------------------------- | -------------------------------------------------------------------------------- |
@@ -848,11 +848,11 @@ The request object contains a lot of useful information about the request coming
 
 #### `path_parameters`, `query_parameters`, and `request_parameters`
 
-Rails collects all of the parameters sent along with the request in the `params` hash, whether they are sent as part of the query string or the post body. The request object has three accessors that give you access to these parameters depending on where they came from. The `query_parameters` hash contains parameters that were sent as part of the query string while the `request_parameters` hash contains parameters sent as part of the post body. The `path_parameters` hash contains parameters that were recognized by the routing as being part of the path leading to this particular controller and action.
+Quails collects all of the parameters sent along with the request in the `params` hash, whether they are sent as part of the query string or the post body. The request object has three accessors that give you access to these parameters depending on where they came from. The `query_parameters` hash contains parameters that were sent as part of the query string while the `request_parameters` hash contains parameters sent as part of the post body. The `path_parameters` hash contains parameters that were recognized by the routing as being part of the path leading to this particular controller and action.
 
 ### The `response` Object
 
-The response object is not usually used directly, but is built up during the execution of the action and rendering of the data that is being sent back to the user, but sometimes - like in an after filter - it can be useful to access the response directly. Some of these accessor methods also have setters, allowing you to change their values. To get a full list of the available methods, refer to the [Rails API documentation](http://api.rubyonrails.org/classes/ActionDispatch/Response.html) and [Rack Documentation](http://www.rubydoc.info/github/rack/rack/Rack/Response).
+The response object is not usually used directly, but is built up during the execution of the action and rendering of the data that is being sent back to the user, but sometimes - like in an after filter - it can be useful to access the response directly. Some of these accessor methods also have setters, allowing you to change their values. To get a full list of the available methods, refer to the [Quails API documentation](http://api.rubyonquails.org/classes/ActionDispatch/Response.html) and [Rack Documentation](http://www.rubydoc.info/github/rack/rack/Rack/Response).
 
 | Property of `response` | Purpose                                                                                             |
 | ---------------------- | --------------------------------------------------------------------------------------------------- |
@@ -865,7 +865,7 @@ The response object is not usually used directly, but is built up during the exe
 
 #### Setting Custom Headers
 
-If you want to set custom headers for a response then `response.headers` is the place to do it. The headers attribute is a hash which maps header names to their values, and Rails will set some of them automatically. If you want to add or change a header, just assign it to `response.headers` this way:
+If you want to set custom headers for a response then `response.headers` is the place to do it. The headers attribute is a hash which maps header names to their values, and Quails will set some of them automatically. If you want to add or change a header, just assign it to `response.headers` this way:
 
 ```ruby
 response.headers["Content-Type"] = "application/pdf"
@@ -876,7 +876,7 @@ Note: in the above case it would make more sense to use the `content_type` sette
 HTTP Authentications
 --------------------
 
-Rails comes with two built-in HTTP authentication mechanisms:
+Quails comes with two built-in HTTP authentication mechanisms:
 
 * Basic Authentication
 * Digest Authentication
@@ -895,7 +895,7 @@ With this in place, you can create namespaced controllers that inherit from `Adm
 
 ### HTTP Digest Authentication
 
-HTTP digest authentication is superior to the basic authentication as it does not require the client to send an unencrypted password over the network (though HTTP basic authentication is safe over HTTPS). Using digest authentication with Rails is quite easy and only requires using one method, `authenticate_or_request_with_http_digest`.
+HTTP digest authentication is superior to the basic authentication as it does not require the client to send an unencrypted password over the network (though HTTP basic authentication is safe over HTTPS). Using digest authentication with Quails is quite easy and only requires using one method, `authenticate_or_request_with_http_digest`.
 
 ```ruby
 class AdminsController < ApplicationController
@@ -918,7 +918,7 @@ As seen in the example above, the `authenticate_or_request_with_http_digest` blo
 Streaming and File Downloads
 ----------------------------
 
-Sometimes you may want to send a file to the user instead of rendering an HTML page. All controllers in Rails have the `send_data` and the `send_file` methods, which will both stream data to the client. `send_file` is a convenience method that lets you provide the name of a file on the disk and it will stream the contents of that file for you.
+Sometimes you may want to send a file to the user instead of rendering an HTML page. All controllers in Quails have the `send_data` and the `send_file` methods, which will both stream data to the client. `send_file` is a convenience method that lets you provide the name of a file on the disk and it will stream the contents of that file for you.
 
 To stream data to the client, use `send_data`:
 
@@ -957,7 +957,7 @@ class ClientsController < ApplicationController
   # Stream a file that has already been generated and stored on disk.
   def download_pdf
     client = Client.find(params[:id])
-    send_file("#{Rails.root}/files/clients/#{client.id}.pdf",
+    send_file("#{Quails.root}/files/clients/#{client.id}.pdf",
               filename: "#{client.name}.pdf",
               type: "application/pdf")
   end
@@ -970,11 +970,11 @@ If `:type` is not specified, it will be guessed from the file extension specifie
 
 WARNING: Be careful when using data coming from the client (params, cookies, etc.) to locate the file on disk, as this is a security risk that might allow someone to gain access to files they are not meant to.
 
-TIP: It is not recommended that you stream static files through Rails if you can instead keep them in a public folder on your web server. It is much more efficient to let the user download the file directly using Apache or another web server, keeping the request from unnecessarily going through the whole Rails stack.
+TIP: It is not recommended that you stream static files through Quails if you can instead keep them in a public folder on your web server. It is much more efficient to let the user download the file directly using Apache or another web server, keeping the request from unnecessarily going through the whole Quails stack.
 
 ### RESTful Downloads
 
-While `send_data` works just fine, if you are creating a RESTful application having separate actions for file downloads is usually not necessary. In REST terminology, the PDF file from the example above can be considered just another representation of the client resource. Rails provides an easy and quite sleek way of doing "RESTful downloads". Here's how you can rewrite the example so that the PDF download is a part of the `show` action, without any streaming:
+While `send_data` works just fine, if you are creating a RESTful application having separate actions for file downloads is usually not necessary. In REST terminology, the PDF file from the example above can be considered just another representation of the client resource. Quails provides an easy and quite sleek way of doing "RESTful downloads". Here's how you can rewrite the example so that the PDF download is a part of the `show` action, without any streaming:
 
 ```ruby
 class ClientsController < ApplicationController
@@ -990,7 +990,7 @@ class ClientsController < ApplicationController
 end
 ```
 
-In order for this example to work, you have to add the PDF MIME type to Rails. This can be done by adding the following line to the file `config/initializers/mime_types.rb`:
+In order for this example to work, you have to add the PDF MIME type to Quails. This can be done by adding the following line to the file `config/initializers/mime_types.rb`:
 
 ```ruby
 Mime::Type.register "application/pdf", :pdf
@@ -1006,7 +1006,7 @@ GET /clients/1.pdf
 
 ### Live Streaming of Arbitrary Data
 
-Rails allows you to stream more than just files. In fact, you can stream anything
+Quails allows you to stream more than just files. In fact, you can stream anything
 you would like in a response object. The `ActionController::Live` module allows
 you to create a persistent connection with a browser. Using this module, you will
 be able to send arbitrary data to the browser at specific points in time.
@@ -1094,7 +1094,7 @@ you should also note the following things:
 Log Filtering
 -------------
 
-Rails keeps a log file for each environment in the `log` folder. These are extremely useful when debugging what's actually going on in your application, but in a live application you may not want every bit of information to be stored in the log file.
+Quails keeps a log file for each environment in the `log` folder. These are extremely useful when debugging what's actually going on in your application, but in a live application you may not want every bit of information to be stored in the log file.
 
 ### Parameters Filtering
 
@@ -1104,7 +1104,7 @@ You can filter out sensitive request parameters from your log files by appending
 config.filter_parameters << :password
 ```
 
-NOTE: Provided parameters will be filtered out by partial matching regular expression. Rails adds default `:password` in the appropriate initializer (`initializers/filter_parameter_logging.rb`) and cares about typical application parameters `password` and `password_confirmation`.
+NOTE: Provided parameters will be filtered out by partial matching regular expression. Quails adds default `:password` in the appropriate initializer (`initializers/filter_parameter_logging.rb`) and cares about typical application parameters `password` and `password_confirmation`.
 
 ### Redirects Filtering
 
@@ -1128,7 +1128,7 @@ Rescue
 
 Most likely your application is going to contain bugs or otherwise throw an exception that needs to be handled. For example, if the user follows a link to a resource that no longer exists in the database, Active Record will throw the `ActiveRecord::RecordNotFound` exception.
 
-Rails default exception handling displays a "500 Server Error" message for all exceptions. If the request was made locally, a nice traceback and some added information gets displayed so you can figure out what went wrong and deal with it. If the request was remote Rails will just display a simple "500 Server Error" message to the user, or a "404 Not Found" if there was a routing error or a record could not be found. Sometimes you might want to customize how these errors are caught and how they're displayed to the user. There are several levels of exception handling available in a Rails application:
+Quails default exception handling displays a "500 Server Error" message for all exceptions. If the request was made locally, a nice traceback and some added information gets displayed so you can figure out what went wrong and deal with it. If the request was remote Quails will just display a simple "500 Server Error" message to the user, or a "404 Not Found" if there was a routing error or a record could not be found. Sometimes you might want to customize how these errors are caught and how they're displayed to the user. There are several levels of exception handling available in a Quails application:
 
 ### The Default 500 and 404 Templates
 
@@ -1186,7 +1186,7 @@ class ClientsController < ApplicationController
 end
 ```
 
-WARNING: Using `rescue_from` with `Exception` or `StandardError` would cause serious side-effects as it prevents Rails from handling exceptions properly. As such, it is not recommended to do so unless there is a strong reason.
+WARNING: Using `rescue_from` with `Exception` or `StandardError` would cause serious side-effects as it prevents Quails from handling exceptions properly. As such, it is not recommended to do so unless there is a strong reason.
 
 NOTE: When running in the production environment, all
 `ActiveRecord::RecordNotFound` errors render the 404 error page. Unless you need

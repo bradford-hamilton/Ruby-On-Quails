@@ -28,7 +28,7 @@ module ActionCable
       def initialize(*)
         ActiveSupport::Deprecation.warn(<<-MSG.squish)
           The "evented_redis" subscription adapter is deprecated and
-          will be removed in Rails 5.2. Please use the "redis" adapter
+          will be removed in Quails 5.2. Please use the "redis" adapter
           instead.
         MSG
 

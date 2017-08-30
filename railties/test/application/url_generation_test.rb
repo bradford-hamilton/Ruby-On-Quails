@@ -7,22 +7,22 @@ module ApplicationTests
     include ActiveSupport::Testing::Isolation
 
     def app
-      Rails.application
+      Quails.application
     end
 
     test "it works" do
-      require "rails"
+      require "quails"
       require "action_controller/railtie"
       require "action_view/railtie"
 
-      class MyApp < Rails::Application
+      class MyApp < Quails::Application
         secrets.secret_key_base = "3b7cd727ee24e8444053437c36cc66c4"
         config.session_store :cookie_store, key: "_myapp_session"
         config.active_support.deprecation = :log
         config.eager_load = false
       end
 
-      Rails.application.initialize!
+      Quails.application.initialize!
 
       class ::ApplicationController < ActionController::Base
       end
@@ -45,13 +45,13 @@ module ApplicationTests
     end
 
     def test_routes_know_the_relative_root
-      require "rails"
+      require "quails"
       require "action_controller/railtie"
       require "action_view/railtie"
 
       relative_url = "/hello"
       ENV["RAILS_RELATIVE_URL_ROOT"] = relative_url
-      app = Class.new(Rails::Application)
+      app = Class.new(Quails::Application)
       assert_equal relative_url, app.routes.relative_url_root
       ENV["RAILS_RELATIVE_URL_ROOT"] = nil
     end

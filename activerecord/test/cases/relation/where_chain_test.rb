@@ -51,10 +51,10 @@ module ActiveRecord
     end
 
     def test_chaining_multiple
-      relation = Post.where.not(author_id: [1, 2]).where.not(title: "ruby on rails")
+      relation = Post.where.not(author_id: [1, 2]).where.not(title: "ruby on quails")
       expected_where_clause =
         Post.where(author_id: [1, 2]).where_clause.invert +
-        Post.where(title: "ruby on rails").where_clause.invert
+        Post.where(title: "ruby on quails").where_clause.invert
 
       assert_equal expected_where_clause, relation.where_clause
     end

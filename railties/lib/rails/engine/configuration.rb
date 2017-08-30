@@ -2,9 +2,9 @@
 
 require_relative "../railtie/configuration"
 
-module Rails
+module Quails
   class Engine
-    class Configuration < ::Rails::Railtie::Configuration
+    class Configuration < ::Quails::Railtie::Configuration
       attr_reader :root
       attr_accessor :middleware
       attr_writer :eager_load_paths, :autoload_once_paths, :autoload_paths
@@ -13,7 +13,7 @@ module Rails
         super()
         @root = root
         @generators = app_generators.dup
-        @middleware = Rails::Configuration::MiddlewareStackProxy.new
+        @middleware = Quails::Configuration::MiddlewareStackProxy.new
       end
 
       # Holds generators configuration:
@@ -29,14 +29,14 @@ module Rails
       #   config.generators.colorize_logging = false
       #
       def generators
-        @generators ||= Rails::Configuration::Generators.new
+        @generators ||= Quails::Configuration::Generators.new
         yield(@generators) if block_given?
         @generators
       end
 
       def paths
         @paths ||= begin
-          paths = Rails::Paths::Root.new(@root)
+          paths = Quails::Paths::Root.new(@root)
 
           paths.add "app",                 eager_load: true, glob: "{*,*/concerns}"
           paths.add "app/assets",          glob: "*"
@@ -52,7 +52,7 @@ module Rails
           paths.add "lib/tasks",           glob: "**/*.rake"
 
           paths.add "config"
-          paths.add "config/environments", glob: "#{Rails.env}.rb"
+          paths.add "config/environments", glob: "#{Quails.env}.rb"
           paths.add "config/initializers", glob: "**/*.rb"
           paths.add "config/locales",      glob: "*.{rb,yml}"
           paths.add "config/routes.rb"

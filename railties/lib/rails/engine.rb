@@ -6,13 +6,13 @@ require "active_support/core_ext/module/delegation"
 require "pathname"
 require "thread"
 
-module Rails
-  # <tt>Rails::Engine</tt> allows you to wrap a specific Rails application or subset of
+module Quails
+  # <tt>Quails::Engine</tt> allows you to wrap a specific Quails application or subset of
   # functionality and share it with other applications or within a larger packaged application.
-  # Every <tt>Rails::Application</tt> is just an engine, which allows for simple
+  # Every <tt>Quails::Application</tt> is just an engine, which allows for simple
   # feature and application sharing.
   #
-  # Any <tt>Rails::Engine</tt> is also a <tt>Rails::Railtie</tt>, so the same
+  # Any <tt>Quails::Engine</tt> is also a <tt>Quails::Railtie</tt>, so the same
   # methods (like <tt>rake_tasks</tt> and +generators+) and configuration
   # options that are available in railties can also be used in engines.
   #
@@ -24,7 +24,7 @@ module Rails
   #
   #   # lib/my_engine.rb
   #   module MyEngine
-  #     class Engine < Rails::Engine
+  #     class Engine < Quails::Engine
   #     end
   #   end
   #
@@ -36,11 +36,11 @@ module Rails
   # == Configuration
   #
   # Besides the +Railtie+ configuration which is shared across the application, in a
-  # <tt>Rails::Engine</tt> you can access <tt>autoload_paths</tt>, <tt>eager_load_paths</tt>
+  # <tt>Quails::Engine</tt> you can access <tt>autoload_paths</tt>, <tt>eager_load_paths</tt>
   # and <tt>autoload_once_paths</tt>, which, differently from a <tt>Railtie</tt>, are scoped to
   # the current engine.
   #
-  #   class MyEngine < Rails::Engine
+  #   class MyEngine < Quails::Engine
   #     # Add a load path for this specific Engine
   #     config.autoload_paths << File.expand_path("lib/some/path", __dir__)
   #
@@ -53,7 +53,7 @@ module Rails
   #
   # You can set up generators for engines with <tt>config.generators</tt> method:
   #
-  #   class MyEngine < Rails::Engine
+  #   class MyEngine < Quails::Engine
   #     config.generators do |g|
   #       g.orm             :active_record
   #       g.template_engine :erb
@@ -63,7 +63,7 @@ module Rails
   #
   # You can also set generators for an application by using <tt>config.app_generators</tt>:
   #
-  #   class MyEngine < Rails::Engine
+  #   class MyEngine < Quails::Engine
   #     # note that you can also pass block to app_generators in the same way you
   #     # can pass it to generators method
   #     config.app_generators.orm :datamapper
@@ -78,20 +78,20 @@ module Rails
   # For example, let's suppose you want to place your controllers in <tt>lib/controllers</tt>.
   # You can set that as an option:
   #
-  #   class MyEngine < Rails::Engine
+  #   class MyEngine < Quails::Engine
   #     paths["app/controllers"] = "lib/controllers"
   #   end
   #
   # You can also have your controllers loaded from both <tt>app/controllers</tt> and
   # <tt>lib/controllers</tt>:
   #
-  #   class MyEngine < Rails::Engine
+  #   class MyEngine < Quails::Engine
   #     paths["app/controllers"] << "lib/controllers"
   #   end
   #
   # The available paths in an engine are:
   #
-  #   class MyEngine < Rails::Engine
+  #   class MyEngine < Quails::Engine
   #     paths["app"]                 # => ["app"]
   #     paths["app/controllers"]     # => ["app/controllers"]
   #     paths["app/helpers"]         # => ["app/helpers"]
@@ -117,14 +117,14 @@ module Rails
   # To do that, use the +endpoint+ method:
   #
   #   module MyEngine
-  #     class Engine < Rails::Engine
+  #     class Engine < Quails::Engine
   #       endpoint MyRackApplication
   #     end
   #   end
   #
   # Now you can mount your engine in application's routes just like that:
   #
-  #   Rails.application.routes.draw do
+  #   Quails.application.routes.draw do
   #     mount MyEngine::Engine => "/engine"
   #   end
   #
@@ -134,7 +134,7 @@ module Rails
   # stack. The usage is exactly the same as in <tt>Application</tt>:
   #
   #   module MyEngine
-  #     class Engine < Rails::Engine
+  #     class Engine < Quails::Engine
   #       middleware.use SomeMiddleware
   #     end
   #   end
@@ -154,7 +154,7 @@ module Rails
   # Note that now there can be more than one router in your application, and it's better to avoid
   # passing requests through many routers. Consider this situation:
   #
-  #   Rails.application.routes.draw do
+  #   Quails.application.routes.draw do
   #     mount MyEngine::Engine => "/blog"
   #     get "/blog/omg" => "main#omg"
   #   end
@@ -164,7 +164,7 @@ module Rails
   # and if there is no such route in +Engine+'s routes, it will be dispatched to <tt>main#omg</tt>.
   # It's much better to swap that:
   #
-  #   Rails.application.routes.draw do
+  #   Quails.application.routes.draw do
   #     get "/blog/omg" => "main#omg"
   #     mount MyEngine::Engine => "/blog"
   #   end
@@ -183,7 +183,7 @@ module Rails
   # <tt>my_engine_engine</tt>. You can change it manually using the <tt>engine_name</tt> method:
   #
   #   module MyEngine
-  #     class Engine < Rails::Engine
+  #     class Engine < Quails::Engine
   #       engine_name "my_engine"
   #     end
   #   end
@@ -199,7 +199,7 @@ module Rails
   # you to pass a module where all your controllers, helpers and models should be nested to:
   #
   #   module MyEngine
-  #     class Engine < Rails::Engine
+  #     class Engine < Quails::Engine
   #       isolate_namespace MyEngine
   #     end
   #   end
@@ -235,7 +235,7 @@ module Rails
   #
   # To make this behavior consistent with other parts of the framework,
   # isolated engines also have an effect on <tt>ActiveModel::Naming</tt>. In a
-  # normal Rails app, when you use a namespaced model such as
+  # normal Quails app, when you use a namespaced model such as
   # <tt>Namespace::Article</tt>, <tt>ActiveModel::Naming</tt> will generate
   # names with the prefix "namespace". In an isolated engine, the prefix will
   # be omitted in url helpers and form fields, for convenience.
@@ -260,7 +260,7 @@ module Rails
   # created to allow you to do that. Consider such a scenario:
   #
   #   # config/routes.rb
-  #   Rails.application.routes.draw do
+  #   Quails.application.routes.draw do
   #     mount MyEngine::Engine => "/my_engine", as: "my_engine"
   #     get "/foo" => "foo#index"
   #   end
@@ -345,7 +345,7 @@ module Rails
   #   # load Blog::Engine with highest priority, followed by application and other railties
   #   config.railties_order = [Blog::Engine, :main_app, :all]
   class Engine < Railtie
-    autoload :Configuration, "rails/engine/configuration"
+    autoload :Configuration, "quails/engine/configuration"
 
     class << self
       attr_accessor :called_from, :isolated
@@ -357,12 +357,12 @@ module Rails
 
       def inherited(base)
         unless base.abstract_railtie?
-          Rails::Railtie::Configuration.eager_load_namespaces << base
+          Quails::Railtie::Configuration.eager_load_namespaces << base
 
           base.called_from = begin
             call_stack = caller_locations.map { |l| l.absolute_path || l.path }
 
-            File.dirname(call_stack.detect { |p| p !~ %r[railties[\w.-]*/lib/rails|rack[\w.-]*/lib/rack] })
+            File.dirname(call_stack.detect { |p| p !~ %r[railties[\w.-]*/lib/quails|rack[\w.-]*/lib/rack] })
           end
         end
 
@@ -413,7 +413,7 @@ module Rails
       # Finds engine with given path.
       def find(path)
         expanded_path = File.expand_path path
-        Rails::Engine.subclasses.each do |klass|
+        Quails::Engine.subclasses.each do |klass|
           engine = klass.instance
           return engine if File.expand_path(engine.root) == expanded_path
         end
@@ -437,7 +437,7 @@ module Rails
     end
 
     # Load console and invoke the registered hooks.
-    # Check <tt>Rails::Railtie.console</tt> for more info.
+    # Check <tt>Quails::Railtie.console</tt> for more info.
     def load_console(app = self)
       require_relative "console/app"
       require_relative "console/helpers"
@@ -445,27 +445,27 @@ module Rails
       self
     end
 
-    # Load Rails runner and invoke the registered hooks.
-    # Check <tt>Rails::Railtie.runner</tt> for more info.
+    # Load Quails runner and invoke the registered hooks.
+    # Check <tt>Quails::Railtie.runner</tt> for more info.
     def load_runner(app = self)
       run_runner_blocks(app)
       self
     end
 
     # Load Rake, railties tasks and invoke the registered hooks.
-    # Check <tt>Rails::Railtie.rake_tasks</tt> for more info.
+    # Check <tt>Quails::Railtie.rake_tasks</tt> for more info.
     def load_tasks(app = self)
       require "rake"
       run_tasks_blocks(app)
       self
     end
 
-    # Load Rails generators and invoke the registered hooks.
-    # Check <tt>Rails::Railtie.generators</tt> for more info.
+    # Load Quails generators and invoke the registered hooks.
+    # Check <tt>Quails::Railtie.generators</tt> for more info.
     def load_generators(app = self)
       require_relative "generators"
       run_generators_blocks(app)
-      Rails::Generators.configure!(app.config.generators)
+      Quails::Generators.configure!(app.config.generators)
       self
     end
 
@@ -559,7 +559,7 @@ module Rails
       $LOAD_PATH.uniq!
     end
 
-    # Set the paths from which Rails will automatically load source files,
+    # Set the paths from which Quails will automatically load source files,
     # and the load_once paths.
     #
     # This needs to be an initializer, since it needs to run once
@@ -621,7 +621,7 @@ module Rails
     end
 
     rake_tasks do
-      next if is_a?(Rails::Application)
+      next if is_a?(Quails::Application)
       next unless has_migrations?
 
       namespace railtie_name do

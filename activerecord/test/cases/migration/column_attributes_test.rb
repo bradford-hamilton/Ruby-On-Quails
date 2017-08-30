@@ -79,7 +79,7 @@ module ActiveRecord
           # Reset to old state
           TestModel.delete_all
 
-          # Now use the Rails insertion
+          # Now use the Quails insertion
           TestModel.create wealth: BigDecimal.new("12345678901234567890.0123456789")
 
           # SELECT

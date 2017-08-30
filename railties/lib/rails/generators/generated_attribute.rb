@@ -2,7 +2,7 @@
 
 require "active_support/time"
 
-module Rails
+module Quails
   module Generators
     class GeneratedAttribute # :nodoc:
       INDEX_OPTIONS = %w(index uniq)

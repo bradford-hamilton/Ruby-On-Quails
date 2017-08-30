@@ -7,7 +7,7 @@ class TestRunnerInEngineTest < ActiveSupport::TestCase
 
   def setup
     @destination_root = Dir.mktmpdir("bukkits")
-    Dir.chdir(@destination_root) { `bundle exec rails plugin new bukkits --full --skip-bundle` }
+    Dir.chdir(@destination_root) { `bundle exec quails plugin new bukkits --full --skip-bundle` }
     plugin_file "test/dummy/db/schema.rb", ""
   end
 
@@ -19,7 +19,7 @@ class TestRunnerInEngineTest < ActiveSupport::TestCase
     create_test_file "post", pass: false
 
     output = run_test_command("test/post_test.rb")
-    expect = %r{Running:\n\nPostTest\nF\n\nFailure:\nPostTest#test_truth \[[^\]]+test/post_test\.rb:6\]:\nwups!\n\nbin/rails test test/post_test\.rb:4}
+    expect = %r{Running:\n\nPostTest\nF\n\nFailure:\nPostTest#test_truth \[[^\]]+test/post_test\.rb:6\]:\nwups!\n\nbin/quails test test/post_test\.rb:4}
     assert_match expect, output
   end
 
@@ -29,6 +29,6 @@ class TestRunnerInEngineTest < ActiveSupport::TestCase
     end
 
     def run_test_command(arguments)
-      Dir.chdir(plugin_path) { `bin/rails test #{arguments}` }
+      Dir.chdir(plugin_path) { `bin/quails test #{arguments}` }
     end
 end

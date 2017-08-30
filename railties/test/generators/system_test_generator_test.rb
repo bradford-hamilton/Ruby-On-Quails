@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/system_test/system_test_generator"
+require "quails/generators/quails/system_test/system_test_generator"
 
-class SystemTestGeneratorTest < Rails::Generators::TestCase
+class SystemTestGeneratorTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
   arguments %w(user)
 

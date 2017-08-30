@@ -15,24 +15,24 @@ module ApplicationTests
     end
 
     def app_const
-      @app_const ||= Class.new(Rails::Application)
+      @app_const ||= Class.new(Quails::Application)
     end
 
     def with_config
-      require "rails/all"
-      require "rails/generators"
+      require "quails/all"
+      require "quails/generators"
       yield app_const.config
     end
 
     def with_bare_config
-      require "rails"
-      require "rails/generators"
+      require "quails"
+      require "quails/generators"
       yield app_const.config
     end
 
-    test "allow running plugin new generator inside Rails app directory" do
-      FileUtils.cd(rails_root) { `ruby bin/rails plugin new vendor/plugins/bukkits` }
-      assert File.exist?(File.join(rails_root, "vendor/plugins/bukkits/test/dummy/config/application.rb"))
+    test "allow running plugin new generator inside Quails app directory" do
+      FileUtils.cd(quails_root) { `ruby bin/quails plugin new vendor/plugins/bukkits` }
+      assert File.exist?(File.join(quails_root, "vendor/plugins/bukkits/test/dummy/config/application.rb"))
     end
 
     test "generators default values" do
@@ -44,27 +44,27 @@ module ApplicationTests
       end
     end
 
-    test "generators set rails options" do
+    test "generators set quails options" do
       with_bare_config do |c|
         c.generators.orm            = :data_mapper
         c.generators.test_framework = :rspec
         c.generators.helper         = false
-        expected = { rails: { orm: :data_mapper, test_framework: :rspec, helper: false } }
+        expected = { quails: { orm: :data_mapper, test_framework: :rspec, helper: false } }
         assert_equal(expected, c.generators.options)
       end
     end
 
-    test "generators set rails aliases" do
+    test "generators set quails aliases" do
       with_config do |c|
-        c.generators.aliases = { rails: { test_framework: "-w" } }
-        expected = { rails: { test_framework: "-w" } }
+        c.generators.aliases = { quails: { test_framework: "-w" } }
+        expected = { quails: { test_framework: "-w" } }
         assert_equal expected, c.generators.aliases
       end
     end
 
     test "generators aliases, options, templates and fallbacks on initialization" do
       add_to_config <<-RUBY
-        config.generators.rails aliases: { test_framework: "-w" }
+        config.generators.quails aliases: { test_framework: "-w" }
         config.generators.orm :data_mapper
         config.generators.test_framework :rspec
         config.generators.fallbacks[:shoulda] = :test_unit
@@ -73,12 +73,12 @@ module ApplicationTests
 
       # Initialize the application
       require "#{app_path}/config/environment"
-      Rails.application.load_generators
+      Quails.application.load_generators
 
-      assert_equal :rspec, Rails::Generators.options[:rails][:test_framework]
-      assert_equal "-w", Rails::Generators.aliases[:rails][:test_framework]
-      assert_equal Hash[shoulda: :test_unit], Rails::Generators.fallbacks
-      assert_equal ["some/where"], Rails::Generators.templates_path
+      assert_equal :rspec, Quails::Generators.options[:quails][:test_framework]
+      assert_equal "-w", Quails::Generators.aliases[:quails][:test_framework]
+      assert_equal Hash[shoulda: :test_unit], Quails::Generators.fallbacks
+      assert_equal ["some/where"], Quails::Generators.templates_path
     end
 
     test "generators no color on initialization" do
@@ -88,7 +88,7 @@ module ApplicationTests
 
       # Initialize the application
       require "#{app_path}/config/environment"
-      Rails.application.load_generators
+      Quails.application.load_generators
 
       assert_equal Thor::Base.shell, Thor::Shell::Basic
     end
@@ -102,7 +102,7 @@ module ApplicationTests
         end
 
         expected = {
-          rails: { orm: :data_mapper },
+          quails: { orm: :data_mapper },
           plugin: { generator: true },
           data_mapper: { migration: false }
         }
@@ -119,7 +119,7 @@ module ApplicationTests
         end
 
         expected = {
-          rails: { orm: :data_mapper },
+          quails: { orm: :data_mapper },
           data_mapper: { migration: false }
         }
 
@@ -134,16 +134,16 @@ module ApplicationTests
 
       # Initialize the application
       require "#{app_path}/config/environment"
-      Rails.application.load_generators
+      Quails.application.load_generators
 
-      assert_includes Rails::Generators.hidden_namespaces, "assets"
-      assert_includes Rails::Generators.hidden_namespaces, "helper"
-      assert_includes Rails::Generators.hidden_namespaces, "js"
-      assert_includes Rails::Generators.hidden_namespaces, "css"
-      assert Rails::Generators.options[:rails][:api]
-      assert_equal false, Rails::Generators.options[:rails][:assets]
-      assert_equal false, Rails::Generators.options[:rails][:helper]
-      assert_nil Rails::Generators.options[:rails][:template_engine]
+      assert_includes Quails::Generators.hidden_namespaces, "assets"
+      assert_includes Quails::Generators.hidden_namespaces, "helper"
+      assert_includes Quails::Generators.hidden_namespaces, "js"
+      assert_includes Quails::Generators.hidden_namespaces, "css"
+      assert Quails::Generators.options[:quails][:api]
+      assert_equal false, Quails::Generators.options[:quails][:assets]
+      assert_equal false, Quails::Generators.options[:quails][:helper]
+      assert_nil Quails::Generators.options[:quails][:template_engine]
     end
 
     test "api only generators allow overriding generator options" do
@@ -155,11 +155,11 @@ module ApplicationTests
 
       # Initialize the application
       require "#{app_path}/config/environment"
-      Rails.application.load_generators
+      Quails.application.load_generators
 
-      assert Rails::Generators.options[:rails][:api]
-      assert Rails::Generators.options[:rails][:helper]
-      assert_equal :my_template, Rails::Generators.options[:rails][:template_engine]
+      assert Quails::Generators.options[:quails][:api]
+      assert Quails::Generators.options[:quails][:helper]
+      assert_equal :my_template, Quails::Generators.options[:quails][:template_engine]
     end
 
     test "api only generator generate mailer views" do
@@ -167,32 +167,32 @@ module ApplicationTests
         config.api_only = true
       RUBY
 
-      FileUtils.cd(rails_root) { `bin/rails generate mailer notifier foo` }
-      assert File.exist?(File.join(rails_root, "app/views/notifier_mailer/foo.text.erb"))
-      assert File.exist?(File.join(rails_root, "app/views/notifier_mailer/foo.html.erb"))
+      FileUtils.cd(quails_root) { `bin/quails generate mailer notifier foo` }
+      assert File.exist?(File.join(quails_root, "app/views/notifier_mailer/foo.text.erb"))
+      assert File.exist?(File.join(quails_root, "app/views/notifier_mailer/foo.html.erb"))
     end
 
     test "ARGV is mutated as expected" do
       require "#{app_path}/config/environment"
-      Rails::Command.const_set("APP_PATH", "rails/all")
+      Quails::Command.const_set("APP_PATH", "quails/all")
 
-      FileUtils.cd(rails_root) do
+      FileUtils.cd(quails_root) do
         ARGV = ["mailer", "notifier", "foo"]
-        Rails::Command.const_set("ARGV", ARGV)
-        quietly { Rails::Command.invoke :generate, ARGV }
+        Quails::Command.const_set("ARGV", ARGV)
+        quietly { Quails::Command.invoke :generate, ARGV }
 
         assert_equal ["notifier", "foo"], ARGV
       end
 
-      Rails::Command.send(:remove_const, "APP_PATH")
+      Quails::Command.send(:remove_const, "APP_PATH")
     end
 
     test "help does not show hidden namespaces" do
-      FileUtils.cd(rails_root) do
-        output = `bin/rails generate --help`
+      FileUtils.cd(quails_root) do
+        output = `bin/quails generate --help`
         assert_no_match "active_record:migration", output
 
-        output = `bin/rails destroy --help`
+        output = `bin/quails destroy --help`
         assert_no_match "active_record:migration", output
       end
     end

@@ -1,11 +1,11 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
 Action View Overview
 ====================
 
 After reading this guide, you will know:
 
-* What Action View is and how to use it with Rails.
+* What Action View is and how to use it with Quails.
 * How best to use templates, partials, and layouts.
 * What helpers are provided by Action View and how to make your own.
 * How to use localized views.
@@ -15,21 +15,21 @@ After reading this guide, you will know:
 What is Action View?
 --------------------
 
-In Rails, web requests are handled by [Action Controller](action_controller_overview.html) and Action View. Typically, Action Controller is concerned with communicating with the database and performing CRUD actions where necessary. Action View is then responsible for compiling the response.
+In Quails, web requests are handled by [Action Controller](action_controller_overview.html) and Action View. Typically, Action Controller is concerned with communicating with the database and performing CRUD actions where necessary. Action View is then responsible for compiling the response.
 
 Action View templates are written using embedded Ruby in tags mingled with HTML. To avoid cluttering the templates with boilerplate code, a number of helper classes provide common behavior for forms, dates, and strings. It's also easy to add new helpers to your application as it evolves.
 
 NOTE: Some features of Action View are tied to Active Record, but that doesn't mean Action View depends on Active Record. Action View is an independent package that can be used with any sort of Ruby libraries.
 
-Using Action View with Rails
+Using Action View with Quails
 ----------------------------
 
 For each controller there is an associated directory in the `app/views` directory which holds the template files that make up the views associated with that controller. These files are used to display the view that results from each controller action.
 
-Let's take a look at what Rails does by default when creating a new resource using the scaffold generator:
+Let's take a look at what Quails does by default when creating a new resource using the scaffold generator:
 
 ```bash
-$ bin/rails generate scaffold article
+$ bin/quails generate scaffold article
       [...]
       invoke  scaffold_controller
       create    app/controllers/articles_controller.rb
@@ -43,7 +43,7 @@ $ bin/rails generate scaffold article
       [...]
 ```
 
-There is a naming convention for views in Rails. Typically, the views share their name with the associated controller action, as you can see above.
+There is a naming convention for views in Quails. Typically, the views share their name with the associated controller action, as you can see above.
 For example, the index controller action of the `articles_controller.rb` will use the `index.html.erb` view file in the `app/views/articles` directory.
 The complete HTML returned to the client is composed of a combination of this ERB file, a layout template that wraps it, and all the partials that the view may reference. Within this guide you will find more detailed documentation about each of these three components.
 
@@ -51,14 +51,14 @@ The complete HTML returned to the client is composed of a combination of this ER
 Templates, Partials and Layouts
 -------------------------------
 
-As mentioned, the final HTML output is a composition of three Rails elements: `Templates`, `Partials` and `Layouts`.
+As mentioned, the final HTML output is a composition of three Quails elements: `Templates`, `Partials` and `Layouts`.
 Below is a brief overview of each of them.
 
 ### Templates
 
 Action View templates can be written in several ways. If the template file has a `.erb` extension then it uses a mixture of ERB (Embedded Ruby) and HTML. If the template file has a `.builder` extension then the `Builder::XmlMarkup` library is used.
 
-Rails supports multiple template systems and uses a file extension to distinguish amongst them. For example, an HTML file using the ERB template system will have `.html.erb` as a file extension.
+Quails supports multiple template systems and uses a file extension to distinguish amongst them. For example, an HTML file using the ERB template system will have `.html.erb` as a file extension.
 
 #### ERB
 
@@ -91,7 +91,7 @@ Here are some basic examples:
 ```ruby
 xml.em("emphasized")
 xml.em { xml.b("emph & bold") }
-xml.a("A Link", "href" => "http://rubyonrails.org")
+xml.a("A Link", "href" => "http://rubyonquails.org")
 xml.target("name" => "compile", "option" => "fast")
 ```
 
@@ -100,7 +100,7 @@ which would produce:
 ```html
 <em>emphasized</em>
 <em><b>emph &amp; bold</b></em>
-<a href="http://rubyonrails.org">A link</a>
+<a href="http://rubyonquails.org">A link</a>
 <target option="fast" name="compile" />
 ```
 
@@ -148,8 +148,8 @@ end
 ```
 
 #### Jbuilder
-[Jbuilder](https://github.com/rails/jbuilder) is a gem that's
-maintained by the Rails team and included in the default Rails Gemfile.
+[Jbuilder](https://github.com/quails/jbuilder) is a gem that's
+maintained by the Quails team and included in the default Quails Gemfile.
 It's similar to Builder, but is used to generate JSON, instead of XML.
 
 If you don't have it, you can add the following to your Gemfile:
@@ -177,12 +177,12 @@ would produce:
 }
 ```
 
-See the [Jbuilder documentation](https://github.com/rails/jbuilder#jbuilder) for
+See the [Jbuilder documentation](https://github.com/quails/jbuilder#jbuilder) for
 more examples and information.
 
 #### Template Caching
 
-By default, Rails will compile each template to a method in order to render it. When you alter a template, Rails will check the file's modification time and recompile it in development mode.
+By default, Quails will compile each template to a method in order to render it. When you alter a template, Quails will check the file's modification time and recompile it in development mode.
 
 ### Partials
 
@@ -306,7 +306,7 @@ You can use a shorthand syntax for rendering collections. Assuming `@products` i
 <%= render @products %>
 ```
 
-Rails determines the name of the partial to use by looking at the model name in the collection, `Product` in this case. In fact, you can even render a collection made up of instances of different models using this shorthand, and Rails will choose the proper partial for each member of the collection.
+Quails determines the name of the partial to use by looking at the model name in the collection, `Product` in this case. In fact, you can even render a collection made up of instances of different models using this shorthand, and Quails will choose the proper partial for each member of the collection.
 
 #### Spacer Templates
 
@@ -316,11 +316,11 @@ You can also specify a second partial to be rendered between instances of the ma
 <%= render partial: @products, spacer_template: "product_ruler" %>
 ```
 
-Rails will render the `_product_ruler` partial (with no data passed to it) between each pair of `_product` partials.
+Quails will render the `_product_ruler` partial (with no data passed to it) between each pair of `_product` partials.
 
 ### Layouts
 
-Layouts can be used to render a common view template around the results of Rails controller actions. Typically, a Rails application will have a couple of layouts that pages will be rendered within. For example, a site might have one layout for a logged in user and another for the marketing or sales side of the site. The logged in user layout might include top-level navigation that should be present across many controller actions. The sales layout for a SaaS app might include top-level navigation for things like "Pricing" and "Contact Us" pages. You would expect each layout to have a different look and feel. You can read about layouts in more detail in the [Layouts and Rendering in Rails](layouts_and_rendering.html) guide.
+Layouts can be used to render a common view template around the results of Quails controller actions. Typically, a Quails application will have a couple of layouts that pages will be rendered within. For example, a site might have one layout for a logged in user and another for the marketing or sales side of the site. The logged in user layout might include top-level navigation that should be present across many controller actions. The sales layout for a SaaS app might include top-level navigation for things like "Pricing" and "Contact Us" pages. You would expect each layout to have a different look and feel. You can read about layouts in more detail in the [Layouts and Rendering in Quails](layouts_and_rendering.html) guide.
 
 Partial Layouts
 ---------------
@@ -402,19 +402,19 @@ This will add `app/views/direct` to the end of the lookup paths.
 Overview of helpers provided by Action View
 -------------------------------------------
 
-WIP: Not all the helpers are listed here. For a full list see the [API documentation](http://api.rubyonrails.org/classes/ActionView/Helpers.html)
+WIP: Not all the helpers are listed here. For a full list see the [API documentation](http://api.rubyonquails.org/classes/ActionView/Helpers.html)
 
-The following is only a brief overview summary of the helpers available in Action View. It's recommended that you review the [API Documentation](http://api.rubyonrails.org/classes/ActionView/Helpers.html), which covers all of the helpers in more detail, but this should serve as a good starting point.
+The following is only a brief overview summary of the helpers available in Action View. It's recommended that you review the [API Documentation](http://api.rubyonquails.org/classes/ActionView/Helpers.html), which covers all of the helpers in more detail, but this should serve as a good starting point.
 
 ### AssetTagHelper
 
 This module provides methods for generating HTML that links views to assets such as images, JavaScript files, stylesheets, and feeds.
 
-By default, Rails links to these assets on the current host in the public folder, but you can direct Rails to link to assets from a dedicated assets server by setting `config.action_controller.asset_host` in the application configuration, typically in `config/environments/production.rb`. For example, let's say your asset host is `assets.example.com`:
+By default, Quails links to these assets on the current host in the public folder, but you can direct Quails to link to assets from a dedicated assets server by setting `config.action_controller.asset_host` in the application configuration, typically in `config/environments/production.rb`. For example, let's say your asset host is `assets.example.com`:
 
 ```ruby
 config.action_controller.asset_host = "assets.example.com"
-image_tag("rails.png") # => <img src="http://assets.example.com/images/rails.png" />
+image_tag("quails.png") # => <img src="http://assets.example.com/images/quails.png" />
 ```
 
 #### auto_discovery_link_tag
@@ -902,10 +902,10 @@ password_field(:login, :pass)
 Returns a radio button tag for accessing a specified attribute.
 
 ```ruby
-# Let's say that @article.category returns "rails":
-radio_button("article", "category", "rails")
+# Let's say that @article.category returns "quails":
+radio_button("article", "category", "quails")
 radio_button("article", "category", "java")
-# => <input type="radio" id="article_category_rails" name="article[category]" value="rails" checked="checked" />
+# => <input type="radio" id="article_category_quails" name="article[category]" value="quails" checked="checked" />
 #    <input type="radio" id="article_category_java" name="article[category]" value="java" />
 ```
 
@@ -1431,7 +1431,7 @@ sanitize @article.body, tags: %w(table tr td), attributes: %w(id class style)
 To change defaults for multiple uses, for example adding table tags to the default:
 
 ```ruby
-class Application < Rails::Application
+class Application < Quails::Application
   config.action_view.sanitized_allowed_tags = 'table', 'tr', 'td'
 end
 ```
@@ -1444,8 +1444,8 @@ Sanitizes a block of CSS code.
 Strips all link tags from text leaving just the link text.
 
 ```ruby
-strip_links('<a href="http://rubyonrails.org">Ruby on Rails</a>')
-# => Ruby on Rails
+strip_links('<a href="http://rubyonquails.org">Ruby on Quails</a>')
+# => Ruby on Quails
 ```
 
 ```ruby
@@ -1461,7 +1461,7 @@ strip_links('Blog: <a href="http://myblog.com/">Visit</a>.')
 #### strip_tags(html)
 
 Strips all HTML tags from the html, including comments.
-This functionality is powered by the rails-html-sanitizer gem.
+This functionality is powered by the quails-html-sanitizer gem.
 
 ```ruby
 strip_tags("Strip <i>these</i> tags!")
@@ -1485,7 +1485,7 @@ request forgery protection parameter and token, respectively.
 ```
 
 NOTE: Regular forms generate hidden fields so they do not use these tags. More
-details can be found in the [Rails Security Guide](security.html#cross-site-request-forgery-csrf).
+details can be found in the [Quails Security Guide](security.html#cross-site-request-forgery-csrf).
 
 Localized Views
 ---------------
@@ -1496,7 +1496,7 @@ For example, suppose you have an `ArticlesController` with a show action. By def
 
 You can use the same technique to localize the rescue files in your public directory. For example, setting `I18n.locale = :de` and creating `public/500.de.html` and `public/404.de.html` would allow you to have localized rescue pages.
 
-Since Rails doesn't restrict the symbols that you use to set I18n.locale, you can leverage this system to display different content depending on anything you like. For example, suppose you have some "expert" users that should see different pages from "normal" users. You could add the following to `app/controllers/application.rb`:
+Since Quails doesn't restrict the symbols that you use to set I18n.locale, you can leverage this system to display different content depending on anything you like. For example, suppose you have some "expert" users that should see different pages from "normal" users. You could add the following to `app/controllers/application.rb`:
 
 ```ruby
 before_action :set_expert_locale
@@ -1508,4 +1508,4 @@ end
 
 Then you could create special views like `app/views/articles/show.expert.html.erb` that would only be displayed to expert users.
 
-You can read more about the Rails Internationalization (I18n) API [here](i18n.html).
+You can read more about the Quails Internationalization (I18n) API [here](i18n.html).

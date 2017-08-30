@@ -26,7 +26,7 @@ module ActiveJob
     #
     # To use Resque set the queue_adapter config to +:resque+.
     #
-    #   Rails.application.config.active_job.queue_adapter = :resque
+    #   Quails.application.config.active_job.queue_adapter = :resque
     class ResqueAdapter
       def enqueue(job) #:nodoc:
         JobWrapper.instance_variable_set(:@queue, job.queue_name)

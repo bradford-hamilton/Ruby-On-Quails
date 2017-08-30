@@ -24,7 +24,7 @@
 #++
 
 require "active_support"
-require "active_support/rails"
+require "active_support/quails"
 require_relative "action_cable/version"
 
 module ActionCable

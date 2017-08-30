@@ -28,7 +28,7 @@ module ActionController
         end
         message = "Completed #{status} #{Rack::Utils::HTTP_STATUS_CODES[status]} in #{event.duration.round}ms".dup
         message << " (#{additions.join(" | ".freeze)})" unless additions.empty?
-        message << "\n\n" if defined?(Rails.env) && Rails.env.development?
+        message << "\n\n" if defined?(Quails.env) && Quails.env.development?
 
         message
       end

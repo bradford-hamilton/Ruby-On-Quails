@@ -435,8 +435,8 @@ class LegacyRouteSetTests < ActiveSupport::TestCase
       get "page/:title" => "content#show_page", :title => "AboutPage", :as => "page"
     end
 
-    assert_equal("http://test.host/page/AboutRails",
-        setup_for_named_route.send(:page_url, title: "AboutRails"))
+    assert_equal("http://test.host/page/AboutQuails",
+        setup_for_named_route.send(:page_url, title: "AboutQuails"))
   end
 
   def test_named_route_with_path_prefix

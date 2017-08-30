@@ -6,7 +6,7 @@ module ActiveSupport
   # Autoload and eager load conveniences for your library.
   #
   # This module allows you to define autoloads based on
-  # Rails conventions (i.e. no need to define the path
+  # Quails conventions (i.e. no need to define the path
   # it is automatically guessed based on the filename)
   # and also define a set of constants that needs to be
   # eager loaded:

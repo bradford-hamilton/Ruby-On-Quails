@@ -15,4 +15,4 @@ aliases = {
 command = ARGV.shift
 command = aliases[command] || command
 
-Rails::Command.invoke command, ARGV
+Quails::Command.invoke command, ARGV

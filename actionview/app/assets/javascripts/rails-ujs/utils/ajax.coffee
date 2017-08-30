@@ -1,7 +1,7 @@
 #= require ./csrf
 #= require ./event
 
-{ CSRFProtection, fire } = Rails
+{ CSRFProtection, fire } = Quails
 
 AcceptHeaders =
   '*': '*/*'
@@ -11,7 +11,7 @@ AcceptHeaders =
   json: 'application/json, text/javascript'
   script: 'text/javascript, application/javascript, application/ecmascript, application/x-ecmascript'
 
-Rails.ajax = (options) ->
+Quails.ajax = (options) ->
   options = prepareOptions(options)
   xhr = createXHR options, ->
     response = processResponse(xhr.response ? xhr.responseText, xhr.getResponseHeader('Content-Type'))
@@ -74,11 +74,11 @@ processResponse = (response, type) ->
       try response = parser.parseFromString(response, type)
   response
 
-# Default way to get an element's href. May be overridden at Rails.href.
-Rails.href = (element) -> element.href
+# Default way to get an element's href. May be overridden at Quails.href.
+Quails.href = (element) -> element.href
 
 # Determines if the request is a cross domain request.
-Rails.isCrossDomain = (url) ->
+Quails.isCrossDomain = (url) ->
   originAnchor = document.createElement('a')
   originAnchor.href = location.href
   urlAnchor = document.createElement('a')

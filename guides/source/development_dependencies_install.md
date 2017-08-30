@@ -1,32 +1,32 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
 Development Dependencies Install
 ================================
 
-This guide covers how to setup an environment for Ruby on Rails core development.
+This guide covers how to setup an environment for Ruby on Quails core development.
 
 After reading this guide, you will know:
 
-* How to set up your machine for Rails development
-* How to run specific groups of unit tests from the Rails test suite
-* How the Active Record portion of the Rails test suite operates
+* How to set up your machine for Quails development
+* How to run specific groups of unit tests from the Quails test suite
+* How the Active Record portion of the Quails test suite operates
 
 --------------------------------------------------------------------------------
 
 The Easy Way
 ------------
 
-The easiest and recommended way to get a development environment ready to hack is to use the [Rails development box](https://github.com/rails/rails-dev-box).
+The easiest and recommended way to get a development environment ready to hack is to use the [Quails development box](https://github.com/quails/quails-dev-box).
 
 The Hard Way
 ------------
 
-In case you can't use the Rails development box, see the steps below to manually
-build a development box for Ruby on Rails core development.
+In case you can't use the Quails development box, see the steps below to manually
+build a development box for Ruby on Quails core development.
 
 ### Install Git
 
-Ruby on Rails uses Git for source code control. The [Git homepage](https://git-scm.com/) has installation instructions. There are a variety of resources on the net that will help you get familiar with Git:
+Ruby on Quails uses Git for source code control. The [Git homepage](https://git-scm.com/) has installation instructions. There are a variety of resources on the net that will help you get familiar with Git:
 
 * [Try Git course](https://try.github.io/) is an interactive course that will teach you the basics.
 * The [official Documentation](https://git-scm.com/documentation) is pretty comprehensive and also contains some videos with the basics of Git.
@@ -34,13 +34,13 @@ Ruby on Rails uses Git for source code control. The [Git homepage](https://git-s
 * [GitHub](https://help.github.com/) offers links to a variety of Git resources.
 * [Pro Git](https://git-scm.com/book) is an entire book about Git with a Creative Commons license.
 
-### Clone the Ruby on Rails Repository
+### Clone the Ruby on Quails Repository
 
-Navigate to the folder where you want the Ruby on Rails source code (it will create its own `rails` subdirectory) and run:
+Navigate to the folder where you want the Ruby on Quails source code (it will create its own `quails` subdirectory) and run:
 
 ```bash
-$ git clone https://github.com/rails/rails.git
-$ cd rails
+$ git clone https://github.com/quails/quails.git
+$ cd quails
 ```
 
 ### Set up and Run the Tests
@@ -233,18 +233,18 @@ $ bundle install
 
 First, we need to delete `.bundle/config` because Bundler remembers in that file that we didn't want to install the "db" group (alternatively you can edit the file).
 
-In order to be able to run the test suite against MySQL you need to create a user named `rails` with privileges on the test databases:
+In order to be able to run the test suite against MySQL you need to create a user named `quails` with privileges on the test databases:
 
 ```bash
 $ mysql -uroot -p
 
-mysql> CREATE USER 'rails'@'localhost';
+mysql> CREATE USER 'quails'@'localhost';
 mysql> GRANT ALL PRIVILEGES ON activerecord_unittest.*
-       to 'rails'@'localhost';
+       to 'quails'@'localhost';
 mysql> GRANT ALL PRIVILEGES ON activerecord_unittest2.*
-       to 'rails'@'localhost';
+       to 'quails'@'localhost';
 mysql> GRANT ALL PRIVILEGES ON inexistent_activerecord_unittest.*
-       to 'rails'@'localhost';
+       to 'quails'@'localhost';
 ```
 
 and create the test databases:
@@ -292,7 +292,7 @@ NOTE: Using the Rake task to create the test databases ensures they have the cor
 
 NOTE: You'll see the following warning (or localized warning) during activating HStore extension in PostgreSQL 9.1.x or earlier: "WARNING: => is deprecated as an operator".
 
-If you're using another database, check the file `activerecord/test/config.yml` or `activerecord/test/config.example.yml` for default connection information. You can edit `activerecord/test/config.yml` to provide different credentials on your machine if you must, but obviously you should not push any such changes back to Rails.
+If you're using another database, check the file `activerecord/test/config.yml` or `activerecord/test/config.example.yml` for default connection information. You can edit `activerecord/test/config.yml` to provide different credentials on your machine if you must, but obviously you should not push any such changes back to Quails.
 
 ### Action Cable Setup
 

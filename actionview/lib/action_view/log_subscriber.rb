@@ -5,7 +5,7 @@ require "active_support/log_subscriber"
 module ActionView
   # = Action View Log Subscriber
   #
-  # Provides functionality so that Rails can output logs from Action View.
+  # Provides functionality so that Quails can output logs from Action View.
   class LogSubscriber < ActiveSupport::LogSubscriber
     VIEWS_PATTERN = /^app\/views\//
 
@@ -16,16 +16,16 @@ module ActionView
 
     def render_template(event)
       info do
-        message = "  Rendered #{from_rails_root(event.payload[:identifier])}".dup
-        message << " within #{from_rails_root(event.payload[:layout])}" if event.payload[:layout]
+        message = "  Rendered #{from_quails_root(event.payload[:identifier])}".dup
+        message << " within #{from_quails_root(event.payload[:layout])}" if event.payload[:layout]
         message << " (#{event.duration.round(1)}ms)"
       end
     end
 
     def render_partial(event)
       info do
-        message = "  Rendered #{from_rails_root(event.payload[:identifier])}".dup
-        message << " within #{from_rails_root(event.payload[:layout])}" if event.payload[:layout]
+        message = "  Rendered #{from_quails_root(event.payload[:identifier])}".dup
+        message << " within #{from_quails_root(event.payload[:layout])}" if event.payload[:layout]
         message << " (#{event.duration.round(1)}ms)"
         message << " #{cache_message(event.payload)}" unless event.payload[:cache_hit].nil?
         message
@@ -36,7 +36,7 @@ module ActionView
       identifier = event.payload[:identifier] || "templates"
 
       info do
-        "  Rendered collection of #{from_rails_root(identifier)}" \
+        "  Rendered collection of #{from_quails_root(identifier)}" \
         " #{render_count(event.payload)} (#{event.duration.round(1)}ms)"
       end
     end
@@ -56,14 +56,14 @@ module ActionView
   private
 
     EMPTY = ""
-    def from_rails_root(string) # :doc:
-      string = string.sub(rails_root, EMPTY)
+    def from_quails_root(string) # :doc:
+      string = string.sub(quails_root, EMPTY)
       string.sub!(VIEWS_PATTERN, EMPTY)
       string
     end
 
-    def rails_root # :doc:
-      @root ||= "#{Rails.root}/"
+    def quails_root # :doc:
+      @root ||= "#{Quails.root}/"
     end
 
     def render_count(payload) # :doc:
@@ -85,8 +85,8 @@ module ActionView
 
     def log_rendering_start(payload)
       info do
-        message = "  Rendering #{from_rails_root(payload[:identifier])}".dup
-        message << " within #{from_rails_root(payload[:layout])}" if payload[:layout]
+        message = "  Rendering #{from_quails_root(payload[:identifier])}".dup
+        message << " within #{from_quails_root(payload[:layout])}" if payload[:layout]
         message
       end
     end

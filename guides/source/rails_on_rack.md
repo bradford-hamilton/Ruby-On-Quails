@@ -1,13 +1,13 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonquails.org.**
 
-Rails on Rack
+Quails on Rack
 =============
 
-This guide covers Rails integration with Rack and interfacing with other Rack components.
+This guide covers Quails integration with Rack and interfacing with other Rack components.
 
 After reading this guide, you will know:
 
-* How to use Rack Middlewares in your Rails applications.
+* How to use Rack Middlewares in your Quails applications.
 * Action Pack's internal Middleware stack.
 * How to define a custom Middleware stack.
 
@@ -24,30 +24,30 @@ Explaining how Rack works is not really in the scope of this guide. In case you
 are not familiar with Rack's basics, you should check out the [Resources](#resources)
 section below.
 
-Rails on Rack
+Quails on Rack
 -------------
 
-### Rails Application's Rack Object
+### Quails Application's Rack Object
 
-`Rails.application` is the primary Rack application object of a Rails
+`Quails.application` is the primary Rack application object of a Quails
 application. Any Rack compliant web server should be using
-`Rails.application` object to serve a Rails application.
+`Quails.application` object to serve a Quails application.
 
-### `rails server`
+### `quails server`
 
-`rails server` does the basic job of creating a `Rack::Server` object and starting the webserver.
+`quails server` does the basic job of creating a `Rack::Server` object and starting the webserver.
 
-Here's how `rails server` creates an instance of `Rack::Server`
+Here's how `quails server` creates an instance of `Rack::Server`
 
 ```ruby
-Rails::Server.new.tap do |server|
+Quails::Server.new.tap do |server|
   require APP_PATH
-  Dir.chdir(Rails.application.root)
+  Dir.chdir(Quails.application.root)
   server.start
 end
 ```
 
-The `Rails::Server` inherits from `Rack::Server` and calls the `Rack::Server#start` method this way:
+The `Quails::Server` inherits from `Rack::Server` and calls the `Rack::Server#start` method this way:
 
 ```ruby
 class Server < ::Rack::Server
@@ -60,12 +60,12 @@ end
 
 ### `rackup`
 
-To use `rackup` instead of Rails' `rails server`, you can put the following inside `config.ru` of your Rails application's root directory:
+To use `rackup` instead of Quails' `quails server`, you can put the following inside `config.ru` of your Quails application's root directory:
 
 ```ruby
-# Rails.root/config.ru
+# Quails.root/config.ru
 require_relative 'config/environment'
-run Rails.application
+run Quails.application
 ```
 
 And start the server:
@@ -87,20 +87,20 @@ Middlewares are loaded once and are not monitored for changes. You will have to 
 Action Dispatcher Middleware Stack
 ----------------------------------
 
-Many of Action Dispatcher's internal components are implemented as Rack middlewares. `Rails::Application` uses `ActionDispatch::MiddlewareStack` to combine various internal and external middlewares to form a complete Rails Rack application.
+Many of Action Dispatcher's internal components are implemented as Rack middlewares. `Quails::Application` uses `ActionDispatch::MiddlewareStack` to combine various internal and external middlewares to form a complete Quails Rack application.
 
-NOTE: `ActionDispatch::MiddlewareStack` is Rails' equivalent of `Rack::Builder`,
-but is built for better flexibility and more features to meet Rails' requirements.
+NOTE: `ActionDispatch::MiddlewareStack` is Quails' equivalent of `Rack::Builder`,
+but is built for better flexibility and more features to meet Quails' requirements.
 
 ### Inspecting Middleware Stack
 
-Rails has a handy task for inspecting the middleware stack in use:
+Quails has a handy task for inspecting the middleware stack in use:
 
 ```bash
-$ bin/rails middleware
+$ bin/quails middleware
 ```
 
-For a freshly generated Rails application, this might produce something like:
+For a freshly generated Quails application, this might produce something like:
 
 ```ruby
 use Rack::Sendfile
@@ -111,8 +111,8 @@ use Rack::Runtime
 use Rack::MethodOverride
 use ActionDispatch::RequestId
 use ActionDispatch::RemoteIp
-use Sprockets::Rails::QuietAssets
-use Rails::Rack::Logger
+use Sprockets::Quails::QuietAssets
+use Quails::Rack::Logger
 use ActionDispatch::ShowExceptions
 use WebConsole::Middleware
 use ActionDispatch::DebugExceptions
@@ -132,7 +132,7 @@ The default middlewares shown here (and some others) are each summarized in the 
 
 ### Configuring Middleware Stack
 
-Rails provides a simple configuration interface `config.middleware` for adding, removing and modifying the middlewares in the middleware stack via `application.rb` or the environment specific configuration file `environments/<environment>.rb`.
+Quails provides a simple configuration interface `config.middleware` for adding, removing and modifying the middlewares in the middleware stack via `application.rb` or the environment specific configuration file `environments/<environment>.rb`.
 
 #### Adding a Middleware
 
@@ -179,12 +179,12 @@ And now if you inspect the middleware stack, you'll find that `Rack::Runtime` is
 not a part of it.
 
 ```bash
-$ bin/rails middleware
-(in /Users/lifo/Rails/blog)
+$ bin/quails middleware
+(in /Users/lifo/Quails/blog)
 use ActionDispatch::Static
 use #<ActiveSupport::Cache::Strategy::LocalCache::Middleware:0x00000001c304c8>
 ...
-run Rails.application.routes
+run Quails.application.routes
 ```
 
 If you want to remove session related middleware, do the following:
@@ -243,11 +243,11 @@ Much of Action Controller's functionality is implemented as Middlewares. The fol
 
 * Checks for IP spoofing attacks.
 
-**`Sprockets::Rails::QuietAssets`**
+**`Sprockets::Quails::QuietAssets`**
 
 * Suppresses logger output for asset requests.
 
-**`Rails::Rack::Logger`**
+**`Quails::Rack::Logger`**
 
 * Notifies the logs that the request has began. After request is complete, flushes all the logs.
 
@@ -307,4 +307,4 @@ Resources
 
 ### Understanding Middlewares
 
-* [Railscast on Rack Middlewares](http://railscasts.com/episodes/151-rack-middleware)
+* [Quailscast on Rack Middlewares](http://quailscasts.com/episodes/151-rack-middleware)

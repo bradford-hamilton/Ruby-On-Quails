@@ -2,10 +2,10 @@
 
 require "abstract_unit"
 require "env_helpers"
-require "rails/command"
-require "rails/commands/console/console_command"
+require "quails/command"
+require "quails/commands/console/console_command"
 
-class Rails::ConsoleTest < ActiveSupport::TestCase
+class Quails::ConsoleTest < ActiveSupport::TestCase
   include EnvHelpers
 
   class FakeConsole
@@ -19,17 +19,17 @@ class Rails::ConsoleTest < ActiveSupport::TestCase
   end
 
   def test_sandbox_option
-    console = Rails::Console.new(app, parse_arguments(["--sandbox"]))
+    console = Quails::Console.new(app, parse_arguments(["--sandbox"]))
     assert console.sandbox?
   end
 
   def test_short_version_of_sandbox_option
-    console = Rails::Console.new(app, parse_arguments(["-s"]))
+    console = Quails::Console.new(app, parse_arguments(["-s"]))
     assert console.sandbox?
   end
 
   def test_no_options
-    console = Rails::Console.new(app, parse_arguments([]))
+    console = Quails::Console.new(app, parse_arguments([]))
     assert !console.sandbox?
   end
 
@@ -37,7 +37,7 @@ class Rails::ConsoleTest < ActiveSupport::TestCase
     start
 
     assert app.console.started?
-    assert_match(/Loading \w+ environment \(Rails/, output)
+    assert_match(/Loading \w+ environment \(Quails/, output)
   end
 
   def test_start_with_sandbox
@@ -45,7 +45,7 @@ class Rails::ConsoleTest < ActiveSupport::TestCase
 
     assert app.console.started?
     assert app.sandbox
-    assert_match(/Loading \w+ environment in sandbox \(Rails/, output)
+    assert_match(/Loading \w+ environment in sandbox \(Quails/, output)
   end
 
   def test_console_with_environment
@@ -55,18 +55,18 @@ class Rails::ConsoleTest < ActiveSupport::TestCase
 
   def test_console_defaults_to_IRB
     app = build_app(nil)
-    assert_equal IRB, Rails::Console.new(app).console
+    assert_equal IRB, Quails::Console.new(app).console
   end
 
-  def test_default_environment_with_no_rails_env
-    with_rails_env nil do
+  def test_default_environment_with_no_quails_env
+    with_quails_env nil do
       start
       assert_match(/\sdevelopment\s/, output)
     end
   end
 
-  def test_default_environment_with_rails_env
-    with_rails_env "special-production" do
+  def test_default_environment_with_quails_env
+    with_quails_env "special-production" do
       start
       assert_match(/\sspecial-production\s/, output)
     end
@@ -94,29 +94,29 @@ class Rails::ConsoleTest < ActiveSupport::TestCase
     assert_match(/\sspecial-production\s/, output)
   end
 
-  def test_rails_env_is_production_when_first_argument_is_p
+  def test_quails_env_is_production_when_first_argument_is_p
     assert_deprecated do
       start ["p"]
       assert_match(/\sproduction\s/, output)
     end
   end
 
-  def test_rails_env_is_test_when_first_argument_is_t
+  def test_quails_env_is_test_when_first_argument_is_t
     assert_deprecated do
       start ["t"]
       assert_match(/\stest\s/, output)
     end
   end
 
-  def test_rails_env_is_development_when_argument_is_d
+  def test_quails_env_is_development_when_argument_is_d
     assert_deprecated do
       start ["d"]
       assert_match(/\sdevelopment\s/, output)
     end
   end
 
-  def test_rails_env_is_dev_when_argument_is_dev_and_dev_env_is_present
-    Rails::Command::ConsoleCommand.class_eval do
+  def test_quails_env_is_dev_when_argument_is_dev_and_dev_env_is_present
+    Quails::Command::ConsoleCommand.class_eval do
       alias_method :old_environments, :available_environments
 
       define_method :available_environments do
@@ -128,7 +128,7 @@ class Rails::ConsoleTest < ActiveSupport::TestCase
       assert_match("dev", parse_arguments(["dev"])[:environment])
     end
   ensure
-    Rails::Command::ConsoleCommand.class_eval do
+    Quails::Command::ConsoleCommand.class_eval do
       undef_method :available_environments
       alias_method :available_environments, :old_environments
       undef_method :old_environments
@@ -141,8 +141,8 @@ class Rails::ConsoleTest < ActiveSupport::TestCase
   private
 
     def start(argv = [])
-      rails_console = Rails::Console.new(app, parse_arguments(argv))
-      @output = capture(:stdout) { rails_console.start }
+      quails_console = Quails::Console.new(app, parse_arguments(argv))
+      @output = capture(:stdout) { quails_console.start }
     end
 
     def app
@@ -172,7 +172,7 @@ class Rails::ConsoleTest < ActiveSupport::TestCase
     end
 
     def parse_arguments(args)
-      Rails::Command::ConsoleCommand.class_eval do
+      Quails::Command::ConsoleCommand.class_eval do
         alias_method :old_perform, :perform
         define_method(:perform) do
           extract_environment_option_from_argument
@@ -181,9 +181,9 @@ class Rails::ConsoleTest < ActiveSupport::TestCase
         end
       end
 
-      Rails::Command.invoke(:console, args)
+      Quails::Command.invoke(:console, args)
     ensure
-      Rails::Command::ConsoleCommand.class_eval do
+      Quails::Command::ConsoleCommand.class_eval do
         undef_method :perform
         alias_method :perform, :old_perform
         undef_method :old_perform

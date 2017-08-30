@@ -28,7 +28,7 @@ module ActionView
     # when the form is initially displayed, input fields corresponding to attributes
     # of the resource should show the current values of those attributes.
     #
-    # In Rails, this is usually achieved by creating the form using +form_for+ and
+    # In Quails, this is usually achieved by creating the form using +form_for+ and
     # a number of related helper methods. +form_for+ generates an appropriate <tt>form</tt>
     # tag and yields a form builder object that knows the model the form is about.
     # Input fields are created by calling methods defined on the form builder, which
@@ -122,7 +122,7 @@ module ActionView
       # of a specific model object.
       #
       # The method can be used in several slightly different ways, depending on
-      # how much you wish to rely on Rails to infer automatically from the model
+      # how much you wish to rely on Quails to infer automatically from the model
       # how the form should be constructed. For a generic model object, a form
       # can be created by passing +form_for+ a string or symbol representing
       # the object we are concerned with:
@@ -252,7 +252,7 @@ module ActionView
       # form is going to be sent. However, further simplification is possible
       # if the record passed to +form_for+ is a _resource_, i.e. it corresponds
       # to a set of RESTful routes, e.g. defined using the +resources+ method
-      # in <tt>config/routes.rb</tt>. In this case Rails will simply infer the
+      # in <tt>config/routes.rb</tt>. In this case Quails will simply infer the
       # appropriate URL from the record itself. For example,
       #
       #   <%= form_for @post do |f| %>
@@ -535,7 +535,7 @@ module ActionView
       #
       # By default +form_with+ attaches the <tt>data-remote</tt> attribute
       # submitting the form via an XMLHTTPRequest in the background if an
-      # Unobtrusive JavaScript driver, like rails-ujs, is used. See the
+      # Unobtrusive JavaScript driver, like quails-ujs, is used. See the
       # <tt>:local</tt> option for more.
       #
       # For ease of comparison the examples above left out the submit button,
@@ -549,7 +549,7 @@ module ActionView
       # is a _resource_. It corresponds to a set of RESTful routes, most likely
       # defined via +resources+ in <tt>config/routes.rb</tt>.
       #
-      # So when passing such a model record, Rails infers the URL and method.
+      # So when passing such a model record, Quails infers the URL and method.
       #
       #   <%= form_with model: @post do |form| %>
       #     ...
@@ -1290,7 +1290,7 @@ module ActionView
       #     ...
       #   <% end %>
       #
-      # because parameter name repetition is precisely what Rails seeks to distinguish
+      # because parameter name repetition is precisely what Quails seeks to distinguish
       # the elements of the array. For each item with a checked check box you
       # get an extra ghost item with only that attribute, assigned to "0".
       #
@@ -1321,10 +1321,10 @@ module ActionView
       # To force the radio button to be checked pass <tt>checked: true</tt> in the
       # +options+ hash. You may pass HTML options there as well.
       #
-      #   # Let's say that @post.category returns "rails":
-      #   radio_button("post", "category", "rails")
+      #   # Let's say that @post.category returns "quails":
+      #   radio_button("post", "category", "quails")
       #   radio_button("post", "category", "java")
-      #   # => <input type="radio" id="post_category_rails" name="post[category]" value="rails" checked="checked" />
+      #   # => <input type="radio" id="post_category_quails" name="post[category]" value="quails" checked="checked" />
       #   #    <input type="radio" id="post_category_java" name="post[category]" value="java" />
       #
       #   # Let's say that @user.receive_newsletter returns "no":
@@ -2080,7 +2080,7 @@ module ActionView
       #     ...
       #   <% end %>
       #
-      # because parameter name repetition is precisely what Rails seeks to distinguish
+      # because parameter name repetition is precisely what Quails seeks to distinguish
       # the elements of the array. For each item with a checked check box you
       # get an extra ghost item with only that attribute, assigned to "0".
       #
@@ -2112,10 +2112,10 @@ module ActionView
       # To force the radio button to be checked pass <tt>checked: true</tt> in the
       # +options+ hash. You may pass HTML options there as well.
       #
-      #   # Let's say that @post.category returns "rails":
-      #   radio_button("category", "rails")
+      #   # Let's say that @post.category returns "quails":
+      #   radio_button("category", "quails")
       #   radio_button("category", "java")
-      #   # => <input type="radio" id="post_category_rails" name="post[category]" value="rails" checked="checked" />
+      #   # => <input type="radio" id="post_category_quails" name="post[category]" value="quails" checked="checked" />
       #   #    <input type="radio" id="post_category_java" name="post[category]" value="java" />
       #
       #   # Let's say that @user.receive_newsletter returns "no":

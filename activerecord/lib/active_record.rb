@@ -24,7 +24,7 @@
 #++
 
 require "active_support"
-require "active_support/rails"
+require "active_support/quails"
 require "active_model"
 require "arel"
 

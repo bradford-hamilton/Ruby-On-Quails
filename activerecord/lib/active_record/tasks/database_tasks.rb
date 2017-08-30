@@ -11,14 +11,14 @@ module ActiveRecord
     # The tasks defined here are used with Rake tasks provided by Active Record.
     #
     # In order to use DatabaseTasks, a few config values need to be set. All the needed
-    # config values are set by Rails already, so it's necessary to do it only if you
-    # want to change the defaults or when you want to use Active Record outside of Rails
+    # config values are set by Quails already, so it's necessary to do it only if you
+    # want to change the defaults or when you want to use Active Record outside of Quails
     # (in such case after configuring the database tasks, you can also use the rake tasks
     # defined in Active Record).
     #
     # The possible config values are:
     #
-    # * +env+: current environment (like Rails.env).
+    # * +env+: current environment (like Quails.env).
     # * +database_configuration+: configuration of your databases (as in +config/database.yml+).
     # * +db_dir+: your +db+ directory.
     # * +fixtures_path+: a path to fixtures directory.
@@ -26,7 +26,7 @@ module ActiveRecord
     # * +seed_loader+: an object which will load seeds, it needs to respond to the +load_seed+ method.
     # * +root+: a path to the root of the application.
     #
-    # Example usage of DatabaseTasks outside Rails could look as such:
+    # Example usage of DatabaseTasks outside Quails could look as such:
     #
     #   include ActiveRecord::Tasks
     #   DatabaseTasks.database_configuration = YAML.load_file('my_database_config.yml')
@@ -78,11 +78,11 @@ module ActiveRecord
       register_task(/sqlite/,       "ActiveRecord::Tasks::SQLiteDatabaseTasks")
 
       def db_dir
-        @db_dir ||= Rails.application.config.paths["db"].first
+        @db_dir ||= Quails.application.config.paths["db"].first
       end
 
       def migrations_paths
-        @migrations_paths ||= Rails.application.paths["db/migrate"].to_a
+        @migrations_paths ||= Quails.application.paths["db/migrate"].to_a
       end
 
       def fixtures_path
@@ -94,15 +94,15 @@ module ActiveRecord
       end
 
       def root
-        @root ||= Rails.root
+        @root ||= Quails.root
       end
 
       def env
-        @env ||= Rails.env
+        @env ||= Quails.env
       end
 
       def seed_loader
-        @seed_loader ||= Rails.application
+        @seed_loader ||= Quails.application
       end
 
       def current_config(options = {})
@@ -261,8 +261,8 @@ module ActiveRecord
 
       def check_schema_file(filename)
         unless File.exist?(filename)
-          message = %{#{filename} doesn't exist yet. Run `rails db:migrate` to create it, then try again.}.dup
-          message << %{ If you do not intend to use a database, you should instead alter #{Rails.root}/config/application.rb to limit the frameworks that will be loaded.} if defined?(::Rails.root)
+          message = %{#{filename} doesn't exist yet. Run `quails db:migrate` to create it, then try again.}.dup
+          message << %{ If you do not intend to use a database, you should instead alter #{Quails.root}/config/application.rb to limit the frameworks that will be loaded.} if defined?(::Quails.root)
           Kernel.abort message
         end
       end

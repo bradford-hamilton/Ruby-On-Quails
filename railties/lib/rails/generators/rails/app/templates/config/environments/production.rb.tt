@@ -1,10 +1,10 @@
-Rails.application.configure do
+Quails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
   config.cache_classes = true
 
-  # Eager load code on boot. This eager loads most of Rails and
+  # Eager load code on boot. This eager loads most of Quails and
   # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
@@ -70,7 +70,7 @@ Rails.application.configure do
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "<%= app_name %>_#{Rails.env}"
+  # config.active_job.queue_name_prefix = "<%= app_name %>_#{Quails.env}"
 
   <%- unless options.skip_action_mailer? -%>
   config.action_mailer.perform_caching = false

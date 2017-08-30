@@ -9,8 +9,8 @@ end
 
 gemfile(true) do
   source "https://rubygems.org"
-  gem "rails", github: "rails/rails"
-  gem "arel", github: "rails/arel"
+  gem "quails", github: "quails/quails"
+  gem "arel", github: "quails/arel"
 end
 
 require "active_support"

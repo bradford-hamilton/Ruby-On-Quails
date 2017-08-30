@@ -10,7 +10,7 @@ class ServerTest < ActiveSupport::TestCase
   end
 
   test "initializing the server port" do
-    assert_includes Capybara.servers, :rails_puma
+    assert_includes Capybara.servers, :quails_puma
   end
 
   test "port is always included" do

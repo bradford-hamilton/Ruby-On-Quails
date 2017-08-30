@@ -61,7 +61,7 @@ module ActiveRecord
 
       ##
       # :singleton-method:
-      # Specifies the format to use when dumping the database schema with Rails'
+      # Specifies the format to use when dumping the database schema with Quails'
       # Rakefile. If :sql, the schema is dumped as (potentially database-
       # specific) SQL statements. If :ruby, the schema is dumped as an
       # ActiveRecord::Schema file which can be loaded into any database that

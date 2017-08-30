@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/controller/controller_generator"
-require "rails/generators/rails/model/model_generator"
-require "rails/generators/mailer/mailer_generator"
-require "rails/generators/rails/scaffold/scaffold_generator"
-require "rails/generators/rails/application_record/application_record_generator"
+require "quails/generators/quails/controller/controller_generator"
+require "quails/generators/quails/model/model_generator"
+require "quails/generators/mailer/mailer_generator"
+require "quails/generators/quails/scaffold/scaffold_generator"
+require "quails/generators/quails/application_record/application_record_generator"
 
-class NamespacedGeneratorTestCase < Rails::Generators::TestCase
+class NamespacedGeneratorTestCase < Quails::Generators::TestCase
   include GeneratorsTestHelper
 
   def setup
     super
-    Rails::Generators.namespace = TestApp
+    Quails::Generators.namespace = TestApp
   end
 end
 
 class NamespacedControllerGeneratorTest < NamespacedGeneratorTestCase
   arguments %w(Account foo bar)
-  tests Rails::Generators::ControllerGenerator
+  tests Quails::Generators::ControllerGenerator
 
   setup :copy_routes
 
@@ -85,7 +85,7 @@ end
 
 class NamespacedModelGeneratorTest < NamespacedGeneratorTestCase
   arguments %w(Account name:string age:integer)
-  tests Rails::Generators::ModelGenerator
+  tests Quails::Generators::ModelGenerator
 
   def test_module_file_is_not_created
     run_generator
@@ -145,7 +145,7 @@ end
 
 class NamespacedMailerGeneratorTest < NamespacedGeneratorTestCase
   arguments %w(notifier foo bar)
-  tests Rails::Generators::MailerGenerator
+  tests Quails::Generators::MailerGenerator
 
   def test_mailer_skeleton_is_created
     run_generator
@@ -196,7 +196,7 @@ end
 class NamespacedScaffoldGeneratorTest < NamespacedGeneratorTestCase
   include GeneratorsTestHelper
   arguments %w(product_line title:string price:integer)
-  tests Rails::Generators::ScaffoldGenerator
+  tests Quails::Generators::ScaffoldGenerator
 
   setup :copy_routes
 
@@ -427,7 +427,7 @@ end
 
 class NamespacedApplicationRecordGeneratorTest < NamespacedGeneratorTestCase
   include GeneratorsTestHelper
-  tests Rails::Generators::ApplicationRecordGenerator
+  tests Quails::Generators::ApplicationRecordGenerator
 
   def test_adds_namespace_to_application_record
     run_generator

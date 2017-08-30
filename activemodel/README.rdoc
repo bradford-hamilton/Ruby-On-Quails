@@ -1,13 +1,13 @@
-= Active Model -- model interfaces for Rails
+= Active Model -- model interfaces for Quails
 
 Active Model provides a known set of interfaces for usage in model classes.
 They allow for Action Pack helpers to interact with non-Active Record models,
 for example. Active Model also helps with building custom ORMs for use outside of
-the Rails framework.
+the Quails framework.
 
-Prior to Rails 3.0, if a plugin or gem developer wanted to have an object
+Prior to Quails 3.0, if a plugin or gem developer wanted to have an object
 interact with Action Pack helpers, it was required to either copy chunks of
-code from Rails, or monkey patch entire helpers to make them handle objects
+code from Quails, or monkey patch entire helpers to make them handle objects
 that did not exactly conform to the Active Record interface. This would result
 in code duplication and fragile applications that broke on upgrades. Active
 Model solves this by defining an explicit API. You can read more about the
@@ -237,9 +237,9 @@ The latest version of Active Model can be installed with RubyGems:
 
   $ gem install activemodel
 
-Source code can be downloaded as part of the Rails project on GitHub
+Source code can be downloaded as part of the Quails project on GitHub
 
-* https://github.com/rails/rails/tree/master/activemodel
+* https://github.com/quails/quails/tree/master/activemodel
 
 
 == License
@@ -253,12 +253,12 @@ Active Model is released under the MIT license:
 
 API documentation is at
 
-* http://api.rubyonrails.org
+* http://api.rubyonquails.org
 
-Bug reports can be filed for the Ruby on Rails project here:
+Bug reports can be filed for the Ruby on Quails project here:
 
-* https://github.com/rails/rails/issues
+* https://github.com/quails/quails/issues
 
-Feature requests should be discussed on the rails-core mailing list here:
+Feature requests should be discussed on the quails-core mailing list here:
 
-* https://groups.google.com/forum/?fromgroups#!forum/rubyonrails-core
+* https://groups.google.com/forum/?fromgroups#!forum/rubyonquails-core

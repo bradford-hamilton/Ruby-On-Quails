@@ -90,7 +90,7 @@ module ApplicationTests
       $initialize_test_set_from_env = nil
       app_file "config/environments/development.rb", <<-RUBY
         $initialize_test_set_from_env = 'success'
-        Rails.application.configure do
+        Quails.application.configure do
           config.cache_classes = true
           config.time_zone = "Brasilia"
         end
@@ -104,8 +104,8 @@ module ApplicationTests
 
       require "#{app_path}/config/environment"
       assert_equal "success", $initialize_test_set_from_env
-      assert Rails.application.config.cache_classes
-      assert_equal "Brasilia", Rails.application.config.time_zone
+      assert Quails.application.config.cache_classes
+      assert_equal "Brasilia", Quails.application.config.time_zone
     end
   end
 end

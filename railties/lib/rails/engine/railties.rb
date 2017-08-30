@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module Rails
+module Quails
   class Engine < Railtie
     class Railties
       include Enumerable
       attr_reader :_all
 
       def initialize
-        @_all ||= ::Rails::Railtie.subclasses.map(&:instance) +
-          ::Rails::Engine.subclasses.map(&:instance)
+        @_all ||= ::Quails::Railtie.subclasses.map(&:instance) +
+          ::Quails::Engine.subclasses.map(&:instance)
       end
 
       def each(*args, &block)

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/helper/helper_generator"
+require "quails/generators/quails/helper/helper_generator"
 
 ObjectHelper = Class.new
 AnotherObjectHelperTest = Class.new
 
-class HelperGeneratorTest < Rails::Generators::TestCase
+class HelperGeneratorTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
   arguments %w(admin)
 

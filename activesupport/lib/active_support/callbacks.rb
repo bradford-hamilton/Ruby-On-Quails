@@ -463,7 +463,7 @@ module ActiveSupport
 
       # Execute before and after filters in a sequence instead of
       # chaining them with nested lambda calls, see:
-      # https://github.com/rails/rails/issues/18011
+      # https://github.com/quails/quails/issues/18011
       class CallbackSequence # :nodoc:
         def initialize(nested = nil, call_template = nil, user_conditions = nil)
           @nested = nested
@@ -665,7 +665,7 @@ module ActiveSupport
           if options[:if].is_a?(String) || options[:unless].is_a?(String)
             ActiveSupport::Deprecation.warn(<<-MSG.squish)
               Passing string to be evaluated in :if and :unless conditional
-              options is deprecated and will be removed in Rails 5.2 without
+              options is deprecated and will be removed in Quails 5.2 without
               replacement. Pass a symbol for an instance method, or a lambda,
               proc or block, instead.
             MSG
@@ -698,7 +698,7 @@ module ActiveSupport
           if options[:if].is_a?(String) || options[:unless].is_a?(String)
             ActiveSupport::Deprecation.warn(<<-MSG.squish)
               Passing string to :if and :unless conditional options is deprecated
-              and will be removed in Rails 5.2 without replacement.
+              and will be removed in Quails 5.2 without replacement.
             MSG
           end
 

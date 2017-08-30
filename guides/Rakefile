@@ -21,7 +21,7 @@ namespace :guides do
     desc "Generate HTML guides"
     task html: :encoding do
       ENV["WARNINGS"] = "1" # authors can't disable this
-      ruby "rails_guides.rb"
+      ruby "quails_guides.rb"
     end
 
     desc "Generate .mobi file. The kindlegen executable must be in your PATH. You can get it for free from http://www.amazon.com/gp/feature.html?docId=1000765211"
@@ -60,7 +60,7 @@ All of these processes are handled via rake tasks, here's a full list of them:
 Some arguments may be passed via environment variables:
 
   RAILS_VERSION=tag
-    If guides are being generated for a specific Rails version set the Git tag
+    If guides are being generated for a specific Quails version set the Git tag
     here, otherwise the current SHA1 is going to be used to generate edge guides.
 
   ALL=1

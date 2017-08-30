@@ -2,10 +2,10 @@
 
 require "active_support/test_case"
 require "active_support/testing/autorun"
-require "rails/generators/rails/app/app_generator"
+require "quails/generators/quails/app/app_generator"
 require "tempfile"
 
-module Rails
+module Quails
   module Generators
     class ARGVScrubberTest < ActiveSupport::TestCase # :nodoc:
       # Future people who read this... These tests are just to surround the
@@ -22,7 +22,7 @@ module Rails
             define_method(:exit) { |code| exit_code = code }
           })
           scrubber.prepare!
-          assert_equal "Rails #{Rails::VERSION::STRING}", output
+          assert_equal "Quails #{Quails::VERSION::STRING}", output
           assert_equal 0, exit_code
         end
       end

@@ -2,7 +2,7 @@
 
 require "active_support/backtrace_cleaner"
 
-module Rails
+module Quails
   class BacktraceCleaner < ActiveSupport::BacktraceCleaner
     APP_DIRS_PATTERN = /^\/?(app|config|lib|test|\(\w*\))/
     RENDER_TEMPLATE_PATTERN = /:in `_render_template_\w*'/
@@ -12,7 +12,7 @@ module Rails
 
     def initialize
       super
-      @root = "#{Rails.root}/".freeze
+      @root = "#{Quails.root}/".freeze
       add_filter { |line| line.sub(@root, EMPTY_STRING) }
       add_filter { |line| line.sub(RENDER_TEMPLATE_PATTERN, EMPTY_STRING) }
       add_filter { |line| line.sub(DOT_SLASH, SLASH) } # for tests

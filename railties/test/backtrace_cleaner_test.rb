@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require "abstract_unit"
-require "rails/backtrace_cleaner"
+require "quails/backtrace_cleaner"
 
 class BacktraceCleanerTest < ActiveSupport::TestCase
   def setup
-    @cleaner = Rails::BacktraceCleaner.new
+    @cleaner = Quails::BacktraceCleaner.new
   end
 
   test "should format installed gems correctly" do
@@ -26,8 +26,8 @@ class BacktraceCleanerTest < ActiveSupport::TestCase
 
   test "should consider traces from irb lines as User code" do
     backtrace = [ "from (irb):1",
-                  "from /Path/to/rails/railties/lib/rails/commands/console.rb:77:in `start'",
-                  "from bin/rails:4:in `<main>'" ]
+                  "from /Path/to/quails/railties/lib/quails/commands/console.rb:77:in `start'",
+                  "from bin/quails:4:in `<main>'" ]
     result = @cleaner.clean(backtrace, :all)
     assert_equal "from (irb):1", result[0]
   end

@@ -4,7 +4,7 @@ require_relative "../template/resolver"
 
 module ActionView #:nodoc:
   # Use FixtureResolver in your tests to simulate the presence of files on the
-  # file system. This is used internally by Rails' own test suite, and is
+  # file system. This is used internally by Quails' own test suite, and is
   # useful for testing extensions that have no way of knowing what the file
   # system will look like at runtime.
   class FixtureResolver < PathResolver

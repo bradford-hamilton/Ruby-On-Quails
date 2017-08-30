@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/command"
-require "rails/commands/secrets/secrets_command"
+require "quails/command"
+require "quails/commands/secrets/secrets_command"
 
-class Rails::Command::SecretsCommandTest < ActiveSupport::TestCase
+class Quails::Command::SecretsCommandTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation
 
   def setup
@@ -36,14 +36,14 @@ class Rails::Command::SecretsCommandTest < ActiveSupport::TestCase
 
   private
     def run_edit_command(editor: "cat")
-      Dir.chdir(app_path) { `EDITOR="#{editor}" bin/rails secrets:edit` }
+      Dir.chdir(app_path) { `EDITOR="#{editor}" bin/quails secrets:edit` }
     end
 
     def run_show_command
-      Dir.chdir(app_path) { `bin/rails secrets:show` }
+      Dir.chdir(app_path) { `bin/quails secrets:show` }
     end
 
     def run_setup_command
-      Dir.chdir(app_path) { `bin/rails secrets:setup` }
+      Dir.chdir(app_path) { `bin/quails secrets:setup` }
     end
 end

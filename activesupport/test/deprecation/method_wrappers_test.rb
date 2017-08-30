@@ -12,7 +12,7 @@ class MethodWrappersTest < ActiveSupport::TestCase
   end
 
   def test_deprecate_methods_warning_default
-    warning = /old_method is deprecated and will be removed from Rails \d.\d \(use new_method instead\)/
+    warning = /old_method is deprecated and will be removed from Quails \d.\d \(use new_method instead\)/
     ActiveSupport::Deprecation.deprecate_methods(@klass, old_method: :new_method)
 
     assert_deprecated(warning) { assert_equal "abc", @klass.new.old_method }

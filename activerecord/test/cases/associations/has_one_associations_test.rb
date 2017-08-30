@@ -50,8 +50,8 @@ class HasOneAssociationsTest < ActiveRecord::TestCase
   def test_finding_using_primary_key
     firm = companies(:first_firm)
     assert_equal Account.find_by_firm_id(firm.id), firm.account
-    firm.firm_id = companies(:rails_core).id
-    assert_equal accounts(:rails_core_account), firm.account_using_primary_key
+    firm.firm_id = companies(:quails_core).id
+    assert_equal accounts(:quails_core_account), firm.account_using_primary_key
   end
 
   def test_update_with_foreign_and_primary_keys
@@ -102,7 +102,7 @@ class HasOneAssociationsTest < ActiveRecord::TestCase
   end
 
   def test_nullification_on_association_change
-    firm = companies(:rails_core)
+    firm = companies(:quails_core)
     old_account_id = firm.account.id
     firm.account = Account.new(credit_limit: 5)
     # account is dependent with nullify, therefore its firm_id should be nil
@@ -118,11 +118,11 @@ class HasOneAssociationsTest < ActiveRecord::TestCase
   end
 
   def test_natural_assignment_to_nil_after_destroy
-    firm = companies(:rails_core)
+    firm = companies(:quails_core)
     old_account_id = firm.account.id
     firm.account.destroy
     firm.account = nil
-    assert_nil companies(:rails_core).account
+    assert_nil companies(:quails_core).account
     assert_raise(ActiveRecord::RecordNotFound) { Account.find(old_account_id) }
   end
 

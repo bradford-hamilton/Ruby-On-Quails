@@ -426,9 +426,9 @@ class RelationTest < ActiveRecord::TestCase
   end
 
   def test_finding_with_hash_conditions_on_joined_table
-    firms = DependentFirm.joins(:account).where(name: "RailsCore", accounts: { credit_limit: 55..60 }).to_a
+    firms = DependentFirm.joins(:account).where(name: "QuailsCore", accounts: { credit_limit: 55..60 }).to_a
     assert_equal 1, firms.size
-    assert_equal companies(:rails_core), firms.first
+    assert_equal companies(:quails_core), firms.first
   end
 
   def test_find_all_with_join
@@ -768,7 +768,7 @@ class RelationTest < ActiveRecord::TestCase
 
   def test_find_all_using_where_with_relation
     david = authors(:david)
-    # switching the lines below would succeed in current rails
+    # switching the lines below would succeed in current quails
     # assert_queries(2) {
     assert_queries(1) {
       relation = Author.where(id: Author.where(id: david.id))
@@ -808,7 +808,7 @@ class RelationTest < ActiveRecord::TestCase
 
   def test_find_all_using_where_with_relation_and_alternate_primary_key
     cool_first = minivans(:cool_first)
-    # switching the lines below would succeed in current rails
+    # switching the lines below would succeed in current quails
     # assert_queries(2) {
     assert_queries(1) {
       relation = Minivan.where(minivan_id: Minivan.where(name: cool_first.name))
@@ -1433,10 +1433,10 @@ class RelationTest < ActiveRecord::TestCase
 
   def test_intersection_with_array
     relation = Author.where(name: "David")
-    rails_author = relation.first
+    quails_author = relation.first
 
-    assert_equal [rails_author], [rails_author] & relation
-    assert_equal [rails_author], relation & [rails_author]
+    assert_equal [quails_author], [quails_author] & relation
+    assert_equal [quails_author], relation & [quails_author]
   end
 
   def test_primary_key

@@ -23,7 +23,7 @@ class CacheKeyTest < ActiveSupport::TestCase
     assert_equal "name/1/2/true", ActiveSupport::Cache.expand_cache_key([1, "2", true], :name)
   end
 
-  def test_expand_cache_key_with_rails_cache_id
+  def test_expand_cache_key_with_quails_cache_id
     with_env("RAILS_CACHE_ID" => "c99") do
       assert_equal "c99/foo", ActiveSupport::Cache.expand_cache_key(:foo)
       assert_equal "c99/foo", ActiveSupport::Cache.expand_cache_key([:foo])
@@ -34,14 +34,14 @@ class CacheKeyTest < ActiveSupport::TestCase
     end
   end
 
-  def test_expand_cache_key_with_rails_app_version
-    with_env("RAILS_APP_VERSION" => "rails3") do
-      assert_equal "rails3/foo", ActiveSupport::Cache.expand_cache_key(:foo)
+  def test_expand_cache_key_with_quails_app_version
+    with_env("RAILS_APP_VERSION" => "quails3") do
+      assert_equal "quails3/foo", ActiveSupport::Cache.expand_cache_key(:foo)
     end
   end
 
-  def test_expand_cache_key_rails_cache_id_should_win_over_rails_app_version
-    with_env("RAILS_CACHE_ID" => "c99", "RAILS_APP_VERSION" => "rails3") do
+  def test_expand_cache_key_quails_cache_id_should_win_over_quails_app_version
+    with_env("RAILS_CACHE_ID" => "c99", "RAILS_APP_VERSION" => "quails3") do
       assert_equal "c99/foo", ActiveSupport::Cache.expand_cache_key(:foo)
     end
   end

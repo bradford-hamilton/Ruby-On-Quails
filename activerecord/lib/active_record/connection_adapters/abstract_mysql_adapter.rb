@@ -441,7 +441,7 @@ module ActiveRecord
         table_options
       end
 
-      # Maps logical Rails types to MySQL-specific data types.
+      # Maps logical Quails types to MySQL-specific data types.
       def type_to_sql(type, limit: nil, precision: nil, scale: nil, unsigned: nil, **) # :nodoc:
         sql = \
           case type.to_s

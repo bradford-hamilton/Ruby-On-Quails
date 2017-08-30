@@ -5,7 +5,7 @@ require "method_source"
 require "rake/file_list"
 require "active_support/core_ext/module/attribute_accessors"
 
-module Rails
+module Quails
   module TestUnit
     class Runner
       mattr_reader :filters, default: []

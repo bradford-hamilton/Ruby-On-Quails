@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/scaffold_controller/scaffold_controller_generator"
+require "quails/generators/quails/scaffold_controller/scaffold_controller_generator"
 
 module Unknown
   module Generators
   end
 end
 
-class ScaffoldControllerGeneratorTest < Rails::Generators::TestCase
+class ScaffoldControllerGeneratorTest < Quails::Generators::TestCase
   include GeneratorsTestHelper
   arguments %w(User name:string age:integer)
 
@@ -147,7 +147,7 @@ class ScaffoldControllerGeneratorTest < Rails::Generators::TestCase
   end
 
   def test_customized_orm_is_used
-    klass = Class.new(Rails::Generators::ActiveModel) do
+    klass = Class.new(Quails::Generators::ActiveModel) do
       def self.all(klass)
         "#{klass}.find(:all)"
       end
@@ -178,24 +178,24 @@ class ScaffoldControllerGeneratorTest < Rails::Generators::TestCase
   end
 
   def test_controller_tests_pass_by_default_inside_mountable_engine
-    Dir.chdir(destination_root) { `bundle exec rails plugin new bukkits --mountable` }
+    Dir.chdir(destination_root) { `bundle exec quails plugin new bukkits --mountable` }
 
     engine_path = File.join(destination_root, "bukkits")
 
     Dir.chdir(engine_path) do
-      quietly { `bin/rails g controller dashboard foo` }
-      assert_match(/2 runs, 2 assertions, 0 failures, 0 errors/, `bin/rails test 2>&1`)
+      quietly { `bin/quails g controller dashboard foo` }
+      assert_match(/2 runs, 2 assertions, 0 failures, 0 errors/, `bin/quails test 2>&1`)
     end
   end
 
   def test_controller_tests_pass_by_default_inside_full_engine
-    Dir.chdir(destination_root) { `bundle exec rails plugin new bukkits --full` }
+    Dir.chdir(destination_root) { `bundle exec quails plugin new bukkits --full` }
 
     engine_path = File.join(destination_root, "bukkits")
 
     Dir.chdir(engine_path) do
-      quietly { `bin/rails g controller dashboard foo` }
-      assert_match(/2 runs, 2 assertions, 0 failures, 0 errors/, `bin/rails test 2>&1`)
+      quietly { `bin/quails g controller dashboard foo` }
+      assert_match(/2 runs, 2 assertions, 0 failures, 0 errors/, `bin/quails test 2>&1`)
     end
   end
 

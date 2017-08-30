@@ -20,7 +20,7 @@ module ActiveRecord
           klass += "(#{owner})" unless owner == klass
 
           ActiveSupport::Deprecation.warn \
-            "Defining #quoted_id is deprecated and will be ignored in Rails 5.2. (defined on #{klass}#{at})"
+            "Defining #quoted_id is deprecated and will be ignored in Quails 5.2. (defined on #{klass}#{at})"
           return value.quoted_id
         end
 

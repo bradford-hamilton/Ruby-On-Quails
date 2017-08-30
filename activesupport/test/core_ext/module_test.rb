@@ -238,13 +238,13 @@ class ModuleTest < ActiveSupport::TestCase
   end
 
   def test_delegation_with_allow_nil
-    rails = Project.new("Rails", Someone.new("David"))
-    assert_equal "David", rails.name
+    quails = Project.new("Quails", Someone.new("David"))
+    assert_equal "David", quails.name
   end
 
   def test_delegation_with_allow_nil_and_nil_value
-    rails = Project.new("Rails")
-    assert_nil rails.name
+    quails = Project.new("Quails")
+    assert_nil quails.name
   end
 
   # Ensures with check for nil, not for a falseish target.
@@ -254,16 +254,16 @@ class ModuleTest < ActiveSupport::TestCase
   end
 
   def test_delegation_with_allow_nil_and_invalid_value
-    rails = Project.new("Rails", "David")
-    assert_raise(NoMethodError) { rails.name }
+    quails = Project.new("Quails", "David")
+    assert_raise(NoMethodError) { quails.name }
   end
 
   def test_delegation_with_allow_nil_and_nil_value_and_prefix
     Project.class_eval do
       delegate :name, to: :person, allow_nil: true, prefix: true
     end
-    rails = Project.new("Rails")
-    assert_nil rails.person_name
+    quails = Project.new("Quails")
+    assert_nil quails.person_name
   end
 
   def test_delegation_without_allow_nil_and_nil_value
