@@ -4,7 +4,7 @@ version = File.read(File.expand_path("RAILS_VERSION", __dir__)).strip
 
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
-  s.name        = "quails"
+  s.name        = "rails"
   s.version     = version
   s.summary     = "Full-stack web application framework."
   s.description = "Ruby on Quails is a full-stack web framework optimized for programmer happiness and sustainable productivity. It encourages beautiful code by favoring convention over configuration."
@@ -32,5 +32,5 @@ Gem::Specification.new do |s|
   s.add_dependency "railties",      version
 
   s.add_dependency "bundler",         ">= 1.3.0"
-  s.add_dependency "sprockets-quails", ">= 2.0.0"
+  s.add_dependency "sprockets-rails", ">= 2.0.0"
 end

@@ -15,15 +15,15 @@ Gem::Specification.new do |s|
 
   s.author   = "David Heinemeier Hansson"
   s.email    = "david@loudthinking.com"
-  s.homepage = "http://rubyonquails.org"
+  s.homepage = "http://rubyonrails.org"
 
   s.files        = Dir["CHANGELOG.md", "README.rdoc", "MIT-LICENSE", "lib/**/*"]
   s.require_path = "lib"
   s.requirements << "none"
 
   s.metadata = {
-    "source_code_uri" => "https://github.com/quails/quails/tree/v#{version}/actionmailer",
-    "changelog_uri"   => "https://github.com/quails/quails/blob/v#{version}/actionmailer/CHANGELOG.md"
+    "source_code_uri" => "https://github.com/rails/rails/tree/v#{version}/actionmailer",
+    "changelog_uri"   => "https://github.com/rails/rails/blob/v#{version}/actionmailer/CHANGELOG.md"
   }
 
   s.add_dependency "actionpack", version
@@ -31,5 +31,5 @@ Gem::Specification.new do |s|
   s.add_dependency "activejob", version
 
   s.add_dependency "mail", ["~> 2.5", ">= 2.5.4"]
-  s.add_dependency "quails-dom-testing", "~> 2.0"
+  s.add_dependency "rails-dom-testing", "~> 2.0"
 end

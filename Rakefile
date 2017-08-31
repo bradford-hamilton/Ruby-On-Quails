@@ -4,7 +4,7 @@ require "net/http"
 
 $:.unshift __dir__
 require "tasks/release"
-require "railties/lib/quails/api/task"
+require "railties/lib/rails/api/task"
 
 desc "Build gem files for all projects"
 task build: "all:build"
@@ -64,8 +64,8 @@ task update_versions: "all:update_versions"
 # Everything is automated and you do NOT need to run this task normally.
 desc "Publishes docs, run this AFTER a new stable tag has been pushed"
 task :publish_docs do
-  Net::HTTP.new("api.rubyonquails.org", 8080).start do |http|
-    request  = Net::HTTP::Post.new("/quails-master-hook")
+  Net::HTTP.new("api.rubyonrails.org", 8080).start do |http|
+    request  = Net::HTTP::Post.new("/rails-master-hook")
     response = http.request(request)
     puts response.body
   end
